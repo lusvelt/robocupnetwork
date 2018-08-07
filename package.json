@@ -1,0 +1,31 @@
+{
+  "name": "robocupnetwork",
+  "version": "4.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "watch": "nodemon index",
+    "postinstall": "cd public && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lusvelt/robocupnetwork.git"
+  },
+  "author": "5^AI 2018/2019 I.I.S. Alessandro Volta Pescara",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lusvelt/robocupnetwork/issues"
+  },
+  "homepage": "https://github.com/lusvelt/robocupnetwork#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "socket.io": "^2.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  }
+}
