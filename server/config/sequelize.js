@@ -14,7 +14,8 @@ const sequelize = new Sequelize(dbParams.database, dbParams.user, dbParams.passw
         idle: 10000
     },
 
-    operatorsAliases: false
+    operatorsAliases: false,
+    logging: false
 });
 
 module.exports = sequelize;

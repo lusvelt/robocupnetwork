@@ -11,7 +11,7 @@ const router = require('./server/config/router');
 const database = require('./server/config/database');
 
 const port = process.env.PORT;
-const publicPath = path.join('public/dist');
+const distPath = path.join('dist');
 
 const app = express();
 const server = http.createServer(app);
@@ -19,9 +19,8 @@ const server = http.createServer(app);
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use('/', express.static(publicPath));
+app.use('/', express.static(distPath));
 
 router.initialize(app);
-database.initialize();
-
-server.listen(port, () => console.log('Server attivo'));
+database.initialize()
+.then(() => server.listen(port, () => console.log('Server attivo')));
