@@ -1,7 +1,7 @@
 {
   "name": "robocupnetwork",
   "version": "4.0.0",
-  "description": "",
+  "description": "Programma ufficiale italiano per la gestione delle gare di robotica",
   "main": "index.js",
   "scripts": {
     "start": "node index",
@@ -23,6 +23,9 @@
     "cors": "^2.8.4",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
+    "mysql2": "^1.6.1",
+    "parse-db-uri": "^1.0.2",
+    "sequelize": "^4.38.0",
     "socket.io": "^2.1.1"
   },
   "devDependencies": {

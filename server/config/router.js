@@ -1,5 +1,5 @@
-const getTest = require('./routes/getTest');
-const postTest = require('./routes/postTest');
+const getTest = require('../routes/getTest');
+const postTest = require('../routes/postTest');
 
 const router = {
     initialize: (app) => {

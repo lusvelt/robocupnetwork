@@ -5,11 +5,13 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const io = require('socket.io');
 
-const router = require('./server/routing/router');
-
 require('./server/config/config');
+
+const router = require('./server/config/router');
+const database = require('./server/config/database');
+
 const port = process.env.PORT;
-const publicPath = path.join('public');
+const publicPath = path.join('public/dist');
 
 const app = express();
 const server = http.createServer(app);
@@ -20,5 +22,6 @@ app.use(cors());
 app.use('/', express.static(publicPath));
 
 router.initialize(app);
+database.initialize();
 
 server.listen(port, () => console.log('Server attivo'));
