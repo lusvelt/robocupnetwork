@@ -1,0 +1,6 @@
+{
+    "LOGIN_TITLE": "Login",
+    "LOGIN_INSTRUCTIONS": "Sign in with your email and password",
+    "LOGIN_ERROR_MESSAGE": "Authentication failed",
+    "WRONG_EMAIL_OR_PASSWORD": "Email or password are incorrect"
+}

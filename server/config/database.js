@@ -1,18 +1,15 @@
 const sequelize = require('./sequelize');
 
-const User = require('../models/User');
-
 const database = {
     initialize: async () => {
-      await sequelize.authenticate().then( () => {
-        console.log('Connection has been established successfully.');
-        sequelize.sync({
-          force: process.env.NODE_ENV !== 'production'
-        });
-      })
-        .catch(err => {
-          console.error('Unable to connect to the database:', err);
-      });
+      try {
+        await sequelize.authenticate();
+        console.log('Connection to database has been established successfully.');
+        await sequelize.sync({ force: process.env.NODE_ENV !== 'production' });
+        console.log('Database initialized successfully');
+      } catch (err) {
+        console.error(err);
+      }
     }
 };
 

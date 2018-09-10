@@ -8,9 +8,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
-    title: 'FEATURES',
+    title: 'MENU\' PRINCIPALE',
     group: true,
   },
+
+  /*
   {
     title: 'UI Features',
     icon: 'nb-keypad',
@@ -173,4 +175,5 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ],
   },
+  */
 ];

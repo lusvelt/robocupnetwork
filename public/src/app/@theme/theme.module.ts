@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -12,11 +13,14 @@ import {
   NbSearchModule,
   NbSidebarModule,
   NbTabsetModule,
-  NbThemeModule,
   NbUserModule,
   NbCheckboxModule,
   NbPopoverModule,
   NbContextMenuModule,
+  NbThemeModule,
+  NbAlertModule,
+  NbInputModule,
+  NbButtonModule
 } from '@nebular/theme';
 
 import { NbSecurityModule } from '@nebular/security';
@@ -42,8 +46,11 @@ import {
 import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
+import { LoginComponent } from './components/auth/login/login.component';
+import { SharedModule } from '../shared/shared.module';
+import { NbAuthModule } from '@nebular/auth';
 
-const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
+const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule, SharedModule, RouterModule];
 
 const NB_MODULES = [
   NbCardModule,
@@ -58,11 +65,18 @@ const NB_MODULES = [
   NbCheckboxModule,
   NbPopoverModule,
   NbContextMenuModule,
+  NbThemeModule,
+  NbInputModule,
+  NbAlertModule,
+  NbButtonModule,
+  NbAuthModule,
+  FormsModule,
   NgbModule,
   NbSecurityModule, // *nbIsGranted directive
 ];
 
 const COMPONENTS = [
+  LoginComponent,
   SwitcherComponent,
   LayoutDirectionSwitcherComponent,
   ThemeSwitcherComponent,

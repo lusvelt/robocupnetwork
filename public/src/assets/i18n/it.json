@@ -1,0 +1,6 @@
+{
+    "LOGIN_TITLE": "Accedi",
+    "LOGIN_INSTRUCTIONS": "Entra con email e password",
+    "LOGIN_ERROR_MESSAGE": "Autenticazione fallita",
+    "WRONG_EMAIL_OR_PASSWORD": "L'email o la password sono errate"
+}
