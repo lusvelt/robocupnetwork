@@ -1,5 +1,3 @@
-import { AuthBlockComponent } from './components/auth/auth-block/auth-block.component';
-
 import { RouterModule } from '@angular/router';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -84,7 +82,6 @@ const NB_MODULES = [
 ];
 
 const COMPONENTS = [
-  AuthBlockComponent,
   LogoutComponent,
   RequestPasswordComponent,
   ResetPasswordComponent,
