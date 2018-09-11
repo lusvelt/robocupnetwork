@@ -9,7 +9,7 @@ const login = async (req, res) => {
         const token = await User.generateAuthToken(email, clearTextPassword);
         res.send({ token });
     } catch (err) {
-        res.status(401).send({ error: authErrorString });
+        res.status(401).send(authErrorString);
     }
 };
 

@@ -30,8 +30,7 @@
       <small class="form-text error" *ngIf="email.invalid && email.touched && email.errors?.required">
         {{ 'LOGIN_EMAIL_REQUIRED' | translate }}
       </small>
-      <small class="form-text error"
-             *ngIf="email.invalid && email.touched && email.errors?.pattern">
+      <small class="form-text error" *ngIf="email.invalid && email.touched && email.errors?.pattern">
         {{ 'LOGIN_EMAIL_REALONE' | translate }}
       </small>
     </div>
