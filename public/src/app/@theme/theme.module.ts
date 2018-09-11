@@ -1,3 +1,5 @@
+import { AuthBlockComponent } from './components/auth/auth-block/auth-block.component';
+
 import { RouterModule } from '@angular/router';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -46,9 +48,15 @@ import {
 import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
+
 import { LoginComponent } from './components/auth/login/login.component';
+import { RegisterComponent } from './components/auth/register/register.component';
+import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
+
 import { SharedModule } from '../shared/shared.module';
 import { NbAuthModule } from '@nebular/auth';
+import { RequestPasswordComponent } from './components/auth/request-password/request-password.component';
+import { LogoutComponent } from './components/auth/logout/logout.component';
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule, SharedModule, RouterModule];
 
@@ -76,7 +84,12 @@ const NB_MODULES = [
 ];
 
 const COMPONENTS = [
+  AuthBlockComponent,
+  LogoutComponent,
+  RequestPasswordComponent,
+  ResetPasswordComponent,
   LoginComponent,
+  RegisterComponent,
   SwitcherComponent,
   LayoutDirectionSwitcherComponent,
   ThemeSwitcherComponent,

@@ -2,5 +2,16 @@
     "LOGIN_TITLE": "Login",
     "LOGIN_INSTRUCTIONS": "Sign in with your email and password",
     "LOGIN_ERROR_MESSAGE": "Authentication failed",
-    "WRONG_EMAIL_OR_PASSWORD": "Email or password are incorrect"
+    "WRONG_EMAIL_OR_PASSWORD": "Email or password are incorrect",
+    "LOGIN_EMAIL_PLACEHOLDER": "Email address",
+    "LOGIN_PASSWORD_PLACEHOLDER": "Password",
+    "LOGIN_EMAIL_REQUIRED": "Email is required!",
+    "LOGIN_EMAIL_REALONE": "Email should be the real one!",
+    "LOGIN_PASSWORD_REQUIRED": "Password is required!",
+    "LOGIN_CHECK_REMEMBERME":"Remember me",
+    "LOGIN_FORGOT_PASSWORD":"Forgot Password?",
+    "LOGIN_SIGNIN": "Sign In",
+    "LOGIN_CONNECT_WITH_SOCIAL":"Or connect with:",  
+    "LOGIN_SIGNUP_DESCRIPTION":"Don't have an account? ",
+    "LOGIN_SIGNUP": "Sign Up"
 }

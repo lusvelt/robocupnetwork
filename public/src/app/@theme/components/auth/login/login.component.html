@@ -15,24 +15,24 @@
     </nb-alert>
 
     <div class="form-group">
-      <label for="input-email" class="sr-only">Email address</label>
+      <label for="input-email" class="sr-only">Email</label>
       <input nbInput
              [(ngModel)]="user.email"
              #email="ngModel"
              name="email"
              id="input-email"
              pattern=".+@.+\..+"
-             placeholder="Email address"
+             placeholder= "Email"
              autofocus
              fullWidth
              [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
              required>
       <small class="form-text error" *ngIf="email.invalid && email.touched && email.errors?.required">
-        Email is required!
+        {{ 'LOGIN_EMAIL_REQUIRED' | translate }}
       </small>
       <small class="form-text error"
              *ngIf="email.invalid && email.touched && email.errors?.pattern">
-        Email should be the real one!
+        {{ 'LOGIN_EMAIL_REALONE' | translate }}
       </small>
     </div>
 
@@ -49,7 +49,7 @@
              [status]="password.dirty ? (password.invalid  ? 'danger' : 'success') : ''"
              required>
       <small class="form-text error" *ngIf="password.invalid && password.touched && password.errors?.required">
-        Password is required!
+        {{ 'LOGIN_PASSWORD_REQUIRED' | translate }} 
       </small>
       <small
         class="form-text error"
@@ -62,8 +62,8 @@
     </div>
 
     <div class="form-group accept-group col-sm-12">
-      <nb-checkbox name="rememberMe" [(ngModel)]="user.rememberMe" *ngIf="rememberMe">Remember me</nb-checkbox>
-      <a class="forgot-password" routerLink="../request-password">Forgot Password?</a>
+      <nb-checkbox name="rememberMe" [(ngModel)]="user.rememberMe" *ngIf="rememberMe">{{ 'LOGIN_CHECK_REMEMBERME' | translate }}</nb-checkbox>
+      <a class="forgot-password" routerLink="../request-password">{{ 'LOGIN_FORGOT_PASSWORD' | translate }}</a>
     </div>
 
     <button nbButton
@@ -71,14 +71,14 @@
             fullWidth
             [disabled]="submitted || !form.valid"
             [class.btn-pulse]="submitted">
-      Sign In
+      {{ 'LOGIN_SIGNIN' | translate }}
     </button>
   </form>
 
   <div class="links">
 
     <ng-container *ngIf="socialLinks && socialLinks.length > 0">
-      <small class="form-text">Or connect with:</small>
+      <small class="form-text">{{ 'LOGIN_CONNECT_WITH_SOCIAL' | translate }}</small>
 
       <div class="socials">
         <ng-container *ngFor="let socialLink of socialLinks">
@@ -97,7 +97,7 @@
     </ng-container>
 
     <small class="form-text">
-      Don't have an account? <a routerLink="../register"><strong>Sign Up</strong></a>
+      {{ 'LOGIN_SIGNUP_DESCRIPTION' | translate }} <a routerLink="../register"><strong>{{ 'LOGIN_SIGNUP' | translate }}</strong></a>
     </small>
   </div>
 </nb-auth-block>
