@@ -7,7 +7,8 @@
     "start": "node index",
     "watch": "nodemon index",
     "build": "cd public && ng build",
-    "postinstall": "cd public && npm install"
+    "postinstall": "cd public && npm install",
+    "precommit": "eslint index.js server/**"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,8 @@
     "socket.io": "^2.1.1"
   },
   "devDependencies": {
+    "eslint": "^5.5.0",
+    "husky": "^0.14.3",
     "nodemon": "^1.18.3"
   }
 }
