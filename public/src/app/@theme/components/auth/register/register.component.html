@@ -1,118 +1,121 @@
 <nb-auth-block>
-  <h2 class="title">Sign Up</h2>
+  <h2 class="title">{{ 'REGISTER_TITLE' | translate }}</h2>
   <form (ngSubmit)="register()" #form="ngForm">
 
     <nb-alert *ngIf="showMessages.error && errors?.length && !submitted" outline="danger">
-      <div><strong>Oh snap!</strong></div>
+      <div><strong>{{ 'REGISTER_ERROR_MESSAGE' | translate }}</strong></div>
       <div *ngFor="let error of errors">{{ error }}</div>
     </nb-alert>
 
     <nb-alert *ngIf="showMessages.success && messages?.length && !submitted" outline="success">
-      <div><strong>Hooray!</strong></div>
+      <div><strong>{{ 'REGISTER_SUCCESS_MESSAGE' | translate }}</strong></div>
       <div *ngFor="let message of messages">{{ message }}</div>
     </nb-alert>
 
     <div class="form-group">
-      <label for="input-name" class="sr-only">Full name</label>
+      <label for="input-name" class="sr-only">{{ 'REGISTER_NAME' | translate}}</label>
       <input nbInput
-             [(ngModel)]="user.fullName"
-             #fullName="ngModel"
+             [(ngModel)]="user.name"
+             #name="ngModel"
              id="input-name"
-             name="fullName"
-             placeholder="Full name"
+             name="name"
+             placeholder="{{ 'REGISTER_NAME' | translate }}"
              autofocus
              fullWidth
-             [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
-             [required]="getConfigValue('forms.validation.fullName.required')"
-             [minlength]="getConfigValue('forms.validation.fullName.minLength')"
-             [maxlength]="getConfigValue('forms.validation.fullName.maxLength')">
-      <small class="form-text error" *ngIf="fullName.invalid && fullName.touched && fullName.errors?.required">
-        Full name is required!
-      </small>
-      <small
-        class="form-text error"
-        *ngIf="fullName.invalid && fullName.touched && (fullName.errors?.minlength || fullName.errors?.maxlength)">
-        Full name should contains
-        from {{getConfigValue('forms.validation.fullName.minLength')}}
-        to {{getConfigValue('forms.validation.fullName.maxLength')}}
-        characters
+             [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : ''"
+             required>
+      <small class="form-text error" *ngIf="name.invalid && name.touched && name.errors?.required">
+        {{ 'REGISTER_NAME_REQUIRED' | translate }}
       </small>
     </div>
 
     <div class="form-group">
-      <label for="input-email" class="sr-only">Email address</label>
+      <label for="input-surname" class="sr-only">{{ 'REGISTER_SURNAME' | translate }}</label>
+      <input nbInput
+             [(ngModel)]="user.surname"
+             #surname="ngModel"
+             id="input-surname"
+             name="surname"
+             placeholder="{{ 'REGISTER_SURNAME' | translate }}"
+             autofocus
+             fullWidth
+             [status]="surname.dirty ? (surname.invalid  ? 'danger' : 'success') : ''"
+             required>
+      <small class="form-text error" *ngIf="surname.invalid && surname.touched && surname.errors?.required">
+        {{ 'REGISTER_SURNAME_REQUIRED' | translate }}
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label for="input-email" class="sr-only">{{ 'REGISTER_EMAIL_ADDRESS' | translate }}</label>
       <input nbInput
              [(ngModel)]="user.email"
              #email="ngModel"
              id="input-email"
              name="email"
              pattern=".+@.+..+"
-             placeholder="Email address"
+             placeholder="{{ 'REGISTER_EMAIL_ADDRESS' | translate }}"
              fullWidth
              [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
-             [required]="getConfigValue('forms.validation.email.required')">
+             required>
       <small class="form-text error" *ngIf="email.invalid && email.touched && email.errors?.required">
-        Email is required!
+        {{ 'REGISTER_EMAIL_REQUIRED' | translate }}
       </small>
       <small class="form-text error"
-             *ngIf="email.invalid && email.touched && email.errors?.pattern">
-        Email should be the real one!
+         *ngIf="email.invalid && email.touched && email.errors?.pattern">
+         {{ 'REGISTER_EMAIL_REALONE' | translate }}
       </small>
     </div>
 
     <div class="form-group">
-      <label for="input-password" class="sr-only">Password</label>
+      <label for="input-password" class="sr-only">{{ 'REGISTER_PASSWORD' | translate }}</label>
       <input nbInput
              [(ngModel)]="user.password"
              #password="ngModel"
              type="password"
              id="input-password"
              name="password"
-             placeholder="Password"
+             placeholder="{{ 'REGISTER_PASSWORD' | translate }}"
              fullWidth
-             [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
-             [required]="getConfigValue('forms.validation.password.required')"
-             [minlength]="getConfigValue('forms.validation.password.minLength')"
-             [maxlength]="getConfigValue('forms.validation.password.maxLength')">
+             [status]="password.dirty ? (password.invalid  ? 'danger' : 'success') : ''"
+             required
+             minlength="6">
       <small class="form-text error" *ngIf="password.invalid && password.touched && password.errors?.required">
-        Password is required!
+        {{ 'REGISTER_PASSWORD_REQUIRED' | translate }}
       </small>
       <small
         class="form-text error"
         *ngIf="password.invalid && password.touched && (password.errors?.minlength || password.errors?.maxlength)">
-        Password should contains
-        from {{ getConfigValue('forms.validation.password.minLength') }}
-        to {{ getConfigValue('forms.validation.password.maxLength') }}
-        characters
+        {{ 'REGISTER_PASSWORD_LENGTH_ERROR' | translate }}
       </small>
     </div>
 
     <div class="form-group">
-      <label for="input-re-password" class="sr-only">Repeat password</label>
+      <label for="input-re-password" class="sr-only">{{ 'REGISTER_CONFIRM_PASSWORD' | translate }}</label>
       <input nbInput
              [(ngModel)]="user.confirmPassword"
              #rePass="ngModel"
              type="password"
              id="input-re-password"
              name="rePass"
-             placeholder="Confirm Password"
+             placeholder="{{ 'REGISTER_CONFIRM_PASSWORD' | translate }}"
              fullWidth
-             [status]="email.dirty ? (email.invalid || password.value != rePass.value  ? 'danger' : 'success') : ''"
-             [required]="getConfigValue('forms.validation.password.required')">
+             [status]="rePass.dirty ? (rePass.invalid || password.value != rePass.value  ? 'danger' : 'success') : ''"
+             required>
       <small class="form-text error"
-             *ngIf="rePass.invalid && rePass.touched && rePass.errors?.required">
-        Password confirmation is required!
+         *ngIf="rePass.invalid && rePass.touched && rePass.errors?.required">
+         {{ 'REGISTER_PASSWORD_CONFIRMATION_REQUIRED' | translate }}
       </small>
       <small
         class="form-text error"
         *ngIf="rePass.touched && password.value != rePass.value && !rePass.errors?.required">
-        Password does not match the confirm password.
+        {{ 'REGISTER_PASSWORD_CONFIRMATION_ERROR' | translate }}
       </small>
     </div>
 
-    <div class="form-group accept-group col-sm-12" *ngIf="getConfigValue('forms.register.terms')">
-      <nb-checkbox name="terms" [(ngModel)]="user.terms" [required]="getConfigValue('forms.register.terms')">
-        Agree to <a href="#" target="_blank"><strong>Terms & Conditions</strong></a>
+    <div class="form-group accept-group col-sm-12">
+      <nb-checkbox name="terms" [(ngModel)]="user.terms" required>
+        {{ 'REGISTER_ACCEPT' | translate }} <a href="#" target="_blank"><strong>{{ 'REGISTER_TERMS_CONDITION' | translate }}</strong></a>
       </nb-checkbox>
     </div>
 
@@ -121,33 +124,14 @@
             fullWidth
             [disabled]="submitted || !form.valid"
             [class.btn-pulse]="submitted">
-      Register
+            {{ 'REGISTER_SIGNUP' | translate }}
     </button>
   </form>
 
   <div class="links">
-
-    <ng-container *ngIf="socialLinks && socialLinks.length > 0">
-      <small class="form-text">Or connect with:</small>
-
-      <div class="socials">
-        <ng-container *ngFor="let socialLink of socialLinks">
-          <a *ngIf="socialLink.link"
-             [routerLink]="socialLink.link"
-             [attr.target]="socialLink.target"
-             [attr.class]="socialLink.icon"
-             [class.with-icon]="socialLink.icon">{{ socialLink.title }}</a>
-          <a *ngIf="socialLink.url"
-             [attr.href]="socialLink.url"
-             [attr.target]="socialLink.target"
-             [attr.class]="socialLink.icon"
-             [class.with-icon]="socialLink.icon">{{ socialLink.title }}</a>
-        </ng-container>
-      </div>
-    </ng-container>
-
     <small class="form-text">
-      Already have an account? <a routerLink="../login"><strong>Sign in</strong></a>
+      {{ 'REGISTER_SIGNIN_DESCRIPTION' | translate }} <a routerLink="../login"><strong>{{ 'REGISTER_SIGNIN' | translate }}</strong></a>
     </small>
   </div>
 </nb-auth-block>
+

@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 /**
  * @license
  * Copyright Akveo. All Rights Reserved.
@@ -7,9 +9,12 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@
 import { NbAuthService } from '@nebular/auth';
 import { TranslateService } from '@ngx-translate/core';
 
+
+import 'rxjs/add/operator/catch';
+import { Observable } from 'rxjs/Observable';
+
 @Component({
   selector: 'ngx-register',
-  styleUrls: ['./register.component.scss'],
   templateUrl: './register.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -24,10 +29,20 @@ export class RegisterComponent {
   messages: string[] = [];
   user: any = {};
 
-  constructor(protected service: NbAuthService, private translate: TranslateService) { }
+  constructor(protected service: NbAuthService,
+              private translate: TranslateService,
+              private http: HttpClient,
+              private router: Router) { }
 
   register(): void {
-    this.errors = this.messages = [];
-    this.submitted = true;
+    this.http.post('http://localhost:3000/register', this.user)
+      .catch((err) => {
+        this.showMessages.error = true;
+        this.errors.push(err.code);
+        return Observable.throw(err);
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['/auth', 'login']);
+      });
   }
 }
