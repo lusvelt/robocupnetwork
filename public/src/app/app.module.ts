@@ -1,3 +1,4 @@
+import { ToasterModule } from 'angular2-toaster';
 /**
  * @license
  * Copyright Akveo. All Rights Reserved.
@@ -40,7 +41,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+    ToasterModule.forRoot()
   ],
   bootstrap: [AppComponent],
   providers: [

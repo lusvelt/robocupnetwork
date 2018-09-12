@@ -1,10 +1,10 @@
+import { NotificationsService } from './../../../../services/notifications.service';
+import { AuthService } from './../../../../services/auth.service';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import 'rxjs/add/operator/catch';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'ngx-login',
@@ -13,12 +13,12 @@ import { Observable } from 'rxjs/Observable';
 export class LoginComponent {
 
   constructor (private translate: TranslateService,
-               private http: HttpClient,
-               private router: Router
+               private authService: AuthService,
+               private router: Router,
+               private notificationsService: NotificationsService
   ) { }
 
   redirectDelay: number = 0;
-  showMessages: any = {};
   strategy: string = '';
 
   errors: string[] = [];
@@ -29,17 +29,12 @@ export class LoginComponent {
   submitted: boolean = false;
   rememberMe = false;
 
-  login(): void {
-    this.http.post('http://localhost:3000/login', this.user)
-      .catch((err) => {
-        this.showMessages.error = true;
-        this.errors.push(err.code);
-        return Observable.throw(err);
-      })
-      .subscribe((response: any) => {
-        localStorage.setItem('token', response.token);
+  onLoginButtonPress(): void {
+    this.authService.login(this.user)
+      .subscribe(() => {
+        this.notificationsService.success('LOGIN_SUCCESSFUL');
         this.router.navigate(['/pages', 'dashboard']);
-      });
+      }, err => this.notificationsService.error('WRONG_EMAIL_OR_PASSWORD'));
   }
 
 }

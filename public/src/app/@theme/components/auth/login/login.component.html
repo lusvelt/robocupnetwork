@@ -2,14 +2,14 @@
   <h2 class="title">{{ 'LOGIN_TITLE' | translate }}</h2>
   <small class="form-text sub-title">{{ 'LOGIN_INSTRUCTIONS' | translate }}</small>
 
-  <form (ngSubmit)="login()" #form="ngForm" autocomplete="nope">
+  <form (ngSubmit)="onLoginButtonPress()" #form="ngForm" autocomplete="nope">
 
-    <nb-alert *ngIf="showMessages.error && errors?.length && !submitted" outline="danger">
+    <nb-alert *ngIf="errors?.length && !submitted" outline="danger">
       <div><strong>{{ 'LOGIN_ERROR_MESSAGE' | translate }}</strong></div>
       <div *ngFor="let error of errors">{{ error | translate }}</div>
     </nb-alert>
 
-    <nb-alert *ngIf="showMessages.success && messages?.length && !submitted" outline="success">
+    <nb-alert *ngIf="messages?.length && !submitted" outline="success">
       <div><strong>Hooray!</strong></div>
       <div *ngFor="let message of messages">{{ message }}</div>
     </nb-alert>

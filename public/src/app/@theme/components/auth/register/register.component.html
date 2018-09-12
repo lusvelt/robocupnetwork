@@ -1,6 +1,6 @@
 <nb-auth-block>
   <h2 class="title">{{ 'REGISTER_TITLE' | translate }}</h2>
-  <form (ngSubmit)="register()" #form="ngForm">
+  <form (ngSubmit)="onRegisterButtonPress()" #form="ngForm">
 
     <nb-alert *ngIf="showMessages.error && errors?.length && !submitted" outline="danger">
       <div><strong>{{ 'REGISTER_ERROR_MESSAGE' | translate }}</strong></div>

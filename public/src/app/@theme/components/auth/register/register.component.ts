@@ -1,17 +1,17 @@
-import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 /**
  * @license
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
+import { AuthService } from './../../../../services/auth.service';
+import { UserInterface } from './../../../../interfaces/user.interface';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { NbAuthService } from '@nebular/auth';
-import { TranslateService } from '@ngx-translate/core';
-
+import * as _ from 'lodash';
 
 import 'rxjs/add/operator/catch';
-import { Observable } from 'rxjs/Observable';
+import { NotificationsService } from '../../../../services/notifications.service';
+import { Router } from '../../../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'ngx-register',
@@ -30,19 +30,16 @@ export class RegisterComponent {
   user: any = {};
 
   constructor(protected service: NbAuthService,
-              private translate: TranslateService,
-              private http: HttpClient,
-              private router: Router) { }
+    private notificationsService: NotificationsService,
+    private authService: AuthService,
+    private router: Router) { }
 
-  register(): void {
-    this.http.post('http://localhost:3000/register', this.user)
-      .catch((err) => {
-        this.showMessages.error = true;
-        this.errors.push(err.code);
-        return Observable.throw(err);
-      })
-      .subscribe((response: any) => {
+  onRegisterButtonPress(): void {
+    const user: UserInterface = _.omit(this.user, ['confirmPassword']);
+    this.authService.register(user)
+      .subscribe(() => {
+        this.notificationsService.success('REGISTRATION_COMPLETED');
         this.router.navigate(['/auth', 'login']);
-      });
+      }, err => this.notificationsService.error(err.error.code));
   }
 }

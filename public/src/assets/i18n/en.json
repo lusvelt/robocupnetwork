@@ -35,5 +35,13 @@
     "REGISTER_SIGNUP": "Sign Up",
     "REGISTER_CONNECT_WITH_SOCIAL": "Or connect with: ",
     "REGISTER_SIGNIN_DESCRIPTION": "Alredy have an account?",
-    "REGISTER_SIGNIN": "Sign In"
+    "REGISTER_SIGNIN": "Sign In",
+
+    "NOTIFICATION_SUCCESS_TITLE": "Operation successful",
+    "NOTIFICATION_WARNING_TITLE": "Warning",
+    "NOTIFICATION_ERROR_TITLE": "Error",
+    "REGISTRATION_COMPLETED": "Your registration is complete, please try to log in to check if it works",
+    "ER_DUP_ENTRY": "This email is already used",
+
+    "LOGIN_SUCCESSFUL": "Login successful"
 }
