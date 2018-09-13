@@ -22,5 +22,6 @@ app.use(cors());
 app.use('/', express.static(distPath));
 
 router.initialize(app);
+
 database.initialize()
     .then(() => server.listen(port, () => console.log('Server is on')));
