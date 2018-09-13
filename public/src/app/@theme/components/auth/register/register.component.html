@@ -79,14 +79,15 @@
              fullWidth
              [status]="password.dirty ? (password.invalid  ? 'danger' : 'success') : ''"
              required
-             minlength="6">
+             [minlength]="passwordRange.minLength"
+             [maxlength]="passwordRange.maxLength">
       <small class="form-text error" *ngIf="password.invalid && password.touched && password.errors?.required">
         {{ 'REGISTER_PASSWORD_REQUIRED' | translate }}
       </small>
       <small
         class="form-text error"
         *ngIf="password.invalid && password.touched && (password.errors?.minlength || password.errors?.maxlength)">
-        {{ 'REGISTER_PASSWORD_LENGTH_ERROR' | translate }}
+        {{ 'REGISTER_PASSWORD_LENGTH_ERROR' | translate:passwordRange }}
       </small>
     </div>
 

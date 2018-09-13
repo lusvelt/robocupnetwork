@@ -12,6 +12,7 @@ import * as _ from 'lodash';
 import 'rxjs/add/operator/catch';
 import { NotificationsService } from '../../../../services/notifications.service';
 import { Router } from '../../../../../../node_modules/@angular/router';
+import { values } from '../../../../config/values.config';
 
 @Component({
   selector: 'ngx-register',
@@ -29,7 +30,12 @@ export class RegisterComponent {
   messages: string[] = [];
   user: any = {};
 
-  constructor(protected service: NbAuthService,
+  passwordRange = {
+    minLength: values.passwordMinLength,
+    maxLength: values.passwordMaxLength
+  };
+
+  constructor(
     private notificationsService: NotificationsService,
     private authService: AuthService,
     private router: Router) { }

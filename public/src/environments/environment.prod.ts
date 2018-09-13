@@ -5,6 +5,5 @@
  */
 export const environment = {
   production: true,
-  apiUrl: 'https://robocupnetwork.it',
-  tokenKey: 'robocupnetwork_token'
+  apiUrl: 'https://robocupnetwork.it'
 };

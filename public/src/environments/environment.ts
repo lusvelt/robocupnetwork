@@ -10,6 +10,5 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000',
-  tokenKey: 'robocupnetwork_token'
+  apiUrl: 'http://localhost:3000'
 };

@@ -1,4 +1,4 @@
-import { environment } from './../../environments/environment';
+import { values } from './../config/values.config';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -9,10 +9,10 @@ export class TokenService {
   constructor() { }
 
   setToken(token: string): void {
-    localStorage.setItem(environment.tokenKey, token);
+    localStorage.setItem(values.tokenKey, token);
   }
 
   getToken(): string {
-    return localStorage.getItem(environment.tokenKey);
+    return localStorage.getItem(values.tokenKey);
   }
 }

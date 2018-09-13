@@ -24,7 +24,7 @@
     "REGISTER_EMAIL_ADDRESS": "Email",
     "REGISTER_EMAIL_REQUIRED": "L'email è necessario!",
     "REGISTER_PASSWORD": "Password",
-    "REGISTER_PASSWORD_LENGTH_ERROR": "La password è troppo corta!",
+    "REGISTER_PASSWORD_LENGTH_ERROR": "La password deve contenere da {{minLength}} a {{maxLength}} caratteri!",
     "REGISTER_PASSWORD_REQUIRED": "La password è necessaria",
     "REGISTER_CONFIRM_PASSWORD": "Ripeti Password",
     "REGISTER_EMAIL_REALONE": "L'email deve essere valida!",

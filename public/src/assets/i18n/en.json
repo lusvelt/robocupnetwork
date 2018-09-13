@@ -25,7 +25,7 @@
     "REGISTER_EMAIL_REQUIRED": "Email is required!",
     "REGISTER_PASSWORD": "Password",
     "REGISTER_PASSWORD_REQUIRED": "Password is required!",
-    "REGISTER_PASSWORD_LENGTH_ERROR": "Password is too short!",
+    "REGISTER_PASSWORD_LENGTH_ERROR": "Password should contain from {{minLength}} to {{maxLength}} characters!",
     "REGISTER_EMAIL_REALONE": "Email should be the real one!",
     "REGISTER_CONFIRM_PASSWORD": "Repeat password",
     "REGISTER_PASSWORD_CONFIRMATION_REQUIRED": "Password confirmation is required!",
