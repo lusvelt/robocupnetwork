@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/sequelize');
 
-const Bonus = sequelize.define('Bonus', {
+const Action = sequelize.define('Action', {
     name: { type: Sequelize.STRING, allowNull: false },
-    expression: { type: Sequelize.STRING, allowNull: false }
+    description: { type: Sequelize.TEXT, allowNull: false }
 });
 
-module.exports = Bonus;
+module.exports = Action;

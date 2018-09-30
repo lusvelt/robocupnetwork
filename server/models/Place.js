@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/sequelize');
 
-const Location = sequelize.define('Location', {
+const Place = sequelize.define('Place', {
     street: { type: Sequelize.STRING, allowNull: false },
     civicNumber: { type: Sequelize.STRING, allowNull: false },
     city: { type: Sequelize.STRING, allowNull: false },
@@ -11,4 +11,8 @@ const Location = sequelize.define('Location', {
     county: { type: Sequelize.STRING, allowNull: false }
 });
 
-module.exports = Location;
+Place.isDefine = () => {
+    console.log(sequelize.isDefined('Place'));
+};
+
+module.exports = Place;

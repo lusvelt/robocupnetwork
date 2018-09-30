@@ -5,6 +5,7 @@ const database = {
         try {
             await sequelize.authenticate();
             console.log('Connection to database has been established successfully.');
+            require('./models');
             await sequelize.sync({ force: process.env.NODE_ENV !== 'production' });
             console.log('Database initialized successfully');
         } catch (err) {

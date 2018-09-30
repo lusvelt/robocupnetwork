@@ -7,7 +7,11 @@ const Phase = sequelize.define('Phase', {
     start: { type: Sequelize.DATE, allowNull: false },
     end: { type: Sequelize.DATE, allowNull: false },
     numAdmittedTeams: { type: Sequelize.INTEGER, allowNull: false },
-    numPassingTeams: { type: Sequelize.INTEGER, allowNull: false }
+    numPassingTeams: { type: Sequelize.INTEGER }
 });
+
+Phase.isDefine = () => {
+    sequelize.isDefined('Phase');
+};
 
 module.exports = Phase;
