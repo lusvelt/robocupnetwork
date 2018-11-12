@@ -15,4 +15,10 @@ export class TokenService {
   getToken(): string {
     return localStorage.getItem(values.tokenKey);
   }
+
+  isTokenSet(): boolean {
+    if (this.getToken())
+      return true;
+    else return false;
+  }
 }

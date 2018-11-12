@@ -1,3 +1,4 @@
+import { AuthGuardService } from './services/auth-guard.service';
 import { LogoutComponent } from './@theme/components/auth/logout/logout.component';
 import { RequestPasswordComponent } from './@theme/components/auth/request-password/request-password.component';
 import { ResetPasswordComponent } from './@theme/components/auth/reset-password/reset-password.component';
@@ -9,7 +10,7 @@ import { NgModule } from '@angular/core';
 import { NbAuthComponent } from '@nebular/auth';
 
 const routes: Routes = [
-  { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule' },
+  { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule', canActivateChild: [AuthGuardService] },
   {
     path: 'auth',
     component: NbAuthComponent,

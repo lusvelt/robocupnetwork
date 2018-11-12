@@ -1,88 +1,70 @@
-import {Component, OnDestroy} from '@angular/core';
-import { NbThemeService } from '@nebular/theme';
-import { takeWhile } from 'rxjs/operators/takeWhile' ;
-
-interface CardSettings {
-  title: string;
-  iconClass: string;
-  type: string;
-}
+import { LocalDataSource } from 'ng2-smart-table';
+import { Component, OnInit } from '@angular/core';
+import { SmartTableService } from '../../@core/data/smart-table.service';
 
 @Component({
   selector: 'ngx-dashboard',
-  styleUrls: ['./dashboard.component.scss'],
   templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnDestroy {
+export class DashboardComponent {
 
-  private alive = true;
-
-  lightCard: CardSettings = {
-    title: 'Light',
-    iconClass: 'nb-lightbulb',
-    type: 'primary',
-  };
-  rollerShadesCard: CardSettings = {
-    title: 'Roller Shades',
-    iconClass: 'nb-roller-shades',
-    type: 'success',
-  };
-  wirelessAudioCard: CardSettings = {
-    title: 'Wireless Audio',
-    iconClass: 'nb-audio',
-    type: 'info',
-  };
-  coffeeMakerCard: CardSettings = {
-    title: 'Coffee Maker',
-    iconClass: 'nb-coffee-maker',
-    type: 'warning',
-  };
-
-  statusCards: string;
-
-  commonStatusCardsSet: CardSettings[] = [
-    this.lightCard,
-    this.rollerShadesCard,
-    this.wirelessAudioCard,
-    this.coffeeMakerCard,
-  ];
-
-  statusCardsByThemes: {
-    default: CardSettings[];
-    cosmic: CardSettings[];
-    corporate: CardSettings[];
-  } = {
-    default: this.commonStatusCardsSet,
-    cosmic: this.commonStatusCardsSet,
-    corporate: [
-      {
-        ...this.lightCard,
-        type: 'warning',
+  settings = {
+    add: {
+      addButtonContent: '<i class="nb-plus"></i>',
+      createButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+    },
+    edit: {
+      editButtonContent: '<i class="nb-edit"></i>',
+      saveButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+    },
+    delete: {
+      deleteButtonContent: '<i class="nb-trash"></i>',
+      confirmDelete: true,
+    },
+    columns: {
+      id: {
+        title: 'ID',
+        type: 'number',
       },
-      {
-        ...this.rollerShadesCard,
-        type: 'primary',
+      firstName: {
+        title: 'First Name',
+        type: 'string',
       },
-      {
-        ...this.wirelessAudioCard,
-        type: 'danger',
+      lastName: {
+        title: 'Last Name',
+        type: 'string',
       },
-      {
-        ...this.coffeeMakerCard,
-        type: 'secondary',
+      username: {
+        title: 'Username',
+        type: 'string',
       },
-    ],
+      email: {
+        title: 'E-mail',
+        type: 'string',
+      },
+      age: {
+        title: 'Age',
+        type: 'number',
+      },
+    },
   };
 
-  constructor(private themeService: NbThemeService) {
-    this.themeService.getJsTheme()
-      .pipe(takeWhile(() => this.alive))
-      .subscribe(theme => {
-        this.statusCards = this.statusCardsByThemes[theme.name];
-    });
+  source: LocalDataSource = new LocalDataSource();
+
+  constructor(private service: SmartTableService) {
+    const data = this.service.getData();
+    this.source.load(data);
   }
 
-  ngOnDestroy() {
-    this.alive = false;
+  onDeleteConfirm(event): void {
+    if (window.confirm('Are you sure you want to delete?')) {
+      event.confirm.resolve();
+    } else {
+      event.confirm.reject();
+    }
   }
+
 }
