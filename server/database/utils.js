@@ -1,7 +1,12 @@
 const sequelize = require('../config/sequelize');
 
 const utils = {
-    getForeignKey: (model) => 'id' + model.name.substr(0, 1).toUpperCase() + model.name.substr(1)
+    getForeignKey: (model) => {
+        var name = model.name;
+        name = name.toLowerCase() + 'Id';
+
+        return(name);
+    }
 };
 
 module.exports = utils;
