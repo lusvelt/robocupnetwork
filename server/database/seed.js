@@ -13,7 +13,7 @@ const seed = async () => {
         await User.create({
             name: 'Stefano',
             surname: 'Colamonaco',
-            birthDate: new Date(1999, 7, 12),
+            birthDate: new Date(2000, 1, 7),
             email: 'stefano.colamonaco.dev@gmail.com',
             password: 'admin2',
             isAdmin: true

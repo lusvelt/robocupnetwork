@@ -13,7 +13,8 @@ const {
     Lineup,
     Role,
     Action,
-    ActionType
+    ActionType,
+    Sign
 } = require('./models');
 
 const {
@@ -26,7 +27,9 @@ const {
     LineupIsInPhase,
     RoleCanDoAction,
     ActionIsOfType,
-    ShiftIncludesLineup
+    ShiftIncludesLineup,
+    RunInvolvesLineup,
+    UserHasRoleInManifestation
 } = require('./associationTables');
 
 const runFk = utils.getForeignKey(Run);
@@ -42,7 +45,8 @@ const roleFK = utils.getForeignKey(Role);
 const actionFk = utils.getForeignKey(Action);
 const actionTypeFk = utils.getForeignKey(ActionType);
 const shiftFk = utils.getForeignKey(Shift);
-
+const signFk = utils.getForeignKey(Sign);
+const manifestationHasUserFk = utils.getForeignKey(ManifestationHasUser);
 // EXAMPLE Session - Shift | 1:1
 // Session.hasOne(Shift, { foreignKey: sessionFk });
 
@@ -86,6 +90,15 @@ Action.belongsToMany(ActionType, { through: ActionIsOfType, foreignKey: actionFk
 ActionType.belongsToMany(Action, { through: ActionIsOfType, foreignKey: actionTypeFk });
 
 // Shift - Lineup - Field | N:M ('../database/associationTables/ShiftIncludesLineup.js')
-/*Shift.belongsToMany(Lineup, { through: ShiftIncludesLineup, foreignKey: shiftFk });
+Shift.belongsToMany(Lineup, { through: ShiftIncludesLineup, foreignKey: shiftFk });
 Lineup.belongsToMany(Shift, { through: ShiftIncludesLineup, foreignKey: lineupFk });
-ShiftIncludesLineup.hasOne(Field, { foreignKey: fieldFk });*/
+Field.hasMany(ShiftIncludesLineup, { foreignKey: fieldFk });
+
+// Run - Lineup - Sign | N:M ('../database/associationTables/RunInvolvesLineup.js')
+Run.belongsToMany(Lineup, { through: RunInvolvesLineup, foreignKey: runFk });
+Lineup.belongsToMany(Run, { through: RunInvolvesLineup, foreignKey: lineupFk });
+Sign.hasMany(RunInvolvesLineup, { foreignKey: signFk});
+
+// ManifestationHasUser - Role | N:M ('../database/associationTables/UserHasRoleInManifestation.js')
+ManifestationHasUser.belongsToMany(Role, { through: UserHasRoleInManifestation, foreignKey: manifestationHasUserFk });
+Role.belongsToMany(ManifestationHasUser, { through: UserHasRoleInManifestation, foreignKey: roleFK });

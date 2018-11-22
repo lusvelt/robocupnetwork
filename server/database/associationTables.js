@@ -8,6 +8,8 @@ const LineupIsInPhase = require('./associationTables/LineupIsInPhase');
 const RoleCanDoAction = require('./associationTables/RoleCanDoAction.js');
 const ActionIsOfType = require('./associationTables/ActionIsOfType');
 const ShiftIncludesLineup = require('./associationTables/ShiftIncludesLineup');
+const RunInvolvesLineup = require('./associationTables/RunInvolvesLineup');
+const UserHasRoleInManifestation = require('./associationTables/UserHasRoleInManifestation.js');
 
 module.exports = {
     RunHasParam,
@@ -19,5 +21,7 @@ module.exports = {
     LineupIsInPhase,
     RoleCanDoAction,
     ActionIsOfType,
-    ShiftIncludesLineup
+    ShiftIncludesLineup,
+    RunInvolvesLineup,
+    UserHasRoleInManifestation
 };
