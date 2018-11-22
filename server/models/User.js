@@ -36,8 +36,6 @@ User.generateAuthToken = async (email, clearTextPassword) => {
     return token;
 };
 
-User.findAll( {
-    attributes: ['name', 'surame', 'birthDate', 'email', 'isAdmin']
-});
+User.getUsersList = () => User.findAll({ attributes: ['name', 'surame', 'birthDate', 'email', 'isAdmin'] });
 
 module.exports = User;
