@@ -30,10 +30,14 @@ User.generateAuthToken = async (email, clearTextPassword) => {
     if (!user || !bcrypt.compareSync(clearTextPassword, user.password))
         throw new Error();
 
-    const jwtPayload = _.pick(user, ['id', 'name', 'surname', 'email']);
+    const jwtPayload = _.pick(user, ['id', 'name', 'surname', 'email', '']);
     const token = jwt.sign(jwtPayload, process.env.JWT_SECRET).toString();
 
     return token;
 };
+
+User.findAll( {
+    attributes: ['name', 'surame', 'birthDate', 'email', 'isAdmin']
+});
 
 module.exports = User;
