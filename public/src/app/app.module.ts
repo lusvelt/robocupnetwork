@@ -1,4 +1,3 @@
-import { ToasterModule } from 'angular2-toaster';
 /**
  * @license
  * Copyright Akveo. All Rights Reserved.
@@ -18,6 +17,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from './shared/shared.module';
+import { ToasterModule } from 'angular2-toaster';
+import { JwtModule } from '@auth0/angular-jwt';
+import { values } from './config/values.config';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -35,6 +37,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
     CoreModule.forRoot(),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem(values.tokenKey),
+        whitelistedDomains: values.whitelistedDomains,
+        blacklistedRoutes: values.whitelistedRoutes
+      }
+    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

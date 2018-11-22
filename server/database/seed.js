@@ -30,8 +30,8 @@ const seed = async () => {
             name: 'Damiano',
             surname: 'Scevola',
             birthDate: new Date(1999, 7, 12),
-            email: 'damiano.scevolo.dev@gmail.com',
-            password: 'admin4',
+            email: 'scevoladamiano@gmail.com',
+            password: 'test1234',
             isAdmin: true
         })
     ];
