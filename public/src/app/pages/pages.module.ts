@@ -7,6 +7,10 @@ import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SmartTableService } from '../@core/data/smart-table.service';
+import { ManifestationListComponent } from './manifestation-list/manifestation-list.component';
+import { ManageUserComponent } from './manage-user/manage-user.component';
+import { ListUserComponent } from './list-user/list-user.component';
+import { NewCompetitionComponent } from './new-competition/new-competition.component';
 
 const PAGES_COMPONENTS = [
   PagesComponent,
@@ -22,6 +26,10 @@ const PAGES_COMPONENTS = [
   declarations: [
     ...PAGES_COMPONENTS,
     DashboardComponent,
+    ManifestationListComponent,
+    ManageUserComponent,
+    ListUserComponent,
+    NewCompetitionComponent,
   ],
   providers: [
   ]

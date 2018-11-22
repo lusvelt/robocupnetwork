@@ -1,9 +1,12 @@
+import { ManifestationListComponent } from './manifestation-list/manifestation-list.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
+import { ManageUserComponent } from './manage-user/manage-user.component';
+import { ListUserComponent } from './list-user/list-user.component';
 
 const routes: Routes = [{
   path: '',
@@ -11,7 +14,20 @@ const routes: Routes = [{
   children: [{
     path: 'dashboard',
     component: DashboardComponent,
-  }, {
+  },
+  {
+    path: 'manifestation-list',
+    component: ManifestationListComponent,
+  },
+  {
+    path: 'manage-user',
+    component: ManageUserComponent,
+  },
+  {
+    path: 'list-user',
+    component: ListUserComponent,
+  },
+  {
     path: 'ui-features',
     loadChildren: './ui-features/ui-features.module#UiFeaturesModule',
   }, {
