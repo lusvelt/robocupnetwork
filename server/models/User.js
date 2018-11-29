@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const sequelize = require('../config/sequelize');
 const { saltRounds } = require('../config/values');
+const eventEmitter = require('./../config/eventEmitter');
 
 const User = sequelize.define('User', {
     name: { type: Sequelize.STRING, allowNull: false },
@@ -22,6 +23,10 @@ User.isDefine = () => {
 User.beforeCreate((user, options) => {
     const hashedPassword = bcrypt.hashSync(user.password, saltRounds);
     user.password = hashedPassword;
+});
+
+User.afterCreate((user, options) => {
+    eventEmitter.emit('userCreated', user);
 });
 
 User.generateAuthToken = async (email, clearTextPassword) => {

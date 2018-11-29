@@ -12,7 +12,7 @@ const router = require('./server/config/router');
 const database = require('./server/config/database');
 const passportJwtStrategy = require('./server/auth/strategies/passportJwt');
 const socketioJwtStrategy = require('./server/auth/strategies/socketioJwt');
-// const sockets = require('./server/sockets/sockets');
+const sockets = require('./server/config/sockets');
 
 const port = process.env.PORT;
 const distPath = path.join('dist');
@@ -30,7 +30,7 @@ passport.use(passportJwtStrategy);
 io.use(socketioJwtStrategy);
 
 router.initialize(app, passport);
-// sockets.initialize(io);
+sockets.initialize(io);
 
 database.initialize()
     .then(() => server.listen(port, () => console.log('Server is on')));
