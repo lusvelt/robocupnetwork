@@ -13,6 +13,7 @@ const database = require('./server/config/database');
 const passportJwtStrategy = require('./server/auth/strategies/passportJwt');
 const socketioJwtStrategy = require('./server/auth/strategies/socketioJwt');
 const sockets = require('./server/config/sockets');
+const argv = require('./server/config/yargs');
 
 const port = process.env.PORT;
 const distPath = path.join('dist');
@@ -32,5 +33,5 @@ io.use(socketioJwtStrategy);
 router.initialize(app, passport);
 sockets.initialize(io);
 
-database.initialize()
+database.initialize(argv.reset)
     .then(() => server.listen(port, () => console.log('Server is on')));

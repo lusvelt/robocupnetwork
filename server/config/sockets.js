@@ -1,4 +1,7 @@
 const eventEmitter = require('./../config/eventEmitter');
+const clientsIoHandler = require('../socketsHandlers/clientsIoHandler');
+const appsIoHandler = require('./../socketsHandlers/appsIoHandler');
+const publicIoHandler = require('./../socketsHandlers/publicIoHandler');
 
 const sockets = {
     initialize: (io) => {
@@ -6,10 +9,9 @@ const sockets = {
         const appsIo = io.of('/apps');
         const publicIo = io.of('/public');
 
-        clientsIo.on('connection', (socket) => {
-            // Questo va aggiustato, in particolare probabilmente si può semplificare con l'invio broadcast
-            eventEmitter.on('userCreated', (user) => socket.emit('newUser', user));
-        });
+        clientsIo.on('connection', clientsIoHandler(clientsIo));
+        appsIo.on('connection', appsIoHandler(appsIo));
+        publicIo.on('connection', publicIoHandler(publicIo));
     }
 };
 

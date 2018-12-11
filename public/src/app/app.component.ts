@@ -1,3 +1,4 @@
+import { SocketIoService } from './services/socket-io.service';
 /**
  * @license
  * Copyright Akveo. All Rights Reserved.
@@ -16,10 +17,12 @@ import 'style-loader!angular2-toaster/toaster.css';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private analytics: AnalyticsService, private translate: TranslateService) { }
+  constructor(private analytics: AnalyticsService, private translate: TranslateService,
+    private socketIoService: SocketIoService) { }
 
   ngOnInit(): void {
     this.analytics.trackPageViews();
     this.translate.setDefaultLang('it');
+    this.socketIoService.connect('/clients');
   }
 }

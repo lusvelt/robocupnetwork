@@ -1,3 +1,5 @@
+import { SocketIoService } from './../../services/socket-io.service';
+import { Observable } from 'rxjs/Observable';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Component, OnInit } from '@angular/core';
 import { SmartTableService } from '../../@core/data/smart-table.service';
@@ -7,7 +9,9 @@ import { SmartTableService } from '../../@core/data/smart-table.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
+
+  users = [];
 
   settings = {
     add: {
@@ -29,34 +33,41 @@ export class DashboardComponent {
         title: 'ID',
         type: 'number',
       },
-      firstName: {
-        title: 'First Name',
+      name: {
+        title: 'Name',
         type: 'string',
       },
-      lastName: {
-        title: 'Last Name',
-        type: 'string',
-      },
-      username: {
-        title: 'Username',
+      surname: {
+        title: 'Surname',
         type: 'string',
       },
       email: {
-        title: 'E-mail',
+        title: 'Email',
         type: 'string',
       },
-      age: {
-        title: 'Age',
-        type: 'number',
-      },
+      birthDate: {
+        title: 'Birth date',
+        type: 'string',
+      }
     },
   };
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private service: SmartTableService) {
+  constructor(private service: SmartTableService, private socketIoService: SocketIoService) { }
+
+  ngOnInit() {
     const data = this.service.getData();
     this.source.load(data);
+
+    this.socketIoService.on('newUser')
+      .subscribe(user => this.users.push(user));
+
+    this.socketIoService.on('deleteUser')
+      .subscribe(user => this.users.splice(this.users.indexOf(user), 1));
+
+    this.socketIoService.on('editUser')
+      .subscribe((args: any) => this.users.splice(this.users.indexOf(args.old), 1, args.new));
   }
 
   onDeleteConfirm(event): void {
