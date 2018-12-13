@@ -43,5 +43,23 @@
     "REGISTRATION_COMPLETED": "Your registration is complete, please try to log in to check if it works",
     "ER_DUP_ENTRY": "This email is already used",
 
-    "LOGIN_SUCCESSFUL": "Login successful"
+    "LOGIN_SUCCESSFUL": "Login successful",
+
+    "DASHBOARD" : "Dashboard",
+    "MAIN_MENU" :"Main menu",
+    "COMPETITIONS":"Competitions",
+    "NEW_COMPETITION":"New competition",
+    "COMPETITIONS_LIST":"Competitions list",
+    "USERS":"Users",
+    "MANAGE_USERS":"Manage users",
+    "REFEREES":"Referees",
+    "MANAGE_REFEREES":"Manage referees",
+    "SCHOOLS":"Schools",
+    "MANAGE_SCHOOLS":"Manage schools",
+    "TEAMS":"Teams",
+    "MANAGE_TEAMS":"Manage teams",
+    "PHASES":"Phases",
+    "MANAGE_PHASES":"Manage phases",
+    "RUNS":"Runs",
+    "MANAGE_RUNS":"Manage runs"
 }

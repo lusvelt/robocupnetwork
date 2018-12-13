@@ -1,3 +1,6 @@
+import { ManageTeamComponent } from './manage-team/manage-team.component';
+import { ManageRefereeComponent } from './manage-referee/manage-referee.component';
+import { NewCompetitionComponent } from './new-competition/new-competition.component';
 import { ManifestationListComponent } from './manifestation-list/manifestation-list.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -6,7 +9,9 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { ManageUserComponent } from './manage-user/manage-user.component';
-import { ListUserComponent } from './list-user/list-user.component';
+import { ManageSchoolComponent } from './manage-school/manage-school.component';
+import { ManageRunComponent } from './manage-run/manage-run.component';
+import { ManagePhaseComponent } from './manage-phase/manage-phase.component';
 
 const routes: Routes = [{
   path: '',
@@ -24,8 +29,28 @@ const routes: Routes = [{
     component: ManageUserComponent,
   },
   {
-    path: 'list-user',
-    component: ListUserComponent,
+    path: 'manage-team',
+    component: ManageTeamComponent,
+  },
+  {
+    path: 'manage-school',
+    component: ManageSchoolComponent,
+  },
+  {
+    path: 'manage-run',
+    component: ManageRunComponent,
+  },
+  {
+    path: 'manage-phase',
+    component: ManagePhaseComponent,
+  },
+  {
+    path: 'manage-referee',
+    component: ManageRefereeComponent,
+  },
+  {
+    path: 'new-competition',
+    component: NewCompetitionComponent,
   },
   {
     path: 'ui-features',

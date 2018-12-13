@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewCompetitionComponent } from './new-competition.component';
+import { ManagePhaseComponent } from './manage-phase.component';
 
-describe('NewCompetitionComponent', () => {
-  let component: NewCompetitionComponent;
-  let fixture: ComponentFixture<NewCompetitionComponent>;
+describe('ManagePhaseComponent', () => {
+  let component: ManagePhaseComponent;
+  let fixture: ComponentFixture<ManagePhaseComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewCompetitionComponent ]
+      declarations: [ ManagePhaseComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewCompetitionComponent);
+    fixture = TestBed.createComponent(ManagePhaseComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

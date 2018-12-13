@@ -1,3 +1,10 @@
-<p>
-  manage-user works!
-</p>
+<nb-card>
+  <nb-card-header>
+    Lista Utenti
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>

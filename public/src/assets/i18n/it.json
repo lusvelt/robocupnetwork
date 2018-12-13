@@ -43,5 +43,23 @@
     "REGISTRATION_COMPLETED": "La tua registrazione è stata completata, effettua il login per verificare il suo funzionamento",
     "ER_DUP_ENTRY": "Questa email è già stata utilizzata",
 
-    "LOGIN_SUCCESSFUL": "Login effettuato con successo"
+    "LOGIN_SUCCESSFUL": "Login effettuato con successo",
+
+    "DASHBOARD" : "Dashboard",
+    "MAIN_MENU" :"Menu' principale",
+    "COMPETITIONS":"Competizioni",
+    "NEW_COMPETITION":"Nuova competizione",
+    "COMPETITIONS_LIST":"Lista competizioni",
+    "USERS":"Utenti",
+    "MANAGE_USERS":"Gestisci utenti",
+    "REFEREES":"Arbitri",
+    "MANAGE_REFEREES":"Gestisci arbitri",
+    "SCHOOLS":"Scuole",
+    "MANAGE_SCHOOLS":"Gestisci scuole",
+    "TEAMS":"Squadre",
+    "MANAGE_TEAMS":"Gestisci squadre",
+    "PHASES":"Fasi",
+    "MANAGE_PHASES":"Gestisci fasi",
+    "RUNS":"Gare",
+    "MANAGE_RUNS":"Gestisci gare"
 }
