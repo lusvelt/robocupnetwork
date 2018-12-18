@@ -3,12 +3,16 @@
      [class.right]="position === 'inverse'">
   <div class="logo-containter">
     <a (click)="toggleSidebar()" href="#" class="navigation"><i class="nb-menu"></i></a>
-    <div class="logo" (click)="goToHome()"><span>Robocup</span></div>
+    <div class="logo" (click)="goToHome()"><span>Robocup Network</span></div>
   </div>
   <ngx-theme-switcher></ngx-theme-switcher>
+ 
+   <!-- <div class="competition">Nessuna competizione selezionata</div> -->
+  
 </div>
 
 <div class="header-container">
+    <div class="competition">{{ 'NO_COMPETITONS_SELECTED' | translate}}</div>
   <ngx-layout-direction-switcher></ngx-layout-direction-switcher>
   <nb-actions
     size="medium"

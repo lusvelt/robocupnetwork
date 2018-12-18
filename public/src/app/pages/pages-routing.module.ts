@@ -1,7 +1,6 @@
 import { ManageTeamComponent } from './manage-team/manage-team.component';
 import { ManageRefereeComponent } from './manage-referee/manage-referee.component';
 import { NewCompetitionComponent } from './new-competition/new-competition.component';
-import { ManifestationListComponent } from './manifestation-list/manifestation-list.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
@@ -12,6 +11,11 @@ import { ManageUserComponent } from './manage-user/manage-user.component';
 import { ManageSchoolComponent } from './manage-school/manage-school.component';
 import { ManageRunComponent } from './manage-run/manage-run.component';
 import { ManagePhaseComponent } from './manage-phase/manage-phase.component';
+import { ManageCompetitionComponent } from './manage-competition/manage-competition.component';
+import { NewUserComponent } from './new-user/new-user.component';
+import { NewTeamComponent } from './new-team/new-team.component';
+import { NewSchoolComponent } from './new-school/new-school.component';
+import { NewRefereeComponent } from './new-referee/new-referee.component';
 
 const routes: Routes = [{
   path: '',
@@ -21,8 +25,8 @@ const routes: Routes = [{
     component: DashboardComponent,
   },
   {
-    path: 'manifestation-list',
-    component: ManifestationListComponent,
+    path: 'manage-competition',
+    component: ManageCompetitionComponent,
   },
   {
     path: 'manage-user',
@@ -51,6 +55,22 @@ const routes: Routes = [{
   {
     path: 'new-competition',
     component: NewCompetitionComponent,
+  },
+  {
+    path: 'new-user',
+    component: NewUserComponent,
+  },
+  {
+    path: 'new-team',
+    component: NewTeamComponent,
+  },
+  {
+    path: 'new-school',
+    component: NewSchoolComponent,
+  },
+  {
+    path: 'new-referee',
+    component: NewRefereeComponent,
   },
   {
     path: 'ui-features',

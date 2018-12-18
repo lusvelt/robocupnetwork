@@ -3,11 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { SmartTableService } from '../../@core/data/smart-table.service';
 
 @Component({
-  selector: 'ngx-manifestation-list',
-  templateUrl: './manifestation-list.component.html',
-  styleUrls: ['./manifestation-list.component.scss']
+  selector: 'ngx-manage-competition',
+  templateUrl: './manage-competition.component.html',
+  styleUrls: ['./manage-competition.component.scss']
 })
-export class ManifestationListComponent {
+export class ManageCompetitionComponent {
 
   settings = {
     add: {

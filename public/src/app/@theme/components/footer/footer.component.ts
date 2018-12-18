@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'ngx-footer',
   styleUrls: ['./footer.component.scss'],
   template: `
     <span class="created-by">
-      Created by <b><a href="https://akveo.com" target="_blank">I.I.S A.Volta Pescara</a></b> 2018-2019
+      {{ 'CREATED_BY' | translate }} <b><a href="https://akveo.com" target="_blank">I.I.S A.Volta Pescara</a></b> 2018-2019
     </span>
     <div class="socials">
       <a href="#" target="_blank" class="ion ion-social-github"></a>
@@ -16,4 +18,5 @@ import { Component } from '@angular/core';
   `,
 })
 export class FooterComponent {
+  constructor(translateService: TranslateService){}
 }

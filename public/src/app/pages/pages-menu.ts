@@ -23,8 +23,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/new-competition',
       },
       {
-       title: 'COMPETITIONS_LIST',
-       link: '/pages/manifestation-list',
+       title: 'MANAGE_COMPETITIONS',
+       link: '/pages/manage-competition',
       }
     ]
   },
@@ -33,6 +33,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'nb-person',
     link: ' ',
     children: [
+      {
+        title: 'NEW_USER',
+        link: '/pages/new-user',
+      },
       {
         title: 'MANAGE_USERS',
         link: '/pages/manage-user',
@@ -45,6 +49,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: ' ',
     children: [
       {
+        title: 'NEW_REFEREE',
+        link: '/pages/new-referee',
+      },
+      {
         title: 'MANAGE_REFEREES',
         link: '/pages/manage-referee',
       }
@@ -56,6 +64,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: ' ',
     children: [
       {
+        title: 'NEW_SCHOOL',
+        link: '/pages/new-school',
+      },
+      {
         title: 'MANAGE_SCHOOLS',
         link: '/pages/manage-school',
       },
@@ -66,6 +78,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'nb-keypad',
     link: ' ',
     children: [
+      {
+        title: 'NEW_TEAM',
+        link: '/pages/new-team',
+      },
       {
         title: 'MANAGE_TEAMS',
         link: '/pages/manage-team',
