@@ -1,66 +1,21 @@
-import { ManageTeamComponent } from './manage-team/manage-team.component';
-import { ManageRefereeComponent } from './manage-referee/manage-referee.component';
-import { NewCompetitionComponent } from './new-competition/new-competition.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
-import { ManageUserComponent } from './manage-user/manage-user.component';
-import { ManageRunComponent } from './manage-run/manage-run.component';
-import { ManagePhaseComponent } from './manage-phase/manage-phase.component';
-import { ManageCompetitionComponent } from './manage-competition/manage-competition.component';
-import { NewUserComponent } from './new-user/new-user.component';
-import { NewTeamComponent } from './new-team/new-team.component';
-import { NewRefereeComponent } from './new-referee/new-referee.component';
 
 const routes: Routes = [{
   path: '',
   component: PagesComponent,
   children: [{
     path: 'dashboard',
+    component: ECommerceComponent,
+  },
+  {
+    path: 'iot-dashboard',
     component: DashboardComponent,
-  },
-  {
-    path: 'manage-competition',
-    component: ManageCompetitionComponent,
-  },
-  {
-    path: 'manage-user',
-    component: ManageUserComponent,
-  },
-  {
-    path: 'manage-team',
-    component: ManageTeamComponent,
-  },
-  {
-    path: 'manage-run',
-    component: ManageRunComponent,
-  },
-  {
-    path: 'manage-phase',
-    component: ManagePhaseComponent,
-  },
-  {
-    path: 'manage-referee',
-    component: ManageRefereeComponent,
-  },
-  {
-    path: 'new-competition',
-    component: NewCompetitionComponent,
-  },
-  {
-    path: 'new-user',
-    component: NewUserComponent,
-  },
-  {
-    path: 'new-team',
-    component: NewTeamComponent,
-  },
-  {
-    path: 'new-referee',
-    component: NewRefereeComponent,
   },
   {
     path: 'schools',
@@ -71,8 +26,16 @@ const routes: Routes = [{
     loadChildren: './ui-features/ui-features.module#UiFeaturesModule',
   },
   {
-    path: 'components',
-    loadChildren: './components/components.module#ComponentsModule',
+    path: 'modal-overlays',
+    loadChildren: './modal-overlays/modal-overlays.module#ModalOverlaysModule',
+  },
+  {
+    path: 'extra-components',
+    loadChildren: './extra-components/extra-components.module#ExtraComponentsModule',
+  },
+  {
+    path: 'bootstrap',
+    loadChildren: './bootstrap/bootstrap.module#BootstrapModule',
   },
   {
     path: 'maps',

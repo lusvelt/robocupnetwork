@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
 import { SmartTableService } from '../../../@core/data/smart-table.service';
@@ -71,5 +71,4 @@ export class SmartTableComponent {
       event.confirm.reject();
     }
   }
-
 }

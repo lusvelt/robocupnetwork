@@ -23,8 +23,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/new-competition',
       },
       {
-       title: 'MANAGE_COMPETITIONS',
-       link: '/pages/manage-competition',
+        title: 'MANAGE_COMPETITIONS',
+        link: '/pages/manage-competition',
       }
     ]
   },

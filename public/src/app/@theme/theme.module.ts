@@ -1,4 +1,4 @@
-import { RouterModule } from '@angular/router';
+import { LoginComponent } from './components/auth/login/login.component';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,14 +13,30 @@ import {
   NbSearchModule,
   NbSidebarModule,
   NbTabsetModule,
+  NbThemeModule,
   NbUserModule,
   NbCheckboxModule,
   NbPopoverModule,
   NbContextMenuModule,
-  NbThemeModule,
-  NbAlertModule,
+  NbProgressBarModule,
+  NbCalendarModule,
+  NbCalendarRangeModule,
+  NbStepperModule,
+  NbButtonModule,
   NbInputModule,
-  NbButtonModule
+  NbAccordionModule,
+  NbDatepickerModule,
+  NbDialogModule,
+  NbWindowModule,
+  NbListModule,
+  NbToastrModule,
+  NbAlertModule,
+  NbSpinnerModule,
+  NbRadioModule,
+  NbSelectModule,
+  NbChatModule,
+  NbTooltipModule,
+  NbCalendarKitModule,
 } from '@nebular/theme';
 
 import { NbSecurityModule } from '@nebular/security';
@@ -36,7 +52,14 @@ import {
   TinyMCEComponent,
   ThemeSwitcherListComponent,
 } from './components';
-import { CapitalizePipe, PluralPipe, RoundPipe, TimingPipe } from './pipes';
+import {
+  CapitalizePipe,
+  PluralPipe,
+  RoundPipe,
+  TimingPipe,
+  NumberWithCommasPipe,
+  EvaIconsPipe,
+} from './pipes';
 import {
   OneColumnLayoutComponent,
   SampleLayoutComponent,
@@ -46,15 +69,13 @@ import {
 import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
-
-import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
-import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
-
-import { NbAuthModule } from '@nebular/auth';
-import { RequestPasswordComponent } from './components/auth/request-password/request-password.component';
 import { LogoutComponent } from './components/auth/logout/logout.component';
+import { RequestPasswordComponent } from './components/auth/request-password/request-password.component';
+import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { RouterModule } from '@angular/router';
+import { NbAuthModule } from '@nebular/auth';
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule, RouterModule];
 
@@ -71,22 +92,31 @@ const NB_MODULES = [
   NbCheckboxModule,
   NbPopoverModule,
   NbContextMenuModule,
-  NbThemeModule,
-  NbInputModule,
-  NbAlertModule,
-  NbButtonModule,
-  NbAuthModule,
-  FormsModule,
   NgbModule,
-  NbSecurityModule, // *nbIsGranted directive
+  NbSecurityModule, // *nbIsGranted directive,
+  NbProgressBarModule,
+  NbCalendarModule,
+  NbCalendarRangeModule,
+  NbStepperModule,
+  NbButtonModule,
+  NbListModule,
+  NbToastrModule,
+  NbInputModule,
+  NbAccordionModule,
+  NbDatepickerModule,
+  NbDialogModule,
+  NbWindowModule,
+  NbAlertModule,
+  NbSpinnerModule,
+  NbRadioModule,
+  NbSelectModule,
+  NbChatModule,
+  NbTooltipModule,
+  NbCalendarKitModule,
+  NbAuthModule
 ];
 
 const COMPONENTS = [
-  LogoutComponent,
-  RequestPasswordComponent,
-  ResetPasswordComponent,
-  LoginComponent,
-  RegisterComponent,
   SwitcherComponent,
   LayoutDirectionSwitcherComponent,
   ThemeSwitcherComponent,
@@ -100,6 +130,11 @@ const COMPONENTS = [
   SampleLayoutComponent,
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
+  LoginComponent,
+  RegisterComponent,
+  LogoutComponent,
+  RequestPasswordComponent,
+  ResetPasswordComponent
 ];
 
 const ENTRY_COMPONENTS = [
@@ -111,6 +146,8 @@ const PIPES = [
   PluralPipe,
   RoundPipe,
   TimingPipe,
+  NumberWithCommasPipe,
+  EvaIconsPipe,
 ];
 
 const NB_THEME_PROVIDERS = [
@@ -122,6 +159,13 @@ const NB_THEME_PROVIDERS = [
   ).providers,
   ...NbSidebarModule.forRoot().providers,
   ...NbMenuModule.forRoot().providers,
+  ...NbDatepickerModule.forRoot().providers,
+  ...NbDialogModule.forRoot().providers,
+  ...NbWindowModule.forRoot().providers,
+  ...NbToastrModule.forRoot().providers,
+  ...NbChatModule.forRoot({
+    messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
+  }).providers,
 ];
 
 @NgModule({
