@@ -51,12 +51,12 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
 
-import { SharedModule } from '../shared/shared.module';
 import { NbAuthModule } from '@nebular/auth';
 import { RequestPasswordComponent } from './components/auth/request-password/request-password.component';
 import { LogoutComponent } from './components/auth/logout/logout.component';
+import { TranslateModule } from '@ngx-translate/core';
 
-const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule, SharedModule, RouterModule];
+const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule, RouterModule];
 
 const NB_MODULES = [
   NbCardModule,

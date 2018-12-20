@@ -1,3 +1,4 @@
+import { ThemeModule } from './../@theme/theme.module';
 import { ToasterModule } from 'angular2-toaster';
 import { NotificationsService } from './../services/notifications.service';
 import { TokenService } from './../services/token.service';
@@ -8,10 +9,12 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
-        TranslateModule
+        TranslateModule,
+        ThemeModule,
     ],
     exports: [
-        TranslateModule
+        TranslateModule,
+        ThemeModule,
     ],
     providers: [
         HttpService,

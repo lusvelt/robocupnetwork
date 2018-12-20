@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class NewTeamComponent implements OnInit {
 
-  constructor(private translateService : TranslateService) { }
+  constructor(private translateService: TranslateService) { }
 
   ngOnInit() {
   }

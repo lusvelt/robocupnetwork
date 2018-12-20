@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class NewSchoolComponent implements OnInit {
 
-  constructor(private translateService : TranslateService) { }
+  constructor(private translateService: TranslateService) { }
 
   ngOnInit() {
   }

@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { ToasterService, ToasterConfig, Toast } from 'angular2-toaster';
 import { notificationsConfig } from '../config/notifications.config';
