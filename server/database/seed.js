@@ -1,4 +1,4 @@
-const { User } = require('./models');
+const { User, ActionType } = require('./models');
 
 const seed = async () => {
     const users = [
@@ -34,6 +34,13 @@ const seed = async () => {
             password: 'test1234',
             isAdmin: true
         })
+    ];
+
+    const actionTypes = [
+        await ActionType.create({ name: 'Create' }),
+        await ActionType.create({ name: 'Read' })
+        // await ActionType.create({ name: 'Update' }),
+        // await ActionType.create({ name: 'Delete' })
     ];
 
     /*const competitions = [

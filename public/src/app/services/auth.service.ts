@@ -12,14 +12,14 @@ export class AuthService {
 
   constructor(private http: HttpService, private tokenService: TokenService) { }
 
-  login(userCredentials: UserCredentialsInterface): Observable<any> {
-    const httpRequest: Observable<any> = this.http.post('/login', userCredentials);
-    httpRequest.subscribe((response: any) => this.tokenService.setToken(response.token));
+  login(userCredentials: UserCredentialsInterface): Promise<any> {
+    const httpRequest: Promise<any> = this.http.post('/login', userCredentials, false);
+    httpRequest.then((response: any) => this.tokenService.setToken(response.token));
     return httpRequest;
   }
 
-  register(user: UserInterface): Observable<any> {
-    return this.http.post('/register', user);
+  register(user: UserInterface): Promise<any> {
+    return this.http.post('/register', user, false);
   }
 
 }

@@ -43,7 +43,7 @@ export class RegisterComponent {
   onRegisterButtonPress(): void {
     const user: UserInterface = _.omit(this.user, ['confirmPassword']);
     this.authService.register(user)
-      .subscribe(() => {
+      .then(() => {
         this.notificationsService.success('REGISTRATION_COMPLETED');
         this.router.navigate(['/auth', 'login']);
       }, err => this.notificationsService.error(err.error.code));

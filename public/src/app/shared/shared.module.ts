@@ -1,5 +1,7 @@
+import { ConfirmModalComponent } from './modals/confirm-modal/confirm-modal.component';
+import { AlertModalComponent } from './modals/alert-modal/alert-modal.component';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ThemeModule } from './../@theme/theme.module';
-import { ToasterModule } from 'angular2-toaster';
 import { NotificationsService } from './../services/notifications.service';
 import { TokenService } from './../services/token.service';
 import { AuthService } from './../services/auth.service';
@@ -11,16 +13,26 @@ import { TranslateModule } from '@ngx-translate/core';
     imports: [
         TranslateModule,
         ThemeModule,
+        Ng2SmartTableModule
     ],
     exports: [
         TranslateModule,
         ThemeModule,
+        Ng2SmartTableModule
+    ],
+    declarations: [
+        AlertModalComponent,
+        ConfirmModalComponent
     ],
     providers: [
         HttpService,
         AuthService,
         TokenService,
         NotificationsService
+    ],
+    entryComponents: [
+        AlertModalComponent,
+        ConfirmModalComponent
     ]
 })
 export class SharedModule { }

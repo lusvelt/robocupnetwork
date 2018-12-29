@@ -103,13 +103,13 @@
       "check-type"
     ],
     "directive-selector": [
-      true,
+      false,
       "attribute",
       "ngx",
       "camelCase"
     ],
     "component-selector": [
-      true,
+      false,
       "element",
       "ngx",
       "kebab-case"

@@ -62,6 +62,10 @@ const routes: Routes = [{
     loadChildren: './miscellaneous/miscellaneous.module#MiscellaneousModule',
   },
   {
+    path: 'privileges',
+    loadChildren: './privileges/privileges.module#PrivilegesModule',
+  },
+  {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',

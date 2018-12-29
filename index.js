@@ -6,14 +6,16 @@ const cors = require('cors');
 const passport = require('passport');
 const socketio = require('socket.io');
 
-require('./server/config/config');
+const argv = require('./server/config/yargs');
+const config = require('./server/config/config');
+
+config(argv);
 
 const router = require('./server/config/router');
 const database = require('./server/config/database');
 const passportJwtStrategy = require('./server/auth/strategies/passportJwt');
 const socketioJwtStrategy = require('./server/auth/strategies/socketioJwt');
 const sockets = require('./server/config/sockets');
-const argv = require('./server/config/yargs');
 
 const port = process.env.PORT;
 const distPath = path.join('dist');

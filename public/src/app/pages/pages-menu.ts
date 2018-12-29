@@ -29,6 +29,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ]
   },
   {
+    title: 'PRIVILEGES',
+    icon: 'nb-keypad',
+    link: '/pages/privileges',
+    children: [
+      {
+        title: 'ACTION_TYPES',
+        link: '/pages/privileges/action-types',
+      }
+    ]
+  },
+  {
     title: 'USERS',
     icon: 'nb-person',
     link: ' ',

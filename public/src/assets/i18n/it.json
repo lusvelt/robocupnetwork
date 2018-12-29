@@ -87,5 +87,7 @@
     "PHASES":"Fasi",
     "MANAGE_PHASES":"Gestisci fasi",
     "RUNS":"Gare",
-    "MANAGE_RUNS":"Gestisci gare"
+    "MANAGE_RUNS":"Gestisci gare",
+
+    "ACTIONS_COLUMN_TITLE": "Azioni"
 }

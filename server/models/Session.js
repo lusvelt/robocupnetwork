@@ -6,8 +6,4 @@ const Session = sequelize.define('Session', {
     end: { type: Sequelize.DATE, allowNull: false}
 });
 
-Session.isDefine = () => {
-    sequelize.isDefined('Session');
-};
-
 module.exports = Session;

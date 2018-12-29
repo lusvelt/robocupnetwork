@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
+    "reset": "node index -r",
+    "debug": "node index -d",
     "watch": "nodemon index",
     "build": "cd public && ng build",
     "postinstall": "cd public && npm install",

@@ -87,5 +87,7 @@
     "PHASES":"Phases",
     "MANAGE_PHASES":"Manage phases",
     "RUNS":"Runs",
-    "MANAGE_RUNS":"Manage runs"
+    "MANAGE_RUNS":"Manage runs",
+
+    "ACTIONS_COLUMN_TITLE": "Actions"
 }

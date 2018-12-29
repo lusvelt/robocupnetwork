@@ -16,10 +16,6 @@ const User = sequelize.define('User', {
     isAdmin: { type: Sequelize.BOOLEAN, allowNull: false, defaultValue: 0 }
 });
 
-User.isDefine = () => {
-    console.log(sequelize.isDefined('User'));
-};
-
 User.beforeCreate((user, options) => {
     const hashedPassword = bcrypt.hashSync(user.password, saltRounds);
     user.password = hashedPassword;

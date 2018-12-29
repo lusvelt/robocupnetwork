@@ -31,7 +31,7 @@ export class LoginComponent {
 
   onLoginButtonPress(): void {
     this.authService.login(this.user)
-      .subscribe(() => {
+      .then(() => {
         this.notificationsService.success('LOGIN_SUCCESSFUL');
         this.router.navigate(['/pages', 'dashboard']);
       }, err => this.notificationsService.error('WRONG_EMAIL_OR_PASSWORD'));

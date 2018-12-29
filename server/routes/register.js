@@ -12,7 +12,7 @@ const register = async (req, res) => {
         if (err.original && err.original.errno === 1062) {
             res.status(400).send({ code: err.original.code });
         } else
-            res.status(400).send();
+            res.sendStatus(400);
     }
 };
 

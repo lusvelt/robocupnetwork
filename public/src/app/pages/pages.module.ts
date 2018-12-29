@@ -20,7 +20,7 @@ const PAGES_COMPONENTS = [
     MiscellaneousModule,
   ],
   declarations: [
-    ...PAGES_COMPONENTS,
+    ...PAGES_COMPONENTS
   ],
 })
 export class PagesModule {
