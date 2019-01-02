@@ -1,9 +1,8 @@
 const eventEmitter = require('../config/eventEmitter');
+const privilegesIo = require('./clients/privilegesIo');
 
 const clientsIoHandler = (clientsIo) => (socket) => {
-    socket.on('createUser', user => {
-        clientsIo.emit('newUser', user);
-    });
+    privilegesIo(clientsIo, socket);
 };
 
 module.exports = clientsIoHandler;

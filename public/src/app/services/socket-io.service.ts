@@ -19,13 +19,32 @@ export class SocketIoService {
   }
 
   emit(eventName: string, args?: any, callback?) {
-    this.socket.emit(eventName, args, callback);
+    if (!args)
+      this.socket.emit(eventName, callback);
+    else
+      this.socket.emit(eventName, args, callback);
+  }
+
+  get(eventName: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.socket.emit(eventName, undefined, response => {
+        if (response instanceof Error) reject();
+        else resolve(response);
+      });
+    });
+  }
+
+  send(eventName: string, data: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.socket.emit(eventName, data, response => {
+        if (response instanceof Error) reject();
+        else resolve(response);
+      });
+    });
   }
 
   on(eventName: string) {
-    return new Observable(observer => {
-      this.socket.on(eventName, data => observer.next(data));
-    });
+    return new Observable(observer => this.socket.on(eventName, data => observer.next(data)));
   }
 
 }

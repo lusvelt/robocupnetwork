@@ -1,3 +1,4 @@
+import { DataSource } from './../../../classes/data-source.class';
 import { PrivilegesService } from './../../../services/privileges.service';
 import { TablesService } from './../../../services/tables.service';
 import { LocalDataSource } from 'ng2-smart-table';
@@ -13,7 +14,7 @@ import { ModalService } from '../../../services/modal.service';
 })
 export class ActionTypesComponent implements OnInit {
 
-  source: LocalDataSource = new LocalDataSource();
+  source: DataSource = new DataSource();
 
   constructor(private tablesService: TablesService,
               private privilegesService: PrivilegesService,
@@ -23,7 +24,16 @@ export class ActionTypesComponent implements OnInit {
   ngOnInit() {
     this.privilegesService.getActionTypes()
       .then(actionTypes => this.source.load(actionTypes))
-      .catch(err => { /* Handle error */ });
+      .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+
+    this.privilegesService.notifyActionTypes('createActionType')
+      .subscribe(actionType => this.source.insert(actionType));
+
+    this.privilegesService.notifyActionTypes('editActionType')
+      .subscribe(actionType => this.source.edit(actionType));
+
+    this.privilegesService.notifyActionTypes('removeActionType')
+      .subscribe(actionType => this.source.delete(actionType));
   }
 
   settings = this.tablesService.getSettings(standardConfig, {
@@ -65,7 +75,7 @@ export class ActionTypesComponent implements OnInit {
       .then(confirmation => {
         if (confirmation) {
           event.confirm.resolve();
-          this.privilegesService.removeActionType(event.data.id)
+          this.privilegesService.removeActionType(event.data)
             .then(result => this.notificationsService.success('DELETE_SUCCEDED'))
             .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
         } else {

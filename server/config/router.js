@@ -8,11 +8,13 @@ const router = {
 
         app.post('/login', login);
         app.post('/register', register);
-
+        
+        /*
         app.get('/getActionTypes', getActionTypes);
         app.post('/createActionType', createActionType);
         app.post('/editActionType', editActionType);
         app.post('/removeActionType', removeActionType);
+        */
     }
 };
 
