@@ -88,6 +88,15 @@
     "MANAGE_PHASES":"Manage phases",
     "RUNS":"Runs",
     "MANAGE_RUNS":"Manage runs",
-
-    "ACTIONS_COLUMN_TITLE": "Actions"
+    "PRIVILEGES":"Privileges",
+    "ACTION_TYPES":"Action type",
+    "ACTIONS": "Actions",
+    "ACTION_TYPE_CREATED": "Action type created",
+    "OPERATION_FAILED_ERROR_MESSAGE":"Operation failed",
+    "ACTION_TYPE_UPDATED": "Action type updated",
+    "DO_YOU_CONFIRM":"Do you confirm?",
+    "ARE_YOU_SURE_YOU_WANT_TO_DELETE": "Are you sure you want to delete?",
+    "DELETE_SUCCEDED":"Delete succeded",
+    "CANCEL":"Cancel",
+    "CONFIRM":"Confirm"
 }

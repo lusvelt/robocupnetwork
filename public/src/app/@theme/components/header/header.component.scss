@@ -57,6 +57,16 @@
         font-weight: nb-theme(font-weight-normal);
       }
     }
+
+    .logo-containter{
+      margin-right: 9%;
+    }
+
+    .competition {
+      font-size: 1rem;
+      display: inline-block;
+      padding: 0 nb-theme(padding);
+    }
   }
 
   @include nb-for-theme(corporate) {

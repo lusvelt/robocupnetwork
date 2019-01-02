@@ -88,6 +88,15 @@
     "MANAGE_PHASES":"Gestisci fasi",
     "RUNS":"Gare",
     "MANAGE_RUNS":"Gestisci gare",
-
-    "ACTIONS_COLUMN_TITLE": "Azioni"
+    "PRIVILEGES":"Privilegi",
+    "ACTION_TYPES":"Tipi di azione",
+    "ACTIONS": "Azioni",
+    "ACTION_TYPE_CREATED": "Tipo di azione creato",
+    "OPERATION_FAILED_ERROR_MESSAGE": "Operazione non riuscita",
+    "ACTION_TYPE_UPDATED": "Tipo di azione aggiornato",
+    "DO_YOU_CONFIRM":"Confermi?",
+    "ARE_YOU_SURE_YOU_WANT_TO_DELETE": "Sei sicuro di voler eliminare?",
+    "DELETE_SUCCEDED":"Eliminazione riuscita con successo",
+    "CANCEL":"Annulla",
+    "CONFIRM":"Conferma"
 }

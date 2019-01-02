@@ -34,7 +34,7 @@ export class ActionTypesComponent implements OnInit {
       editable: false
     },
     name: {
-      title: 'Name',
+      title: 'NAME',
       type: 'string',
     }
   });

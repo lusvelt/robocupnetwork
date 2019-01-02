@@ -8,6 +8,6 @@
     {{ modalContent }}
 </div>
 <div class="modal-footer">
-    <button class="btn btn-md btn-secondary" (click)="closeModal(false)">Annulla</button>
-    <button class="btn btn-md btn-primary" (click)="closeModal(true)">Conferma</button>
+    <button class="btn btn-md btn-secondary" (click)="closeModal(false)">{{'CANCEL' | translate}}</button>
+    <button class="btn btn-md btn-primary" (click)="closeModal(true)">{{'CONFIRM' | translate}}</button>
 </div>

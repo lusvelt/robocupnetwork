@@ -1,6 +1,6 @@
 export const standardConfig = {
     actions: {
-        columnTitle: 'ACTIONS_COLUMN_TITLE',
+        columnTitle: 'ACTIONS',
         position: 'right'
     },
     add: {

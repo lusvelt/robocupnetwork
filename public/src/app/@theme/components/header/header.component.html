@@ -11,8 +11,8 @@
 
 <div class="header-container">
   <div class="competition">{{ 'NO_COMPETITONS_SELECTED' | translate}}</div>
-  <ngx-layout-direction-switcher></ngx-layout-direction-switcher>
-  <nb-actions size="medium" [class.right]="position === 'normal'" [class.left]="position === 'inverse'">
+  <!--<ngx-layout-direction-switcher></ngx-layout-direction-switcher>-->
+   <nb-actions size="medium" [class.right]="position === 'normal'" [class.left]="position === 'inverse'">
     <nb-action icon="nb-gear" class="toggle-layout" (click)="toggleSettings()"></nb-action>
     <nb-action *nbIsGranted="['view', 'user']">
       <nb-user [nbContextMenu]="userMenu" [name]="user?.name" [picture]="user?.picture"></nb-user>

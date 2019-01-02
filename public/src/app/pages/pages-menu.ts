@@ -76,11 +76,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'NEW_SCHOOL',
-        link: '/pages/new-school',
+        link: '/pages/schools/new',
       },
       {
         title: 'MANAGE_SCHOOLS',
-        link: '/pages/manage-school',
+        link: '/pages/schools/manage',
       },
     ]
   },
