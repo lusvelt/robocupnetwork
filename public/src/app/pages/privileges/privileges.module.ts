@@ -5,10 +5,14 @@ import { ActionTypesComponent } from './action-types/action-types.component';
 import { NgModule } from '@angular/core';
 import { PrivilegesComponent } from './privileges.component';
 import { PrivilegesService } from '../../services/privileges.service';
+import { ActionComponent } from './action/action.component';
+import { RoleComponent } from './role/role.component';
 
 const components = [
     PrivilegesComponent,
-    ActionTypesComponent
+    ActionTypesComponent,
+    ActionComponent,
+    RoleComponent
 ];
 
 @NgModule({
@@ -19,6 +23,8 @@ const components = [
     ],
     declarations: [
         ...components,
+        ActionComponent,
+        RoleComponent,
     ],
     providers: [
         PrivilegesService

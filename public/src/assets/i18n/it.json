@@ -98,5 +98,20 @@
     "ARE_YOU_SURE_YOU_WANT_TO_DELETE": "Sei sicuro di voler eliminare?",
     "DELETE_SUCCEDED":"Eliminazione riuscita con successo",
     "CANCEL":"Annulla",
-    "CONFIRM":"Conferma"
+    "CONFIRM":"Conferma",
+
+    "ROLES":"Ruoli",
+    "ROLE":"Ruolo",
+    "ROLE_NAME":"Nome del ruolo",
+    "ROLE_NAME_REQUIRED":"Nome del ruolo richiesto!",
+    "ROLE_DESCRIPTION":"Descrizione del ruolo",
+    "ROLE_BUTTON":"Crea ruolo",
+
+    "ACTION":"Azione",
+    "ACTION_NAME":"Nome dell'azione",
+    "ACTION_NAME_REQUIRED":"Nome dell'azione richiesto!",
+    "ACTION_DESCRIPTION":"Descrizione dell'azione",
+    "ACTION_BUTTON":"Crea azione"
+
+
 }

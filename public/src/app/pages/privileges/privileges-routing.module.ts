@@ -2,6 +2,8 @@ import { ActionTypesComponent } from './action-types/action-types.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PrivilegesComponent } from './privileges.component';
+import { ActionComponent } from './action/action.component';
+import { RoleComponent } from './role/role.component';
 
 const routes: Routes = [{
     path: '',
@@ -9,6 +11,14 @@ const routes: Routes = [{
     children: [{
         path: 'action-types',
         component: ActionTypesComponent,
+    },
+    {
+        path: 'action',
+        component: ActionComponent,
+    },
+    {
+        path: 'role',
+        component: RoleComponent,
     }],
 }];
 

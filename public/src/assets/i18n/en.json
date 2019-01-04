@@ -98,5 +98,18 @@
     "ARE_YOU_SURE_YOU_WANT_TO_DELETE": "Are you sure you want to delete?",
     "DELETE_SUCCEDED":"Delete succeded",
     "CANCEL":"Cancel",
-    "CONFIRM":"Confirm"
+    "CONFIRM":"Confirm",
+
+    "ROLES":"Roles",
+    "ROLE":"Role",
+    "ROLE_NAME":"Role name",
+    "ROLE_NAME_REQUIRED":"Role name required!",
+    "ROLE_DESCRIPTION":"Role descripton",
+    "ROLE_BUTTON":"Create role",
+
+    "ACTION":"Action",
+    "ACTION_NAME":"Action name",
+    "ACTION_NAME_REQUIRED":"Action name required!",
+    "ACTION_DESCRIPTION":"Action description",
+    "ACTION_BUTTON":"Create action"
 }

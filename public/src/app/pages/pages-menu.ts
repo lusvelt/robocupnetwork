@@ -36,6 +36,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'ACTION_TYPES',
         link: '/pages/privileges/action-types',
+      },
+      {
+        title: 'ACTIONS',
+        link: '/pages/privileges/action',
+      },
+      {
+        title: 'ROLES',
+        link: '/pages/privileges/role',
       }
     ]
   },
