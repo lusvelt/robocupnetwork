@@ -8,6 +8,7 @@ import { AuthService } from './../services/auth.service';
 import { HttpService } from './../services/http.service';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { MultipleSelectDropdownComponent } from './view-cells/multiple-select-dropdown/multiple-select-dropdown.component';
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { TranslateModule } from '@ngx-translate/core';
     ],
     declarations: [
         AlertModalComponent,
-        ConfirmModalComponent
+        ConfirmModalComponent,
+        MultipleSelectDropdownComponent
     ],
     providers: [
         HttpService,
@@ -32,7 +34,8 @@ import { TranslateModule } from '@ngx-translate/core';
     ],
     entryComponents: [
         AlertModalComponent,
-        ConfirmModalComponent
+        ConfirmModalComponent,
+        MultipleSelectDropdownComponent
     ]
 })
 export class SharedModule { }

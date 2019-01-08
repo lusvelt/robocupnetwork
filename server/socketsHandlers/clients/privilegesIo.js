@@ -90,6 +90,33 @@ const privilegesIo = (clientsIo, socket) => {
         }
     };
 
+    const updateSelectedActionTypes = async (data, callback) => {
+        try {
+            const _action = data.action;
+            const changedActionTypes = data.changedActionTypes;
+            const id = _action.id;
+            const action = await Action.findById(id);
+            const promises = [];
+            changedActionTypes.forEach(async changedActionType => {
+                promises.push(new Promise((resolve, reject) => {
+                    ActionType.findById(changedActionType.id)
+                        .then(actionType => {
+                            if (changedActionType.selected)
+                                return action.addActionType(actionType);
+                            else
+                                return action.removeActionType(actionType);
+                        })
+                        .then(result => resolve(result))
+                        .catch(err => reject(err)); 
+                }));
+            });
+            const result = await Promise.all(promises);
+            callback(result);
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
     const getRoles= async(args,callback) => {
         try {
             const roles = await Role.getRolesList();
@@ -131,10 +158,11 @@ const privilegesIo = (clientsIo, socket) => {
     socket.on('createActionType', createActionType);
     socket.on('editActionType', editActionType);
     socket.on('removeActionType', removeActionType);
-
+    
     socket.on('getActions',getActions);
     socket.on('removeAction', removeAction);
     socket.on('editAction', editAction);
+    socket.on('updateSelectedActionTypes', updateSelectedActionTypes);
 
     socket.on('getRoles',getRoles);
     socket.on('removeRole',removeRole);

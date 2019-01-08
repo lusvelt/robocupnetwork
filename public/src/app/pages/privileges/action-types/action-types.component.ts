@@ -47,7 +47,7 @@ export class ActionTypesComponent implements OnInit {
     },
     name: {
       title: 'NAME',
-      type: 'string',
+      type: 'text',
     }
   });
 

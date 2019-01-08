@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionInterface } from '../../../interfaces/action.interface';
-import { SmartTableService } from '../../../@core/data/smart-table.service';
 import { LocalDataSource } from 'ng2-smart-table';
+import { SmartTableService } from '../../../@core/data/smart-table.service';
+import { RoleInterface } from '../../../interfaces/role.interface';
 import { TranslateService } from '@ngx-translate/core';
-import { PrivilegesService } from '../../../services/privileges.service';
-import { ModalService } from '../../../services/modal.service';
-import { NotificationsService } from '../../../services/notifications.service';
-import { TablesService } from '../../../services/tables.service';
 import { DataSource } from '../../../classes/data-source.class';
+import { TablesService } from '../../../services/tables.service';
+import { PrivilegesService } from '../../../services/privileges.service';
+import { NotificationsService } from '../../../services/notifications.service';
+import { ModalService } from '../../../services/modal.service';
 import { standardConfig } from '../../../config/tables.config';
 
 @Component({
-  selector: 'ngx-action',
-  templateUrl: './action.component.html',
-  styleUrls: ['./action.component.scss']
+  selector: 'ngx-role',
+  templateUrl: './roles.component.html',
+  styleUrls: ['./roles.component.scss']
 })
-export class ActionComponent implements OnInit {
-
-  source: DataSource= new DataSource();
-  action: any = {};
+export class RolesComponent implements OnInit {
+  source: DataSource = new DataSource();
+  role: any = {};
   actionChoose: any = {};
+
   constructor(private tablesService: TablesService,
               private translateService: TranslateService,
               private privilegesService: PrivilegesService,
@@ -28,27 +28,28 @@ export class ActionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.privilegesService.getActions()
-    .then(action => this.source.load(action))
+    this.privilegesService.getRoles()
+    .then(role => this.source.load(role))
     .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
 
-    this.privilegesService.notify('createAction')
-      .subscribe(action => this.source.insert(action));
+    this.privilegesService.notify('createRole')
+      .subscribe(role => this.source.insert(role));
 
-    this.privilegesService.notify('editAction')
-      .subscribe(action => this.source.edit(action));
+    this.privilegesService.notify('editRole')
+      .subscribe(role => this.source.edit(role));
 
-    this.privilegesService.notify('removeAction')
-      .subscribe(action => this.source.delete(action));
+    this.privilegesService.notify('removeRole')
+      .subscribe(role => this.source.delete(role));
   }
 
-  actionType: string[] = ['READ', 'DELETE', 'EDIT' ];
+
+  actions: string[] = ['CANCELLA GARA', 'CONFERMA GARA', 'CREA UTENTE'];
 
   onButtonClicked() {
-    const action: ActionInterface = this.action;
+    const role: RoleInterface = this.role;
   }
 
-  settings= this.tablesService.getSettings(standardConfig,{
+  settings = this.tablesService.getSettings(standardConfig, {
     id: {
       title: 'ID',
       type: 'number',
@@ -57,18 +58,19 @@ export class ActionComponent implements OnInit {
     },
     name: {
       title: 'NAME',
-      type: 'string',
+      type: 'text',
     },
     description: {
       title: 'DESCRIPTION',
-      type: 'string',
+      type: 'text',
     }
   });
 
+
   onEditConfirm(event) {
     event.confirm.resolve();
-    this.privilegesService.editAction(event.newData)
-      .then(result => this.notificationsService.success('ACTION_UPDATED'))
+    this.privilegesService.editRole(event.newData)
+      .then(result => this.notificationsService.success('ROLE_UPDATED'))
       .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
   }
 
@@ -77,7 +79,7 @@ export class ActionComponent implements OnInit {
       .then(confirmation => {
         if (confirmation) {
           event.confirm.resolve();
-          this.privilegesService.removeAction(event.data)
+          this.privilegesService.removeRole(event.data)
             .then(result => this.notificationsService.success('DELETE_SUCCEDED'))
             .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
         } else {
@@ -85,4 +87,6 @@ export class ActionComponent implements OnInit {
         }
       });
   }
+
 }
+

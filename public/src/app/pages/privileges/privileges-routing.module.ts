@@ -2,8 +2,8 @@ import { ActionTypesComponent } from './action-types/action-types.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PrivilegesComponent } from './privileges.component';
-import { ActionComponent } from './action/action.component';
-import { RoleComponent } from './role/role.component';
+import { ActionsComponent } from './actions/actions.component';
+import { RolesComponent } from './roles/roles.component';
 
 const routes: Routes = [{
     path: '',
@@ -14,11 +14,11 @@ const routes: Routes = [{
     },
     {
         path: 'action',
-        component: ActionComponent,
+        component: ActionsComponent,
     },
     {
         path: 'role',
-        component: RoleComponent,
+        component: RolesComponent,
     }],
 }];
 
