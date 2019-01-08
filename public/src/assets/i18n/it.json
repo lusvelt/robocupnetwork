@@ -101,17 +101,21 @@
     "CONFIRM":"Conferma",
 
     "ROLES":"Ruoli",
+    "NEW_ROLE":"Nuovo ruolo",
     "ROLE":"Ruolo",
     "ROLE_NAME":"Nome del ruolo",
     "ROLE_NAME_REQUIRED":"Nome del ruolo richiesto!",
     "ROLE_DESCRIPTION":"Descrizione del ruolo",
     "ROLE_BUTTON":"Crea ruolo",
+    "ROLE_UPDATED":"Ruolo aggiornato",
 
     "ACTION":"Azione",
+    "NEW_ACTION":"Nuova azione",
     "ACTION_NAME":"Nome dell'azione",
     "ACTION_NAME_REQUIRED":"Nome dell'azione richiesto!",
     "ACTION_DESCRIPTION":"Descrizione dell'azione",
-    "ACTION_BUTTON":"Crea azione"
+    "ACTION_BUTTON":"Crea azione",
+    "ACTION_UPDATED":"Azione aggiornato"
 
 
 }

@@ -1,4 +1,4 @@
-const { User, ActionType } = require('./models');
+const { User, ActionType, Action, Role } = require('./models');
 
 const seed = async () => {
     const users = [
@@ -42,6 +42,16 @@ const seed = async () => {
         // await ActionType.create({ name: 'Update' }),
         // await ActionType.create({ name: 'Delete' })
     ];
+
+    const action = [
+        await Action.create({name:'Annulla gara',description:'test1'}),
+        await Action.create({name:'Crea utente',description:'test2'}),
+    ]
+
+    const roles = [
+        await Role.create({name:'Arbitro gare',description:'test1'}),
+        await Role.create({name:'Utente',description:'test2'}),
+    ]
 
     /*const competitions = [
         await Competition.create

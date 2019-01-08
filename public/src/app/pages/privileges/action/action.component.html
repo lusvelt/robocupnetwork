@@ -1,63 +1,63 @@
-
 <div class="row">
   <div class="col-md-12">
     <form (ngSubmit)="onButtonClicked()" #form="ngForm">
-        <div class="form-group">
-      <nb-card>
-        <nb-card-header>{{'ACTION' | translate}}</nb-card-header>
+      <div class="form-group">
+        <nb-card>
+          <nb-card-header>{{'NEW_ACTION' | translate}}</nb-card-header>
           <nb-card-body>
             <div class="action-name">
               <label for="input-name" class="sr-only">{{ 'ACTION_NAME' | translate}}</label>
               <input nbInput
-              [(ngModel)]="action.name"
-              #name="ngModel"
-              id="input-name"
-              name="name"
-              placeholder="{{ 'ACTION_NAME' | translate }}"
-              autofocus
-              fullWidth
-              [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : ''"
-              required>
+                     [(ngModel)]="action.name"
+                     #name="ngModel"
+                     id="input-name"
+                     name="name"
+                     placeholder="{{ 'ACTION_NAME' | translate }}"
+                     autofocus
+                     fullWidth
+                     [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : ''"
+                     required>
               <small class="form-text error" *ngIf="name.touched && name.errors?.required">
-                  {{ 'ACTION_NAME_REQUIRED' | translate }}
+                {{ 'ACTION_NAME_REQUIRED' | translate }}
               </small>
-            </div>  
+            </div>
             <div class="action-description">
-              <textarea nbInput [(ngModel)]="action.description" name="description" rows="5" placeholder="{{'ACTION_DESCRIPTION'|translate}}" class="form-control"></textarea>
+              <textarea nbInput [(ngModel)]="action.description" name="description" rows="5"
+                        placeholder="{{'ACTION_DESCRIPTION'|translate}}" class="form-control"></textarea>
             </div>
-            
+
             <div class="dropdown" ngbDropdown>
-                <button class="btn btn-primary" type="button" ngbDropdownToggle>
-                  {{ 'ACTION_TYPES' | translate }}
-                </button>
-                <ul ngbDropdownMenu class="dropdown-menu">
-                    <li class="dropdown-item" *ngFor="let type of actionType">
-                        <nb-checkbox name="actionChoose" [(ngModel)]="actionChoose.status">{{ type }}</nb-checkbox>
-                    </li>
-                  </ul>
+              <button class="btn btn-primary" type="button" ngbDropdownToggle>
+                {{ 'ACTION_TYPES' | translate }}
+              </button>
+              <ul ngbDropdownMenu class="dropdown-menu">
+                <li class="dropdown-item" *ngFor="let type of actionType">
+                  <nb-checkbox name="actionChoose" [(ngModel)]="actionChoose.status">{{ type }}</nb-checkbox>
+                </li>
+              </ul>
             </div>
-            
+
             <div class=".col-md-4.offset-md-4">
-                <div class="container-btn">
-                    <button class="btn-demo" nbButton hero>{{'ACTION_BUTTON'|translate}}</button>
-                </div>
+              <div class="container-btn">
+                <button class="btn-demo" nbButton hero>{{'ACTION_BUTTON'|translate}}</button>
+              </div>
             </div>
           </nb-card-body>
-      </nb-card>
-    </div>  
-   </form>
-   
-   
-   <nb-card>
+        </nb-card>
+      </div>
+    </form>
+
+
+    <nb-card>
       <nb-card-header>
-        Smart Table
+        {{'ACTIONS'|translate}}
       </nb-card-header>
-    
+
       <nb-card-body>
         <ng2-smart-table [settings]="settings" [source]="source"
-          (createConfirm)="onCreateConfirm($event)"
-          (editConfirm)="onEditConfirm($event)"
-          (deleteConfirm)="onDeleteConfirm($event)">
+                         (createConfirm)="onCreateConfirm($event)"
+                         (editConfirm)="onEditConfirm($event)"
+                         (deleteConfirm)="onDeleteConfirm($event)">
         </ng2-smart-table>
       </nb-card-body>
     </nb-card>

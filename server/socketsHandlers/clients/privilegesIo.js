@@ -1,6 +1,8 @@
 const _ = require('lodash');
 
 const ActionType = require('../../models/ActionType');
+const Action = require('../../models/Action');
+const Role = require('../../models/Role');
 
 const privilegesIo = (clientsIo, socket) => {
 
@@ -52,10 +54,91 @@ const privilegesIo = (clientsIo, socket) => {
         }
     };
 
+    const getActions= async(args,callback) => {
+        try {
+            const action = await Action.getActionsList();
+            callback(action);
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
+    const removeAction = async (_action, callback) => {
+        try {
+            const id = _action.id;
+            const result = await Action.destroy({ where: { id } });
+            if (!result)
+                throw new Error();
+            callback(result);
+            socket.broadcast.emit('removeAction', _action);
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
+    const editAction = async (_action, callback) => {
+        try {        
+            const id = _action.id;
+            const action = _.omit(_action, ['id']);
+            const result = await Action.update(action, { where: { id } });
+            if (!result)
+                throw new Error();
+            callback(result);
+            socket.broadcast.emit('editAction', _action);
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
+    const getRoles= async(args,callback) => {
+        try {
+            const roles = await Role.getRolesList();
+            callback(roles);
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
+    const removeRole = async (_role, callback) => {
+        try {
+            const id = _role.id;
+            const result = await Role.destroy({ where: { id } });
+            if (!result)
+                throw new Error();
+            callback(result);
+            socket.broadcast.emit('removeRole', _role);
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
+    const editRole = async (_role, callback) => {
+        try {        
+            const id = _role.id;
+            const role = _.omit(_role, ['id']);
+            const result = await Role.update(role, { where: { id } });
+            if (!result)
+                throw new Error();
+            callback(result);
+            socket.broadcast.emit('editRole', _role);
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+    
+
     socket.on('getActionTypes', getActionTypes);
     socket.on('createActionType', createActionType);
     socket.on('editActionType', editActionType);
     socket.on('removeActionType', removeActionType);
+
+    socket.on('getActions',getActions);
+    socket.on('removeAction', removeAction);
+    socket.on('editAction', editAction);
+
+    socket.on('getRoles',getRoles);
+    socket.on('removeRole',removeRole);
+    socket.on('editRole', editRole);
 
 };
 

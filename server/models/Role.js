@@ -6,4 +6,6 @@ const Role = sequelize.define('Role', {
     description: { type: Sequelize.TEXT }
 });
 
+Role.getRolesList = () => Role.findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] } });
+
 module.exports = Role;

@@ -6,4 +6,6 @@ const Action = sequelize.define('Action', {
     description: { type: Sequelize.TEXT, allowNull: false }
 });
 
+Action.getActionsList = () => Action.findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] } });
+
 module.exports = Action;

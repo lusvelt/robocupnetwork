@@ -26,9 +26,34 @@ export class PrivilegesService {
     return this.socketIoService.send('removeActionType', data);
   }
 
-  notifyActionTypes(eventName: string): Observable<any> {
+  notify(eventName: string): Observable<any> {
     return new Observable(observer => this.socketIoService.on(eventName)
                                         .subscribe(data => observer.next(data)));
+  }
+
+
+  getActions() {
+    return this.socketIoService.get('getActions');
+  }
+
+  removeAction(data) {
+    return this.socketIoService.send('removeAction', data);
+  }
+
+  editAction(data) {
+    return this.socketIoService.send('editAction', data);
+  }
+
+  getRoles() {
+    return this.socketIoService.get('getRoles');
+  }
+
+  removeRole(data) {
+    return this.socketIoService.send('removeRole', data);
+  }
+
+  editRole(data) {
+    return this.socketIoService.send('editRole', data);
   }
 
 }

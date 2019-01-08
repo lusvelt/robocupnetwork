@@ -7,6 +7,7 @@ import { SmartTableService } from '../../../@core/data/smart-table.service';
 import { standardConfig } from '../../../config/tables.config';
 import { NotificationsService } from '../../../services/notifications.service';
 import { ModalService } from '../../../services/modal.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'ngx-action-types',
@@ -19,20 +20,21 @@ export class ActionTypesComponent implements OnInit {
   constructor(private tablesService: TablesService,
               private privilegesService: PrivilegesService,
               private notificationsService: NotificationsService,
-              private modalService: ModalService) { }
+              private modalService: ModalService,
+              private translateService: TranslateService) { }
 
   ngOnInit() {
     this.privilegesService.getActionTypes()
       .then(actionTypes => this.source.load(actionTypes))
       .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
 
-    this.privilegesService.notifyActionTypes('createActionType')
+    this.privilegesService.notify('createActionType')
       .subscribe(actionType => this.source.insert(actionType));
 
-    this.privilegesService.notifyActionTypes('editActionType')
+    this.privilegesService.notify('editActionType')
       .subscribe(actionType => this.source.edit(actionType));
 
-    this.privilegesService.notifyActionTypes('removeActionType')
+    this.privilegesService.notify('removeActionType')
       .subscribe(actionType => this.source.delete(actionType));
   }
 

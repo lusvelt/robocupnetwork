@@ -3,6 +3,12 @@ import { ActionInterface } from '../../../interfaces/action.interface';
 import { SmartTableService } from '../../../@core/data/smart-table.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { TranslateService } from '@ngx-translate/core';
+import { PrivilegesService } from '../../../services/privileges.service';
+import { ModalService } from '../../../services/modal.service';
+import { NotificationsService } from '../../../services/notifications.service';
+import { TablesService } from '../../../services/tables.service';
+import { DataSource } from '../../../classes/data-source.class';
+import { standardConfig } from '../../../config/tables.config';
 
 @Component({
   selector: 'ngx-action',
@@ -11,15 +17,29 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class ActionComponent implements OnInit {
 
+  source: DataSource= new DataSource();
   action: any = {};
   actionChoose: any = {};
-  constructor(private service: SmartTableService,
-              private translateService: TranslateService) {
-    const data = this.service.getData();
-    this.source.load(data);
+  constructor(private tablesService: TablesService,
+              private translateService: TranslateService,
+              private privilegesService: PrivilegesService,
+              private notificationsService: NotificationsService,
+              private modalService: ModalService) {
   }
 
   ngOnInit() {
+    this.privilegesService.getActions()
+    .then(action => this.source.load(action))
+    .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+
+    this.privilegesService.notify('createAction')
+      .subscribe(action => this.source.insert(action));
+
+    this.privilegesService.notify('editAction')
+      .subscribe(action => this.source.edit(action));
+
+    this.privilegesService.notify('removeAction')
+      .subscribe(action => this.source.delete(action));
   }
 
   actionType: string[] = ['READ', 'DELETE', 'EDIT' ];
@@ -28,56 +48,41 @@ export class ActionComponent implements OnInit {
     const action: ActionInterface = this.action;
   }
 
-  settings = {
-    add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
+  settings= this.tablesService.getSettings(standardConfig,{
+    id: {
+      title: 'ID',
+      type: 'number',
+      addable: false,
+      editable: false
     },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
+    name: {
+      title: 'NAME',
+      type: 'string',
     },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
-    },
-    columns: {
-      id: {
-        title: 'ID',
-        type: 'number',
-      },
-      firstName: {
-        title: 'First Name',
-        type: 'string',
-      },
-      lastName: {
-        title: 'Last Name',
-        type: 'string',
-      },
-      username: {
-        title: 'Username',
-        type: 'string',
-      },
-      email: {
-        title: 'E-mail',
-        type: 'string',
-      },
-      age: {
-        title: 'Age',
-        type: 'number',
-      },
-    },
-  };
+    description: {
+      title: 'DESCRIPTION',
+      type: 'string',
+    }
+  });
 
-  source: LocalDataSource = new LocalDataSource();
+  onEditConfirm(event) {
+    event.confirm.resolve();
+    this.privilegesService.editAction(event.newData)
+      .then(result => this.notificationsService.success('ACTION_UPDATED'))
+      .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+  }
 
   onDeleteConfirm(event): void {
-    if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
-    }
+    this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
+      .then(confirmation => {
+        if (confirmation) {
+          event.confirm.resolve();
+          this.privilegesService.removeAction(event.data)
+            .then(result => this.notificationsService.success('DELETE_SUCCEDED'))
+            .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+        } else {
+          event.confirm.reject();
+        }
+      });
   }
 }
