@@ -99,6 +99,10 @@
     "DELETE_SUCCEDED":"Eliminazione riuscita con successo",
     "CANCEL":"Annulla",
     "CONFIRM":"Conferma",
+    "OPEN":"Apri",
+    "CLOSE":"Chiudi",
+    "SHOW_FORM":"Mostra inserimento",
+    "HIDE_FORM":"Nascondi inserimento",
 
     "ROLES":"Ruoli",
     "NEW_ROLE":"Nuovo ruolo",

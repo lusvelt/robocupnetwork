@@ -48,6 +48,10 @@ export class PrivilegesService {
     return this.socketIoService.send('updateSelectedActionTypes', { action, changedActionTypes });
   }
 
+  updateSelectedAction(action, changedAction) {
+    return this.socketIoService.send('updateSelectedAction', { action, changedAction });
+  }
+
   getRoles() {
     return this.socketIoService.get('getRoles');
   }

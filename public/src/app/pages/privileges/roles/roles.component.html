@@ -1,67 +1,66 @@
+<button class = "hideFormButton" [ngClass]="{ 'btn': true, 'btn-success': !showForm, 'btn-danger': showForm }" type="button" (click)="toggleForm()">
+  <i [ngClass]="{ 'fas': true, 'fa-plus': !showForm, 'fa-times': showForm }"></i>
+  {{ (showForm ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
+</button>
 
-<div class="row">
-    <div class="col-md-12">
-      <form (ngSubmit)="onButtonClicked()" #form="ngForm">
-          <div class="form-group">
-        <nb-card>
-          <nb-card-header>{{'NEW_ROLE' | translate}}</nb-card-header>
-            <nb-card-body>
-              <div class="role-name">
-                <label for="input-name" class="sr-only">{{ 'ROLE_NAME' | translate}}</label>
-                <input nbInput
-                [(ngModel)]="role.name"
-                #name="ngModel"
-                id="input-name"
-                name="name"
-                placeholder="{{ 'ROLE_NAME' | translate }}"
-                autofocus
-                fullWidth
-                [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : ''"
-                required>
-                <small class="form-text error" *ngIf="name.touched && name.errors?.required">
-                    {{ 'ROLE_NAME_REQUIRED' | translate }}
-                </small>
-              </div>  
-              <div class="role-description">
-                <textarea nbInput [(ngModel)]="role.description" name="description" rows="5" placeholder="{{'ROLE_DESCRIPTION'|translate}}" class="form-control"></textarea>
-              </div>
-              
-              <div class="dropdown" ngbDropdown>
-                  <button class="btn btn-primary" type="button" ngbDropdownToggle>
-                    {{ 'ACTIONS' | translate }}
-                  </button>
-                  <ul ngbDropdownMenu class="dropdown-menu">
-                      <li class="dropdown-item" *ngFor="let action of actions">
-                          <nb-checkbox name="actionChoose" [(ngModel)]="actionChoose.status">{{ action }}</nb-checkbox>
-                      </li>
-                    </ul>
-              </div>
-              
-              <div class=".col-md-4.offset-md-4">
-                  <div class="container-btn">
-                      <button class="btn-demo" nbButton hero>{{'ROLE_BUTTON'|translate}}</button>
-                  </div>
-              </div>
-            </nb-card-body>
-        </nb-card>
+<form (ngSubmit)="onButtonClicked()" #form="ngForm" [hidden]="!showForm">
+  <div class="form-group">
+  <nb-card>
+    <nb-card-header>{{'NEW_ROLE' | translate}}</nb-card-header>
+    <nb-card-body>
+      <div class="role-name">
+        <label for="input-name" class="sr-only">{{ 'ROLE_NAME' | translate}}</label>
+        <input nbInput
+        [(ngModel)]="role.name"
+        #name="ngModel"
+        id="input-name"
+        name="name"
+        placeholder="{{ 'ROLE_NAME' | translate }}"
+        autofocus
+        fullWidth
+        [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : ''"
+        required>
+        <small class="form-text error" *ngIf="name.touched && name.errors?.required">
+            {{ 'ROLE_NAME_REQUIRED' | translate }}
+        </small>
       </div>  
-     </form>
-     
-     
-     <nb-card>
-        <nb-card-header>
-          {{'ROLES'|translate}}
-        </nb-card-header>
+      <div class="role-description">
+        <textarea nbInput [(ngModel)]="role.description" name="description" rows="5" placeholder="{{'ROLE_DESCRIPTION'|translate}}" class="form-control"></textarea>
+      </div>
       
-        <nb-card-body>
-          <ng2-smart-table [settings]="settings" [source]="source"
-            (createConfirm)="onCreateConfirm($event)"
-            (editConfirm)="onEditConfirm($event)"
-            (deleteConfirm)="onDeleteConfirm($event)">
-          </ng2-smart-table>
-        </nb-card-body>
-      </nb-card>
-  
-    </div>
-  </div> 
-  
+      <div class="dropdown" ngbDropdown>
+          <button class="btn btn-primary" type="button" ngbDropdownToggle>
+            {{ 'ACTIONS' | translate }}
+          </button>
+          <ul ngbDropdownMenu class="dropdown-menu">
+              <li class="dropdown-item" *ngFor="let action of actions">
+                  <nb-checkbox name="actionChoose" [(ngModel)]="actionChoose.status">{{ action }}</nb-checkbox>
+              </li>
+            </ul>
+      </div>
+      
+      <div class=".col-md-4.offset-md-4">
+          <div class="container-btn">
+              <button class="btn-demo" nbButton hero>{{'ROLE_BUTTON'|translate}}</button>
+          </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+  </div>  
+</form>
+
+
+<nb-card>
+<nb-card-header>
+  {{'ROLES'|translate}}
+</nb-card-header>
+
+<nb-card-body>
+  <ng2-smart-table [settings]="settings" [source]="source"
+    (createConfirm)="onCreateConfirm($event)"
+    (editConfirm)="onEditConfirm($event)"
+    (deleteConfirm)="onDeleteConfirm($event)">
+  </ng2-smart-table>
+</nb-card-body>
+</nb-card>
+

@@ -9,6 +9,7 @@ import { PrivilegesService } from '../../../services/privileges.service';
 import { NotificationsService } from '../../../services/notifications.service';
 import { ModalService } from '../../../services/modal.service';
 import { standardConfig } from '../../../config/tables.config';
+import { MultipleSelectDropdownComponent } from '../../../shared/view-cells/multiple-select-dropdown/multiple-select-dropdown.component';
 
 @Component({
   selector: 'ngx-role',
@@ -16,6 +17,7 @@ import { standardConfig } from '../../../config/tables.config';
   styleUrls: ['./roles.component.scss']
 })
 export class RolesComponent implements OnInit {
+  showForm: boolean = false;
   source: DataSource = new DataSource();
   role: any = {};
   actionChoose: any = {};
@@ -43,8 +45,6 @@ export class RolesComponent implements OnInit {
   }
 
 
-  actions: string[] = ['CANCELLA GARA', 'CONFERMA GARA', 'CREA UTENTE'];
-
   onButtonClicked() {
     const role: RoleInterface = this.role;
   }
@@ -63,6 +63,32 @@ export class RolesComponent implements OnInit {
     description: {
       title: 'DESCRIPTION',
       type: 'text',
+    },
+    actions: {
+      title: 'ACTIONS',
+      type: 'custom',
+      renderComponent: MultipleSelectDropdownComponent,
+      onComponentInitFunction: (instance) => {
+        this.privilegesService.getActions()
+          .then(actions => instance.items = actions);
+
+        this.privilegesService.notify('createAction')
+          .subscribe(action => instance.items.push(action));
+
+        this.privilegesService.notify('editAction')
+          .subscribe(action => instance.items.splice(instance.items.findIndex(el => el.id === action.id), 1, action));
+
+        this.privilegesService.notify('removeAction')
+          .subscribe(action => instance.items.splice(instance.items.findIndex(el => el.id === action.id), 1));
+
+        instance.parentNotifier.on('change', changed => {
+          this.privilegesService.updateSelectedAction(instance.rowData, changed)
+            .then(result => this.notificationsService.success('SELECTED_ACTION_UPDATE_SUCCEDED'))
+            .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+        });
+      },
+      addable: false,
+      editable: false
     }
   });
 
@@ -86,6 +112,10 @@ export class RolesComponent implements OnInit {
           event.confirm.reject();
         }
       });
+  }
+
+  toggleForm() {
+    this.showForm = !this.showForm;
   }
 
 }

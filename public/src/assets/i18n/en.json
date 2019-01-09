@@ -99,6 +99,10 @@
     "DELETE_SUCCEDED":"Delete succeded",
     "CANCEL":"Cancel",
     "CONFIRM":"Confirm",
+    "OPEN":"Open",
+    "CLOSE":"Close",
+    "SHOW_FORM":"Show add form",
+    "HIDE_FORM":"Hide add form",
 
     "ROLES":"Roles",
     "NEW_ROLE":"New role",

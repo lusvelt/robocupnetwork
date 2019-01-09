@@ -3,6 +3,7 @@ import { ViewCell } from 'ng2-smart-table';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { EventEmitter } from 'events';
 import * as _ from 'lodash';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'ngx-multiple-select-dropdown',
@@ -19,7 +20,8 @@ export class MultipleSelectDropdownComponent implements ViewCell, OnInit {
 
   parentNotifier: EventEmitter = new EventEmitter();
 
-  constructor(config: NgbDropdownConfig) {
+  constructor(config: NgbDropdownConfig,
+              translateService: TranslateService) {
     config.autoClose = false;
   }
 

@@ -91,6 +91,7 @@ const privilegesIo = (clientsIo, socket) => {
     };
 
     const updateSelectedActionTypes = async (data, callback) => {
+        //da sistemare
         try {
             const _action = data.action;
             const changedActionTypes = data.changedActionTypes;
@@ -152,17 +153,46 @@ const privilegesIo = (clientsIo, socket) => {
             callback(new Error());
         }
     };
+
+    const updateSelectedAction = async (data, callback) => {
+        //da sistemare
+        try {
+            const _action = data.action;
+            const changedAction = data.changedAction;
+            const id = _action.id;
+            const role = await Role.findById(id);
+            const promises = [];
+            changedAction.forEach(async changedAction => {
+                promises.push(new Promise((resolve, reject) => {
+                    Action.findById(changedAction.id)
+                        .then(action => {
+                            if (changedActionType.selected)
+                                return role.addAction(action);
+                            else
+                                return role.removeAction(action);
+                        })
+                        .then(result => resolve(result))
+                        .catch(err => reject(err)); 
+                }));
+            });
+            const result = await Promise.all(promises);
+            callback(result);
+        } catch (err) {
+            callback(new Error());
+        }
+    };
     
 
     socket.on('getActionTypes', getActionTypes);
     socket.on('createActionType', createActionType);
     socket.on('editActionType', editActionType);
     socket.on('removeActionType', removeActionType);
-    
+    socket.on('updateSelectedActionTypes', updateSelectedActionTypes);
+
     socket.on('getActions',getActions);
     socket.on('removeAction', removeAction);
     socket.on('editAction', editAction);
-    socket.on('updateSelectedActionTypes', updateSelectedActionTypes);
+    socket.on('updateSelectedAction', updateSelectedAction);
 
     socket.on('getRoles',getRoles);
     socket.on('removeRole',removeRole);
