@@ -1,17 +1,16 @@
+import { NotificationsService } from './../../../services/notifications.service';
 import { MultipleSelectDropdownComponent } from './../../../shared/view-cells/multiple-select-dropdown/multiple-select-dropdown.component';
 import { Component, OnInit } from '@angular/core';
 import { ActionInterface } from '../../../interfaces/action.interface';
-import { SmartTableService } from '../../../@core/data/smart-table.service';
-import { LocalDataSource } from 'ng2-smart-table';
 import { TranslateService } from '@ngx-translate/core';
 import { PrivilegesService } from '../../../services/privileges.service';
 import { ModalService } from '../../../services/modal.service';
 import { NotificationsService } from '../../../services/notifications.service';
 import { TablesService } from '../../../services/tables.service';
 import { DataSource } from '../../../classes/data-source.class';
-import { standardConfig } from '../../../config/tables.config';
-import { Observable } from 'rxjs/Observable';
-import { EventEmitter } from 'events';
+import { notAddableConfig } from '../../../config/tables.config';
+import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'ngx-action',
@@ -19,21 +18,28 @@ import { EventEmitter } from 'events';
   styleUrls: ['./actions.component.scss']
 })
 export class ActionsComponent implements OnInit {
-  showForm: boolean = false;
+  action: any = {
+    name: '',
+    description: '',
+    actionTypes: [],
+    show: false
+  };
+
   source: DataSource= new DataSource();
-  action: any = {};
   actionChoose: any = {};
 
   constructor(private tablesService: TablesService,
               private translateService: TranslateService,
               private privilegesService: PrivilegesService,
               private notificationsService: NotificationsService,
-              private modalService: ModalService) {
+              private modalService: ModalService,
+              private config: NgbDropdownConfig) {
+                config.autoClose = false;
   }
 
   ngOnInit() {
     this.privilegesService.getActions()
-    .then(action => this.source.load(action))
+    .then(actions => this.source.load(actions))
     .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
 
     this.privilegesService.notify('createAction')
@@ -44,13 +50,36 @@ export class ActionsComponent implements OnInit {
 
     this.privilegesService.notify('removeAction')
       .subscribe(action => this.source.delete(action));
+
+    this.privilegesService.getActionTypes()
+      .then(actionTypes => this.action.actionTypes = actionTypes);
+
+    this.getNotifiedForActionTypes(this.action.actionTypes);
+  }
+
+  getNotifiedForActionTypes(actionTypesArray: any[]) {
+    this.privilegesService.notify('createActionType')
+      .subscribe(actionType => actionTypesArray.push(actionType));
+
+    this.privilegesService.notify('editActionType')
+      .subscribe(actionType => actionTypesArray.splice(actionTypesArray.findIndex(el => el.id === actionType.id), 1, actionType));
+
+    this.privilegesService.notify('removeActionType')
+      .subscribe(actionType => actionTypesArray.splice(actionTypesArray.findIndex(el => el.id === actionType.id), 1));
   }
 
   onButtonClicked() {
-    const action: ActionInterface = this.action;
+    const action: ActionInterface = _.cloneDeep(this.action);
+    action.actionTypes = action.actionTypes.filter((actionType: any) => actionType.selected);
+    this.privilegesService.createAction(action)
+      .then(_action => {
+        this.notificationsService.success('ACTION_CREATED');
+        this.source.insert(_action);
+        this.action.show = false;
+      });
   }
 
-  settings = this.tablesService.getSettings(standardConfig, {
+  settings = this.tablesService.getSettings(notAddableConfig, {
     id: {
       title: 'ID',
       type: 'number',
@@ -68,19 +97,15 @@ export class ActionsComponent implements OnInit {
     actionTypes: {
       title: 'ACTION_TYPES',
       type: 'custom',
+      // filter: false,
       renderComponent: MultipleSelectDropdownComponent,
       onComponentInitFunction: (instance) => {
+        instance.internalArrayKey = 'ActionTypes';
+
         this.privilegesService.getActionTypes()
-          .then(actionTypes => instance.items = actionTypes);
+          .then(actionTypes => instance.parentNotifier.emit('items', actionTypes));
 
-        this.privilegesService.notify('createActionType')
-          .subscribe(actionType => instance.items.push(actionType));
-
-        this.privilegesService.notify('editActionType')
-          .subscribe(actionType => instance.items.splice(instance.items.findIndex(el => el.id === actionType.id), 1, actionType));
-
-        this.privilegesService.notify('removeActionType')
-          .subscribe(actionType => instance.items.splice(instance.items.findIndex(el => el.id === actionType.id), 1));
+        this.getNotifiedForActionTypes(instance.items);
 
         instance.parentNotifier.on('change', changed => {
           this.privilegesService.updateSelectedActionTypes(instance.rowData, changed)
@@ -115,6 +140,6 @@ export class ActionsComponent implements OnInit {
   }
 
   toggleForm() {
-    this.showForm = !this.showForm;
+    this.action.show = !this.action.show;
   }
 }

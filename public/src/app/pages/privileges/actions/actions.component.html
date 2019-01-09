@@ -1,15 +1,15 @@
-<button class = "hideFormButton" [ngClass]="{ 'btn': true, 'btn-success': !showForm, 'btn-danger': showForm }" type="button" (click)="toggleForm()">
-  <i [ngClass]="{ 'fas': true, 'fa-plus': !showForm, 'fa-times': showForm }"></i>
-  {{ (showForm ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
+<button class="mb-3" [ngClass]="{ 'btn': true, 'btn-success': !action.show, 'btn-danger': action.show }" type="button" (click)="toggleForm()">
+  <i [ngClass]="{ 'fas': true, 'fa-plus': !action.show, 'fa-times': action.show }"></i>
+  {{ (action.show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
 </button>
 
 
-<form (ngSubmit)="onButtonClicked()" #form="ngForm" [hidden]="!showForm">
+<form (ngSubmit)="onButtonClicked()" #form="ngForm" [hidden]="!action.show">
   <div class="form-group">
     <nb-card>
       <nb-card-header>{{'NEW_ACTION' | translate}}</nb-card-header>
       <nb-card-body>
-        <div class="action-name">
+        <div class="mb-3">
           <label for="input-name" class="sr-only">{{ 'ACTION_NAME' | translate}}</label>
           <input nbInput
                   [(ngModel)]="action.name"
@@ -25,27 +25,22 @@
             {{ 'ACTION_NAME_REQUIRED' | translate }}
           </small>
         </div>
-        <div class="action-description">
+        <div class="mb-3">
           <textarea nbInput [(ngModel)]="action.description" name="description" rows="5"
                     placeholder="{{'ACTION_DESCRIPTION'|translate}}" class="form-control"></textarea>
         </div>
 
-        <div class="dropdown" ngbDropdown>
+        <div class="mb-3" ngbDropdown>
           <button class="btn btn-primary" type="button" ngbDropdownToggle>
             {{ 'ACTION_TYPES' | translate }}
           </button>
           <ul ngbDropdownMenu class="dropdown-menu">
-            <li class="dropdown-item" *ngFor="let type of actionType">
-              <nb-checkbox name="actionChoose" [(ngModel)]="type.status">{{ type }}</nb-checkbox>
+            <li class="dropdown-item" *ngFor="let actionType of action.actionTypes">
+              <nb-checkbox name="actionChoose" [(ngModel)]="actionType.selected">{{ actionType.name }}</nb-checkbox>
             </li>
           </ul>
         </div>
-
-        <div class=".col-md-4.offset-md-4">
-          <div class="container-btn">
-            <button class="btn-demo" nbButton hero>{{'ACTION_BUTTON'|translate}}</button>
-          </div>
-        </div>
+        <button class="btn btn-primary" nbButton hero>{{'ACTION_BUTTON'|translate}}</button>
       </nb-card-body>
     </nb-card>
   </div>

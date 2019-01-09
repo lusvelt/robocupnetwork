@@ -36,6 +36,10 @@ export class PrivilegesService {
     return this.socketIoService.get('getActions');
   }
 
+  createAction(data) {
+    return this.socketIoService.send('createAction', data);
+  }
+
   removeAction(data) {
     return this.socketIoService.send('removeAction', data);
   }

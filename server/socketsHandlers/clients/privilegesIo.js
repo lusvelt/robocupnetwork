@@ -54,10 +54,35 @@ const privilegesIo = (clientsIo, socket) => {
         }
     };
 
-    const getActions= async(args,callback) => {
+    const getActions = async (args, callback) => {
         try {
             const action = await Action.getActionsList();
             callback(action);
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
+    const createAction = async (_action, callback) => {
+        try {
+            const action = await Action.create(_.omit(_action, ['actionTypes']));
+            if (!action)
+                throw new Error();
+            const promises = [];
+            _action.actionTypes.forEach(_actionType => {
+                promises.push(new Promise((resolve, reject) => {
+                    ActionType.findById(_actionType.id)
+                        .then(actionType => action.addActionType(actionType))
+                        .then(result => resolve(result))
+                        .catch(err => reject(err));
+                }));
+            });
+            const result = await Promise.all(promises);
+            if (!result)
+                throw new Error();
+            action.ActionTypes = _action.actionTypes;
+            callback(action);
+            socket.broadcast.emit('createAction', action);
         } catch (err) {
             callback(new Error());
         }
@@ -98,7 +123,7 @@ const privilegesIo = (clientsIo, socket) => {
             const id = _action.id;
             const action = await Action.findById(id);
             const promises = [];
-            changedActionTypes.forEach(async changedActionType => {
+            changedActionTypes.forEach(changedActionType => {
                 promises.push(new Promise((resolve, reject) => {
                     ActionType.findById(changedActionType.id)
                         .then(actionType => {
@@ -118,7 +143,7 @@ const privilegesIo = (clientsIo, socket) => {
         }
     };
 
-    const getRoles= async(args,callback) => {
+    const getRoles = async(args,callback) => {
         try {
             const roles = await Role.getRolesList();
             callback(roles);
@@ -162,11 +187,11 @@ const privilegesIo = (clientsIo, socket) => {
             const id = _action.id;
             const role = await Role.findById(id);
             const promises = [];
-            changedAction.forEach(async changedAction => {
+            changedAction.forEach(changedAction => {
                 promises.push(new Promise((resolve, reject) => {
                     Action.findById(changedAction.id)
                         .then(action => {
-                            if (changedActionType.selected)
+                            if (changedAction.selected)
                                 return role.addAction(action);
                             else
                                 return role.removeAction(action);
@@ -190,6 +215,7 @@ const privilegesIo = (clientsIo, socket) => {
     socket.on('updateSelectedActionTypes', updateSelectedActionTypes);
 
     socket.on('getActions',getActions);
+    socket.on('createAction', createAction);
     socket.on('removeAction', removeAction);
     socket.on('editAction', editAction);
     socket.on('updateSelectedAction', updateSelectedAction);

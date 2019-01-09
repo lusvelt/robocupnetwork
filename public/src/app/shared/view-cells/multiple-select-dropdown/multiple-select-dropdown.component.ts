@@ -15,8 +15,9 @@ export class MultipleSelectDropdownComponent implements ViewCell, OnInit {
 
   @Input() value;
   @Input() rowData;
-  items: any[];
-  oldItems: any[];
+  items: any[] = [];
+  oldItems: any[] = [];
+  internalArrayKey: string;
 
   parentNotifier: EventEmitter = new EventEmitter();
 
@@ -27,6 +28,10 @@ export class MultipleSelectDropdownComponent implements ViewCell, OnInit {
 
   ngOnInit() {
     this.oldItems = _.cloneDeep(this.items);
+    this.parentNotifier.on('items', items => {
+      this.items = items;
+      this.items.forEach(item => item.selected = this.rowData[this.internalArrayKey].filter(el => el.id === item.id).length > 0);
+    });
   }
 
   toggleDropdown() {

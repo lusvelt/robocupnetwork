@@ -1,5 +1,5 @@
-<div ngbDropdown class="d-inline-block">
-  <button class="btn btn-outline-primary" id="dropdown" ngbDropdownToggle (click)="toggleDropdown()">{{ (showDropdown ? 'CLOSE' : 'OPEN') | translate}}</button>
+<div ngbDropdown class="d-inline-block w-100">
+  <button class="btn btn-outline-primary text-center" id="dropdown" ngbDropdownToggle (click)="toggleDropdown()">{{ (showDropdown ? 'CLOSE' : 'OPEN') | translate}}</button>
     <div ngbDropdownMenu aria-labelledby="dropdown">
       <div class="dropdown-item" *ngFor="let item of items; trackBy: trackByFn">
         <nb-checkbox [(ngModel)]="item.selected">{{ item.name }}</nb-checkbox>
