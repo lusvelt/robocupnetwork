@@ -1,4 +1,4 @@
-export interface ActionType {
+export interface ActionTypeInterface {
     id?: number;
     name: string;
     description: string;

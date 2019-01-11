@@ -8,8 +8,10 @@ import { TablesService } from '../../../services/tables.service';
 import { PrivilegesService } from '../../../services/privileges.service';
 import { NotificationsService } from '../../../services/notifications.service';
 import { ModalService } from '../../../services/modal.service';
-import { standardConfig } from '../../../config/tables.config';
+import { standardConfig, notAddableConfig } from '../../../config/tables.config';
 import { MultipleSelectDropdownComponent } from '../../../shared/view-cells/multiple-select-dropdown/multiple-select-dropdown.component';
+import * as _ from 'lodash';
+import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'ngx-role',
@@ -17,16 +19,22 @@ import { MultipleSelectDropdownComponent } from '../../../shared/view-cells/mult
   styleUrls: ['./roles.component.scss']
 })
 export class RolesComponent implements OnInit {
-  showForm: boolean = false;
+  role: any = {
+    name: '',
+    description: '',
+    actions: [],
+    show: false
+  };
   source: DataSource = new DataSource();
-  role: any = {};
   actionChoose: any = {};
 
   constructor(private tablesService: TablesService,
               private translateService: TranslateService,
               private privilegesService: PrivilegesService,
               private notificationsService: NotificationsService,
-              private modalService: ModalService) {
+              private modalService: ModalService,
+              private config: NgbDropdownConfig) {
+                config.autoClose = false;
   }
 
   ngOnInit() {
@@ -42,14 +50,37 @@ export class RolesComponent implements OnInit {
 
     this.privilegesService.notify('removeRole')
       .subscribe(role => this.source.delete(role));
+
+    this.privilegesService.getActions()
+    .then(actions => this.role.actions = actions);
+
+    this.getNotifiedForActions(this.role.actions);
+  }
+
+  getNotifiedForActions(actionsArray: any[]) {
+    this.privilegesService.notify('createAction')
+      .subscribe(action => actionsArray.push(action));
+
+    this.privilegesService.notify('editAction')
+      .subscribe(action => actionsArray.splice(actionsArray.findIndex(el => el.id === action.id), 1, action));
+
+    this.privilegesService.notify('removeAction')
+      .subscribe(action => actionsArray.splice(actionsArray.findIndex(el => el.id === action.id), 1));
   }
 
 
   onButtonClicked() {
-    const role: RoleInterface = this.role;
+    const role: RoleInterface = _.cloneDeep(this.role);
+    role.actions = role.actions.filter((action: any) => action.selected);
+    this.privilegesService.createRole(role)
+      .then(_role => {
+        this.notificationsService.success('ROLE_CREATED');
+        this.source.insert(_role);
+        this.role.show = false;
+      });
   }
 
-  settings = this.tablesService.getSettings(standardConfig, {
+  settings = this.tablesService.getSettings(notAddableConfig, {
     id: {
       title: 'ID',
       type: 'number',
@@ -69,18 +100,14 @@ export class RolesComponent implements OnInit {
       type: 'custom',
       renderComponent: MultipleSelectDropdownComponent,
       onComponentInitFunction: (instance) => {
+
+        instance.internalArrayKey = 'Actions';
+
+
         this.privilegesService.getActions()
-          .then(actions => instance.items = actions);
+          .then(actions => instance.parentNotifier.emit('items', actions));
 
-        this.privilegesService.notify('createAction')
-          .subscribe(action => instance.items.push(action));
-
-        this.privilegesService.notify('editAction')
-          .subscribe(action => instance.items.splice(instance.items.findIndex(el => el.id === action.id), 1, action));
-
-        this.privilegesService.notify('removeAction')
-          .subscribe(action => instance.items.splice(instance.items.findIndex(el => el.id === action.id), 1));
-
+        this.getNotifiedForActions(instance.items);
         instance.parentNotifier.on('change', changed => {
           this.privilegesService.updateSelectedAction(instance.rowData, changed)
             .then(result => this.notificationsService.success('SELECTED_ACTION_UPDATE_SUCCEDED'))
@@ -115,7 +142,7 @@ export class RolesComponent implements OnInit {
   }
 
   toggleForm() {
-    this.showForm = !this.showForm;
+    this.role.show = !this.role.show;
   }
 
 }

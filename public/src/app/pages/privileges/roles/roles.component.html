@@ -1,14 +1,14 @@
-<button class = "hideFormButton" [ngClass]="{ 'btn': true, 'btn-success': !showForm, 'btn-danger': showForm }" type="button" (click)="toggleForm()">
-  <i [ngClass]="{ 'fas': true, 'fa-plus': !showForm, 'fa-times': showForm }"></i>
-  {{ (showForm ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
+<button class = "mb-3" [ngClass]="{ 'btn': true, 'btn-success': !role.show, 'btn-danger': role.show }" type="button" (click)="toggleForm()">
+  <i [ngClass]="{ 'fas': true, 'fa-plus': !role.show, 'fa-times': role.show }"></i>
+  {{ (role.show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
 </button>
 
-<form (ngSubmit)="onButtonClicked()" #form="ngForm" [hidden]="!showForm">
+<form (ngSubmit)="onButtonClicked()" #form="ngForm" [hidden]="!role.show">
   <div class="form-group">
   <nb-card>
     <nb-card-header>{{'NEW_ROLE' | translate}}</nb-card-header>
     <nb-card-body>
-      <div class="role-name">
+      <div class="mb-3">
         <label for="input-name" class="sr-only">{{ 'ROLE_NAME' | translate}}</label>
         <input nbInput
         [(ngModel)]="role.name"
@@ -24,26 +24,21 @@
             {{ 'ROLE_NAME_REQUIRED' | translate }}
         </small>
       </div>  
-      <div class="role-description">
+      <div class="mb-3">
         <textarea nbInput [(ngModel)]="role.description" name="description" rows="5" placeholder="{{'ROLE_DESCRIPTION'|translate}}" class="form-control"></textarea>
       </div>
       
-      <div class="dropdown" ngbDropdown>
+      <div class="mb-3" ngbDropdown>
           <button class="btn btn-primary" type="button" ngbDropdownToggle>
             {{ 'ACTIONS' | translate }}
           </button>
           <ul ngbDropdownMenu class="dropdown-menu">
-              <li class="dropdown-item" *ngFor="let action of actions">
-                  <nb-checkbox name="actionChoose" [(ngModel)]="actionChoose.status">{{ action }}</nb-checkbox>
+              <li class="dropdown-item" *ngFor="let action of role.actions">
+                  <nb-checkbox name="actionChoose" [(ngModel)]="action.selected">{{ action.name }}</nb-checkbox>
               </li>
             </ul>
       </div>
-      
-      <div class=".col-md-4.offset-md-4">
-          <div class="container-btn">
-              <button class="btn-demo" nbButton hero>{{'ROLE_BUTTON'|translate}}</button>
-          </div>
-      </div>
+      <button class="btn btn-primary" nbButton hero>{{'ROLE_BUTTON'|translate}}</button>
     </nb-card-body>
   </nb-card>
   </div>  

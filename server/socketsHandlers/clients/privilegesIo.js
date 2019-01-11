@@ -88,6 +88,31 @@ const privilegesIo = (clientsIo, socket) => {
         }
     };
 
+    const createRole = async (_role, callback) => {
+        try {
+            const role = await Role.create(_.omit(_role, ['actions']));
+            if (!role)
+                throw new Error();
+            const promises = [];
+            _role.actions.forEach(_action => {
+                promises.push(new Promise((resolve, reject) => {
+                    Action.findById(_action.id)
+                        .then(action => role.assAction(action))
+                        .then(result => resolve(result))
+                        .catch(err => reject(err));
+                }));
+            });
+            const result = await Promise.all(promises);
+            if (!result)
+                throw new Error();
+            role.dataValues.Actions = _role.actions;
+            callback(action);
+            socket.broadcast.emit('createRole', role);
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
     const removeAction = async (_action, callback) => {
         try {
             const id = _action.id;
@@ -219,7 +244,7 @@ const privilegesIo = (clientsIo, socket) => {
     socket.on('removeAction', removeAction);
     socket.on('editAction', editAction);
     socket.on('updateSelectedAction', updateSelectedAction);
-
+    socket.on('createRole',createRole);
     socket.on('getRoles',getRoles);
     socket.on('removeRole',removeRole);
     socket.on('editRole', editRole);
