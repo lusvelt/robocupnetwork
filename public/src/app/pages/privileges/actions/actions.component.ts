@@ -5,7 +5,6 @@ import { ActionInterface } from '../../../interfaces/action.interface';
 import { TranslateService } from '@ngx-translate/core';
 import { PrivilegesService } from '../../../services/privileges.service';
 import { ModalService } from '../../../services/modal.service';
-import { NotificationsService } from '../../../services/notifications.service';
 import { TablesService } from '../../../services/tables.service';
 import { DataSource } from '../../../classes/data-source.class';
 import { notAddableConfig } from '../../../config/tables.config';

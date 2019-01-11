@@ -80,7 +80,7 @@ const privilegesIo = (clientsIo, socket) => {
             const result = await Promise.all(promises);
             if (!result)
                 throw new Error();
-            action.ActionTypes = _action.actionTypes;
+            action.dataValues.ActionTypes = _action.actionTypes;
             callback(action);
             socket.broadcast.emit('createAction', action);
         } catch (err) {
