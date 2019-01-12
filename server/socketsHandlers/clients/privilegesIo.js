@@ -97,7 +97,7 @@ const privilegesIo = (clientsIo, socket) => {
             _role.actions.forEach(_action => {
                 promises.push(new Promise((resolve, reject) => {
                     Action.findById(_action.id)
-                        .then(action => role.assAction(action))
+                        .then(action => role.addAction(action))
                         .then(result => resolve(result))
                         .catch(err => reject(err));
                 }));
@@ -106,7 +106,7 @@ const privilegesIo = (clientsIo, socket) => {
             if (!result)
                 throw new Error();
             role.dataValues.Actions = _role.actions;
-            callback(action);
+            callback(role);
             socket.broadcast.emit('createRole', role);
         } catch (err) {
             callback(new Error());
