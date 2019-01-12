@@ -5,7 +5,7 @@ import { NgModule, Pipe } from '@angular/core';
 export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'DASHBOARD',
-    icon: 'nb-home',
+    icon: 'fa fa-home fa-lg',
     link: '/pages/dashboard',
     home: true,
   },
@@ -15,7 +15,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'COMPETITIONS',
-    icon: 'nb-keypad',
+    icon: 'fa fa-flag-checkered',
     link: '/pages/ui-features',
     children: [
       {
@@ -30,7 +30,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'PRIVILEGES',
-    icon: 'nb-keypad',
+    icon: 'fas fa-shield-alt',
     link: '/pages/privileges',
     children: [
       {
@@ -49,22 +49,22 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'USERS',
-    icon: 'nb-person',
-    link: ' ',
+    icon: 'fa fa-user',
+    link: ' /pages/users',
     children: [
       {
         title: 'NEW_USER',
-        link: '/pages/new-user',
+        link: '/pages/users/new-user',
       },
       {
         title: 'MANAGE_USERS',
-        link: '/pages/manage-user',
+        link: '/pages/users/manage-user',
       }
     ]
   },
   {
     title: 'REFEREES',
-    icon: 'nb-keypad',
+    icon: 'fas fa-user-tie',
     link: ' ',
     children: [
       {
@@ -79,7 +79,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'SCHOOLS',
-    icon: 'nb-keypad',
+    icon: 'fas fa-school',
     link: ' ',
     children: [
       {
@@ -94,7 +94,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'TEAMS',
-    icon: 'nb-keypad',
+    icon: 'fas fa-users',
     link: ' ',
     children: [
       {
@@ -109,7 +109,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'PHASES',
-    icon: 'nb-keypad',
+    icon: 'fas fa-list-ul',
     link: ' ',
     children: [
       {
@@ -120,7 +120,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'RUNS',
-    icon: 'nb-play',
+    icon: 'fas fa-trophy',
     link: ' ',
     children: [
       {
