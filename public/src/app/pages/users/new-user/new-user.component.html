@@ -1,3 +1,70 @@
-<p>
-  new-user works!
-</p>
+  <div class="form-group">
+    <nb-card>
+      <nb-card-header>{{'NEW_USER' | translate}}</nb-card-header>
+      <nb-card-body>
+        <div class="row full-name-inputs mb-3">
+          <div class="col-sm-6 input-group">
+            <input nbInput [(ngModel)]="user.name" #name="ngModel" id="input-name" name="name" placeholder="{{ 'USER_NAME' | translate }}"
+            autofocus fullWidth [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : ''" required>
+            <small class="form-text error" *ngIf="name.touched && name.errors?.required">
+              {{ 'USER_NAME_REQUIRED' | translate }}
+            </small>
+          </div>
+          <div class="col-sm-6 input-group">
+            <input nbInput [(ngModel)]="user.surname" #surname="ngModel" id="input-surname" name="surname" placeholder="{{ 'USER_SURNAME' | translate }}"
+            autofocus fullWidth [status]="surname.dirty ? (surname.invalid  ? 'danger' : 'success') : ''" required>
+            <small class="form-text error" *ngIf="surname.touched && surname.errors?.required">
+              {{ 'USER_SURNAME_REQUIRED' | translate }}
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="input-email" class="sr-only">{{ 'USER_EMAIL' | translate}}</label>
+          <input nbInput [(ngModel)]="user.email" #email="ngModel" id="input-email" name="email" placeholder="{{ 'USER_EMAIL' | translate }}"
+            autofocus fullWidth [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''" required>
+          <small class="form-text error" *ngIf="email.touched && email.errors?.required">
+            {{ 'USER_EMAIL_REQUIRED' | translate }}
+          </small>
+        </div>
+
+        <div class="mb-3">
+          <label for="input-password" class="sr-only">{{ 'USER_PASSWORD' | translate}}</label>
+          <input nbInput [(ngModel)]="user.password" #password="ngModel" id="input-password" name="password" placeholder="{{ 'USER_PASSWORD' | translate }}"
+            autofocus fullWidth [status]="password.dirty ? (password.invalid  ? 'danger' : 'success') : ''" required>
+          <small class="form-text error" *ngIf="password.touched && password.errors?.required">
+            {{ 'USER_PASSWORD_REQUIRED' | translate }}
+          </small>
+        </div>
+
+        <div class="mb-3">
+          <nb-checkbox status="success" class="col-sm-4 ">Admin</nb-checkbox>
+        </div>
+
+        <div class="mb-3" ngbDropdown>
+          <button class="btn btn-primary" type="button" ngbDropdownToggle>
+            {{ 'ROLE' | translate }}
+          </button>
+          <ul ngbDropdownMenu class="dropdown-menu">
+            <li class="dropdown-item" *ngFor="let role of user.roles">
+              <nb-checkbox name="actionChoose" [(ngModel)]="roles.selected">{{ roles.name }}</nb-checkbox>
+            </li>
+          </ul>
+        </div>
+
+        <div class="mb-3">
+          <input nbInput
+                placeholder="Form Picker"
+                [nbDatepicker]="formpicker">
+          <nb-datepicker #formpicker></nb-datepicker>
+        </div>
+
+
+
+
+        <div class="mb-3">
+          <button class="btn btn-primary" nbButton hero>{{'USER_BUTTON'|translate}}</button>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
