@@ -1,3 +1,4 @@
+<form (ngSubmit)="onButtonClicked()" #form="ngForm">
   <div class="form-group">
     <nb-card>
       <nb-card-header>{{'NEW_USER' | translate}}</nb-card-header>
@@ -38,25 +39,29 @@
         </div>
 
         <div class="mb-3">
-          <nb-checkbox status="success" class="col-sm-4 ">Admin</nb-checkbox>
+<nb-checkbox status="success" class="col-sm-4" [(ngModel)]="user.isAdmin" #isAdmin="ngModel" name="isAdmin">Admin</nb-checkbox>
         </div>
 
-        <div class="mb-3" ngbDropdown>
+      <div class="mb-3" ngbDropdown [hidden]="user.isAdmin">
           <button class="btn btn-primary" type="button" ngbDropdownToggle>
             {{ 'ROLE' | translate }}
           </button>
           <ul ngbDropdownMenu class="dropdown-menu">
             <li class="dropdown-item" *ngFor="let role of user.roles">
-              <nb-checkbox name="actionChoose" [(ngModel)]="roles.selected">{{ roles.name }}</nb-checkbox>
+              <nb-checkbox name="actionChoose" [(ngModel)]="role.selected" >{{ role.name }}</nb-checkbox>
             </li>
           </ul>
         </div>
 
         <div class="mb-3">
           <input nbInput
-                placeholder="Form Picker"
-                [nbDatepicker]="formpicker">
-          <nb-datepicker #formpicker></nb-datepicker>
+                placeholder="{{'BIRTHDATE'| translate}}"
+                [nbDatepicker]="formpicker"
+                name="birthdate"
+                #birthdate="ngModel"
+                [(ngModel)]="user.birthdate"
+                >
+      <nb-datepicker #formpicker></nb-datepicker>
         </div>
 
 
