@@ -8,11 +8,7 @@ const Place = sequelize.define('Place', {
     postalCode: { type: Sequelize.CHAR(5), allowNull: false },
     province: { type: Sequelize.STRING },
     region: { type: Sequelize.STRING },
-    county: { type: Sequelize.STRING, allowNull: false }
+    country: { type: Sequelize.STRING, allowNull: false }
 });
-
-Place.isDefine = () => {
-    console.log(sequelize.isDefined('Place'));
-};
 
 module.exports = Place;

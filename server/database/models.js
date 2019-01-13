@@ -37,17 +37,17 @@ module.exports = {
     Occurence,
     Param,
     Phase,
-    Place,
     Robot,
     RobotImage,
     RobotType,
     Role,
     Run,
-    School,
     SchoolType,
     Session,
     Shift,
     Sign,
     Team,
-    User
+    User,
+    Place,
+    School
 };

@@ -14,7 +14,12 @@ const {
     Role,
     Action,
     ActionType,
-    Sign
+    Sign,
+    Place,
+    School,
+    SchoolType,
+    Category,
+    Event
 } = require('./models');
 
 const {
@@ -29,7 +34,8 @@ const {
     ActionIsOfType,
     ShiftIncludesLineup,
     RunInvolvesLineup,
-    UserHasRoleInManifestation
+    UserHasRoleInManifestation,
+    TeamHasUser
 } = require('./associationTables');
 
 const runFk = utils.getForeignKey(Run);
@@ -41,14 +47,42 @@ const teamFk = utils.getForeignKey(Team);
 const phaseFk = utils.getForeignKey(Phase);
 const fieldFk = utils.getForeignKey(Field);
 const lineupFk = utils.getForeignKey(Lineup);
-const roleFK = utils.getForeignKey(Role);
+const roleFk = utils.getForeignKey(Role);
 const actionFk = utils.getForeignKey(Action);
 const actionTypeFk = utils.getForeignKey(ActionType);
 const shiftFk = utils.getForeignKey(Shift);
 const signFk = utils.getForeignKey(Sign);
 const manifestationHasUserFk = utils.getForeignKey(ManifestationHasUser);
+const placeFk = utils.getForeignKey(Place);
+const schoolTypeFk = utils.getForeignKey(SchoolType);
+const categoryFk = utils.getForeignKey(Category);
+
 // EXAMPLE Session - Shift | 1:1
 // Session.hasOne(Shift, { foreignKey: sessionFk });
+
+// Category - Params | 1:N
+Category.hasMany(Param, { foreignKey: categoryFk });
+
+// Phase - Phase | 1:1
+Phase.hasOne(Phase, { foreignKey: 'nextPhaseId'});
+
+// Phase - Category | 1:N
+Category.hasMany(Phase, { foreignKey: categoryFk });
+
+// Event - Event | 1:1
+Event.hasOne(Event, { foreignKey: 'triggerId'});
+
+// Event - Category | 1:N
+Category.hasMany(Event, { foreignKey: categoryFk });
+
+// School - SchoolTypes | 1:N
+SchoolType.hasMany(School, { foreignKey: schoolTypeFk });
+
+// Place - Manifestation | 1:N
+Place.hasMany(Manifestation, { foreignKey: placeFk });
+
+// Place - School | 1:N
+Place.hasMany(School, { foreignKey: placeFk });
 
 // Session - Shift | 1:N
 Session.hasMany(Shift, { foreignKey: sessionFk });
@@ -57,7 +91,7 @@ Session.hasMany(Shift, { foreignKey: sessionFk });
 Run.belongsToMany(Param, { through: RunHasParam, foreignKey: runFk });
 Param.belongsToMany(Run, { through: RunHasParam, foreignKey: paramFk });
 
-// Manifestation - User | N : M ('../database/associationTables/ManifestationHasUser.js')
+// Manifestation - User | N:M ('../database/associationTables/ManifestationHasUser.js')
 Manifestation.belongsToMany(User, { through: ManifestationHasUser, foreignKey: manifestationFk });
 User.belongsToMany(Manifestation, { through: ManifestationHasUser, foreignKey: userFk });
 
@@ -82,7 +116,7 @@ Lineup.belongsToMany(Phase, { through: LineupIsInPhase, foreignKey: lineupFk });
 Phase.belongsToMany(Lineup, { through: LineupIsInPhase, foreignKey: lineupFk });
 
 // Role - Action | N:M ('../database/associationTables/RoleCanDoAction.js)
-Role.belongsToMany(Action, { through: RoleCanDoAction, foreignKey: roleFK });
+Role.belongsToMany(Action, { through: RoleCanDoAction, foreignKey: roleFk });
 Action.belongsToMany(Role, { through: RoleCanDoAction, foreignKey: actionFk });
 
 // Action - ActionType | N:M ('../database/associationTables/ActionIsOfType.js)
@@ -101,4 +135,9 @@ Sign.hasMany(RunInvolvesLineup, { foreignKey: signFk});
 
 // ManifestationHasUser - Role | N:M ('../database/associationTables/UserHasRoleInManifestation.js')
 ManifestationHasUser.belongsToMany(Role, { through: UserHasRoleInManifestation, foreignKey: manifestationHasUserFk });
-Role.belongsToMany(ManifestationHasUser, { through: UserHasRoleInManifestation, foreignKey: roleFK });
+Role.belongsToMany(ManifestationHasUser, { through: UserHasRoleInManifestation, foreignKey: roleFk });
+
+// Team - User - Manifestation | N:M ('../database/associationTables/TeamHasUser.js)
+Team.belongsToMany(User, { through: TeamHasUser, foreignKey: teamFk });
+User.belongsToMany(Team, { through: TeamHasUser, foreignKey: userFk });
+Manifestation.hasMany(TeamHasUser, { foreignKey: manifestationFk });
