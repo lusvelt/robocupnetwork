@@ -25,7 +25,7 @@
              [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : ''"
              required>
       <small class="form-text error" *ngIf="name.invalid && name.touched && name.errors?.required">
-        {{ 'REGISTER_NAME_REQUIRED' | translate }}
+        {{ 'NAME_REQUIRED' | translate }}
       </small>
     </div>
 
@@ -42,7 +42,7 @@
              [status]="surname.dirty ? (surname.invalid  ? 'danger' : 'success') : ''"
              required>
       <small class="form-text error" *ngIf="surname.invalid && surname.touched && surname.errors?.required">
-        {{ 'REGISTER_SURNAME_REQUIRED' | translate }}
+        {{ 'SURNAME_REQUIRED' | translate }}
       </small>
     </div>
 
@@ -59,35 +59,35 @@
              [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
              required>
       <small class="form-text error" *ngIf="email.invalid && email.touched && email.errors?.required">
-        {{ 'REGISTER_EMAIL_REQUIRED' | translate }}
+        {{ 'EMAIL_REQUIRED' | translate }}
       </small>
       <small class="form-text error"
          *ngIf="email.invalid && email.touched && email.errors?.pattern">
-         {{ 'REGISTER_EMAIL_REALONE' | translate }}
+         {{ 'EMAIL_REALONE' | translate }}
       </small>
     </div>
 
     <div class="form-group">
-      <label for="input-password" class="sr-only">{{ 'REGISTER_PASSWORD' | translate }}</label>
+      <label for="input-password" class="sr-only">{{ 'PASSWORD' | translate }}</label>
       <input nbInput
              [(ngModel)]="user.password"
              #password="ngModel"
              type="password"
              id="input-password"
              name="password"
-             placeholder="{{ 'REGISTER_PASSWORD' | translate }}"
+             placeholder="{{ 'PASSWORD' | translate }}"
              fullWidth
              [status]="password.dirty ? (password.invalid  ? 'danger' : 'success') : ''"
              required
              [minlength]="passwordRange.minLength"
              [maxlength]="passwordRange.maxLength">
       <small class="form-text error" *ngIf="password.invalid && password.touched && password.errors?.required">
-        {{ 'REGISTER_PASSWORD_REQUIRED' | translate }}
+        {{ 'PASSWORD_REQUIRED' | translate }}
       </small>
       <small
         class="form-text error"
         *ngIf="password.invalid && password.touched && (password.errors?.minlength || password.errors?.maxlength)">
-        {{ 'REGISTER_PASSWORD_LENGTH_ERROR' | translate:passwordRange }}
+        {{ 'PASSWORD_LENGTH_ERROR' | translate:passwordRange }}
       </small>
     </div>
 
@@ -99,18 +99,18 @@
              type="password"
              id="input-re-password"
              name="rePass"
-             placeholder="{{ 'REGISTER_CONFIRM_PASSWORD' | translate }}"
+             placeholder="{{ 'CONFIRM_PASSWORD' | translate }}"
              fullWidth
              [status]="rePass.dirty ? (rePass.invalid || password.value != rePass.value  ? 'danger' : 'success') : ''"
              required>
       <small class="form-text error"
          *ngIf="rePass.invalid && rePass.touched && rePass.errors?.required">
-         {{ 'REGISTER_PASSWORD_CONFIRMATION_REQUIRED' | translate }}
+         {{ 'PASSWORD_CONFIRMATION_REQUIRED' | translate }}
       </small>
       <small
         class="form-text error"
         *ngIf="rePass.touched && password.value != rePass.value && !rePass.errors?.required">
-        {{ 'REGISTER_PASSWORD_CONFIRMATION_ERROR' | translate }}
+        {{ 'PASSWORD_CONFIRMATION_ERROR' | translate }}
       </small>
     </div>
 

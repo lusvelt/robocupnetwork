@@ -4,7 +4,7 @@ export interface UserInterface {
     name: string;
     surname: string;
     email: string;
-    birthdate?: Date;
+    birthDate: Date;
     password?: string;
     isAdmin: boolean;
     roles: RoleInterface [];

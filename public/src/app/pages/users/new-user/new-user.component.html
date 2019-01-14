@@ -1,50 +1,86 @@
 <form (ngSubmit)="onButtonClicked()" #form="ngForm">
   <div class="form-group">
     <nb-card>
-      <nb-card-header>{{'NEW_USER' | translate}}</nb-card-header>
+      <nb-card-header>{{'NAME' | translate}}</nb-card-header>
       <nb-card-body>
         <div class="row full-name-inputs mb-3">
           <div class="col-sm-6 input-group">
-            <input nbInput [(ngModel)]="user.name" #name="ngModel" id="input-name" name="name" placeholder="{{ 'USER_NAME' | translate }}"
+            <input nbInput [(ngModel)]="user.name" #name="ngModel" id="input-name" name="name" placeholder="{{ 'NAME' | translate }}"
             autofocus fullWidth [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : ''" required>
             <small class="form-text error" *ngIf="name.touched && name.errors?.required">
-              {{ 'USER_NAME_REQUIRED' | translate }}
+              {{ 'NAME_REQUIRED' | translate }}
             </small>
+            <small class="form-text error" *ngIf="surname.touched && surname.errors?.required">
+              {{'  '}} 
+             </small>
           </div>
           <div class="col-sm-6 input-group">
-            <input nbInput [(ngModel)]="user.surname" #surname="ngModel" id="input-surname" name="surname" placeholder="{{ 'USER_SURNAME' | translate }}"
+            <input nbInput [(ngModel)]="user.surname" #surname="ngModel" id="input-surname" name="surname" placeholder="{{ 'SURNAME' | translate }}"
             autofocus fullWidth [status]="surname.dirty ? (surname.invalid  ? 'danger' : 'success') : ''" required>
             <small class="form-text error" *ngIf="surname.touched && surname.errors?.required">
-              {{ 'USER_SURNAME_REQUIRED' | translate }}
+              {{ 'SURNAME_REQUIRED' | translate }}
+            </small>
+            <small class="form-text error" *ngIf="name.touched && name.errors?.required">
+             {{'  '}} 
             </small>
           </div>
         </div>
 
         <div class="mb-3">
-          <label for="input-email" class="sr-only">{{ 'USER_EMAIL' | translate}}</label>
-          <input nbInput [(ngModel)]="user.email" #email="ngModel" id="input-email" name="email" placeholder="{{ 'USER_EMAIL' | translate }}"
+          <label for="input-email" class="sr-only">{{ 'EMAIL' | translate}}</label>
+          <input nbInput [(ngModel)]="user.email" #email="ngModel" id="input-email" pattern=".+@.+..+" name="email" placeholder="{{ 'EMAIL' | translate }}"
             autofocus fullWidth [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''" required>
           <small class="form-text error" *ngIf="email.touched && email.errors?.required">
-            {{ 'USER_EMAIL_REQUIRED' | translate }}
+            {{ 'EMAIL_REQUIRED' | translate }}
+          </small>
+          <small class="form-text error" *ngIf="email.invalid && email.touched && email.errors?.pattern">
+            {{ 'EMAIL_REALONE' | translate }}
           </small>
         </div>
 
         <div class="mb-3">
-          <label for="input-password" class="sr-only">{{ 'USER_PASSWORD' | translate}}</label>
-          <input nbInput [(ngModel)]="user.password" #password="ngModel" id="input-password" name="password" placeholder="{{ 'USER_PASSWORD' | translate }}"
-            autofocus fullWidth [status]="password.dirty ? (password.invalid  ? 'danger' : 'success') : ''" required>
+          <label for="input-password" class="sr-only">{{ 'PASSWORD' | translate}}</label>
+          <input nbInput [(ngModel)]="user.password" type="password" #password="ngModel" id="input-password" name="password" placeholder="{{ 'PASSWORD' | translate }}"
+            autofocus fullWidth [status]="password.dirty ? (password.invalid  ? 'danger' : 'success') : ''" required [minlength]="passwordRange.minLength" [maxlength]="passwordRange.maxLength">
           <small class="form-text error" *ngIf="password.touched && password.errors?.required">
-            {{ 'USER_PASSWORD_REQUIRED' | translate }}
+            {{ 'PASSWORD_REQUIRED' | translate }}
+          </small>
+          <small
+             class="form-text error" *ngIf="password.invalid && password.touched && (password.errors?.minlength || password.errors?.maxlength)">
+            {{ 'PASSWORD_LENGTH_ERROR' | translate:passwordRange }}
           </small>
         </div>
 
         <div class="mb-3">
-<nb-checkbox status="success" class="col-sm-4" [(ngModel)]="user.isAdmin" #isAdmin="ngModel" name="isAdmin">Admin</nb-checkbox>
+          <label for="input-re-password" class="sr-only">{{ 'CONFIRM_PASSWORD' | translate }}</label>
+          <input nbInput
+                 [(ngModel)]="user.confirmPassword"
+                 #rePass="ngModel"
+                 type="password"
+                 id="input-re-password"
+                 name="rePass"
+                 placeholder="{{ 'CONFIRM_PASSWORD' | translate }}"
+                 fullWidth
+                 [status]="rePass.dirty ? (rePass.invalid || password.value != rePass.value  ? 'danger' : 'success') : ''"
+                 required>
+          <small class="form-text error"
+             *ngIf="rePass.invalid && rePass.touched && rePass.errors?.required">
+             {{ 'PASSWORD_CONFIRMATION_REQUIRED' | translate }}
+          </small>
+          <small
+            class="form-text error"
+            *ngIf="rePass.touched && password.value != rePass.value && !rePass.errors?.required">
+            {{ 'PASSWORD_CONFIRMATION_ERROR' | translate }}
+          </small>
+        </div>
+
+        <div class="mb-3">
+          <nb-checkbox status="success" class="col-sm-4" [(ngModel)]="user.isAdmin" #isAdmin="ngModel" name="isAdmin">Admin</nb-checkbox>
         </div>
 
       <div class="mb-3" ngbDropdown [hidden]="user.isAdmin">
           <button class="btn btn-primary" type="button" ngbDropdownToggle>
-            {{ 'ROLE' | translate }}
+            {{ 'ROLES' | translate }}
           </button>
           <ul ngbDropdownMenu class="dropdown-menu">
             <li class="dropdown-item" *ngFor="let role of user.roles">
@@ -57,9 +93,9 @@
           <input nbInput
                 placeholder="{{'BIRTHDATE'| translate}}"
                 [nbDatepicker]="formpicker"
-                name="birthdate"
+                name="birthDate"
                 #birthdate="ngModel"
-                [(ngModel)]="user.birthdate"
+                [(ngModel)]="user.birthDate"
                 >
       <nb-datepicker #formpicker></nb-datepicker>
         </div>

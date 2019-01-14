@@ -6,9 +6,9 @@ const manifestationIo = (clientsIo, socket) => {
         try {
             const manifestation = await Manifestation.create(_manifestation);
             if(!manifestation)
-                throw new Error();
-            callback(_manifestation);
-            socket.broadcast.emit('createManifestation',_manifestation);
+                throw new Error();  
+            callback(manifestation);
+            socket.broadcast.emit('createManifestation',manifestation);
         } catch (err) {
             callback (new Error());
         }

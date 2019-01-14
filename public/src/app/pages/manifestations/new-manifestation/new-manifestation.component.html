@@ -24,12 +24,12 @@
 
         <div class="mb-3">
           <input nbInput
-              placeholder="{{'DATA_RANGE'|translate}}"
+              placeholder="{{'MANIFESTATION_DATE'|translate}}"
               [nbDatepicker]="rangepicker"
               type="text"
               name="date"
               #date="ngModel"
-              [(ngModel)]="manifestation.date"
+              [(ngModel)]="manifestation"
               >
         <nb-rangepicker #rangepicker></nb-rangepicker>
         </div>

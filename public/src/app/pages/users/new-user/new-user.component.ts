@@ -6,6 +6,7 @@ import { NotificationsService } from '../../../services/notifications.service';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as _ from 'lodash';
 import { TranslateService } from '@ngx-translate/core';
+import { values } from '../../../config/values.config';
 @Component({
   selector: 'ngx-new-user',
   templateUrl: './new-user.component.html',
@@ -15,11 +16,16 @@ export class NewUserComponent implements OnInit {
   user: any = {
     name: '',
     surname: '',
-    birthdate: '',
+    birthDate: '',
     email: '',
     password: '',
     isAdmin: false,
     roles: []
+  };
+
+  passwordRange = {
+    minLength: values.passwordMinLength,
+    maxLength: values.passwordMaxLength
   };
 
 
@@ -52,12 +58,12 @@ export class NewUserComponent implements OnInit {
   }
 
   onButtonClicked() {
-    const user: UserInterface = _.cloneDeep(this.user);
+    const user: UserInterface = _.omit(this.user, ['confirmPassword']);
+    user.birthDate = new Date(user.birthDate);
     user.roles = user.roles.filter((role: any) => role.selected);
     this.usersService.createUser(user)
     .then(_user => {
-      //console.log(this.user);
-      this.notificationsService.success('ROLE_CREATED');
+      this.notificationsService.success('USER_CREATED');
     });
   }
 }

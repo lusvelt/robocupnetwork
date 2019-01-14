@@ -9,6 +9,7 @@ import { ModalService } from '../../../services/modal.service';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as _ from 'lodash';
 import { notAddableConfig } from '../../../config/tables.config';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'ngx-new-manifestation',
@@ -19,7 +20,6 @@ export class NewManifestationComponent implements OnInit {
   manifestation: any = {
     name: '',
     description: '',
-    date: [],
     show: false
   };
   source: DataSource = new DataSource();
@@ -28,7 +28,8 @@ export class NewManifestationComponent implements OnInit {
               private notificationsService: NotificationsService,
               private modalService: ModalService,
               private manifestationsService: ManifestationsService,
-              private config: NgbDropdownConfig) {
+              private config: NgbDropdownConfig,
+              private datePipe: DatePipe) {
                 config.autoClose = false;
                }
 
@@ -49,7 +50,9 @@ export class NewManifestationComponent implements OnInit {
 
   onButtonClicked() {
     const manifestation: ManifestationInterface = _.cloneDeep(this.manifestation);
-    console.log(manifestation);
+
+    manifestation.start = new Date(this.manifestation.start);
+    manifestation.end = new Date(this.manifestation.end);
     this.manifestationsService.createManifestation(manifestation)
       .then(_manifestation => {
         this.notificationsService.success('MANIFESTATION_CREATED');
@@ -73,8 +76,12 @@ export class NewManifestationComponent implements OnInit {
       title: 'DESCRIPTION',
       type: 'text',
     },
-    date: {
-      title: 'DATE',
+    start: {
+      title: 'START',
+      type: 'date',
+    },
+    end: {
+      title: 'END',
       type: 'date',
     },
   });
