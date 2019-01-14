@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const User = require('../../models/User');
 const Role = require('../../models/Role');
+const utils = require('../../database/utils');
 
 const usersIo = (clientsIo, socket) => {
 /*const createAction = async (_action, callback) => {
@@ -30,6 +31,8 @@ const usersIo = (clientsIo, socket) => {
   };*/
 
     const createUser = async (_user, callback) => {
+        const date = utils.getDate(_user.birthdate);
+        _user.birthdate = date;
         try {
             const user = await User.create(_.omit(_user,['roles']));
             if(!user)
@@ -52,7 +55,10 @@ const usersIo = (clientsIo, socket) => {
         } catch (err) {
             callback (new Error());
         }
+        console.log(_user);
     };
+
+    socket.on('createUser', createUser);
 };
 
 module.exports = usersIo;

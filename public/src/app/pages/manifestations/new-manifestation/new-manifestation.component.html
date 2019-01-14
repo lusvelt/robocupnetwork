@@ -1,0 +1,55 @@
+<button class="mb-3" [ngClass]="{ 'btn': true, 'btn-success': !manifestation.show, 'btn-danger': manifestation.show }" type="button"
+  (click)="toggleForm()">
+  <i [ngClass]="{ 'fas': true, 'fa-plus': !manifestation.show, 'fa-times': manifestation.show }"></i>
+  {{ (manifestation.show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
+</button>
+
+<form (ngSubmit)="onButtonClicked()" #form="ngForm" [hidden]="!manifestation.show">
+  <div class="form-group">
+    <nb-card>
+      <nb-card-header>{{'NEW_MANIFESTATION' | translate}}</nb-card-header>
+      <nb-card-body>
+        <div class="mb-3">
+          <label for="input-name" class="sr-only">{{ 'MANIFESTATION_NAME' | translate}}</label>
+          <input nbInput [(ngModel)]="manifestation.name" #name="ngModel" id="input-name" name="name" placeholder="{{ 'MANIFESTATION_NAME' | translate }}"
+            autofocus fullWidth [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : ''" required>
+          <small class="form-text error" *ngIf="name.touched && name.errors?.required">
+            {{ 'MANIFESTATION_NAME_REQUIRED' | translate }}
+          </small>
+        </div>
+        <div class="mb-3">
+          <textarea nbInput [(ngModel)]="manifestation.description" name="description" rows="5" placeholder="{{'MANIFESTATION_DESCRIPTION'|translate}}"
+            class="form-control"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <input nbInput
+              placeholder="{{'DATA_RANGE'|translate}}"
+              [nbDatepicker]="rangepicker"
+              type="text"
+              name="date"
+              #date="ngModel"
+              [(ngModel)]="manifestation.date"
+              >
+        <nb-rangepicker #rangepicker></nb-rangepicker>
+        </div>
+
+
+        <button class="btn btn-primary" nbButton hero>{{'MANIFESTATION_BUTTON'|translate}}</button>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</form>
+
+
+<nb-card>
+  <nb-card-header>
+    {{'MANIFESTATIONS'|translate}}
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source" (createConfirm)="onCreateConfirm($event)" (editConfirm)="onEditConfirm($event)"
+      (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>

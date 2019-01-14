@@ -70,6 +70,10 @@ const routes: Routes = [{
     loadChildren: './users/users.module#UsersModule',
   },
   {
+    path: 'manifestations',
+    loadChildren: './manifestations/manifestations.module#ManifestationsModule',
+  },
+  {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',

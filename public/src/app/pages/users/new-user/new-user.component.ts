@@ -56,6 +56,7 @@ export class NewUserComponent implements OnInit {
     user.roles = user.roles.filter((role: any) => role.selected);
     this.usersService.createUser(user)
     .then(_user => {
+      //console.log(this.user);
       this.notificationsService.success('ROLE_CREATED');
     });
   }

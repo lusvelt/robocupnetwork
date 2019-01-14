@@ -6,6 +6,11 @@ const utils = {
         name = name.toLowerCase() + 'Id';
 
         return(name);
+    },
+
+    getDate: (string) => {
+        string = string.slice(0, 10);
+        return string;
     }
 };
 

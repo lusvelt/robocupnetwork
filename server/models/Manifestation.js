@@ -8,4 +8,6 @@ const Manifestation = sequelize.define('Manifestation', {
     end: { type: Sequelize.DATE, allowNull: false }
 });
 
+Manifestation.getManifestationsList = () => Manifestation.findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] } });
+
 module.exports = Manifestation;

@@ -1,4 +1,4 @@
-const { User, ActionType, Action, Role } = require('./models');
+const { User, ActionType, Action, Role, Manifestation } = require('./models');
 
 const seed = async () => {
     const users = [
@@ -46,12 +46,17 @@ const seed = async () => {
     const action = [
         await Action.create({name:'Annulla gara',description:'test1'}),
         await Action.create({name:'Crea utente',description:'test2'}),
-    ]
+    ];
 
     const roles = [
         await Role.create({name:'Arbitro gare',description:'test1'}),
         await Role.create({name:'Utente',description:'test2'}),
-    ]
+    ];
+
+    const manifestation = [
+        await Manifestation.create({name:'Nazionali',description:'ciao', start: new Date(), end: new Date()}),
+        await Manifestation.create({name:'Regionali',description:'ciao', start: new Date(), end: new Date()}),
+    ];
 
     /*const competitions = [
         await Competition.create

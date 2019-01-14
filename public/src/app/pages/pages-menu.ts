@@ -14,17 +14,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
     group: true,
   },
   {
-    title: 'COMPETITIONS',
+    title: 'MANIFESTATIONS',
     icon: 'fa fa-flag-checkered',
-    link: '/pages/ui-features',
+    link: '/pages/manifestations',
     children: [
       {
         title: 'NEW_COMPETITION',
-        link: '/pages/new-competition',
-      },
-      {
-        title: 'MANAGE_COMPETITIONS',
-        link: '/pages/manage-competition',
+        link: '/pages/manifestations/new-manifestation',
       }
     ]
   },
