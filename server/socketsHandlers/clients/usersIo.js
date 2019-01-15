@@ -55,7 +55,17 @@ const usersIo = (clientsIo, socket) => {
         }
     };
 
+    const getUsers = async (args, callback) => {
+        try {
+            const users = await User.getUsersList();
+            callback(users);
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
     socket.on('createUser', createUser);
+    socket.on('getUsers', getUsers);
 };
 
 module.exports = usersIo;

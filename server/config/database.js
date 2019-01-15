@@ -6,16 +6,19 @@ const database = {
         try {
             await sequelize.authenticate();
             console.log('Connection to database has been established successfully.');
+            require('../database/models');
+            require('../database/associations');
             if (reset){
                 console.log('Resetting database forcedly...');
-                require('../database/models');
+                /*require('../database/models');
                 console.log('Models initialized succesfully');
                 require('./../database/associations');
-                console.log('Associations initialized succesfully');
+                console.log('Associations initialized succesfully');*/
             }
             await sequelize.sync({ force: reset });
             if (reset) await seed();
             console.log('Database initialized successfully');
+
         } catch (err) {
             console.error(err);
         }

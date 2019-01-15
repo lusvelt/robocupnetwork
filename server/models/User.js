@@ -10,7 +10,7 @@ const eventEmitter = require('./../config/eventEmitter');
 const User = sequelize.define('User', {
     name: { type: Sequelize.STRING, allowNull: false },
     surname: { type: Sequelize.STRING, allowNull: false },
-    birthDate: { type: Sequelize.DATE, allowNull: true },
+    birthDate: { type: Sequelize.DATEONLY, allowNull: true },
     email: { type: Sequelize.STRING, allowNull: false, unique: true },
     password: { type: Sequelize.STRING, allowNull: false },
     isAdmin: { type: Sequelize.BOOLEAN, allowNull: false, defaultValue: 0 }
@@ -37,6 +37,6 @@ User.generateAuthToken = async (email, clearTextPassword) => {
     return token;
 };
 
-User.getUsersList = () => User.findAll({ attributes: ['name', 'surame', 'birthDate', 'email', 'isAdmin'] });
+User.getUsersList = () => User.findAll({ attributes: { exclude: ['password', 'createdAt', 'updatedAt'] } });
 
 module.exports = User;
