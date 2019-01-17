@@ -8,8 +8,8 @@ const Role = sequelize.define('Role', {
 });
 
 Role.getRolesList = () => Role.findAll({
-     attributes: { exclude: ['createdAt', 'updatedAt'] },
-     include: [ Action ]
-});     
+    attributes: { exclude: ['createdAt', 'updatedAt'] },
+    include: [ Action ]
+});
 
 module.exports = Role;

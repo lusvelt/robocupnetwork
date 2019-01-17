@@ -14,8 +14,4 @@ const Category = sequelize.define('Category', {
     defaultMax: { type: Sequelize.INTEGER, allowNull: false }
 });
 
-Category.isDefine = () => {
-    sequelize.isDefined('Category');
-};
-
 module.exports = Category;

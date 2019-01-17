@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const User = require('../../models/User');
 const Role = require('../../models/Role');
-const utils = require('../../database/utils');
+const log = require('../../config/consoleMessageConfig');
 
 const usersIo = (clientsIo, socket) => {
 /*const createAction = async (_action, callback) => {
@@ -50,6 +50,7 @@ const usersIo = (clientsIo, socket) => {
                 throw new Error();
             callback(user);
             socket.broadcast.emit('createUser', user);
+            log.verbose('User created');
         } catch (err) {
             callback (new Error());
         }
@@ -58,6 +59,7 @@ const usersIo = (clientsIo, socket) => {
     const getUsers = async (args, callback) => {
         try {
             const users = await User.getUsersList();
+            log.verbose('User data request');
             callback(users);
         } catch (err) {
             callback(new Error());

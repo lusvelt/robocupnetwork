@@ -10,8 +10,4 @@ const Phase = sequelize.define('Phase', {
     numPassingTeams: { type: Sequelize.INTEGER }
 });
 
-Phase.isDefine = () => {
-    sequelize.isDefined('Phase');
-};
-
 module.exports = Phase;

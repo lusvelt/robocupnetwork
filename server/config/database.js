@@ -1,26 +1,27 @@
 const sequelize = require('./sequelize');
 const seed = require('../database/seed');
+const log = require('../config/consoleMessageConfig');
 
 const database = {
     initialize: async (reset) => {
         try {
             await sequelize.authenticate();
-            console.log('Connection to database has been established successfully.');
-            require('../database/models');
-            require('../database/associations');
+            log.info('Connection to database has been established successfully.');
             if (reset){
-                console.log('Resetting database forcedly...');
-                /*require('../database/models');
-                console.log('Models initialized succesfully');
+                log.debug('Resetting database forcedly...');
+                require('../database/models');
+                log.debug('Models initialized succesfully');
                 require('./../database/associations');
-                console.log('Associations initialized succesfully');*/
+                log.debug('Associations initialized succesfully');
             }
             await sequelize.sync({ force: reset });
-            if (reset) await seed();
-            console.log('Database initialized successfully');
-
+            if (reset) {
+                await seed();
+                log.debug('Data initialized successfully');
+            }
+            log.info('Database initialized successfully');
         } catch (err) {
-            console.error(err);
+            log.error(err);
         }
     }
 };

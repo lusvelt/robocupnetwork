@@ -8,6 +8,7 @@ const socketio = require('socket.io');
 
 const argv = require('./server/config/yargs');
 const config = require('./server/config/config');
+const log = require('./server/config/consoleMessageConfig');
 
 config(argv);
 
@@ -37,5 +38,8 @@ app.use(internalEventsSystem);
 router.initialize(app, passport);
 sockets.initialize(io);
 
+console.log();
+
 database.initialize(argv.reset)
-    .then(() => server.listen(port, () => console.log('Server is on')));
+    .then(() => server.listen(port, () => log.info('Server is listening on port: ' + port )));
+

@@ -7,7 +7,7 @@
     "start": "node index",
     "reset": "node index -r",
     "debug": "node index -d",
-    "watch": "nodemon index",
+    "watch": "nodemon index -r",
     "build": "cd public && ng build",
     "postinstall": "cd public && npm install",
     "precommit": "eslint index.js server/**",
@@ -39,6 +39,7 @@
     "sequelize": "^4.38.0",
     "socket.io": "^2.1.1",
     "socketio-jwt": "^4.5.0",
+    "winston": "^3.1.0",
     "yargs": "^12.0.5"
   },
   "devDependencies": {

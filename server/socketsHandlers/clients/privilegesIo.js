@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const log = require('../../config/consoleMessageConfig');
 
 const ActionType = require('../../models/ActionType');
 const Action = require('../../models/Action');
@@ -10,6 +11,7 @@ const privilegesIo = (clientsIo, socket) => {
         try {
             const actionTypes = await ActionType.getActionTypesList();
             callback(actionTypes);
+            log.verbose('ActionType created');
         } catch (err) {
             callback(new Error());
         }
@@ -22,13 +24,14 @@ const privilegesIo = (clientsIo, socket) => {
                 throw new Error();
             callback(result);
             socket.broadcast.emit('createActionType', result);
+            log.verbose('ActionType created');
         } catch (err) {
             callback(new Error());
         }
     };
 
     const editActionType = async (_actionType, callback) => {
-        try {        
+        try {
             const id = _actionType.id;
             const actionType = _.omit(_actionType, ['id']);
             const result = await ActionType.update(actionType, { where: { id } });
@@ -36,6 +39,7 @@ const privilegesIo = (clientsIo, socket) => {
                 throw new Error();
             callback(result);
             socket.broadcast.emit('editActionType', _actionType);
+            log.verbose('ActionType modified');
         } catch (err) {
             callback(new Error());
         }
@@ -49,6 +53,7 @@ const privilegesIo = (clientsIo, socket) => {
                 throw new Error();
             callback(result);
             socket.broadcast.emit('removeActionType', _actionType);
+            log.verbose('ActionType removed');
         } catch (err) {
             callback(new Error());
         }
@@ -58,6 +63,7 @@ const privilegesIo = (clientsIo, socket) => {
         try {
             const action = await Action.getActionsList();
             callback(action);
+            log.verbose('Actions data request');
         } catch (err) {
             callback(new Error());
         }
@@ -83,6 +89,7 @@ const privilegesIo = (clientsIo, socket) => {
             action.dataValues.ActionTypes = _action.actionTypes;
             callback(action);
             socket.broadcast.emit('createAction', action);
+            log.verbose('Action created');
         } catch (err) {
             callback(new Error());
         }
@@ -108,6 +115,7 @@ const privilegesIo = (clientsIo, socket) => {
             role.dataValues.Actions = _role.actions;
             callback(role);
             socket.broadcast.emit('createRole', role);
+            log.verbose('Role created');
         } catch (err) {
             callback(new Error());
         }
@@ -121,13 +129,14 @@ const privilegesIo = (clientsIo, socket) => {
                 throw new Error();
             callback(result);
             socket.broadcast.emit('removeAction', _action);
+            log.verbose('Action removed');
         } catch (err) {
             callback(new Error());
         }
     };
 
     const editAction = async (_action, callback) => {
-        try {        
+        try {
             const id = _action.id;
             const action = _.omit(_action, ['id']);
             const result = await Action.update(action, { where: { id } });
@@ -135,6 +144,7 @@ const privilegesIo = (clientsIo, socket) => {
                 throw new Error();
             callback(result);
             socket.broadcast.emit('editAction', _action);
+            log.verbose('Action modified');
         } catch (err) {
             callback(new Error());
         }
@@ -158,7 +168,7 @@ const privilegesIo = (clientsIo, socket) => {
                                 return action.removeActionType(actionType);
                         })
                         .then(result => resolve(result))
-                        .catch(err => reject(err)); 
+                        .catch(err => reject(err));
                 }));
             });
             const result = await Promise.all(promises);
@@ -172,6 +182,7 @@ const privilegesIo = (clientsIo, socket) => {
         try {
             const roles = await Role.getRolesList();
             callback(roles);
+            log.verbose('Role data request');
         } catch (err) {
             callback(new Error());
         }
@@ -185,13 +196,14 @@ const privilegesIo = (clientsIo, socket) => {
                 throw new Error();
             callback(result);
             socket.broadcast.emit('removeRole', _role);
+            log.verbose('Role removed');
         } catch (err) {
             callback(new Error());
         }
     };
 
     const editRole = async (_role, callback) => {
-        try {        
+        try {
             const id = _role.id;
             const role = _.omit(_role, ['id']);
             const result = await Role.update(role, { where: { id } });
@@ -199,6 +211,7 @@ const privilegesIo = (clientsIo, socket) => {
                 throw new Error();
             callback(result);
             socket.broadcast.emit('editRole', _role);
+            log.verbose('Role modified');
         } catch (err) {
             callback(new Error());
         }
@@ -222,7 +235,7 @@ const privilegesIo = (clientsIo, socket) => {
                                 return role.removeAction(action);
                         })
                         .then(result => resolve(result))
-                        .catch(err => reject(err)); 
+                        .catch(err => reject(err));
                 }));
             });
             const result = await Promise.all(promises);
@@ -231,7 +244,7 @@ const privilegesIo = (clientsIo, socket) => {
             callback(new Error());
         }
     };
-    
+
 
     socket.on('getActionTypes', getActionTypes);
     socket.on('createActionType', createActionType);
