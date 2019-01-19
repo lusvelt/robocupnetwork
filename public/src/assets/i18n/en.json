@@ -127,11 +127,15 @@
     "MANIFESTATIONS":"Manifestations",
     "START": "Start",
     "END": "End",
+    "MANAGE_MANIFESTATIONS":"Manage manifestations",
     "MANIFESTATION_NAME": "Manifestazion name",
     "NEW_MANIFESTATION":"New manifestation",
     "MANIFESTATION_DESCRIPTION":"Manifestation description",
     "MANIFESTATION_DATE":"Manifestation date",
-    "MANIFESTATION_BUTTON": "Create manifestation"
+    "MANIFESTATION_BUTTON": "Create manifestation",
+    "ADDED_ROLES_IN_MANIFESTATION":"Added roles in manifestation",
+
+    "SUBMIT":"Submit"
 
 
 }

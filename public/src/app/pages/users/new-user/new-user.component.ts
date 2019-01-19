@@ -7,6 +7,9 @@ import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as _ from 'lodash';
 import { TranslateService } from '@ngx-translate/core';
 import { values } from '../../../config/values.config';
+import { ManifestationsService } from '../../../services/manifestations.service';
+import { NbDialogService } from '@nebular/theme';
+import { RolesListComponent } from '../../../shared/dialogs/roles-list/roles-list.component';
 @Component({
   selector: 'ngx-new-user',
   templateUrl: './new-user.component.html',
@@ -20,8 +23,10 @@ export class NewUserComponent implements OnInit {
     email: '',
     password: '',
     isAdmin: false,
-    roles: []
+    manifestations: []
   };
+
+  manifestationsList: [];
 
   passwordRange = {
     minLength: values.passwordMinLength,
@@ -31,31 +36,20 @@ export class NewUserComponent implements OnInit {
 
   constructor(private privilegesService: PrivilegesService,
               private usersService: UsersService,
+              private manifestationsService: ManifestationsService,
               private notificationsService: NotificationsService,
+              private dialogService: NbDialogService,
               private transalteService: TranslateService,
               private config: NgbDropdownConfig) {
                 config.autoClose = false;
                }
 
   ngOnInit() {
-    this.privilegesService.getRoles()
-    .then(roles => this.user.roles = roles);
-
-    this.getNotifiedForRoles(this.user.roles);
+    this.manifestationsService.getManifestations()
+    .then(manifestations => this.manifestationsList = manifestations);
   }
 
-  getNotifiedForRoles(roleArray: any[]) {
-    this.privilegesService.notify('createRole')
-      .subscribe(role => roleArray.push(role));
-
-    this.privilegesService.notify('editRole')
-      .subscribe(role =>
-        roleArray.splice(roleArray.findIndex(el => el.id === role.id), 1, role));
-
-    this.privilegesService.notify('removeRole')
-      .subscribe(role =>
-        roleArray.splice(roleArray.findIndex(el => el.id === role.id), 1));
-  }
+  
 
   onButtonClicked() {
     const user: UserInterface = _.omit(this.user, ['confirmPassword']);
@@ -64,6 +58,22 @@ export class NewUserComponent implements OnInit {
     this.usersService.createUser(user)
     .then(_user => {
       this.notificationsService.success('USER_CREATED');
+    });
+  }
+
+  onManifestationClicked(manifestation) {
+    this.dialogService.open(RolesListComponent, {
+      context: {
+        title: manifestation.name
+      },
+    }).onClose.subscribe(roles => {
+      this.user.manifestations.splice(this.user.manifestations.findIndex(manifestation => manifestation.id === this.user.manifestations.id),1);
+      if(roles)
+        if(roles.length){
+         manifestation.roles = roles;
+         this.user.manifestations.push(manifestation);
+         this.notificationsService.success('ADDED_ROLES_IN_MANIFESTATION');
+        }
     });
   }
 }

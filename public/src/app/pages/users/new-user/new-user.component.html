@@ -1,7 +1,7 @@
 <form (ngSubmit)="onButtonClicked()" #form="ngForm">
   <div class="form-group">
     <nb-card>
-      <nb-card-header>{{'NAME' | translate}}</nb-card-header>
+      <nb-card-header>{{'NEW_USER' | translate}}</nb-card-header>
       <nb-card-body>
         <div class="row full-name-inputs mb-3">
           <div class="col-sm-6 input-group">
@@ -80,14 +80,14 @@
 
       <div class="mb-3" ngbDropdown [hidden]="user.isAdmin">
           <button class="btn btn-primary" type="button" ngbDropdownToggle>
-            {{ 'ROLES' | translate }}
+            {{ 'MANIFESTATIONS' | translate }}
           </button>
           <ul ngbDropdownMenu class="dropdown-menu">
-            <li class="dropdown-item" *ngFor="let role of user.roles">
-              <nb-checkbox name="actionChoose" [(ngModel)]="role.selected" >{{ role.name }}</nb-checkbox>
+            <li (click)="onManifestationClicked(manifestation)" class="dropdown-item" *ngFor="let manifestation of manifestationsList">
+                {{ manifestation.name }}
             </li>
           </ul>
-        </div>
+      </div>
 
         <div class="mb-3">
           <input nbInput

@@ -19,7 +19,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/manifestations',
     children: [
       {
-        title: 'NEW_COMPETITION',
+        title: 'MANAGE_MANIFESTATIONS',
         link: '/pages/manifestations/new-manifestation',
       }
     ]

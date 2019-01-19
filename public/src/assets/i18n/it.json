@@ -126,11 +126,15 @@
     "MANIFESTATIONS":"Manifestazioni",
     "START": "Inizio",
     "END": "Fine",
+    "MANAGE_MANIFESTATIONS":"Gestisci manifestazioni",
     "NEW_MANIFESTATION":"Nuova manifestazione",
     "MANIFESTATION_NAME": "Nome manifestazione",
     "MANIFESTATION_DESCRIPTION":"Descrizione manifestazione",
     "MANIFESTATION_DATE":"Data manifestazione",
-    "MANIFESTATION_BUTTON": "Crea manifestazione"
+    "MANIFESTATION_BUTTON": "Crea manifestazione",
+    "ADDED_ROLES_IN_MANIFESTATION":"Aggiunti ruoli in manifestazione",
+
+    "SUBMIT":"Conferma"
 
 
 }

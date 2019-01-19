@@ -1,0 +1,8 @@
+<input nbInput
+  placeholder="{{'BIRTHDATE'| translate}}"
+  [nbDatepicker]="formpicker"
+  name="birthDate"
+  #birthdate="ngModel"
+  [(ngModel)]="user.birthDate"
+  >
+<nb-datepicker #formpicker></nb-datepicker>

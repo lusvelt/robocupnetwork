@@ -7,6 +7,7 @@ import { TablesService } from './../../../services/tables.service';
 import { Component, OnInit } from '@angular/core';
 import { DataSource } from '../../../classes/data-source.class';
 import { notAddableConfig } from '../../../config/tables.config';
+import { SingleDateComponent } from '../../../shared/view-cells/single-date/single-date.component';
 
 @Component({
   selector: 'ngx-manage-user',
@@ -58,7 +59,8 @@ export class ManageUserComponent implements OnInit {
     },
     birthDate: {
       title: 'BIRTHDATE',
-      type: 'date',
+      type: 'custom',
+      renderComponent: SingleDateComponent,
     },
     email: {
       title: 'EMAIL',
@@ -66,7 +68,8 @@ export class ManageUserComponent implements OnInit {
     },
     isAdmin: {
       title: 'ADMIN',
-      type: 'boolean',
+      type: 'text',
+      editable: false
     }
   });
 

@@ -9,6 +9,8 @@ import { HttpService } from './../services/http.service';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MultipleSelectDropdownComponent } from './view-cells/multiple-select-dropdown/multiple-select-dropdown.component';
+import { SingleDateComponent } from './view-cells/single-date/single-date.component';
+import { RolesListComponent } from './dialogs/roles-list/roles-list.component';
 
 @NgModule({
     imports: [
@@ -24,7 +26,9 @@ import { MultipleSelectDropdownComponent } from './view-cells/multiple-select-dr
     declarations: [
         AlertModalComponent,
         ConfirmModalComponent,
-        MultipleSelectDropdownComponent
+        MultipleSelectDropdownComponent,
+        SingleDateComponent,
+        RolesListComponent
     ],
     providers: [
         HttpService,
@@ -35,7 +39,9 @@ import { MultipleSelectDropdownComponent } from './view-cells/multiple-select-dr
     entryComponents: [
         AlertModalComponent,
         ConfirmModalComponent,
-        MultipleSelectDropdownComponent
+        MultipleSelectDropdownComponent,
+        SingleDateComponent,
+        RolesListComponent
     ]
 })
 export class SharedModule { }
