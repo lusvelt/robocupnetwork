@@ -8,10 +8,10 @@ import { NbDialogRef } from '@nebular/theme';
   styleUrls: ['./roles-list.component.scss']
 })
 export class RolesListComponent implements OnInit {
-  
-  @Input() title : string;
 
-  roles:any = [];
+  @Input() title: string;
+
+  roles: any = [];
 
   constructor(private privilegesService: PrivilegesService,
               protected ref: NbDialogRef<RolesListComponent>) { }
@@ -36,12 +36,12 @@ export class RolesListComponent implements OnInit {
         roleArray.splice(roleArray.findIndex(el => el.id === role.id), 1));
   }
 
-  cancel(){
+  cancel() {
     this.ref.close();
   }
 
-  submit(roles){
+  submit(roles) {
     roles = roles.filter((role: any) => role.selected);
-    this.ref.close(roles)
+    this.ref.close(roles);
   }
 }
