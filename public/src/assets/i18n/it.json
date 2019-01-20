@@ -134,7 +134,27 @@
     "MANIFESTATION_BUTTON": "Crea manifestazione",
     "ADDED_ROLES_IN_MANIFESTATION":"Aggiunti ruoli in manifestazione",
 
-    "SUBMIT":"Conferma"
+    "SUBMIT":"Conferma",
+
+    "PLACES": "Luoghi",
+    "MANAGE_PLACES": "Gestisci Luoghi",
+    "NEW_PLACE":"Nuovo luogo",
+    "PLACE_COUNTRY":"Stato",
+    "PLACE_COUNTRY_REQUIRED":"Stato richiesto!",
+    "PLACE_REGION":"Regione",
+    "PLACE_REGION_REQUIRED":"Regione richiesta!",
+    "PLACE_PROVINCE":"Provincia",
+    "PLACE_PROVINCE_REQUIRED":"Provincia richiesta!",
+    "PLACE_POSTAL_CODE":"Codice postale",
+    "PLACE_POSTAL_CODE_REQUIRED":"Codice postale richiesto!",
+    "PLACE_CITY":"Città",
+    "PLACE_CITY_REQUIRED":"Città richiesta!",
+    "PLACE_CIVIC_NUMBER":"Numero civico",
+    "PLACE_CIVIC_NUMBER_REQUIRED":"Numero civico richiesto!",
+    "PLACE_STREET":"Strada",
+    "PLACE_STREET_REQUIRED":"Strada richiesta!",
+    "PLACE_BUTTON":"Crea luogo",
+    "PLACE_UPDATED":"Luogo aggiornato"
 
 
 }

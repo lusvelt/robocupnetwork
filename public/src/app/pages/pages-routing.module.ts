@@ -74,6 +74,10 @@ const routes: Routes = [{
     loadChildren: './manifestations/manifestations.module#ManifestationsModule',
   },
   {
+    path: 'places',
+    loadChildren: './places/places.module#PlacesModule',
+  },
+  {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',

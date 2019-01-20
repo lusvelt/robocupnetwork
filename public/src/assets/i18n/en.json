@@ -11,7 +11,7 @@
     "LOGIN_CHECK_REMEMBERME": "Remember me",
     "LOGIN_FORGOT_PASSWORD": "Forgot Password?",
     "LOGIN_SIGNIN": "Sign In",
-    "LOGIN_CONNECT_WITH_SOCIAL": "Or connect with: ",  
+    "LOGIN_CONNECT_WITH_SOCIAL": "Or connect with: ",
     "LOGIN_SIGNUP_DESCRIPTION": "Don't have an account? ",
     "LOGIN_SIGNUP": "Sign Up",
     "REGISTER_TITLE": "Sign Up",
@@ -135,7 +135,27 @@
     "MANIFESTATION_BUTTON": "Create manifestation",
     "ADDED_ROLES_IN_MANIFESTATION":"Added roles in manifestation",
 
-    "SUBMIT":"Submit"
+    "SUBMIT":"Submit",
+
+    "PLACES": "Places",
+    "MANAGE_PLACES": "Manage places",
+    "NEW_PLACE":"New place",
+    "PLACE_COUNTRY":"Country",
+    "PLACE_COUNTRY_REQUIRED":"Country required!",
+    "PLACE_REGION":"Region",
+    "PLACE_REGION_REQUIRED":"Region required!",
+    "PLACE_PROVINCE":"Province",
+    "PLACE_PROVINCE_REQUIRED":"Province required!",
+    "PLACE_POSTAL_CODE":"Postal code",
+    "PLACE_POSTAL_CODE_REQUIRED":"Postal code required!",
+    "PLACE_CITY":"City",
+    "PLACE_CITY_REQUIRED":"City required!",
+    "PLACE_CIVIC_NUMBER":"Civic number",
+    "PLACE_CIVIC_NUMBER_REQUIRED":"Civic number required!",
+    "PLACE_STREET":"Street",
+    "PLACE_STREET_REQUIRED":"Street required!",
+    "PLACE_BUTTON":"Create place",
+    "PLACE_UPDATED":"Place updated"
 
 
 }

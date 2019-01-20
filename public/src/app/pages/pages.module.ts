@@ -7,6 +7,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { ThemeModule } from '../@theme/theme.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { NewManifestationComponent } from './manifestations/new-manifestation/new-manifestation.component';
+import { ManagePlaceComponent } from './places/manage-place/manage-place.component';
 
 const PAGES_COMPONENTS = [
   PagesComponent,
@@ -21,7 +22,7 @@ const PAGES_COMPONENTS = [
     MiscellaneousModule,
   ],
   declarations: [
-    ...PAGES_COMPONENTS
+    ...PAGES_COMPONENTS,
   ],
 })
 export class PagesModule {

@@ -1,0 +1,146 @@
+<button class="mb-3" [ngClass]="{ 'btn': true, 'btn-success': !place.show, 'btn-danger': place.show }" type="button" (click)="toggleForm()">
+  <i [ngClass]="{ 'fas': true, 'fa-plus': !place.show, 'fa-times': place.show }"></i>
+  {{ (place.show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
+</button>
+
+
+<form (ngSubmit)="onButtonClicked()" #form="ngForm" [hidden]="!place.show">
+  <div class="form-group">
+    <nb-card>
+      <nb-card-header>{{'NEW_PLACE' | translate}}</nb-card-header>
+      <nb-card-body>
+        <div class="mb-3">
+          <label for="input-country" class="sr-only">{{ 'PLACE_COUNTRY' | translate}}</label>
+          <input nbInput
+                  [(ngModel)]="place.country"
+                  #country="ngModel"
+                  id="input-country"
+                  name="country"
+                  placeholder="{{ 'PLACE_COUNTRY' | translate }}"
+                  autofocus
+                  fullWidth
+                  [status]="country.dirty ? (country.invalid  ? 'danger' : 'success') : ''"
+                  required>
+          <small class="form-text error" *ngIf="country.touched && country.errors?.required">
+            {{ 'PLACE_COUNTRY_REQUIRED' | translate }}
+          </small>
+         </div>
+         <div class="mb-3">
+            <label for="input-region" class="sr-only">{{ 'PLACE_REGION' | translate}}</label>
+            <input nbInput
+                    [(ngModel)]="place.region"
+                    #region="ngModel"
+                    id="input-region"
+                    name="region"
+                    placeholder="{{ 'PLACE_REGION' | translate }}"
+                    autofocus
+                    fullWidth
+                    [status]="region.dirty ? (region.invalid  ? 'danger' : 'success') : ''"
+                    required>
+            <small class="form-text error" *ngIf="region.touched && region.errors?.required">
+              {{ 'PLACE_REGION_REQUIRED' | translate }}
+            </small>
+           </div>
+           <div class="mb-3">
+            <label for="input-province" class="sr-only">{{ 'PLACE_PROVINCE' | translate}}</label>
+            <input nbInput
+                    [(ngModel)]="place.province"
+                    #province="ngModel"
+                    id="input-region"
+                    name="province"
+                    placeholder="{{ 'PLACE_PROVINCE' | translate }}"
+                    autofocus
+                    fullWidth
+                    [status]="province.dirty ? (province.invalid  ? 'danger' : 'success') : ''"
+                    required>
+            <small class="form-text error" *ngIf="province.touched && province.errors?.required">
+              {{ 'PLACE_PROVINCE_REQUIRED' | translate }}
+            </small>
+          </div>
+          <div class="mb-3">
+            <label for="input-postalCode" class="sr-only">{{ 'PLACE_POSTAL_CODE' | translate}}</label>
+            <input nbInput
+                    [(ngModel)]="place.postalCode"
+                    #postalCode="ngModel"
+                    id="input-postalCode"
+                    name="postalCode"
+                    placeholder="{{ 'PLACE_POSTAL_CODE' | translate }}"
+                    autofocus
+                    fullWidth
+                    [status]="postalCode.dirty ? (postalCode.invalid  ? 'danger' : 'success') : ''"
+                    required>
+            <small class="form-text error" *ngIf="postalCode.touched && postalCode.errors?.required">
+              {{ 'PLACE_POSTAL_CODE_REQUIRED' | translate }}
+            </small>
+          </div>
+          <div class="mb-3">
+              <label for="input-city" class="sr-only">{{ 'PLACE_CITY' | translate}}</label>
+              <input nbInput
+                      [(ngModel)]="place.city"
+                      #city="ngModel"
+                      id="input-region"
+                      name="city"
+                      placeholder="{{ 'PLACE_CITY' | translate }}"
+                      autofocus
+                      fullWidth
+                      [status]="city.dirty ? (city.invalid  ? 'danger' : 'success') : ''"
+                      required>
+              <small class="form-text error" *ngIf="city.touched && city.errors?.required">
+                {{ 'PLACE_CITY_REQUIRED' | translate }}
+              </small>
+           </div>
+           <div class="mb-3">
+              <label for="input-civicNumber" class="sr-only">{{ 'PLACE_CIVIC_NUMBER' | translate}}</label>
+              <input nbInput
+                      [(ngModel)]="place.civicNumber"
+                      #civicNumber="ngModel"
+                      id="input-civicNumber"
+                      name="civicNumber"
+                      placeholder="{{ 'PLACE_CIVIC_NUMBER' | translate }}"
+                      autofocus
+                      fullWidth
+                      [status]="civicNumber.dirty ? (civicNumber.invalid  ? 'danger' : 'success') : ''"
+                      required>
+              <small class="form-text error" *ngIf="civicNumber.touched && civicNumber.errors?.required">
+                {{ 'PLACE_CIVIC_NUMBER_REQUIRED' | translate }}
+              </small>
+           </div>
+           <div class="mb-3">
+              <label for="input-street" class="sr-only">{{ 'PLACE_STREET' | translate}}</label>
+              <input nbInput
+                      [(ngModel)]="place.street"
+                      #street="ngModel"
+                      id="input-street"
+                      name="street"
+                      placeholder="{{ 'PLACE_STREET' | translate }}"
+                      autofocus
+                      fullWidth
+                      [status]="street.dirty ? (street.invalid  ? 'danger' : 'success') : ''"
+                      required>
+              <small class="form-text error" *ngIf="street.touched && street.errors?.required">
+                {{ 'PLACE_STREET_REQUIRED' | translate }}
+              </small>
+           </div>
+
+
+        <button class="btn btn-primary" nbButton hero>{{'PLACE_BUTTON'|translate}}</button>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</form>
+
+
+<nb-card>
+  <nb-card-header>
+    {{'PLACE'|translate}}
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source"
+                      (createConfirm)="onCreateConfirm($event)"
+                      (editConfirm)="onEditConfirm($event)"
+                      (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+

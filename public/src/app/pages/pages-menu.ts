@@ -25,6 +25,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ]
   },
   {
+    title: 'PLACES',
+    icon: 'fa fa-flag-checkered',
+    link: '/pages/places',
+    children: [
+      {
+        title: 'MANAGE_PLACES',
+        link: '/pages/places/manage-place',
+      }
+    ]
+  },
+  {
     title: 'PRIVILEGES',
     icon: 'fas fa-shield-alt',
     link: '/pages/privileges',
