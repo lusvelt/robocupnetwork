@@ -1,0 +1,67 @@
+<button class="mb-3" [ngClass]="{ 'btn': true, 'btn-success': !school.show, 'btn-danger': school.show }" type="button"
+  (click)="toggleForm()">
+  <i [ngClass]="{ 'fas': true, 'fa-plus': !school.show, 'fa-times': school.show }"></i>
+  {{ (school.show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
+</button>
+
+<form (ngSubmit)="onButtonClicked()" #form="ngForm" [hidden]="!school.show">
+  <div class="form-group">
+    <nb-card>
+      <nb-card-header>{{'NEW_SCHOOL' | translate}}</nb-card-header>
+      <nb-card-body>
+        <div class="mb-3">
+          <label for="input-name" class="sr-only">{{ 'SCHOOL_NAME' | translate}}</label>
+          <input nbInput [(ngModel)]="school.name" #name="ngModel" id="input-name" name="name" placeholder="{{ 'SCHOOL_NAME' | translate }}"
+            autofocus fullWidth [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : ''" required>
+          <small class="form-text error" *ngIf="name.touched && name.errors?.required">
+            {{ 'SCHOOL_NAME_REQUIRED' | translate }}
+          </small>
+        </div>
+        <div class="mb-3" ngbDropdown>
+          <button class="btn btn-primary" type="button" ngbDropdownToggle>
+            {{ 'PLACE' | translate }}
+          </button>
+          <ul ngbDropdownMenu class="dropdown-menu">
+            <li class="dropdown-item" *ngFor="let place of school.places">
+              <nb-checkbox name="placeChoose" [(ngModel)]="place.selected">{{ place.country }}, {{place.region}}, {{place.province}}, {{ place.city }}, {{place.street}}, {{place.civicNumber}}, {{place.postalCode}}</nb-checkbox>
+            </li>
+          </ul>
+        </div> <!--
+        <div class="mb-3" ngbDropdown>
+          <button class="btn btn-primary" type="button" ngbDropdownToggle>
+            {{ 'CITY' | translate }}
+          </button>
+          <ul ngbDropdownMenu class="dropdown-menu">
+            <li class="dropdown-item" *ngFor="let place of filterCity(school.places)">
+              <nb-checkbox name="placeChoose" [(ngModel)]="place.place.selected">{{ place.city }}</nb-checkbox>
+            </li>
+          </ul>
+        </div>
+        <div class="mb-3" ngbDropdown>
+          <button class="btn btn-primary" type="button" ngbDropdownToggle>
+            {{ 'STREET' | translate }}
+          </button>
+          <ul ngbDropdownMenu class="dropdown-menu">
+            <li class="dropdown-item" *ngFor="let place of school.places">
+              <nb-checkbox name="placeChoose" [(ngModel)]="place.street.selected">{{ place.street }}</nb-checkbox>
+            </li>
+          </ul>
+        </div> -->
+        <button class="btn btn-primary" nbButton hero>{{'SCHOOL_BUTTON'|translate}}</button>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</form>
+
+
+<nb-card>
+  <nb-card-header>
+    {{'SCHOOLS'|translate}}
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source" (createConfirm)="onCreateConfirm($event)" (editConfirm)="onEditConfirm($event)"
+      (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>

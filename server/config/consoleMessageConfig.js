@@ -1,15 +1,15 @@
 const { createLogger, format, transports } = require('winston');
 const path = require('path');
-const fs = require('fs');
+// const fs = require('fs');
 
 const env = process.env.NODE_ENV || 'development';
-const logDir = 'log';
+// const logDir = 'log';
 
-if (!fs.existsSync(logDir)) {
-    fs.mkdirSync(logDir);
-}
+// if (!fs.existsSync(logDir)) {
+//     fs.mkdirSync(logDir);
+// }
 
-const filename = path.join(logDir, 'results.log');
+// const filename = path.join(logDir, 'results.log');
 
 const logger = createLogger({
     level: env === 'production' ? 'info' : 'debug',
@@ -35,10 +35,10 @@ const logger = createLogger({
                 format.prettyPrint()
             ),
         }),
-        new transports.File({
-            filename,
-            format: format.printf(info => `${info.timestamp} ${info.level} [${info.label}]: ${info.message}`)
-        })
+        // new transports.File({
+        //     filename,
+        //     format: format.printf(info => `${info.timestamp} ${info.level} [${info.label}]: ${info.message}`)
+        // })
     ]
 });
 

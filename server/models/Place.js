@@ -11,4 +11,6 @@ const Place = sequelize.define('Place', {
     country: { type: Sequelize.STRING, allowNull: false }
 });
 
+Place.getPlacesList = () => Place.findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] } });
+
 module.exports = Place;
