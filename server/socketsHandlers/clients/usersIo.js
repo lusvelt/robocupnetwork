@@ -32,10 +32,10 @@ const usersIo = (clientsIo, socket) => {
 
     const createUser = async (_user, callback) => {
         try {
-            const user = await User.create(_.omit(_user,['roles']));
+            const user = await User.create(_.omit(_user,['manifestations']));
             if(!user)
                 throw new Error();
-            const promises = [];
+            /* const promises = [];
             _user.roles.forEach(_role => {
                 promises.push(new Promise((resolve, reject) => {
                     Role.findById(_role.id)
@@ -47,12 +47,41 @@ const usersIo = (clientsIo, socket) => {
 
             const result = await Promise.all(promises);
             if(!result)
-                throw new Error();
+                throw new Error(); */
             callback(user);
             socket.broadcast.emit('createUser', user);
             log.verbose('User created');
         } catch (err) {
             callback (new Error());
+        }
+    };
+
+    const editUser = async (_user, callback) => {
+        try {
+            const id = _user.id;
+            const user = _.omit(_user, ['id','birthDate','isAdmin']);
+            const result = await User.update(user, { where: { id } });
+            if (!result)
+                throw new Error();
+            callback(result);
+            socket.broadcast.emit('editUser', _user);
+            log.verbose('User modified');
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
+    const removeUser = async (_user, callback) => {
+        try {
+            const id = _user.id;
+            const result = await User.destroy({ where: { id } });
+            if (!result)
+                throw new Error();
+            callback(result);
+            socket.broadcast.emit('removeUser', _user);
+            log.verbose('User removed');
+        } catch (err) {
+            callback(new Error());
         }
     };
 
@@ -68,6 +97,8 @@ const usersIo = (clientsIo, socket) => {
 
     socket.on('createUser', createUser);
     socket.on('getUsers', getUsers);
+    socket.on('editUser',editUser);
+    socket.on('removeUser',removeUser);
 };
 
 module.exports = usersIo;

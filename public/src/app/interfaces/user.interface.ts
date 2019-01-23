@@ -1,4 +1,5 @@
 import { RoleInterface } from './role.interface';
+import { ManifestationInterface } from './manifestation.interface';
 
 export interface UserInterface {
     name: string;
@@ -7,5 +8,5 @@ export interface UserInterface {
     birthDate: Date;
     password?: string;
     isAdmin: boolean;
-    roles: RoleInterface [];
+    manifestations: ManifestationInterface [];
 }

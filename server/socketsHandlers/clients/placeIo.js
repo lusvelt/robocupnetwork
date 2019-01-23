@@ -67,7 +67,7 @@ const placeIo = (clientsIo, socket) => {
     socket.on('createPlace', createPlace);
     socket.on('removePlace', removePlace);
     socket.on('getPlaces', getPlaces);
-    socket.on('editPlaces', editPlace);
+    socket.on('editPlace', editPlace);
 };
 
 module.exports = placeIo;

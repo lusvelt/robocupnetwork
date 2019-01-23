@@ -28,7 +28,7 @@
 
         <div class="mb-3">
           <label for="input-email" class="sr-only">{{ 'EMAIL' | translate}}</label>
-          <input nbInput [(ngModel)]="user.email" #email="ngModel" id="input-email" pattern=".+@.+..+" name="email" placeholder="{{ 'EMAIL' | translate }}"
+          <input nbInput [(ngModel)]="user.email" #email="ngModel" id="input-email" pattern=".+@.+\..+" name="email" placeholder="{{ 'EMAIL' | translate }}"
             autofocus fullWidth [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''" required>
           <small class="form-text error" *ngIf="email.touched && email.errors?.required">
             {{ 'EMAIL_REQUIRED' | translate }}

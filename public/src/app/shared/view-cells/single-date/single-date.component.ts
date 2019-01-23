@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ViewCell } from 'ng2-smart-table';
+import { EventEmitter } from 'events';
+import * as _ from 'lodash';
+import { NbDatepicker } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-single-date',
@@ -11,10 +14,14 @@ export class SingleDateComponent implements ViewCell, OnInit {
   @Input() rowData: any;
   date: Date;
   oldDate: Date;
-  user = [];
+  user: any [] = [] ;
+  private status: boolean = false;
+
+  parentNotifier: EventEmitter = new EventEmitter;
   constructor() { }
 
   ngOnInit() {
+    this.date = new Date (this.rowData.birthDate);
   }
 
 }

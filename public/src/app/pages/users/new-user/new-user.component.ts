@@ -54,9 +54,9 @@ export class NewUserComponent implements OnInit {
   onButtonClicked() {
     const user: UserInterface = _.omit(this.user, ['confirmPassword']);
     user.birthDate = new Date(user.birthDate);
-    user.roles = user.roles.filter((role: any) => role.selected);
     this.usersService.createUser(user)
     .then(_user => {
+      // ARRIVA ARRAY VUOTO
       this.notificationsService.success('USER_CREATED');
     });
   }
@@ -67,9 +67,10 @@ export class NewUserComponent implements OnInit {
         title: manifestation.name
       },
     }).onClose.subscribe(roles => {
-      this.user.manifestations.splice(this.user.manifestations.findIndex(manifestation => manifestation.id === this.user.manifestations.id), 1);
+      // Da sistemare quando modifichi
+      // this.user.manifestations.splice(this.user.manifestations.findIndex ( el => el.id === this.user.manifestations.id), 1);
       if (roles)
-        if (roles.length) {
+        if (roles.length !== 0) {
          manifestation.roles = roles;
          this.user.manifestations.push(manifestation);
          this.notificationsService.success('ADDED_ROLES_IN_MANIFESTATION');

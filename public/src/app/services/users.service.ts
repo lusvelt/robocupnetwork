@@ -22,6 +22,10 @@ export class UsersService {
     return this.socketIoService.send('editUser', data);
   }
 
+  updateUserBirthdate(user, changedBirthdate) {
+    return this.socketIoService.send('updateUserBirthdate', { user, changedBirthdate});
+  }
+
   removeUser(data) {
     return this.socketIoService.send('removeUser', data);
   }

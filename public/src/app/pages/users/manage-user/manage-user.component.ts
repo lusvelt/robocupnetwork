@@ -61,6 +61,13 @@ export class ManageUserComponent implements OnInit {
       title: 'BIRTHDATE',
       type: 'custom',
       renderComponent: SingleDateComponent,
+      onComponentInitFunction: (instance) => {
+        instance.parentNotifier.on('change', changed => {
+          this.usersService.updateUserBirthdate(instance.rowData, changed)
+            .then(result => this.notificationsService.success('BIRTHDATE_UPDATE_SUCCEDED'))
+            .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+        });
+      }
     },
     email: {
       title: 'EMAIL',
@@ -74,9 +81,9 @@ export class ManageUserComponent implements OnInit {
   });
 
   onEditConfirm(event) {
-    event.confirm.resolve()/*;
-    this.privilegesService.editUser(event.newData)*/
-      .then(result => this.notificationsService.success('ACTION_TYPE_UPDATED'))
+    event.confirm.resolve();
+    this.usersService.editUser(event.newData)
+      .then(result => this.notificationsService.success('USER_UPDATED'))
       .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
   }
 
@@ -84,8 +91,8 @@ export class ManageUserComponent implements OnInit {
     this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
       .then(confirmation => {
         if (confirmation) {
-          event.confirm.resolve()/*;
-          this.privilegesService.removeActionType(event.data)*/
+          event.confirm.resolve();
+          this.usersService.removeUser(event.data)
             .then(result => this.notificationsService.success('DELETE_SUCCEDED'))
             .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
         } else {
