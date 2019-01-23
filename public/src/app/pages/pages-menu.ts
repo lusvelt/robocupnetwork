@@ -26,7 +26,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'PLACES',
-    icon: 'fa fa-flag-checkered',
+    icon: 'fas fa-map-marker-alt',
     link: '/pages/places',
     children: [
       {

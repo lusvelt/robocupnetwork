@@ -1,6 +1,8 @@
 const _ = require('lodash');
 const User = require('../../models/User');
 const Role = require('../../models/Role');
+const Manifestation = require('../../models/Manifestation');
+const UserHasRoleInManifestation = require('../../database/associationTables/UserHasRoleInManifestation');
 const log = require('../../config/consoleMessageConfig');
 
 const usersIo = (clientsIo, socket) => {
@@ -35,19 +37,23 @@ const usersIo = (clientsIo, socket) => {
             const user = await User.create(_.omit(_user,['manifestations']));
             if(!user)
                 throw new Error();
-            /* const promises = [];
-            _user.roles.forEach(_role => {
+            
+            const promises = [];
+            _user.manifestations.forEach(_manifestation => {
                 promises.push(new Promise((resolve, reject) => {
-                    Role.findById(_role.id)
-                        .then(role => user.addRole(role))
-                        .then(result => resolve(result))
-                        .catch(err => reject(err));
+                    Manifestation.findById(_manifestation.id)
+                        .then(manifestation => {
+                            promises.push(user.addManifestation(manifestation));
+                            _manifestation.roles.forEach(_role =>
+                                promises.push(UserHasRoleInManifestation.create({ userId: user.dataValues.id, manifestationId: _manifestation.id, roleId: _role.id})));
+                        });
                 }));
             });
 
             const result = await Promise.all(promises);
             if(!result)
-                throw new Error(); */
+                throw new Error();
+
             callback(user);
             socket.broadcast.emit('createUser', user);
             log.verbose('User created');

@@ -79,14 +79,23 @@
         </div>
 
       <div class="mb-3" ngbDropdown [hidden]="user.isAdmin">
-          <button class="btn btn-primary" type="button" ngbDropdownToggle>
+          <!--<button class="btn btn-primary" type="button" ngbDropdownToggle>
             {{ 'MANIFESTATIONS' | translate }}
-          </button>
-          <ul ngbDropdownMenu class="dropdown-menu">
+          </button>-->
+          <input type="text" class="form-control"
+                  placeholder="{{ 'MANIFESTATIONS' | translate }}"
+                  (selectItem)="onManifestationClicked($event)"
+                  [ngbTypeahead]="searchManifestation"
+                  [resultFormatter]="manifestationsFormatter"
+                  [inputFormatter]="manifestationsFormatter"
+                  (focus)="focus$.next($event.target.value)"
+                  (click)="click$.next($event.target.value)"
+                  #searchManifestationInstance="ngbTypeahead"/>
+          <!--<ul ngbDropdownMenu class="dropdown-menu">
             <li (click)="onManifestationClicked(manifestation)" class="dropdown-item" *ngFor="let manifestation of manifestationsList">
                 {{ manifestation.name }}
             </li>
-          </ul>
+          </ul>-->
       </div>
 
         <div class="mb-3">

@@ -7,7 +7,7 @@
     "start": "node index",
     "reset": "node index -r",
     "debug": "node index -d",
-    "watch": "nodemon index -r",
+    "watch": "nodemon index",
     "build": "cd public && ng build",
     "postinstall": "cd public && npm install",
     "precommit": "eslint index.js server/**",

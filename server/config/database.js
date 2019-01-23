@@ -7,15 +7,18 @@ const database = {
         try {
             await sequelize.authenticate();
             log.info('Connection to database has been established successfully.');
-            if (reset){
+
+            require('../database/models');
+            log.debug('Models initialized succesfully');
+            
+            require('./../database/associations');
+            log.debug('Associations initialized succesfully');
+            
+            if (reset)
                 log.debug('Resetting database forcedly...');
-                require('../database/models');
-                log.debug('Models initialized succesfully');
-                require('./../database/associations');
-                log.debug('Associations initialized succesfully');
-            }
             await sequelize.sync({ force: reset });
             if (reset) {
+                log.debug('Initializing data...');
                 await seed();
                 log.debug('Data initialized successfully');
             }

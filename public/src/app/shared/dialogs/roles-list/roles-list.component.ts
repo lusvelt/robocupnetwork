@@ -10,6 +10,7 @@ import { NbDialogRef } from '@nebular/theme';
 export class RolesListComponent implements OnInit {
 
   @Input() title: string;
+  @Input() oldRoles: any[];
 
   roles: any = [];
 
@@ -18,7 +19,13 @@ export class RolesListComponent implements OnInit {
 
   ngOnInit() {
     this.privilegesService.getRoles()
-    .then(roles => this.roles = roles);
+    .then(roles => {
+      this.roles = roles.map(role => {
+        const oldRole = this.oldRoles.find(el => el.id === role.id);
+        role.selected = oldRole ? !!oldRole.selected : false;
+        return role;
+      });
+    });
 
     this.getNotifiedForRoles(this.roles);
   }
