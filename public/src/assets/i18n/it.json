@@ -154,7 +154,18 @@
     "PLACE_STREET":"Strada",
     "PLACE_STREET_REQUIRED":"Strada richiesta!",
     "PLACE_BUTTON":"Crea luogo",
-    "PLACE_UPDATED":"Luogo aggiornato"
+    "PLACE_UPDATED":"Luogo aggiornato",
+
+    "AGE_RANGES": "Fasce di età",
+    "NEW_AGE_RANGE":"Nuova fascia",
+    "AGE_RANGE_NAME":"Nome",
+    "AGE_RANGE_NAME_REQUIRED":"Nome richiesto!",
+    "AGE_RANGE_MIN":"Minimo",
+    "AGE_RANGE_MIN_REQUIRED":"Minimo richiesto!",
+    "AGE_RANGE_MAX":"Massimo",
+    "AGE_RANGE_MAX_REQUIRED":"Massimo richiesto!",
+    "AGE_RANGE_BUTTON":"Crea fascia di età",
+    "AGE_RANGE_UPDATED":"Fascia aggiornata"
 
 
 }

@@ -1,4 +1,5 @@
 export interface PlaceInterface {
+  id?: number;
   country: string;
   region: string;
   province: string;

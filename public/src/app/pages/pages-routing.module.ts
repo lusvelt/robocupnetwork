@@ -78,6 +78,10 @@ const routes: Routes = [{
     loadChildren: './places/places.module#PlacesModule',
   },
   {
+    path: 'age-ranges',
+    loadChildren: './age-ranges/age-ranges.module#AgeRangesModule',
+  },
+  {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',

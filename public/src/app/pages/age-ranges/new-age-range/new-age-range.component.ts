@@ -2,30 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { notAddableConfig } from '../../../config/tables.config';
 import { TablesService } from '../../../services/tables.service';
 import { TranslateService } from '@ngx-translate/core';
-
 import { NotificationsService } from '../../../services/notifications.service';
 import { ModalService } from '../../../services/modal.service';
 import { DataSource } from '../../../classes/data-source.class';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
-import { PlacesService } from '../../../services/places.service';
-import { PlaceInterface } from '../../../interfaces/place.interface';
+import { AgeRangesService } from '../../../services/age-ranges.service';
+import { AgeRangeInterface } from '../../../interfaces/age-range.interface';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'ngx-manage-place',
-  templateUrl: './manage-place.component.html',
-  styleUrls: ['./manage-place.component.scss']
+  selector: 'ngx-new-age-range',
+  templateUrl: './new-age-range.component.html',
+  styleUrls: ['./new-age-range.component.scss']
 })
-export class ManagePlaceComponent implements OnInit {
+export class NewAgeRangeComponent implements OnInit {
 
-  place: any = {
-    country: '',
-    region: '',
-    province: '',
-    postalCode: '',
-    city: '',
-    civicNumber: '',
-    street: '',
+  ageRange: any = {
+    name: '',
+    min: '',
+    max: '',
     show: false
   };
 
@@ -33,35 +28,34 @@ export class ManagePlaceComponent implements OnInit {
 
   constructor(private tablesService: TablesService,
     private translateService: TranslateService,
-    private placesService: PlacesService,
+    private ageRangesService: AgeRangesService,
     private notificationsService: NotificationsService,
     private modalService: ModalService,
     private config: NgbDropdownConfig) {
       config.autoClose = false;
-}
-
+  }
   ngOnInit() {
-    this.placesService.getPlaces()
-    .then(places => this.source.load(places))
+    this.ageRangesService.getAgeRanges()
+    .then(ageRanges => this.source.load(ageRanges))
     .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
 
-    this.placesService.notify('createPlace')
-      .subscribe(place => this.source.insert(place));
+    this.ageRangesService.notify('createAgeRange')
+      .subscribe(ageRange => this.source.insert(ageRange));
 
-    this.placesService.notify('editPlace')
-      .subscribe(place => this.source.edit(place));
+    this.ageRangesService.notify('editAgeRange')
+      .subscribe(ageRange => this.source.edit(ageRange));
 
-    this.placesService.notify('removePlace')
-      .subscribe(place => this.source.delete(place));
+    this.ageRangesService.notify('removeAgeRange')
+      .subscribe(ageRange => this.source.delete(ageRange));
   }
 
   onButtonClicked() {
-    const place: PlaceInterface = _.cloneDeep(this.place);
-    this.placesService.createPlace(place)
-      .then(_place => {
-        this.notificationsService.success('PLACE_CREATED');
-        this.source.insert(_place);
-        this.place.show = false;
+    const ageRange: AgeRangeInterface = _.cloneDeep(this.ageRange);
+    this.ageRangesService.createAgeRange(ageRange)
+      .then(_ageRange => {
+        this.notificationsService.success('AGE_RANGE_CREATED');
+        this.source.insert(_ageRange);
+        this.ageRange.show = false;
       });
   }
     settings = this.tablesService.getSettings(notAddableConfig, {
@@ -72,39 +66,23 @@ export class ManagePlaceComponent implements OnInit {
       editable: false
     },
     country: {
-      title: 'COUNTRY',
+      title: 'NAME',
       type: 'text',
     },
     region: {
-      title: 'REGION',
-      type: 'text',
+      title: 'MIN',
+      type: 'number',
     },
     province: {
-      title: 'PROVINCE',
-      type: 'text',
-    },
-    postalCode: {
-      title: 'POSTAL_CODE',
-      type: 'text',
-    },
-    city: {
-      title: 'CITY',
-      type: 'text',
-    },
-    civicNumber: {
-      title: 'CIVIC_NUMBER',
-      type: 'text',
-    },
-    street: {
-      title: 'STREET',
-      type: 'text',
+      title: 'MAX',
+      type: 'number',
     }
   });
 
   onEditConfirm(event) {
     event.confirm.resolve();
-    this.placesService.editPlace(event.newData)
-      .then(result => this.notificationsService.success('PLACE_UPDATED'))
+    this.ageRangesService.editAgeRange(event.newData)
+      .then(result => this.notificationsService.success('AGE_RANGE_UPDATED'))
       .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
   }
 
@@ -113,7 +91,7 @@ export class ManagePlaceComponent implements OnInit {
       .then(confirmation => {
         if (confirmation) {
           event.confirm.resolve();
-          this.placesService.removePlace(event.data)
+          this.ageRangesService.removeAgeRange(event.data)
             .then(result => this.notificationsService.success('DELETE_SUCCEDED'))
             .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
         } else {
@@ -123,6 +101,7 @@ export class ManagePlaceComponent implements OnInit {
   }
 
   toggleForm() {
-    this.place.show = !this.place.show;
+    this.ageRange.show = !this.ageRange.show;
   }
+
 }

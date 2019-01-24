@@ -8,6 +8,7 @@ import { ThemeModule } from '../@theme/theme.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { NewManifestationComponent } from './manifestations/new-manifestation/new-manifestation.component';
 import { ManagePlaceComponent } from './places/manage-place/manage-place.component';
+import { NewAgeRangeComponent } from './age-ranges/new-age-range/new-age-range.component';
 
 const PAGES_COMPONENTS = [
   PagesComponent,

@@ -36,6 +36,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ]
   },
   {
+    title: 'AGE_RANGES',
+    icon: 'fas fa-exchange-alt',
+    link: '/pages/age-ranges',
+    children: [
+      {
+        title: 'NEW_AGE_RANGE',
+        link: '/pages/age-ranges/new-age-range',
+      }
+    ]
+  },
+  {
     title: 'PRIVILEGES',
     icon: 'fas fa-shield-alt',
     link: '/pages/privileges',

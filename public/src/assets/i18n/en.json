@@ -155,7 +155,18 @@
     "PLACE_STREET":"Street",
     "PLACE_STREET_REQUIRED":"Street required!",
     "PLACE_BUTTON":"Create place",
-    "PLACE_UPDATED":"Place updated"
+    "PLACE_UPDATED":"Place updated",
+
+    "AGE_RANGES": "Age ranges",
+    "NEW_AGE_RANGE":"New place",
+    "AGE_RANGE_NAME":"Name",
+    "AGE_RANGE_NAME_REQUIRED":"Name required!",
+    "AGE_RANGE_MIN":"Min",
+    "AGE_RANGE_MIN_REQUIRED":"Min required!",
+    "AGE_RANGE_MAX":"Max",
+    "AGE_RANGE_MAX_REQUIRED":"Max required!",
+    "AGE_RANGE_BUTTON":"Create age range",
+    "AGE_RANGE_UPDATED":"Age range updated"
 
 
 }
