@@ -65,15 +65,15 @@ export class NewAgeRangeComponent implements OnInit {
       addable: false,
       editable: false
     },
-    country: {
+    name: {
       title: 'NAME',
       type: 'text',
     },
-    region: {
+    min: {
       title: 'MIN',
       type: 'number',
     },
-    province: {
+    max: {
       title: 'MAX',
       type: 'number',
     }

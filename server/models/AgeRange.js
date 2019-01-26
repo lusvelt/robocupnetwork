@@ -7,4 +7,6 @@ const AgeRange = sequelize.define('AgeRange', {
     max: { type: Sequelize.INTEGER, allowNull: false }
 });
 
+AgeRange.getAgeRangesList = () => AgeRange.findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] } });
+
 module.exports = AgeRange;
