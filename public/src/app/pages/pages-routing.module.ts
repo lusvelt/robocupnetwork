@@ -70,12 +70,12 @@ const routes: Routes = [{
     loadChildren: './users/users.module#UsersModule',
   },
   {
-    path: 'manifestations',
-    loadChildren: './manifestations/manifestations.module#ManifestationsModule',
+    path: 'referees',
+    loadChildren: './referees/referees.module#RefereesModule',
   },
   {
-    path: 'places',
-    loadChildren: './places/places.module#PlacesModule',
+    path: 'manifestations',
+    loadChildren: './manifestations/manifestations.module#ManifestationsModule',
   },
   {
     path: 'age-ranges',

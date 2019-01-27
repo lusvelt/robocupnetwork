@@ -86,12 +86,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: ' ',
     children: [
       {
-        title: 'NEW_REFEREE',
-        link: '/pages/new-referee',
-      },
-      {
         title: 'MANAGE_REFEREES',
-        link: '/pages/manage-referee',
+        link: '/pages/referees/manage-referees',
       }
     ]
   },

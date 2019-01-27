@@ -1,0 +1,27 @@
+<button class="mb-3" [ngClass]="{ 'btn': true, 'btn-success': !referee.show, 'btn-danger': referee.show }"
+  type="button" (click)="toggleForm()">
+  <i [ngClass]="{ 'fas': true, 'fa-plus': !referee.show, 'fa-times': referee.show }"></i>
+  {{ (referee.show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
+</button>
+
+<form (ngSubmit)="onButtonClicked()" #form="ngForm" [hidden]="!referee.show">
+  <div class="form-group">
+    <nb-card>
+      <nb-card-header>{{'NEW_REFEREE' | translate}}</nb-card-header>
+      <nb-card-body>
+        <div class="mb-3">
+          <label for="input-name" class="sr-only">{{ 'REFEREE_NAME' | translate}}</label>
+          <input nbInput [(ngModel)]="referee.name" #name="ngModel" id="input-name" name="name" placeholder="{{ 'REFEREE_NAME' | translate }}"
+            autofocus fullWidth [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : ''" required>
+          <small class="form-text error" *ngIf="name.touched && name.errors?.required">
+            {{ 'REFEREE_NAME_REQUIRED' | translate }}
+          </small>
+        </div>
+
+
+
+        <button class="btn btn-primary" nbButton hero>{{'REFEREE_BUTTON'|translate}}</button>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</form>
