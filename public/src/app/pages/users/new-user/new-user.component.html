@@ -98,6 +98,16 @@
           </ul>-->
       </div>
 
+      
+      <div class="mb-3" [hidden]="isOneRoleInManifestation">
+        <ol *ngFor="let manifestation of user.manifestations">
+          {{manifestation.name}}
+          <ol>
+              <li *ngFor="let role of manifestation.roles">{{role.name}}</li>
+          </ol>
+        </ol>  
+      </div>
+
         <div class="mb-3">
           <input nbInput
                 placeholder="{{'BIRTHDATE'| translate}}"

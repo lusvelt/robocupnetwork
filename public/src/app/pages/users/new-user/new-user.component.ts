@@ -31,6 +31,8 @@ export class NewUserComponent implements OnInit {
     manifestations: []
   };
 
+  isOneRoleInManifestation: boolean = true;
+
   manifestationsList: [];
   @ViewChild('searchManifestationInstance') searchManifestationInstance: NgbTypeahead;
   focus$ = new Subject<string>();
@@ -92,12 +94,18 @@ export class NewUserComponent implements OnInit {
       const index = this.user.manifestations.findIndex(el => el.id === manifestation.id);
       if (index !== -1)
         this.user.manifestations.splice(index, 1);
-      if (roles)
+      if (roles) {
         if (roles.length !== 0) {
           manifestation.roles = roles;
           this.user.manifestations.push(manifestation);
           this.notificationsService.success('ADDED_ROLES_IN_MANIFESTATION');
         }
+      }
+      if (this.user.manifestations.length === 0) {
+        this.isOneRoleInManifestation = true;
+      }else {
+        this.isOneRoleInManifestation = false;
+      }
     });
   }
 }

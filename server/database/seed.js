@@ -1,4 +1,4 @@
-const { User, ActionType, Action, Role, Manifestation, School, Place, AgeRange } = require('./models');
+const { User, ActionType, Action, Role, Manifestation, School, Place, AgeRange, Team } = require('./models');
 
 const seed = async () => {
     const users = [
@@ -68,6 +68,10 @@ const seed = async () => {
 
     const ageRanges = [
         await AgeRange.create({name:'under19',min:'14',max:'18'})
+    ];
+
+    const teams = [
+        await Team.create({name: 'Fenix'})
     ];
 
     /*const competitions = [

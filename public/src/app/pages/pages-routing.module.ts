@@ -82,6 +82,10 @@ const routes: Routes = [{
     loadChildren: './manifestations/manifestations.module#ManifestationsModule',
   },
   {
+    path: 'places',
+    loadChildren: './places/places.module#PlacesModule',
+  },
+  {
     path: 'age-ranges',
     loadChildren: './age-ranges/age-ranges.module#AgeRangesModule',
   },
