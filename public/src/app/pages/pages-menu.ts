@@ -113,7 +113,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'MANAGE_TEAMS',
-        link: '/pages/manage-team',
+        link: '/pages/teams/manage-team',
       },
     ]
   },
