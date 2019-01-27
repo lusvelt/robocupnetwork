@@ -1,4 +1,4 @@
-const { User, ActionType, Action, Role, Manifestation, School, Place } = require('./models');
+const { User, ActionType, Action, Role, Manifestation, School, Place, AgeRange } = require('./models');
 
 const seed = async () => {
     const users = [
@@ -64,6 +64,10 @@ const seed = async () => {
 
     const places = [
         await Place.create({street:'Via Perna',civicNumber:'4',city:'Sambuceto',postalCode:'66020',province:'Chieti',region:'Abruzzo',country:'Italia'})
+    ];
+
+    const ageRanges = [
+        await AgeRange.create({name:'under19',min:'14',max:'18'})
     ];
 
     /*const competitions = [

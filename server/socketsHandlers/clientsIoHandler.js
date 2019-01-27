@@ -5,6 +5,7 @@ const manifestationIo = require('./clients/manifestationIo');
 const schoolIo = require('./clients/schoolIo');
 const placeIo = require('./clients/placeIo');
 const ageRangeIo = require('./clients/ageRangeIo');
+const teamIo = require('./clients/teamIo');
 
 
 const clientsIoHandler = (clientsIo) => (socket) => {
@@ -14,6 +15,7 @@ const clientsIoHandler = (clientsIo) => (socket) => {
     schoolIo(clientsIo, socket);
     placeIo(clientsIo, socket);
     ageRangeIo(clientsIo, socket);
+    teamIo(clientsIo, socket);
 };
 
 module.exports = clientsIoHandler;

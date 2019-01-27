@@ -68,6 +68,7 @@
     "NEW_REFEREE":"Nuovo arbitro",
     "MANAGE_REFEREES":"Gestisci arbitri",
     "SCHOOLS":"Scuole",
+    "SCHOOL_BUTTON":"Crea scuola",
     "NEW_SCHOOL":"Nuova scuola",
     "MANAGE_SCHOOLS":"Gestisci scuole",
     "CREATE_SCHOOL":"Crea scuola",
@@ -165,7 +166,11 @@
     "AGE_RANGE_MAX":"Massimo",
     "AGE_RANGE_MAX_REQUIRED":"Massimo richiesto!",
     "AGE_RANGE_BUTTON":"Crea fascia di età",
-    "AGE_RANGE_UPDATED":"Fascia aggiornata"
+    "AGE_RANGE_UPDATED":"Fascia aggiornata",
+
+    "TEAM_NAME_REQUIRED":"Nome della squadra richiesto!",
+    "TEAM_BUTTON":"Crea team",
+    "TEAM_UPDATED":"Team aggiornato"
 
 
 }

@@ -70,6 +70,10 @@ const routes: Routes = [{
     loadChildren: './users/users.module#UsersModule',
   },
   {
+    path: 'teams',
+    loadChildren: './teams/teams.module#TeamsModule',
+  },
+  {
     path: 'referees',
     loadChildren: './referees/referees.module#RefereesModule',
   },

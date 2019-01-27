@@ -69,6 +69,7 @@
     "NEW_REFEREE":"New referee",
     "MANAGE_REFEREES":"Manage referees",
     "SCHOOLS":"Schools",
+    "SCHOOL_BUTTON":"Create school",
     "NEW_SCHOOL":"New school",
     "MANAGE_SCHOOLS":"Manage schools",
     "CREATE_SCHOOL":"Crea scuola",
@@ -166,7 +167,11 @@
     "AGE_RANGE_MAX":"Max",
     "AGE_RANGE_MAX_REQUIRED":"Max required!",
     "AGE_RANGE_BUTTON":"Create age range",
-    "AGE_RANGE_UPDATED":"Age range updated"
+    "AGE_RANGE_UPDATED":"Age range updated",
+
+    "TEAM_NAME_REQUIRED":"Name required!",
+    "TEAM_BUTTON":"Create team",
+    "TEAM_UPDATED":"Team updated"
 
 
 }
