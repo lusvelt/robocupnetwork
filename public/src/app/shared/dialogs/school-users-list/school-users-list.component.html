@@ -1,0 +1,13 @@
+<nb-card>
+  <nb-card-header>{{ title }}</nb-card-header>
+  <nb-card-body>
+    <li *ngFor="let user of users">
+        <nb-checkbox name="user" [(ngModel)]="user.selected">{{ user.name }}</nb-checkbox>
+
+    </li>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton hero status="danger" (click)="cancel()">{{ 'CANCEL' | translate }}</button>
+    <button class="submit" nbButton hero status="success" (click)="submit(users)">{{ 'SUBMIT' | translate }}</button>
+  </nb-card-footer>
+</nb-card>

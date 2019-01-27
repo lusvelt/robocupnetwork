@@ -1,15 +1,24 @@
 import { AgeRangesService } from './../../../services/age-ranges.service';
 import { MultipleSelectDropdownComponent } from './../../../shared/view-cells/multiple-select-dropdown/multiple-select-dropdown.component';
 import { DataSource } from './../../../classes/data-source.class';
-import { Component, OnInit } from '@angular/core';
+import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { TablesService } from '../../../services/tables.service';
 import { NotificationsService } from '../../../services/notifications.service';
 import { ModalService } from '../../../services/modal.service';
-import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownConfig, NgbTypeaheadConfig, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { TeamService } from '../../../services/team.service';
+import { SchoolService } from '../../../services/schools.service';
 import { notAddableConfig } from '../../../config/tables.config';
 import { TeamInterface } from '../../../interfaces/team.interface';
+import { merge } from 'rxjs';
+import { values } from '../../../config/values.config';
+import { Subject } from 'rxjs/Subject';
+import { NbDialogService } from '@nebular/theme';
+import { SchoolUsersListComponent } from '../../../shared/dialogs/school-users-list/school-users-list.component';
+import { UserInterface } from './../../../interfaces/user.interface';
+import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
 
 @Component({
@@ -22,8 +31,29 @@ export class ManageTeamComponent implements OnInit {
   team: any = {
     name: '',
     show: false,
-    ageRanges: []
+    ageRanges: [],
+    schools: []
   };
+
+  isOneUserInSchool: boolean = true;
+
+ schoolsList: [];
+  @ViewChild('searchSchoolInstance') searchSchoolInstance: NgbTypeahead;
+  focus$ = new Subject<string>();
+  click$ = new Subject<string>();
+
+  schoolsFormatter = (value: any) => value.name;
+
+  searchSchool = (text$: Observable<string>) => {
+    const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+    const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.searchSchoolInstance.isPopupOpen()));
+    const inputFocus$ = this.focus$;
+
+    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+      map(term => (term === '' ? this.schoolsList
+        : this.schoolsList.filter((v: any) => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
+    );
+  }
 
   source: DataSource = new DataSource();
 
@@ -32,7 +62,9 @@ export class ManageTeamComponent implements OnInit {
               private notificationsService: NotificationsService,
               private modalService: ModalService,
               private config: NgbDropdownConfig,
+              private dialogService: NbDialogService,
               private teamService: TeamService,
+              private schoolService: SchoolService,
               private ageRangeService: AgeRangesService) {
     }
 
@@ -58,6 +90,9 @@ export class ManageTeamComponent implements OnInit {
     .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
 
     this.getNotifiedForAgeRanges(this.team.ageRanges);
+
+    this.schoolService.getSchools()
+    .then(schools => this.schoolsList = schools);
   }
 
   getNotifiedForAgeRanges(ageRangesArray: any[]) {
@@ -118,6 +153,33 @@ export class ManageTeamComponent implements OnInit {
           event.confirm.reject();
         }
       });
+  }
+  onSchoolClicked(event: any) {
+    event.preventDefault();
+    const school = event.item;
+    const teamSchool = this.team.schools.find(m => m.id === school.id);
+    this.dialogService.open(SchoolUsersListComponent, {
+      context: {
+        title: school.name,
+        oldUsers: teamSchool ? teamSchool.users : []
+      }
+    }).onClose.subscribe(users => {
+      const index = this.team.schools.findIndex(el => el.id === school.id);
+      if (index !== -1)
+        this.team.schools.splice(index, 1);
+      if (users) {
+        if (users.length !== 0) {
+          school.users = users;
+          this.team.schools.push(school);
+          this.notificationsService.success('ADDED_USERS_IN_SCHOOL');
+        }
+      }
+      if (this.team.schools.length === 0) {
+        this.isOneUserInSchool = true;
+      }else {
+        this.isOneUserInSchool = false;
+      }
+    });
   }
 
   toggleForm() {

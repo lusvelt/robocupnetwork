@@ -27,6 +27,27 @@
             </li>
           </ul>
         </div>
+        <div class="mb-3" ngbDropdown>
+
+          <input type="text" class="form-control"
+                  placeholder="{{ 'SCHOOLS' | translate }}"
+                  (selectItem)="onSchoolClicked($event)"
+                  [ngbTypeahead]="searchSchool"
+                  [resultFormatter]="schoolsFormatter"
+                  [inputFormatter]="schoolsFormatter"
+                  (focus)="focus$.next($event.target.value)"
+                  (click)="click$.next($event.target.value)"
+                  #searchSchoolInstance="ngbTypeahead"/>
+
+      </div>
+      <div class="mb-3" [hidden]="isOneUserInSchool">
+        <ol *ngFor="let school of team.schools">
+          {{school.name}}
+          <ol>
+              <li *ngFor="let user of school.users">{{user.name}}</li>
+          </ol>
+        </ol>
+      </div>
         <button class="btn btn-primary" nbButton hero>{{'TEAM_BUTTON'|translate}}</button>
       </nb-card-body>
     </nb-card>
