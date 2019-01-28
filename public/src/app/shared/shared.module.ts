@@ -11,7 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MultipleSelectDropdownComponent } from './view-cells/multiple-select-dropdown/multiple-select-dropdown.component';
 import { SingleDateComponent } from './view-cells/single-date/single-date.component';
 import { RolesListComponent } from './dialogs/roles-list/roles-list.component';
-import { SchoolUsersListComponent } from './dialogs/school-users-list/school-users-list.component';
+import { UsersListComponent } from './dialogs/users-list/users-list.component';
 
 
 @NgModule({
@@ -31,7 +31,7 @@ import { SchoolUsersListComponent } from './dialogs/school-users-list/school-use
         MultipleSelectDropdownComponent,
         SingleDateComponent,
         RolesListComponent,
-        SchoolUsersListComponent
+        UsersListComponent
     ],
     providers: [
         HttpService,
@@ -45,7 +45,7 @@ import { SchoolUsersListComponent } from './dialogs/school-users-list/school-use
         MultipleSelectDropdownComponent,
         SingleDateComponent,
         RolesListComponent,
-        SchoolUsersListComponent
+        UsersListComponent
     ]
 })
 export class SharedModule { }
