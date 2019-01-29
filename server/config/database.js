@@ -10,10 +10,10 @@ const database = {
 
             require('../database/models');
             log.debug('Models initialized succesfully');
-            
+
             require('./../database/associations');
             log.debug('Associations initialized succesfully');
-            
+
             if (reset)
                 log.debug('Resetting database forcedly...');
             await sequelize.sync({ force: reset });
@@ -24,7 +24,8 @@ const database = {
             }
             log.info('Database initialized successfully');
         } catch (err) {
-            log.error(err);
+            // log.error(err);
+            console.log(err);
         }
     }
 };

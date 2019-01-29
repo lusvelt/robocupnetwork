@@ -9,6 +9,7 @@ import { NotificationsService } from '../../../services/notifications.service';
 import { ModalService } from '../../../services/modal.service';
 import { NgbDropdownConfig, NgbTypeaheadConfig, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { TeamService } from '../../../services/team.service';
+import { UsersService } from '../../../services/users.service';
 import { SchoolService } from '../../../services/schools.service';
 import { notAddableConfig } from '../../../config/tables.config';
 import { TeamInterface } from '../../../interfaces/team.interface';
@@ -16,7 +17,7 @@ import { merge } from 'rxjs';
 import { values } from '../../../config/values.config';
 import { Subject } from 'rxjs/Subject';
 import { NbDialogService } from '@nebular/theme';
-import { SchoolUsersListComponent } from '../../../shared/dialogs/school-users-list/school-users-list.component';
+import { UsersListComponent } from '../../../shared/dialogs/users-list/users-list.component';
 import { UserInterface } from './../../../interfaces/user.interface';
 import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
@@ -32,26 +33,27 @@ export class ManageTeamComponent implements OnInit {
     name: '',
     show: false,
     ageRanges: [],
-    schools: []
+    schools: [],
+    users: []
   };
 
-  isOneUserInSchool: boolean = true;
+  isOneUserInTeam: boolean = true;
 
- schoolsList: [];
-  @ViewChild('searchSchoolInstance') searchSchoolInstance: NgbTypeahead;
+ usersList: [];
+  @ViewChild('searchUserInstance') searchUserInstance: NgbTypeahead;
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
 
-  schoolsFormatter = (value: any) => value.name;
+  usersFormatter = (value: any) => [value.name, value.surname, value.birthDate];
 
-  searchSchool = (text$: Observable<string>) => {
+  searchUser = (text$: Observable<string>) => {
     const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
-    const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.searchSchoolInstance.isPopupOpen()));
+    const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.searchUserInstance.isPopupOpen()));
     const inputFocus$ = this.focus$;
 
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-      map(term => (term === '' ? this.schoolsList
-        : this.schoolsList.filter((v: any) => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
+      map(term => (term === '' ? this.usersList
+        :  this.usersList.filter((v: any) => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
     );
   }
 
@@ -65,12 +67,13 @@ export class ManageTeamComponent implements OnInit {
               private dialogService: NbDialogService,
               private teamService: TeamService,
               private schoolService: SchoolService,
-              private ageRangeService: AgeRangesService) {
+              private ageRangeService: AgeRangesService,
+              private usersService: UsersService) {
     }
 
 
   ngOnInit() {
-    this.teamService.getTeams()
+      this.teamService.getTeams()
       .then(team => {
         this.source.load(team);
       })
@@ -90,9 +93,14 @@ export class ManageTeamComponent implements OnInit {
     .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
 
     this.getNotifiedForAgeRanges(this.team.ageRanges);
-
     this.schoolService.getSchools()
-    .then(schools => this.schoolsList = schools);
+    .then(schools => this.team.schools = schools)
+    .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+
+    this.getNotifiedForSchools(this.team.schools);
+
+    this.usersService.getUsers()
+    .then(users => this.usersList = users);
   }
 
   getNotifiedForAgeRanges(ageRangesArray: any[]) {
@@ -104,6 +112,16 @@ export class ManageTeamComponent implements OnInit {
 
     this.ageRangeService.notify('removeAgeRange')
       .subscribe(ageRange => ageRangesArray.splice(ageRangesArray.findIndex(el => el.id === ageRange.id), 1));
+  }
+  getNotifiedForSchools(schoolsArray: any[]) {
+    this.schoolService.notify('createSchool')
+    .subscribe(school => schoolsArray.push(school));
+
+    this.schoolService.notify('editSchool')
+      .subscribe(school => schoolsArray.splice(schoolsArray.findIndex(el => el.id === school.id), 1, school));
+
+    this.schoolService.notify('removeSchool')
+      .subscribe(school => schoolsArray.splice(schoolsArray.findIndex(el => el.id === school.id), 1));
   }
 
   onButtonClicked() {
@@ -154,30 +172,30 @@ export class ManageTeamComponent implements OnInit {
         }
       });
   }
-  onSchoolClicked(event: any) {
+  onUserClicked(event: any) {
     event.preventDefault();
-    const school = event.item;
-    const teamSchool = this.team.schools.find(m => m.id === school.id);
-    this.dialogService.open(SchoolUsersListComponent, {
+    const user = event.item;
+    const teamUser = this.team.users.find(m => m.id === user.id);
+    this.dialogService.open(UsersListComponent, {
       context: {
-        title: school.name,
-        oldUsers: teamSchool ? teamSchool.users : []
+        title: user.name,
+        oldUsers: teamUser ? teamUser : []
       }
     }).onClose.subscribe(users => {
-      const index = this.team.schools.findIndex(el => el.id === school.id);
+      const index = this.team.users.findIndex(el => el.id === user.id);
       if (index !== -1)
-        this.team.schools.splice(index, 1);
+        this.team.users.splice(index, 1);
       if (users) {
         if (users.length !== 0) {
-          school.users = users;
-          this.team.schools.push(school);
-          this.notificationsService.success('ADDED_USERS_IN_SCHOOL');
+          this.team.users = users;
+          this.team.users.push(user);
+          this.notificationsService.success('ADDED_USERS_IN_TEAM');
         }
       }
-      if (this.team.schools.length === 0) {
-        this.isOneUserInSchool = true;
+      if (this.team.users.length === 0) {
+        this.isOneUserInTeam = true;
       }else {
-        this.isOneUserInSchool = false;
+        this.isOneUserInTeam = false;
       }
     });
   }

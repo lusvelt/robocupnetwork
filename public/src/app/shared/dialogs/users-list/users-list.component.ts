@@ -3,12 +3,12 @@ import { UsersService } from '../../../services/users.service';
 import { NbDialogRef } from '@nebular/theme';
 
 @Component({
-  selector: 'ngx-school-users-list',
-  templateUrl: './school-users-list.component.html',
-  styleUrls: ['./school-users-list.component.scss']
+  selector: 'ngx-users-list',
+  templateUrl: './users-list.component.html',
+  styleUrls: ['./users-list.component.scss']
 })
 
-export class SchoolUsersListComponent implements OnInit {
+export class UsersListComponent implements OnInit {
 
   @Input() title: string;
   @Input() oldUsers: any[];
@@ -16,7 +16,7 @@ export class SchoolUsersListComponent implements OnInit {
   users: any = [];
 
   constructor(private usersService: UsersService,
-              protected ref: NbDialogRef<SchoolUsersListComponent>) { }
+              protected ref: NbDialogRef<UsersListComponent>) { }
 
   ngOnInit() {
     this.usersService.getUsers()

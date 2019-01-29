@@ -11,6 +11,7 @@ const ShiftIncludesLineup = require('./associationTables/ShiftIncludesLineup.js'
 const RunInvolvesLineup = require('./associationTables/RunInvolvesLineup.js');
 const UserHasRoleInManifestation = require('./associationTables/UserHasRoleInManifestation.js');
 const TeamHasUser = require('./associationTables/TeamHasUser.js');
+const SchoolHasSchoolType = require('./associationTables/SchoolHasSchoolType.js');
 
 module.exports = {
     RunHasParam,
@@ -25,5 +26,6 @@ module.exports = {
     ShiftIncludesLineup,
     RunInvolvesLineup,
     UserHasRoleInManifestation,
-    TeamHasUser
+    TeamHasUser,
+    SchoolHasSchoolType
 };

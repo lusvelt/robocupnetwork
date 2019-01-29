@@ -20,6 +20,9 @@ const {
     SchoolType,
     Category,
     Event,
+    RobotImage,
+    Robot,
+    RobotType
 } = require('./models');
 
 const {
@@ -35,7 +38,8 @@ const {
     ShiftIncludesLineup,
     RunInvolvesLineup,
     UserHasRoleInManifestation,
-    TeamHasUser
+    TeamHasUser,
+    SchoolHasSchoolType
 } = require('./associationTables');
 
 const runFk = utils.getForeignKey(Run);
@@ -53,8 +57,11 @@ const actionTypeFk = utils.getForeignKey(ActionType);
 const shiftFk = utils.getForeignKey(Shift);
 const signFk = utils.getForeignKey(Sign);
 const placeFk = utils.getForeignKey(Place);
+const schoolFk = utils.getForeignKey(School);
 const schoolTypeFk = utils.getForeignKey(SchoolType);
 const categoryFk = utils.getForeignKey(Category);
+const robotImageFk = utils.getForeignKey(RobotImage);
+const robotTypeFk = utils.getForeignKey(RobotType);
 
 // EXAMPLE Session - Shift | 1:1
 // Session.hasOne(Shift, { foreignKey: sessionFk });
@@ -74,8 +81,18 @@ Event.hasOne(Event, { foreignKey: 'triggerId'});
 // Event - Category | 1:N
 Category.hasMany(Event, { foreignKey: categoryFk });
 
-// School - SchoolTypes | 1:N
-SchoolType.hasMany(School, { foreignKey: schoolTypeFk });
+// Robot - RobotsImage | 1:N
+RobotImage.hasMany(Robot, { foreignKey: robotImageFk });
+
+// Robot - RobotType | 1:N
+RobotType.hasMany(Robot, { foreignKey: robotTypeFk });
+
+// Robot - TeamPartecipatesToCompetition | 1:N
+Team.hasMany(Robot, { foreignKey: teamFk });
+
+// School - SchoolTypes | N:M ('../database/associationTables/SchoolHasSchoolType.js')
+School.hasMany(SchoolHasSchoolType, { foreignKey: schoolFk });
+SchoolType.hasMany(SchoolHasSchoolType, { schoolTypeFk });
 
 // Place - Manifestation | 1:N
 Place.hasMany(Manifestation, { foreignKey: placeFk });
