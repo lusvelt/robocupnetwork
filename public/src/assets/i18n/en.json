@@ -171,7 +171,33 @@
 
     "TEAM_NAME_REQUIRED":"Name required!",
     "TEAM_BUTTON":"Create team",
-    "TEAM_UPDATED":"Team updated"
+    "TEAM_UPDATED":"Team updated",
+
+    "CATEGORIES": "Categories",
+    "NEW_CATEGORIES": "New categories",
+    "NEW_CATEGORY":"New category",
+    "CATEGORY_NAME":"name",
+    "CATEGORY_NAME_REQUIRED":"Name required!",
+    "CATEGORY_DESCRIPTION":"Description",
+    "CATEGORY_DESCRIPTION_REQUIRED":"Description required!",
+    "CATEGORY_SCORING_TYPE":"Scoring type",
+    "CATEGORY_SCORING_TYPE_REQUIRED":"Scoring type required!",
+    "CATEGORY_RUN_TYPE":"Run type",
+    "CATEGORY_RUN_TYPE_REQUIRED":"Run type required!",
+    "CATEGORY_MAX_ROBOTS_PER_TEAM":"Max robots per team",
+    "CATEGORY_MAX_ROBOTS_PER_TEAM_REQUIRED":"Max robots per team required!",
+    "CATEGORY_MAX_TEAMS_PER_LINEUP":"Max teams per lineup",
+    "CATEGORY_MAX_TEAMS_PER_LINEUP_REQUIRED":"Max teams per lineup required!",
+    "CATEGORY_IS_DIVIDED_INTO_ZONES":"Is divided into zones?",
+    "CATEGORY_IS_DIVIDED_INTO_ZONES_REQUIRED":"Is divided into zones required!",
+    "CATEGORY_CHECKPOINTS_DETERMINE_ZONES":"Checkpoints determine zones?",
+    "CATEGORY_CHECKPOINTS_DETERMINE_ZONES_REQUIRED":"Checkpoints determine zones required!",
+    "CATEGORY_REQUIRES_EVACUATION":"Require evacuation?",
+    "CATEGORY_REQUIRES_EVACUATION_REQUIRED":"evacuation required!",
+    "CATEGORY_DEFAULT_MAX_TIME":"Default max time",
+    "CATEGORY_DEFAULT_MAX_TIME_REQUIRED":"Default max time required!",
+    "CATEGORY_BUTTON":"Create category",
+    "CATEGORY_UPDATED":"Category updated"
 
 
 }

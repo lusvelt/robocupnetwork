@@ -62,6 +62,10 @@ const routes: Routes = [{
     loadChildren: './miscellaneous/miscellaneous.module#MiscellaneousModule',
   },
   {
+    path: 'categories',
+    loadChildren: './categories/categories.module#CategoriesModule',
+  },
+  {
     path: 'privileges',
     loadChildren: './privileges/privileges.module#PrivilegesModule',
   },

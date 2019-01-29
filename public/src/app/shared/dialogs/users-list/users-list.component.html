@@ -2,7 +2,7 @@
   <nb-card-header>{{ title }}</nb-card-header>
   <nb-card-body>
     <li *ngFor="let user of users">
-        <nb-checkbox name="user" [(ngModel)]="user.selected">{{ user.name }}</nb-checkbox>
+        <nb-checkbox name="user" [(ngModel)]="user.selected">{{ user.name }},{{ user.surname }},{{ user.birthDate }}</nb-checkbox>
 
     </li>
   </nb-card-body>
