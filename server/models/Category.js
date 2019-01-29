@@ -14,6 +14,6 @@ const Category = sequelize.define('Category', {
     defaultMax: { type: Sequelize.INTEGER, allowNull: false }
 });
 
-Category.getCategorysList = () => Category.findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] } });
+Category.getCategoriesList = () => Category.findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] } });
 
 module.exports = Category;
