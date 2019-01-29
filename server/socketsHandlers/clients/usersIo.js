@@ -101,10 +101,28 @@ const usersIo = (clientsIo, socket) => {
         }
     };
 
+    const updateUserBirthdate = async (args, callback) => {
+        const _user = args.user;
+        const birthDate = args.changedBirthdate;
+
+        try {
+            const user = await User.findById(_user.id);
+            const result = await user.update({ birthDate });
+
+            if (!result)
+                throw new Error();
+
+            callback(result);
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
     socket.on('createUser', createUser);
     socket.on('getUsers', getUsers);
-    socket.on('editUser',editUser);
-    socket.on('removeUser',removeUser);
+    socket.on('editUser', editUser);
+    socket.on('removeUser', removeUser);
+    socket.on('updateUserBirthdate', updateUserBirthdate);
 };
 
 module.exports = usersIo;

@@ -17,12 +17,10 @@ import 'style-loader!angular2-toaster/toaster.css';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private analytics: AnalyticsService, private translate: TranslateService,
-    private socketIoService: SocketIoService) { }
+  constructor(private analytics: AnalyticsService, private translate: TranslateService) { }
 
   ngOnInit(): void {
     this.analytics.trackPageViews();
     this.translate.setDefaultLang('it');
-    this.socketIoService.connect('/clients');
   }
 }

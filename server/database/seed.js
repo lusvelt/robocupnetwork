@@ -5,7 +5,7 @@ const seed = async () => {
         await User.create({
             name: 'Niccolò',
             surname: 'Bellucci',
-            birthDate: new Date(1999, 10, 15),
+            birthDate: new Date(1999, 9, 15),
             email: 'niccolo.bellucci.dev@gmail.com',
             password: 'admin1',
             isAdmin: true
@@ -13,7 +13,7 @@ const seed = async () => {
         await User.create({
             name: 'Stefano',
             surname: 'Colamonaco',
-            birthDate: new Date(2000, 1, 5),
+            birthDate: new Date(2000, 0, 5),
             email: 'stefano.colamonaco.dev@gmail.com',
             password: 'admin2',
             isAdmin: true
@@ -21,7 +21,7 @@ const seed = async () => {
         await User.create({
             name: 'Alessio',
             surname: 'Di Pasquale',
-            birthDate: new Date(2000, 12, 2),
+            birthDate: new Date(2000, 11, 2),
             email: 'alessio.dipasquale.dev@gmail.com',
             password: 'admin3',
             isAdmin: true
@@ -44,8 +44,8 @@ const seed = async () => {
     ];
 
     const action = [
-        await Action.create({name:'Annulla gara',description:'test1'}),
-        await Action.create({name:'Crea utente',description:'test2'}),
+        await Action.create({name:'Annulla gara', alias: 'cancelRun', description:'test1'}),
+        await Action.create({name:'Crea utente', alias: 'createUser', description:'test2'}),
     ];
 
     const roles = [
@@ -76,7 +76,7 @@ const seed = async () => {
 
     const categories = [
         await Category.create({name: 'Rescue Line', description: 'Seguilinea', maxRobotsPerTeam: 4, maxTeamsPerLineUp: 10, isDividedIntoZones: true, checkpointsDetermineZones: true, requiresEvacuation: true, defaultMax: 300})
-    ]
+    ];
 
     /*const competitions = [
         await Competition.create

@@ -1,4 +1,63 @@
-<div class="row">
+
+<h2>{{ 'WELCOME_MESSAGE' | translate }}</h2>
+<div class="mb-3" ngbDropdown>
+  <!--<button class="btn btn-primary" type="button" ngbDropdownToggle>
+            {{ 'MANIFESTATIONS' | translate }}
+          </button>-->
+  <label class="sr-only">{{ 'SELECT_MANIFESTATION' | translate }}</label>
+  <input type="text" class="form-control" placeholder="{{ 'MANIFESTATIONS' | translate }}" (selectItem)="onManifestationClicked($event)"
+    [ngbTypeahead]="searchManifestation" [resultFormatter]="manifestationsFormatter" [inputFormatter]="manifestationsFormatter"
+    (focus)="focus$.next($event.target.value)" (click)="click$.next($event.target.value)" #searchManifestationInstance="ngbTypeahead" />
+  <!--<ul ngbDropdownMenu class="dropdown-menu">
+            <li (click)="onManifestationClicked(manifestation)" class="dropdown-item" *ngFor="let manifestation of manifestationsList">
+                {{ manifestation.name }}
+            </li>
+          </ul>-->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<div class="row">
   <div class="col-xxxl-3 col-md-6" *ngFor="let statusCard of statusCards">
     <ngx-status-card [title]="statusCard.title"
                      [type]="statusCard.type">
@@ -41,3 +100,4 @@
     <ngx-security-cameras></ngx-security-cameras>
   </div>
 </div>
+-->

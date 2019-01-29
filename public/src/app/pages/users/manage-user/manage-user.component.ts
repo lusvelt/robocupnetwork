@@ -1,10 +1,11 @@
+import { Subscription } from 'rxjs/Subscription';
 import { UsersService } from './../../../services/users.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ModalService } from './../../../services/modal.service';
 import { NotificationsService } from './../../../services/notifications.service';
 import { PrivilegesService } from './../../../services/privileges.service';
 import { TablesService } from './../../../services/tables.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataSource } from '../../../classes/data-source.class';
 import { notAddableConfig } from '../../../config/tables.config';
 import { SingleDateComponent } from '../../../shared/view-cells/single-date/single-date.component';
@@ -14,9 +15,10 @@ import { SingleDateComponent } from '../../../shared/view-cells/single-date/sing
   templateUrl: './manage-user.component.html',
   styleUrls: ['./manage-user.component.scss']
 })
-export class ManageUserComponent implements OnInit {
+export class ManageUserComponent implements OnInit, OnDestroy {
 
   source: DataSource = new DataSource();
+  subscriptions: Subscription[] = [];
 
   constructor(
       private tablesService: TablesService,
@@ -29,17 +31,20 @@ export class ManageUserComponent implements OnInit {
 
   ngOnInit() {
     this.usersService.getUsers()
-    .then(users => this.source.load(users))
-    .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+      .then(users => this.source.load(users))
+      .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
 
-    this.usersService.notify('createUser')
-    .subscribe(user => this.source.insert(user));
+    this.subscriptions.push(
+      this.usersService.notify('createUser')
+        .subscribe(user => this.source.insert(user)));
 
-    this.usersService.notify('editUser')
-    .subscribe(user => this.source.edit(user));
+    this.subscriptions.push(
+      this.usersService.notify('editUser')
+        .subscribe(user => this.source.edit(user)));
 
-    this.usersService.notify('removeUser')
-    .subscribe(user => this.source.delete(user));
+    this.subscriptions.push(
+      this.usersService.notify('removeUser')
+        .subscribe(user => this.source.delete(user)));
   }
 
   settings = this.tablesService.getSettings(notAddableConfig, {
@@ -99,5 +104,9 @@ export class ManageUserComponent implements OnInit {
           event.confirm.reject();
         }
       });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }

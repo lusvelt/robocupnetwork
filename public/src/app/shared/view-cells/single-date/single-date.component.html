@@ -5,4 +5,4 @@
   #birthdate="ngModel"
   [(ngModel)]="date"
   >
-<nb-datepicker #formpicker></nb-datepicker>
+<nb-datepicker #formpicker (dateChange)="onDateChange($event)"></nb-datepicker>

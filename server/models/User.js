@@ -6,6 +6,9 @@ const jwt = require('jsonwebtoken');
 const sequelize = require('../config/sequelize');
 const { saltRounds } = require('../config/values');
 const eventEmitter = require('./../config/eventEmitter');
+const Manifestation = require('./Manifestation');
+const Role = require('./Role');
+const ActionType = require('./ActionType');
 
 const User = sequelize.define('User', {
     name: { type: Sequelize.STRING, allowNull: false },
@@ -38,5 +41,45 @@ User.generateAuthToken = async (email, clearTextPassword) => {
 };
 
 User.getUsersList = () => User.findAll({ attributes: { exclude: ['password', 'createdAt', 'updatedAt'] } });
+
+User.prototype.regenerateAuthToken = async function (_manifestation) {
+    const manifestation = await Manifestation.findById(_manifestation.id);
+    const userHasRoleInManifestationAssociations = await this.getUserHasRoleInManifestations({ where: { manifestationId: _manifestation.id }});
+    
+    let promises = [];
+    userHasRoleInManifestationAssociations.forEach(association =>
+        promises.push(Role.findById(association.dataValues.roleId)));
+
+    const roles = await Promise.all(promises);
+    
+    promises = [];
+    roles.forEach(role => promises.push(role.getActions()));
+    
+    const actionsPerRole = await Promise.all(promises);
+    const actions = [];
+    actionsPerRole.forEach(_actions => {
+        _actions.forEach(_action => {
+            if (actions.findIndex(action => action.id === _action.id) === -1)
+                actions.push(_action);
+        });
+    });
+
+    const actionsAliases = actions.map(action => action.dataValues.alias);
+
+    const jwtPayload = {
+        id: this.id,
+        name: this.name,
+        surname: this.surname,
+        email: this.email,
+        manifestation,
+        roles,
+        actions,
+        actionsAliases
+    };
+
+    const token = jwt.sign(jwtPayload, process.env.JWT_SECRET).toString();
+
+    return token;
+};
 
 module.exports = User;

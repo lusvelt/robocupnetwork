@@ -21,7 +21,11 @@ export class SingleDateComponent implements ViewCell, OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.date = new Date (this.rowData.birthDate);
+    this.date = new Date(this.rowData.birthDate);
+  }
+
+  onDateChange(date: any) {
+    this.parentNotifier.emit('change', date);
   }
 
 }
