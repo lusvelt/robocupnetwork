@@ -170,7 +170,33 @@
 
     "TEAM_NAME_REQUIRED":"Nome della squadra richiesto!",
     "TEAM_BUTTON":"Crea team",
-    "TEAM_UPDATED":"Team aggiornato"
+    "TEAM_UPDATED":"Team aggiornato",
+
+    "CATEGORIES": "Categorie",
+    "NEW_CATEGORIES": "Nuove categorie",
+    "NEW_CATEGORY":"Nuova categoria",
+    "CATEGORY_NAME":"nome",
+    "CATEGORY_NAME_REQUIRED":"Nome richiesto!",
+    "CATEGORY_DESCRIPTION":"Descrizione",
+    "CATEGORY_DESCRIPTION_REQUIRED":"Descrizione richiesta!",
+    "CATEGORY_SCORING_TYPE":"Tipo di punteggio",
+    "CATEGORY_SCORING_TYPE_REQUIRED":"Tipo di punteggio richiesto!",
+    "CATEGORY_RUN_TYPE":"Tipo di gara",
+    "CATEGORY_RUN_TYPE_REQUIRED":"Tipo di gara richiesto!",
+    "CATEGORY_MAX_ROBOTS_PER_TEAM":"Massimo numero di robot per team",
+    "CATEGORY_MAX_ROBOTS_PER_TEAM_REQUIRED":"Massimo numero di robot per team richiesto!",
+    "CATEGORY_MAX_TEAMS_PER_LINEUP":"Max teams per lineup",
+    "CATEGORY_MAX_TEAMS_PER_LINEUP_REQUIRED":"Max teams per lineup richiesto!",
+    "CATEGORY_IS_DIVIDED_INTO_ZONES":"Divisione in zone?",
+    "CATEGORY_IS_DIVIDED_INTO_ZONES_REQUIRED":"Risposta richiesta!",
+    "CATEGORY_CHECKPOINTS_DETERMINE_ZONES":"I checkpoints determinano le zone?",
+    "CATEGORY_CHECKPOINTS_DETERMINE_ZONES_REQUIRED":"risposta richiesta!",
+    "CATEGORY_REQUIRES_EVACUATION":"Zona di evacuazione?",
+    "CATEGORY_REQUIRES_EVACUATION_REQUIRED":"risposta richiesta!",
+    "CATEGORY_DEFAULT_MAX_TIME":"Tempo massimo",
+    "CATEGORY_DEFAULT_MAX_TIME_REQUIRED":"Tempo massimo richiesto!",
+    "CATEGORY_BUTTON":"Crea categoria",
+    "CATEGORY_UPDATED":"Categoria aggiornata"
 
 
 }
