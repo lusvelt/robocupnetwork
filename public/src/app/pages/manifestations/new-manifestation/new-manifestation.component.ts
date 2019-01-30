@@ -1,7 +1,7 @@
 import { ManifestationInterface } from './../../../interfaces/manifestation.interface';
 import { DataSource } from './../../../classes/data-source.class';
 import { ManifestationsService } from './../../../services/manifestations.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TablesService } from '../../../services/tables.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from '../../../services/notifications.service';
@@ -10,18 +10,20 @@ import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as _ from 'lodash';
 import { notAddableConfig } from '../../../config/tables.config';
 import { DatePipe } from '@angular/common';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'ngx-new-manifestation',
   templateUrl: './new-manifestation.component.html',
   styleUrls: ['./new-manifestation.component.scss']
 })
-export class NewManifestationComponent implements OnInit {
+export class NewManifestationComponent implements OnInit, OnDestroy {
   manifestation: any = {
     name: '',
     description: '',
     show: false
   };
+  subscriptions: Subscription[] = [];
   source: DataSource = new DataSource();
   constructor(private tablesService: TablesService,
               private translateService: TranslateService,
@@ -38,14 +40,17 @@ export class NewManifestationComponent implements OnInit {
       .then(manifestation => this.source.load(manifestation))
       .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
 
-    this.manifestationsService.notify('createManifestaton')
-      .subscribe(manifestation => this.source.insert(manifestation));
+    this.subscriptions.push(
+      this.manifestationsService.notify('createManifestaton')
+      .subscribe(manifestation => this.source.insert(manifestation)));
 
-    this.manifestationsService.notify('editManifestation')
-      .subscribe(manifestation => this.source.edit(manifestation));
+    this.subscriptions.push(
+      this.manifestationsService.notify('editManifestation')
+      .subscribe(manifestation => this.source.edit(manifestation)));
 
-    this.manifestationsService.notify('removeManifestation')
-      .subscribe(manifestation => this.source.delete(manifestation));
+    this.subscriptions.push(
+      this.manifestationsService.notify('removeManifestation')
+      .subscribe(manifestation => this.source.delete(manifestation)));
   }
 
   onButtonClicked() {
@@ -109,6 +114,9 @@ export class NewManifestationComponent implements OnInit {
 
   toggleForm() {
     this.manifestation.show = !this.manifestation.show;
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
 }

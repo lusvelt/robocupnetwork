@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { SmartTableService } from '../../../@core/data/smart-table.service';
 import { RoleInterface } from '../../../interfaces/role.interface';
@@ -12,19 +12,21 @@ import { standardConfig, notAddableConfig } from '../../../config/tables.config'
 import { MultipleSelectDropdownComponent } from '../../../shared/view-cells/multiple-select-dropdown/multiple-select-dropdown.component';
 import * as _ from 'lodash';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ngx-role',
   templateUrl: './roles.component.html',
   styleUrls: ['./roles.component.scss']
 })
-export class RolesComponent implements OnInit {
+export class RolesComponent implements OnInit, OnDestroy {
   role: any = {
     name: '',
     description: '',
     actions: [],
     show: false
   };
+  subscriptions: Subscription[] = [];
   source: DataSource = new DataSource();
   actionChoose: any = {};
 
@@ -42,14 +44,17 @@ export class RolesComponent implements OnInit {
     .then(role => this.source.load(role))
     .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
 
+    this.subscriptions.push(
     this.privilegesService.notify('createRole')
-      .subscribe(role => this.source.insert(role));
+      .subscribe(role => this.source.insert(role)));
 
-    this.privilegesService.notify('editRole')
-      .subscribe(role => this.source.edit(role));
+    this.subscriptions.push(
+      this.privilegesService.notify('editRole')
+      .subscribe(role => this.source.edit(role)));
 
-    this.privilegesService.notify('removeRole')
-      .subscribe(role => this.source.delete(role));
+    this.subscriptions.push(
+      this.privilegesService.notify('removeRole')
+      .subscribe(role => this.source.delete(role)));
 
     this.privilegesService.getActions()
     .then(actions => this.role.actions = actions);
@@ -143,6 +148,9 @@ export class RolesComponent implements OnInit {
 
   toggleForm() {
     this.role.show = !this.role.show;
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
 }

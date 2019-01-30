@@ -2,19 +2,20 @@ import { DataSource } from './../../../classes/data-source.class';
 import { PrivilegesService } from './../../../services/privileges.service';
 import { TablesService } from './../../../services/tables.service';
 import { LocalDataSource } from 'ng2-smart-table';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SmartTableService } from '../../../@core/data/smart-table.service';
 import { standardConfig } from '../../../config/tables.config';
 import { NotificationsService } from '../../../services/notifications.service';
 import { ModalService } from '../../../services/modal.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ngx-action-types',
   templateUrl: './action-types.component.html'
 })
-export class ActionTypesComponent implements OnInit {
-
+export class ActionTypesComponent implements OnInit, OnDestroy {
+  subscriptions: Subscription[] = [];
   source: DataSource = new DataSource();
 
   constructor(private tablesService: TablesService,
@@ -28,14 +29,17 @@ export class ActionTypesComponent implements OnInit {
       .then(actionTypes => this.source.load(actionTypes))
       .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
 
-    this.privilegesService.notify('createActionType')
-      .subscribe(actionType => this.source.insert(actionType));
+    this.subscriptions.push(
+      this.privilegesService.notify('createActionType')
+      .subscribe(actionType => this.source.insert(actionType)));
 
-    this.privilegesService.notify('editActionType')
-      .subscribe(actionType => this.source.edit(actionType));
+    this.subscriptions.push(
+      this.privilegesService.notify('editActionType')
+      .subscribe(actionType => this.source.edit(actionType)));
 
-    this.privilegesService.notify('removeActionType')
-      .subscribe(actionType => this.source.delete(actionType));
+    this.subscriptions.push(
+      this.privilegesService.notify('removeActionType')
+      .subscribe(actionType => this.source.delete(actionType)));
   }
 
   settings = this.tablesService.getSettings(standardConfig, {
@@ -84,5 +88,8 @@ export class ActionTypesComponent implements OnInit {
           event.confirm.reject();
         }
       });
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }

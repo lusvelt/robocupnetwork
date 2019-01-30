@@ -2,24 +2,26 @@ import { filter } from 'rxjs/operators';
 import { TablesService } from './../../../services/tables.service';
 import { NotificationsService } from './../../../services/notifications.service';
 import { UsersService } from './../../../services/users.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ModalService } from '../../../services/modal.service';
 import { DataSource } from '../../../classes/data-source.class';
 import { standardConfig } from '../../../config/tables.config';
 import { UserInterface } from '../../../interfaces/user.interface';
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'ngx-manage-referees',
   templateUrl: './manage-referees.component.html',
   styleUrls: ['./manage-referees.component.scss']
 })
-export class ManageRefereesComponent implements OnInit {
+export class ManageRefereesComponent implements OnInit, OnDestroy {
   referee: any = {
     name: '',
     show: false
   };
 
+  subscriptions: Subscription[] = [];
   source: DataSource = new DataSource();
 
   refereesId: number;
@@ -68,5 +70,8 @@ export class ManageRefereesComponent implements OnInit {
 
   toggleForm() {
     this.referee.show = !this.referee.show;
+  }
+  ngOnDestroy() {
+    // this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }

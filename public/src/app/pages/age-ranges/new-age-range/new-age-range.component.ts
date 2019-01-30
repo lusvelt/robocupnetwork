@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { notAddableConfig } from '../../../config/tables.config';
 import { TablesService } from '../../../services/tables.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -9,13 +9,14 @@ import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AgeRangesService } from '../../../services/age-ranges.service';
 import { AgeRangeInterface } from '../../../interfaces/age-range.interface';
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ngx-new-age-range',
   templateUrl: './new-age-range.component.html',
   styleUrls: ['./new-age-range.component.scss']
 })
-export class NewAgeRangeComponent implements OnInit {
+export class NewAgeRangeComponent implements OnInit, OnDestroy {
 
   ageRange: any = {
     name: '',
@@ -24,6 +25,7 @@ export class NewAgeRangeComponent implements OnInit {
     show: false
   };
 
+  subscriptions: Subscription[] = [];
   source: DataSource= new DataSource();
 
   constructor(private tablesService: TablesService,
@@ -39,14 +41,17 @@ export class NewAgeRangeComponent implements OnInit {
     .then(ageRanges => this.source.load(ageRanges))
     .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
 
+    this.subscriptions.push(
     this.ageRangesService.notify('createAgeRange')
-      .subscribe(ageRange => this.source.insert(ageRange));
+      .subscribe(ageRange => this.source.insert(ageRange)));
 
-    this.ageRangesService.notify('editAgeRange')
-      .subscribe(ageRange => this.source.edit(ageRange));
+    this.subscriptions.push(
+      this.ageRangesService.notify('editAgeRange')
+      .subscribe(ageRange => this.source.edit(ageRange)));
 
-    this.ageRangesService.notify('removeAgeRange')
-      .subscribe(ageRange => this.source.delete(ageRange));
+    this.subscriptions.push(
+      this.ageRangesService.notify('removeAgeRange')
+      .subscribe(ageRange => this.source.delete(ageRange)));
   }
 
   onButtonClicked() {
@@ -102,6 +107,9 @@ export class NewAgeRangeComponent implements OnInit {
 
   toggleForm() {
     this.ageRange.show = !this.ageRange.show;
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
 }

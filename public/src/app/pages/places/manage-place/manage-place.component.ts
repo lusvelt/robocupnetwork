@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { notAddableConfig } from '../../../config/tables.config';
 import { TablesService } from '../../../services/tables.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,13 +10,14 @@ import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { PlacesService } from '../../../services/places.service';
 import { PlaceInterface } from '../../../interfaces/place.interface';
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ngx-manage-place',
   templateUrl: './manage-place.component.html',
   styleUrls: ['./manage-place.component.scss']
 })
-export class ManagePlaceComponent implements OnInit {
+export class ManagePlaceComponent implements OnInit, OnDestroy {
 
   place: any = {
     country: '',
@@ -29,6 +30,7 @@ export class ManagePlaceComponent implements OnInit {
     show: false
   };
 
+  subscriptions: Subscription[] = [];
   source: DataSource= new DataSource();
 
   constructor(private tablesService: TablesService,
@@ -45,14 +47,17 @@ export class ManagePlaceComponent implements OnInit {
     .then(places => this.source.load(places))
     .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
 
+    this.subscriptions.push(
     this.placesService.notify('createPlace')
-      .subscribe(place => this.source.insert(place));
+      .subscribe(place => this.source.insert(place)));
 
-    this.placesService.notify('editPlace')
-      .subscribe(place => this.source.edit(place));
+    this.subscriptions.push(
+      this.placesService.notify('editPlace')
+      .subscribe(place => this.source.edit(place)));
 
-    this.placesService.notify('removePlace')
-      .subscribe(place => this.source.delete(place));
+    this.subscriptions.push(
+      this.placesService.notify('removePlace')
+      .subscribe(place => this.source.delete(place)));
   }
 
   onButtonClicked() {
@@ -124,5 +129,8 @@ export class ManagePlaceComponent implements OnInit {
 
   toggleForm() {
     this.place.show = !this.place.show;
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }

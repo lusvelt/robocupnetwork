@@ -1,6 +1,6 @@
 import { NotificationsService } from './../../../services/notifications.service';
 import { MultipleSelectDropdownComponent } from './../../../shared/view-cells/multiple-select-dropdown/multiple-select-dropdown.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActionInterface } from '../../../interfaces/action.interface';
 import { TranslateService } from '@ngx-translate/core';
 import { PrivilegesService } from '../../../services/privileges.service';
@@ -10,20 +10,21 @@ import { DataSource } from '../../../classes/data-source.class';
 import { notAddableConfig } from '../../../config/tables.config';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ngx-action',
   templateUrl: './actions.component.html',
   styleUrls: ['./actions.component.scss']
 })
-export class ActionsComponent implements OnInit {
+export class ActionsComponent implements OnInit, OnDestroy {
   action: any = {
     name: '',
     description: '',
     actionTypes: [],
     show: false
   };
-
+  subscriptions: Subscription[] = [];
   source: DataSource= new DataSource();
   actionChoose: any = {};
 
@@ -41,14 +42,17 @@ export class ActionsComponent implements OnInit {
     .then(actions => this.source.load(actions))
     .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
 
+    this.subscriptions.push(
     this.privilegesService.notify('createAction')
-      .subscribe(action => this.source.insert(action));
+      .subscribe(action => this.source.insert(action)));
 
-    this.privilegesService.notify('editAction')
-      .subscribe(action => this.source.edit(action));
+    this.subscriptions.push(
+      this.privilegesService.notify('editAction')
+      .subscribe(action => this.source.edit(action)));
 
-    this.privilegesService.notify('removeAction')
-      .subscribe(action => this.source.delete(action));
+    this.subscriptions.push(
+      this.privilegesService.notify('removeAction')
+      .subscribe(action => this.source.delete(action)));
 
     this.privilegesService.getActionTypes()
       .then(actionTypes => this.action.actionTypes = actionTypes);
@@ -140,5 +144,8 @@ export class ActionsComponent implements OnInit {
 
   toggleForm() {
     this.action.show = !this.action.show;
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }

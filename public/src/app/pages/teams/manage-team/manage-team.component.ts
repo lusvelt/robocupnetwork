@@ -2,7 +2,7 @@ import { AgeRangesService } from './../../../services/age-ranges.service';
 import { MultipleSelectDropdownComponent } from './../../../shared/view-cells/multiple-select-dropdown/multiple-select-dropdown.component';
 import { DataSource } from './../../../classes/data-source.class';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { TablesService } from '../../../services/tables.service';
 import { NotificationsService } from '../../../services/notifications.service';
@@ -13,7 +13,7 @@ import { UsersService } from '../../../services/users.service';
 import { SchoolService } from '../../../services/schools.service';
 import { notAddableConfig } from '../../../config/tables.config';
 import { TeamInterface } from '../../../interfaces/team.interface';
-import { merge } from 'rxjs';
+import { merge, Subscription } from 'rxjs';
 import { values } from '../../../config/values.config';
 import { Subject } from 'rxjs/Subject';
 import { NbDialogService } from '@nebular/theme';
@@ -27,7 +27,7 @@ import * as _ from 'lodash';
   templateUrl: './manage-team.component.html',
   styleUrls: ['./manage-team.component.scss']
 })
-export class ManageTeamComponent implements OnInit {
+export class ManageTeamComponent implements OnInit, OnDestroy {
 
   team: any = {
     name: '',
@@ -57,6 +57,7 @@ export class ManageTeamComponent implements OnInit {
     );
   }
 
+  subscriptions: Subscription[] = [];
   source: DataSource = new DataSource();
 
   constructor(private tablesService: TablesService,
@@ -73,20 +74,21 @@ export class ManageTeamComponent implements OnInit {
 
 
   ngOnInit() {
-      this.teamService.getTeams()
-      .then(team => {
-        this.source.load(team);
-      })
-      .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+    this.teamService.getTeams()
+     .then(team => {
+      this.source.load(team);
+    })
+    .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+    this.subscriptions.push(
+     this.teamService.notify('createTeam')
+      .subscribe(team => this.source.insert(team)));
+    this.subscriptions.push(
+     this.teamService.notify('editTeam')
+      .subscribe(team => this.source.edit(team)));
 
-    this.teamService.notify('createTeam')
-      .subscribe(team => this.source.insert(team));
-
-    this.teamService.notify('editTeam')
-      .subscribe(team => this.source.edit(team));
-
-    this.teamService.notify('removeTeam')
-      .subscribe(team => this.source.delete(team));
+    this.subscriptions.push(
+     this.teamService.notify('removeTeam')
+      .subscribe(team => this.source.delete(team)));
 
     this.ageRangeService.getAgeRanges()
     .then(ageRanges => this.team.ageRanges = ageRanges)
@@ -202,6 +204,10 @@ export class ManageTeamComponent implements OnInit {
 
   toggleForm() {
     this.team.show = !this.team.show;
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
 }

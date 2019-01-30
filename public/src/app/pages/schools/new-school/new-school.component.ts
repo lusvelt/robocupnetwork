@@ -1,7 +1,7 @@
 import { PlacesService } from './../../../services/places.service';
 import { MultipleSelectDropdownComponent } from './../../../shared/view-cells/multiple-select-dropdown/multiple-select-dropdown.component';
 import { DataSource } from './../../../classes/data-source.class';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { TablesService } from '../../../services/tables.service';
 import { NotificationsService } from '../../../services/notifications.service';
@@ -11,13 +11,14 @@ import { SchoolService } from '../../../services/schools.service';
 import { notAddableConfig } from '../../../config/tables.config';
 import { SchoolInterface } from '../../../interfaces/school.interface';
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'ngx-new-school',
   templateUrl: './new-school.component.html',
   styleUrls: ['./new-school.component.scss']
 })
-export class NewSchoolComponent implements OnInit {
+export class NewSchoolComponent implements OnInit, OnDestroy {
 
   school: any = {
     name: '',
@@ -25,6 +26,7 @@ export class NewSchoolComponent implements OnInit {
     places: []
   };
 
+  subscriptions: Subscription[] = [];
   source: DataSource = new DataSource();
 
   constructor(private tablesService: TablesService,
@@ -42,15 +44,17 @@ export class NewSchoolComponent implements OnInit {
         this.source.load(school);
       })
       .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+    this.subscriptions.push(
+      this.schoolService.notify('createSchool')
+      .subscribe(school => this.source.insert(school)));
 
-    this.schoolService.notify('createSchool')
-      .subscribe(school => this.source.insert(school));
+    this.subscriptions.push(
+      this.schoolService.notify('editSchool')
+      .subscribe(school => this.source.edit(school)));
 
-    this.schoolService.notify('editSchool')
-      .subscribe(school => this.source.edit(school));
-
-    this.schoolService.notify('removeSchool')
-      .subscribe(school => this.source.delete(school));
+    this.subscriptions.push(
+      this.schoolService.notify('removeSchool')
+      .subscribe(school => this.source.delete(school)));
 
     this.placeService.getPlaces()
     .then(places => this.school.places = places)
@@ -122,5 +126,8 @@ export class NewSchoolComponent implements OnInit {
 
   toggleForm() {
     this.school.show = !this.school.show;
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }

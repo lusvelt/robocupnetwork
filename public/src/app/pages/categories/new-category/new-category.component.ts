@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { notAddableConfig } from '../../../config/tables.config';
 import { TablesService } from '../../../services/tables.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -9,13 +9,14 @@ import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { CategoriesService } from '../../../services/categories.service';
 import { CategoryInterface } from '../../../interfaces/category.interface';
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ngx-new-category',
   templateUrl: './new-category.component.html',
   styleUrls: ['./new-category.component.scss']
 })
-export class NewCategoryComponent implements OnInit {
+export class NewCategoryComponent implements OnInit, OnDestroy {
 
   category: any = {
     name: '',
@@ -31,6 +32,7 @@ export class NewCategoryComponent implements OnInit {
     show: false
   };
 
+  subscriptions: Subscription[] = [];
   source: DataSource= new DataSource();
 
   constructor(private tablesService: TablesService,
@@ -47,14 +49,17 @@ export class NewCategoryComponent implements OnInit {
     .then(categories => this.source.load(categories))
     .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
 
+    this.subscriptions.push(
     this.categoriesService.notify('createCategory')
-      .subscribe(category => this.source.insert(category));
+      .subscribe(category => this.source.insert(category)));
 
-    this.categoriesService.notify('editCategory')
-      .subscribe(category => this.source.edit(category));
+    this.subscriptions.push(
+      this.categoriesService.notify('editCategory')
+      .subscribe(category => this.source.edit(category)));
 
-    this.categoriesService.notify('removeCategory')
-      .subscribe(category => this.source.delete(category));
+    this.subscriptions.push(
+      this.categoriesService.notify('removeCategory')
+      .subscribe(category => this.source.delete(category)));
   }
 
   onButtonClicked() {
@@ -138,5 +143,8 @@ export class NewCategoryComponent implements OnInit {
 
   toggleForm() {
     this.category.show = !this.category.show;
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }
