@@ -10,7 +10,7 @@ import { NgModule } from '@angular/core';
 import { NbAuthComponent } from '@nebular/auth';
 
 const routes: Routes = [
-  { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule', canActivateChild: [AuthGuardService] },
+  { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule', canActivate: [AuthGuardService] },
   {
     path: 'auth',
     component: NbAuthComponent,

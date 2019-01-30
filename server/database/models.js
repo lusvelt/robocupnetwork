@@ -7,6 +7,7 @@ const Event = require('../models/Event');
 const Field = require('../models/Field');
 const Lineup = require('../models/Lineup');
 const Manifestation = require('../models/Manifestation');
+const Module = require('../models/Module');
 const Occurence = require('../models/Occurence');
 const Param = require('../models/Param');
 const Phase = require('../models/Phase');
@@ -34,6 +35,7 @@ module.exports = {
     Field,
     Lineup,
     Manifestation,
+    Module,
     Occurence,
     Param,
     Phase,

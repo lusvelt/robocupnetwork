@@ -1,26 +1,31 @@
+import { AuthService } from './auth.service';
 import { TokenService } from './token.service';
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateChild, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateChild, Router, CanActivate } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuardService implements CanActivateChild {
+export class AuthGuardService implements CanActivate {
 
-  constructor(private tokenService: TokenService, private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
-  /*canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const page = route.url[0].path;
-  }*/
-
-  canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const urlTree = state.url.split('/');
     const child = urlTree[1];
+    const module = urlTree[2];
 
-    if (child !== 'auth' && !this.tokenService.isTokenSet()) {
+    if (child !== 'auth' && !this.authService.isAuthenticated()) {
       this.redirectToLogin();
       return false;
-    } else return true;
+    } else if (
+        !this.authService.isSuperadmin() && (
+          module === 'privileges'
+        )
+      )
+      return false;
+
+    else return true;
   }
 
   redirectToLogin() {

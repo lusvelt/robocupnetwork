@@ -37,8 +37,8 @@ const seed = async () => {
     ];
 
     const actionTypes = [
-        await ActionType.create({ name: 'Create' }),
-        await ActionType.create({ name: 'Read' })
+        await ActionType.create({ name: 'Create', alias: 'create' }),
+        await ActionType.create({ name: 'Read', alias: 'read' })
         // await ActionType.create({ name: 'Update' }),
         // await ActionType.create({ name: 'Delete' })
     ];

@@ -6,6 +6,7 @@ const {
     Session,
     Shift,
     Manifestation,
+    Module,
     User,
     Team,
     Phase,
@@ -39,7 +40,8 @@ const {
     RunInvolvesLineup,
     UserHasRoleInManifestation,
     TeamHasUser,
-    SchoolHasSchoolType
+    SchoolHasSchoolType,
+    ActionBelongsToModule
 } = require('./associationTables');
 
 const runFk = utils.getForeignKey(Run);
@@ -62,6 +64,7 @@ const schoolTypeFk = utils.getForeignKey(SchoolType);
 const categoryFk = utils.getForeignKey(Category);
 const robotImageFk = utils.getForeignKey(RobotImage);
 const robotTypeFk = utils.getForeignKey(RobotType);
+const moduleFk = utils.getForeignKey(Module);
 
 // EXAMPLE Session - Shift | 1:1
 // Session.hasOne(Shift, { foreignKey: sessionFk });
@@ -138,6 +141,10 @@ Action.belongsToMany(Role, { through: RoleCanDoAction, foreignKey: actionFk });
 // Action - ActionType | N:M ('../database/associationTables/ActionIsOfType.js)
 Action.belongsToMany(ActionType, { through: ActionIsOfType, foreignKey: actionFk });
 ActionType.belongsToMany(Action, { through: ActionIsOfType, foreignKey: actionTypeFk });
+
+// Action - Module | N:M ('../database/associationTables/ActionBelongsToModule.js)
+Action.belongsToMany(Module, { through: ActionBelongsToModule, foreignKey: actionFk });
+Module.belongsToMany(Action, { through: ActionBelongsToModule, foreignKey: moduleFk });
 
 // Shift - Lineup - Field | N:M ('../database/associationTables/ShiftIncludesLineup.js')
 Shift.belongsToMany(Lineup, { through: ShiftIncludesLineup, foreignKey: shiftFk });

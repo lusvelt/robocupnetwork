@@ -1,17 +1,18 @@
-const RunHasParam = require('./associationTables/RunHasParam.js');
-const ManifestationHasUser = require('./associationTables/ManifestationHasUser.js');
-const TeamParticipatesToManifestation = require('./associationTables/TeamParticipatesToManifestation.js');
-const PhaseHasField = require('./associationTables/PhaseHasField.js');
-const RunIsArbitratedByReferee = require('./associationTables/RunIsArbitratedByReferee.js');
-const LineupHasTeam = require('./associationTables/LineupHasTeam.js');
-const LineupIsInPhase = require('./associationTables/LineupIsInPhase.js');
-const RoleCanDoAction = require('./associationTables/RoleCanDoAction.js');
-const ActionIsOfType = require('./associationTables/ActionIsOfType.js');
-const ShiftIncludesLineup = require('./associationTables/ShiftIncludesLineup.js');
-const RunInvolvesLineup = require('./associationTables/RunInvolvesLineup.js');
-const UserHasRoleInManifestation = require('./associationTables/UserHasRoleInManifestation.js');
-const TeamHasUser = require('./associationTables/TeamHasUser.js');
-const SchoolHasSchoolType = require('./associationTables/SchoolHasSchoolType.js');
+const RunHasParam = require('./associationTables/RunHasParam');
+const ManifestationHasUser = require('./associationTables/ManifestationHasUser');
+const TeamParticipatesToManifestation = require('./associationTables/TeamParticipatesToManifestation');
+const PhaseHasField = require('./associationTables/PhaseHasField');
+const RunIsArbitratedByReferee = require('./associationTables/RunIsArbitratedByReferee');
+const LineupHasTeam = require('./associationTables/LineupHasTeam');
+const LineupIsInPhase = require('./associationTables/LineupIsInPhase');
+const RoleCanDoAction = require('./associationTables/RoleCanDoAction');
+const ActionIsOfType = require('./associationTables/ActionIsOfType');
+const ShiftIncludesLineup = require('./associationTables/ShiftIncludesLineup');
+const RunInvolvesLineup = require('./associationTables/RunInvolvesLineup');
+const UserHasRoleInManifestation = require('./associationTables/UserHasRoleInManifestation');
+const TeamHasUser = require('./associationTables/TeamHasUser');
+const SchoolHasSchoolType = require('./associationTables/SchoolHasSchoolType');
+const ActionBelongsToModule = require('./associationTables/ActionBelongsToModule');
 
 module.exports = {
     RunHasParam,
@@ -27,5 +28,6 @@ module.exports = {
     RunInvolvesLineup,
     UserHasRoleInManifestation,
     TeamHasUser,
-    SchoolHasSchoolType
+    SchoolHasSchoolType,
+    ActionBelongsToModule
 };

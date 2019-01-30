@@ -26,8 +26,20 @@ export class AuthService {
     return this.http.post('/register', user, false);
   }
 
+  isAuthenticated(): boolean {
+    return this.tokenService.isTokenSet();
+  }
+
+  isSuperadmin(): boolean {
+    return this.tokenService.getDecodedToken().isAdmin;
+  }
+
   getManifestation() {
     return this.tokenService.getDecodedToken().manifestation;
+  }
+
+  isManifestationSelected(): boolean {
+    return !!this.getManifestation();
   }
 
   selectManifestation(manifestation) {
@@ -43,10 +55,21 @@ export class AuthService {
     return promise;
   }
 
+  unsetManifestation() {
+    const user = this.userService.getUserInfo();
+    const promise = this.socketIoService.send('unsetManifestation', { user });
+
+    promise.then(result => {
+      this.tokenService.setToken(result.token);
+      this.eventEmitter.emit('manifestationChange', undefined);
+    });
+
+    return promise;
+  }
+
   onManifestationChange(): Observable<any> {
     return new Observable(observer => {
       this.eventEmitter.on('manifestationChange', manifestation => observer.next(manifestation));
     });
   }
-
 }
