@@ -10,7 +10,11 @@
 </div>
 
 <div class="header-container">
-  <div class="competition">{{ 'NO_COMPETITONS_SELECTED' | translate}}</div>
+
+      <nb-action class="competition">
+        {{ currentManifestation | translate }}
+      </nb-action>
+      <nb-action size="medium" class="control-item mr-3" icon="nb-close"></nb-action>
   <!--<ngx-layout-direction-switcher></ngx-layout-direction-switcher>-->
    <nb-actions size="medium" [class.right]="position === 'normal'" [class.left]="position === 'inverse'">
     <nb-action icon="nb-gear" class="toggle-layout" (click)="toggleSettings()"></nb-action>

@@ -6,11 +6,13 @@ import { HttpService } from './http.service';
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 import { SocketIoService } from './socket-io.service';
+import { EventEmitter } from 'events';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private eventEmitter: EventEmitter = new EventEmitter();
 
   constructor(private http: HttpService, private tokenService: TokenService, private userService: UserService, private socketIoService: SocketIoService) { }
 
@@ -24,13 +26,27 @@ export class AuthService {
     return this.http.post('/register', user, false);
   }
 
+  getManifestation() {
+    return this.tokenService.getDecodedToken().manifestation;
+  }
+
   selectManifestation(manifestation) {
     const user = this.userService.getUserInfo();
     const promise = this.socketIoService.send('selectManifestation', { manifestation, user });
 
-    promise.then(result => this.tokenService.setToken(result.token));
+    promise.then(result => {
+      this.tokenService.setToken(result.token);
+      const _manifestation = this.getManifestation();
+      this.eventEmitter.emit('manifestationChange', _manifestation);
+    });
 
     return promise;
+  }
+
+  onManifestationChange(): Observable<any> {
+    return new Observable(observer => {
+      this.eventEmitter.on('manifestationChange', manifestation => observer.next(manifestation));
+    });
   }
 
 }
