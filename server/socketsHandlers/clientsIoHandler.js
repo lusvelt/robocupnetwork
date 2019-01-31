@@ -9,8 +9,12 @@ const ageRangeIo = require('./clients/ageRangeIo');
 const teamIo = require('./clients/teamIo');
 const categoryIo = require('./clients/categoryIo');
 
+const clientsAuthMiddleware = require('../auth/middlewares/clientsAuthMiddleware');
+
 
 const clientsIoHandler = (clientsIo) => (socket) => {
+    socket.use(clientsAuthMiddleware(socket));
+
     authIo(clientsIo, socket);
     privilegesIo(clientsIo, socket);
     usersIo(clientsIo, socket);
