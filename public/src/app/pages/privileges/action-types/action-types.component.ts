@@ -52,6 +52,10 @@ export class ActionTypesComponent implements OnInit, OnDestroy {
     name: {
       title: 'NAME',
       type: 'text',
+    },
+    alias: {
+      title: 'ALIAS',
+      type: 'alias'
     }
   });
 

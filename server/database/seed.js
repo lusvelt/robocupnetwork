@@ -49,8 +49,8 @@ const seed = async () => {
     ];
 
     const roles = [
-        await Role.create({name:'Arbitro gare',description:'test1'}),
-        await Role.create({name:'Utente',description:'test2'}),
+        await Role.create({name:'Arbitro gare',description:'test1',alias:'referee'}),
+        await Role.create({name:'Utente',description:'test2',alias:'user'}),
     ];
 
     const manifestation = [

@@ -197,7 +197,9 @@
     "CATEGORY_DEFAULT_MAX_TIME":"Default max time",
     "CATEGORY_DEFAULT_MAX_TIME_REQUIRED":"Default max time required!",
     "CATEGORY_BUTTON":"Create category",
-    "CATEGORY_UPDATED":"Category updated"
+    "CATEGORY_UPDATED":"Category updated",
 
-
+    "MODULES": "Modules",
+    "ALIAS": "Alias",
+    "ALIAS_REQUIRED": "Alias required"
 }

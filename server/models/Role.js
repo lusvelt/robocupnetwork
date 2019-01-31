@@ -4,7 +4,8 @@ const Action = require('./Action');
 
 const Role = sequelize.define('Role', {
     name: { type: Sequelize.STRING, allowNull: false, unique: true },
-    description: { type: Sequelize.TEXT }
+    description: { type: Sequelize.TEXT },
+    alias: { type: Sequelize.STRING, allowNull: false, unique: true },
 });
 
 Role.getRolesList = () => Role.findAll({

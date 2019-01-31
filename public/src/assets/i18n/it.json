@@ -196,7 +196,9 @@
     "CATEGORY_DEFAULT_MAX_TIME":"Tempo massimo",
     "CATEGORY_DEFAULT_MAX_TIME_REQUIRED":"Tempo massimo richiesto!",
     "CATEGORY_BUTTON":"Crea categoria",
-    "CATEGORY_UPDATED":"Categoria aggiornata"
+    "CATEGORY_UPDATED":"Categoria aggiornata",
 
-
+    "MODULES": "Moduli",
+    "ALIAS": "Alias",
+    "ALIAS_REQUIRED": "Alias richiesto!"
 }

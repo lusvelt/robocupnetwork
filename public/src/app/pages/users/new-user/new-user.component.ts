@@ -14,6 +14,7 @@ import { RolesListComponent } from '../../../shared/dialogs/roles-list/roles-lis
 import { Subject } from 'rxjs/Subject';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { merge } from 'rxjs';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'ngx-new-user',
@@ -34,6 +35,7 @@ export class NewUserComponent implements OnInit {
   isOneRoleInManifestation: boolean = true;
 
   manifestationsList: [];
+  rolesList: [];
   @ViewChild('searchManifestationInstance') searchManifestationInstance: NgbTypeahead;
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
@@ -70,15 +72,29 @@ export class NewUserComponent implements OnInit {
   ngOnInit() {
     this.manifestationsService.getManifestations()
     .then(manifestations => this.manifestationsList = manifestations);
+
+    this.privilegesService.getRoles()
+    .then(roles => this.rolesList = roles);
   }
 
 
 
   onButtonClicked() {
+    /* ASSEGNAMENTAZIONE RUOLI ALL'ADMIN
+      if (this.user.isAdmin) {
+      this.user.manifestations = this.manifestationsList;
+      this.user.manifestations.forEach(manifestation => {
+        manifestation.roles = this.rolesList;
+      });
+    } */
     const user: UserInterface = _.omit(this.user, ['confirmPassword']);
     user.birthDate = new Date(user.birthDate);
-    this.usersService.createUser(user)
-      .then(_user => this.notificationsService.success('USER_CREATED'));
+    if (user.name !== '' && user.surname !== '' && user.email !== '' && user.password !== '') {
+      this.usersService.createUser(user)
+        .then(_user => this.notificationsService.success('USER_CREATED'));
+    } else {
+      this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
+    }
   }
 
   onManifestationClicked(event: any) {

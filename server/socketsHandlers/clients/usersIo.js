@@ -37,7 +37,6 @@ const usersIo = (clientsIo, socket) => {
             const user = await User.create(_.omit(_user,['manifestations']));
             if(!user)
                 throw new Error();
-            
             const promises = [];
             _user.manifestations.forEach(_manifestation => {
                 promises.push(new Promise((resolve, reject) => {

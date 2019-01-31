@@ -1,3 +1,4 @@
+import { ModulesComponent } from './modules/modules.component';
 import { ActionTypesComponent } from './action-types/action-types.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -19,6 +20,10 @@ const routes: Routes = [{
     {
         path: 'role',
         component: RolesComponent,
+    },
+    {
+      path: 'module',
+      component: ModulesComponent,
     }],
 }];
 

@@ -21,6 +21,7 @@ export class ActionsComponent implements OnInit, OnDestroy {
   action: any = {
     name: '',
     description: '',
+    alias: '',
     actionTypes: [],
     show: false
   };
@@ -61,14 +62,18 @@ export class ActionsComponent implements OnInit, OnDestroy {
   }
 
   getNotifiedForActionTypes(actionTypesArray: any[]) {
+    this.subscriptions.push(
     this.privilegesService.notify('createActionType')
-      .subscribe(actionType => actionTypesArray.push(actionType));
+      .subscribe(actionType => actionTypesArray.push(actionType)));
 
-    this.privilegesService.notify('editActionType')
-      .subscribe(actionType => actionTypesArray.splice(actionTypesArray.findIndex(el => el.id === actionType.id), 1, actionType));
+    this.subscriptions.push(
+      this.privilegesService.notify('editActionType')
+      .subscribe(actionType => actionTypesArray.splice(actionTypesArray.findIndex(el => el.id === actionType.id), 1, actionType)));
 
-    this.privilegesService.notify('removeActionType')
-      .subscribe(actionType => actionTypesArray.splice(actionTypesArray.findIndex(el => el.id === actionType.id), 1));
+    this.subscriptions.push(
+      this.privilegesService.notify('removeActionType')
+      .subscribe(actionType => actionTypesArray.splice(actionTypesArray.findIndex(el => el.id === actionType.id), 1)))
+      ;
   }
 
   onButtonClicked() {
@@ -96,6 +101,10 @@ export class ActionsComponent implements OnInit, OnDestroy {
     description: {
       title: 'DESCRIPTION',
       type: 'text',
+    },
+    alias: {
+      title: 'ALIAS',
+      type: 'text'
     },
     actionTypes: {
       title: 'ACTION_TYPES',

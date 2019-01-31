@@ -1,4 +1,3 @@
-import { NewSchoolComponent } from './new-school/new-school.component';
 import { ManageSchoolComponent } from './manage-school/manage-school.component';
 import { NgModule } from '@angular/core';
 import { SchoolsRoutingModule } from './schools-routing.module';
@@ -12,7 +11,6 @@ import { SharedModule } from '../../shared/shared.module';
     ],
     declarations: [
         ManageSchoolComponent,
-        NewSchoolComponent,
         SchoolsComponent
     ],
     providers: [

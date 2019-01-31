@@ -63,14 +63,17 @@ export class RolesComponent implements OnInit, OnDestroy {
   }
 
   getNotifiedForActions(actionsArray: any[]) {
+    this.subscriptions.push(
     this.privilegesService.notify('createAction')
-      .subscribe(action => actionsArray.push(action));
+      .subscribe(action => actionsArray.push(action)));
 
-    this.privilegesService.notify('editAction')
-      .subscribe(action => actionsArray.splice(actionsArray.findIndex(el => el.id === action.id), 1, action));
+    this.subscriptions.push(
+      this.privilegesService.notify('editAction')
+      .subscribe(action => actionsArray.splice(actionsArray.findIndex(el => el.id === action.id), 1, action)));
 
-    this.privilegesService.notify('removeAction')
-      .subscribe(action => actionsArray.splice(actionsArray.findIndex(el => el.id === action.id), 1));
+    this.subscriptions.push(
+      this.privilegesService.notify('removeAction')
+      .subscribe(action => actionsArray.splice(actionsArray.findIndex(el => el.id === action.id), 1)));
   }
 
 
@@ -99,6 +102,10 @@ export class RolesComponent implements OnInit, OnDestroy {
     description: {
       title: 'DESCRIPTION',
       type: 'text',
+    },
+    alias: {
+      title: 'ALIAS',
+      type: 'text'
     },
     actions: {
       title: 'ACTIONS',

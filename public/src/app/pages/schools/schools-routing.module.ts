@@ -1,4 +1,3 @@
-import { NewSchoolComponent } from './new-school/new-school.component';
 import { ManageSchoolComponent } from './manage-school/manage-school.component';
 import { SchoolsComponent } from './schools.component';
 import { NotFoundComponent } from './../miscellaneous/not-found/not-found.component';
@@ -12,10 +11,6 @@ const routes: Routes = [{
         {
             path: 'manage',
             component: ManageSchoolComponent
-        },
-        {
-            path: 'new',
-            component: NewSchoolComponent
         }
     ],
 }];

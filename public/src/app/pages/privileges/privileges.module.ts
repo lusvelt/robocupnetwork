@@ -7,12 +7,14 @@ import { PrivilegesComponent } from './privileges.component';
 import { PrivilegesService } from '../../services/privileges.service';
 import { ActionsComponent } from './actions/actions.component';
 import { RolesComponent } from './roles/roles.component';
+import { ModulesComponent } from './modules/modules.component';
 
 const components = [
     PrivilegesComponent,
     ActionTypesComponent,
     ActionsComponent,
-    RolesComponent
+    RolesComponent,
+    ModulesComponent
 ];
 
 @NgModule({
@@ -25,6 +27,7 @@ const components = [
         ...components,
         ActionsComponent,
         RolesComponent,
+        ModulesComponent,
     ],
     providers: [
         PrivilegesService
