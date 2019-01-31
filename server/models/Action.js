@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/sequelize');
 const ActionType = require('./ActionType');
+const Module = require('./Module');
 
 const Action = sequelize.define('Action', {
     name: { type: Sequelize.STRING, allowNull: false },
@@ -10,7 +11,7 @@ const Action = sequelize.define('Action', {
 
 Action.getActionsList = () => Action.findAll({
     attributes: { exclude: ['createdAt', 'updatedAt'] },
-    include: [ ActionType ]
+    include: [ ActionType, Module ]
 });
 
 module.exports = Action;

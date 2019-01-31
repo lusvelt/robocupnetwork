@@ -1,3 +1,4 @@
+import { notificationsConfig } from './../../../config/notifications.config';
 import { NotificationsService } from './../../../services/notifications.service';
 import { MultipleSelectDropdownComponent } from './../../../shared/view-cells/multiple-select-dropdown/multiple-select-dropdown.component';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -11,6 +12,7 @@ import { notAddableConfig } from '../../../config/tables.config';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'ngx-action',
@@ -23,6 +25,7 @@ export class ActionsComponent implements OnInit, OnDestroy {
     description: '',
     alias: '',
     actionTypes: [],
+    modules: [],
     show: false
   };
   subscriptions: Subscription[] = [];
@@ -58,6 +61,9 @@ export class ActionsComponent implements OnInit, OnDestroy {
     this.privilegesService.getActionTypes()
       .then(actionTypes => this.action.actionTypes = actionTypes);
 
+    this.privilegesService.getModules()
+      .then(result => this.action.modules = result);
+
     this.getNotifiedForActionTypes(this.action.actionTypes);
   }
 
@@ -76,9 +82,25 @@ export class ActionsComponent implements OnInit, OnDestroy {
       ;
   }
 
+  getNotifiedForModules(modulesArray: any[]) {
+    this.subscriptions.push(
+      this.privilegesService.notify('createModule')
+        .subscribe(mod => modulesArray.push(mod)));
+
+    this.subscriptions.push(
+      this.privilegesService.notify('editModule')
+        .subscribe(mod => modulesArray.splice(modulesArray.findIndex(el => el.id === mod.id), 1, mod)));
+
+    this.subscriptions.push(
+      this.privilegesService.notify('removeModule')
+        .subscribe(mod => modulesArray.splice(modulesArray.findIndex(el => el.id === mod.id), 1)))
+      ;
+  }
+
   onButtonClicked() {
     const action: ActionInterface = _.cloneDeep(this.action);
     action.actionTypes = action.actionTypes.filter((actionType: any) => actionType.selected);
+    action.modules = action.modules.filter((mod: any) => mod.selected);
     this.privilegesService.createAction(action)
       .then(_action => {
         this.notificationsService.success('ACTION_CREATED');
@@ -127,6 +149,26 @@ export class ActionsComponent implements OnInit, OnDestroy {
       },
       addable: false,
       editable: false
+    },
+    modules: {
+      title: 'MODULES',
+      type: 'custom',
+      renderComponent: MultipleSelectDropdownComponent,
+      onComponentInitFunction: (instance) => {
+        instance.internalArrayKey = 'Modules';
+
+        this.privilegesService.getModules()
+          .then(mod => instance.parentNotifier.emit('items', mod));
+
+       // DA FARE this.getNotifiedForModules(instance.items);
+
+        instance.parentNotifier.on('change', changed => {
+          this.privilegesService.updateSelectedModules(instance.rowData, changed)
+            .then(result => this.notificationsService.success('SELECTED_MODULES_UPDATE_SUCCEDED'))
+            .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+        });
+
+      },
     }
   });
 

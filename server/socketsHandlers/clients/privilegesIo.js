@@ -75,7 +75,7 @@ const privilegesIo = (clientsIo, socket) => {
             const action = await Action.create(_.omit(_action, ['actionTypes']));
             if (!action)
                 throw new Error();
-            const promises = [];
+            let promises = [];
             _action.actionTypes.forEach(_actionType => {
                 promises.push(new Promise((resolve, reject) => {
                     ActionType.findById(_actionType.id)
@@ -84,10 +84,23 @@ const privilegesIo = (clientsIo, socket) => {
                         .catch(err => reject(err));
                 }));
             });
-            const result = await Promise.all(promises);
+            let result = await Promise.all(promises);
+
+            promises = [];
+            _action.modules.forEach(_module => {
+                promises.push(new Promise((resolve, reject) => {
+                    Module.findById(_module.id)
+                        .then(mod => action.addModule(mod))
+                        .then(result => resolve(result))
+                        .catch(err => reject(err));
+                }));
+            });
+            result = await Promise.all(promises);
+
             if (!result)
                 throw new Error();
             action.dataValues.ActionTypes = _action.actionTypes;
+            action.dataValues.Modules =_action.modules;
             callback(action);
             socket.broadcast.emit('createAction', action);
             log.verbose('Action created');

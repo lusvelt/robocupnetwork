@@ -57,6 +57,18 @@
             </li>
           </ul>
         </div>
+
+        <div class="mb-3" ngbDropdown>
+          <button class="btn btn-primary" type="button" ngbDropdownToggle>
+            {{ 'MODULES' | translate }}
+          </button>
+          <ul ngbDropdownMenu class="dropdown-menu">
+            <li class="dropdown-item" *ngFor="let module of action.modules">
+              <nb-checkbox name="moduleChoose" [(ngModel)]="module.selected">{{ module.name }}</nb-checkbox>
+            </li>
+          </ul>
+        </div>
+        
         <button class="btn btn-primary" nbButton hero>{{'ACTION_BUTTON'|translate}}</button>
       </nb-card-body>
     </nb-card>
