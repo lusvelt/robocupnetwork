@@ -1,4 +1,4 @@
-const { User, ActionType, Action, Role, Manifestation, School, Place, AgeRange, Team, Category} = require('./models');
+const { User, ActionType, Action, Role, Manifestation, School, Place, AgeRange, Team, Category, Module} = require('./models');
 
 const seed = async () => {
     const users = [
@@ -76,6 +76,10 @@ const seed = async () => {
 
     const categories = [
         await Category.create({name: 'Rescue Line', description: 'Seguilinea', maxRobotsPerTeam: 4, maxTeamsPerLineUp: 10, isDividedIntoZones: true, checkpointsDetermineZones: true, requiresEvacuation: true, defaultMax: 300})
+    ];
+
+    const modals = [
+        await Module.create({name: 'Users',alias: 'user'})
     ];
 
     /*const competitions = [

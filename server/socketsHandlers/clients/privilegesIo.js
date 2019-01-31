@@ -4,6 +4,7 @@ const log = require('../../config/consoleMessageConfig');
 const ActionType = require('../../models/ActionType');
 const Action = require('../../models/Action');
 const Role = require('../../models/Role');
+const Module = require('../../models/Module');
 
 const privilegesIo = (clientsIo, socket) => {
 
@@ -245,6 +246,66 @@ const privilegesIo = (clientsIo, socket) => {
         }
     };
 
+    const getModules = async (args, callback) => {
+        try {
+            const modules = await Module.getModulesList();
+            callback(modules);
+            log.verbose('Modules data request');
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
+    const removeModule = async (_module, callback) => {
+        try {
+            const id = _module.id;
+            const result = await Module.destroy({
+                where: {
+                    id
+                }
+            });
+            if (!result)
+                throw new Error();
+            callback(result);
+            socket.broadcast.emit('removeModule', _module);
+            log.verbose('Module removed');
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
+    const editModule = async (_module, callback) => {
+        try {
+            const id = _module.id;
+            const module = _.omit(_module, ['id']);
+            const result = await Module.update(module, {
+                where: {
+                    id
+                }
+            });
+            if (!result)
+                throw new Error();
+            callback(result);
+            socket.broadcast.emit('editModal', _module);
+            log.verbose('Module modified');
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
+    const createModule = async (module, callback) => {
+        try {
+            const result = await Module.create(module);
+            if (!result)
+                throw new Error();
+            callback(result);
+            socket.broadcast.emit('createModule', result);
+            log.verbose('Module created');
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
 
     socket.on('getActionTypes', getActionTypes);
     socket.on('createActionType', createActionType);
@@ -257,11 +318,16 @@ const privilegesIo = (clientsIo, socket) => {
     socket.on('removeAction', removeAction);
     socket.on('editAction', editAction);
     socket.on('updateSelectedAction', updateSelectedAction);
+
     socket.on('createRole',createRole);
     socket.on('getRoles',getRoles);
     socket.on('removeRole',removeRole);
     socket.on('editRole', editRole);
 
+    socket.on('getModules', getModules);
+    socket.on('createModule',createModule);
+    socket.on('editModule',editModule);
+    socket.on('removeModule', removeModule);
 };
 
 module.exports = privilegesIo;

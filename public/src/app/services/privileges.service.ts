@@ -38,6 +38,10 @@ export class PrivilegesService {
     return this.socketIoService.send('createRole', data);
   }
 
+  createModule(data) {
+    return this.socketIoService.send('createModule', data);
+  }
+
   createAction(data) {
     return this.socketIoService.send('createAction', data);
   }
@@ -68,6 +72,18 @@ export class PrivilegesService {
 
   editRole(data) {
     return this.socketIoService.send('editRole', data);
+  }
+
+  getModules() {
+    return this.socketIoService.get('getModules');
+  }
+
+  editModule(data) {
+    return this.socketIoService.send('editModule', data);
+  }
+
+  removeModule(data) {
+    return this.socketIoService.send('removeModule', data);
   }
 
 }
