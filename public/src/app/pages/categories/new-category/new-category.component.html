@@ -1,141 +1,110 @@
-<button class="mb-3" [ngClass]="{ 'btn': true, 'btn-success': !category.show, 'btn-danger': category.show }" type="button" (click)="toggleForm()">
-  <i [ngClass]="{ 'fas': true, 'fa-plus': !category.show, 'fa-times': category.show }"></i>
-  {{ (category.show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
+<button class="mb-3" [ngClass]="{ 'btn': true, 'btn-success': !show, 'btn-danger': show }" type="button"
+  (click)="toggleForm()">
+  <i [ngClass]="{ 'fas': true, 'fa-plus': !show, 'fa-times': show }"></i>
+  {{ (show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
 </button>
 
 
-<form (ngSubmit)="onButtonClicked()" #form="ngForm" [hidden]="!category.show">
+<form (ngSubmit)="onButtonClicked()" #form="ngForm" [hidden]="!show">
   <div class="form-group">
     <nb-card>
       <nb-card-header>{{'NEW_CATEGORY' | translate}}</nb-card-header>
       <nb-card-body>
         <div class="mb-3">
           <label for="input-name" class="sr-only">{{ 'CATEGORY_NAME' | translate}}</label>
-          <input nbInput
-                  [(ngModel)]="category.name"
-                  #name="ngModel"
-                  id="input-name"
-                  name="name"
-                  placeholder="{{ 'CATEGORY_NAME' | translate }}"
-                  autofocus
-                  fullWidth
-                  [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : ''"
-                  required>
+          <input nbInput [(ngModel)]="category.name" #name="ngModel" id="input-name" name="name" placeholder="{{ 'CATEGORY_NAME' | translate }}"
+            autofocus fullWidth [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : ''" required>
           <small class="form-text error" *ngIf="name.touched && name.errors?.required">
             {{ 'CATEGORY_NAME_REQUIRED' | translate }}
           </small>
-         </div>
-         <div class="mb-3">
+        </div>
+        <div class="mb-3">
           <textarea nbInput [(ngModel)]="category.description" name="description" rows="5" placeholder="{{'CATEGORY_DESCRIPTION'|translate}}"
             class="form-control"></textarea>
         </div>
 
-        <div class="mb-3" ngbDropdown>
-          <button class="btn btn-primary" type="button" ngbDropdownToggle>
-            {{ 'CATEGORY_SCORING_TYPE' | translate }}
-          </button>
-          <ul ngbDropdownMenu class="dropdown-menu">
-            <li class="dropdown-item" *ngFor="let scoringType of category.scoringType">
-              <nb-checkbox name="scoringTypeChoose" [(ngModel)]="scoringType.selected">{{ scoringType }}</nb-checkbox>
-            </li>
-          </ul>
+        <div class="mb-3">
+          <div class="row">
+            <h5 class="ml-3 mr-3 mt-3"> {{ 'CATEGORY_SCORING_TYPE' | translate }}:</h5>
+            <nb-radio-group name="scoringtype" [(value)]="category.scoringType">
+              <nb-radio value='events'>{{'EVENTS'|translate}}</nb-radio>
+              <nb-radio value='finalJudgement'>{{'FINAL_JUDGEMENT'|translate}}</nb-radio>
+            </nb-radio-group>
+          </div>
         </div>
 
-        <div class="mb-3" ngbDropdown>
-          <button class="btn btn-primary" type="button" ngbDropdownToggle>
-            {{ 'CATEGORY_RUN_TYPE' | translate }}
-          </button>
-          <ul ngbDropdownMenu class="dropdown-menu">
-            <li class="dropdown-item" *ngFor="let runType of category.runType">
-              <nb-checkbox name="runTypeChoose" [(ngModel)]="runType.selected">{{ runType }}</nb-checkbox>
-            </li>
-          </ul>
+        <div class="mb-3">
+            <div class="row">
+              <h5 class="ml-3 mr-3 mt-3"> {{ 'CATEGORY_RUN_TYPE' | translate }}:</h5>
+              <nb-radio-group name="runtype" [(value)]="category.runType">
+                <nb-radio value='solo'>{{'SOLO'|translate}}</nb-radio>
+                <nb-radio value='match'>{{'MATCH'|translate}}</nb-radio>
+              </nb-radio-group>
+            </div>
+          </div>
+
+
+
+        <div class="mb-3">
+          <label for="input-maxRobotsPerTeam" class="sr-only">{{ 'CATEGORY_MAX_ROBOTS_PER_TEAM' | translate}}</label>
+          <input nbInput [(ngModel)]="category.maxRobotsPerTeam" #maxRobotsPerTeam="ngModel" id="input-maxRobotsPerTeam"
+            name="maxRobotsPerTeam" placeholder="{{ 'CATEGORY_MAX_ROBOTS_PER_TEAM' | translate }}" autofocus fullWidth
+            [status]="maxRobotsPerTeam.dirty ? (maxRobotsPerTeam.invalid  ? 'danger' : 'success') : ''" required>
+          <small class="form-text error" *ngIf="maxRobotsPerTeam.touched && maxRobotsPerTeam.errors?.required">
+            {{ 'CATEGORY_MAX_ROBOTS_PER_TEAM_REQUIRED' | translate }}
+          </small>
         </div>
 
+        <div class="mb-3">
+          <label for="input-maxTeamsPerLineUp" class="sr-only">{{ 'CATEGORY_MAX_TEAMS_PER_LINEUP' | translate}}</label>
+          <input nbInput [(ngModel)]="category.maxTeamsPerLineUp" #maxTeamsPerLineUp="ngModel" id="input-maxTeamsPerLineUp"
+            name="maxTeamsPerLineUp" placeholder="{{ 'CATEGORY_MAX_TEAMS_PER_LINEUP' | translate }}" autofocus
+            fullWidth [status]="maxTeamsPerLineUp.dirty ? (maxTeamsPerLineUp.invalid  ? 'danger' : 'success') : ''"
+            required>
+          <small class="form-text error" *ngIf="maxTeamsPerLineUp.touched && maxTeamsPerLineUp.errors?.required">
+            {{ 'CATEGORY_MAX_TEAMS_PER_LINEUP_REQUIRED' | translate }}
+          </small>
+        </div>
 
-
-          <div class="mb-3">
-            <label for="input-maxRobotsPerTeam" class="sr-only">{{ 'CATEGORY_MAX_ROBOTS_PER_TEAM' | translate}}</label>
-            <input nbInput
-                    [(ngModel)]="category.maxRobotsPerTeam"
-                    #maxRobotsPerTeam="ngModel"
-                    id="input-maxRobotsPerTeam"
-                    name="maxRobotsPerTeam"
-                    placeholder="{{ 'CATEGORY_MAX_ROBOTS_PER_TEAM' | translate }}"
-                    autofocus
-                    fullWidth
-                    [status]="maxRobotsPerTeam.dirty ? (maxRobotsPerTeam.invalid  ? 'danger' : 'success') : ''"
-                    required>
-            <small class="form-text error" *ngIf="maxRobotsPerTeam.touched && maxRobotsPerTeam.errors?.required">
-              {{ 'CATEGORY_MAX_ROBOTS_PER_TEAM_REQUIRED' | translate }}
-            </small>
-          </div>
-          <div class="mb-3">
-              <label for="input-maxTeamsPerLineUp" class="sr-only">{{ 'CATEGORY_MAX_TEAMS_PER_LINEUP' | translate}}</label>
-              <input nbInput
-                      [(ngModel)]="category.maxTeamsPerLineUp"
-                      #maxTeamsPerLineUp="ngModel"
-                      id="input-maxTeamsPerLineUp"
-                      name="maxTeamsPerLineUp"
-                      placeholder="{{ 'CATEGORY_MAX_TEAMS_PER_LINEUP' | translate }}"
-                      autofocus
-                      fullWidth
-                      [status]="maxTeamsPerLineUp.dirty ? (maxTeamsPerLineUp.invalid  ? 'danger' : 'success') : ''"
-                      required>
-              <small class="form-text error" *ngIf="maxTeamsPerLineUp.touched && maxTeamsPerLineUp.errors?.required">
-                {{ 'CATEGORY_MAX_TEAMS_PER_LINEUP_REQUIRED' | translate }}
-              </small>
-           </div>
-
-           <div class="mb-3" ngbDropdown>
-            <button class="btn btn-primary" type="button" ngbDropdownToggle>
-              {{ 'CATEGORY_IS_DIVIDED_INTO_ZONES' | translate }}
-            </button>
-            <ul ngbDropdownMenu class="dropdown-menu">
-              <li class="dropdown-item" *ngFor="let isDividedIntoZones of category.isDividedIntoZones">
-                <nb-checkbox name="isDividedIntoZonesChoose" [(ngModel)]="isDividedIntoZones.selected">{{ isDividedIntoZones }}</nb-checkbox>
-              </li>
-            </ul>
+        <div class="mb-3">
+            <div class="row">
+              <h5 class="ml-3 mr-3 mt-3"> {{ 'CATEGORY_IS_DIVIDED_INTO_ZONES' | translate }}:</h5>
+              <nb-radio-group name="isDividedIntoZones" [(value)]="category.isDividedIntoZones">
+                <nb-radio value=true>{{'TRUE'|translate}}</nb-radio>
+                <nb-radio value=false>{{'FALSE'|translate}}</nb-radio>
+              </nb-radio-group>
+            </div>
           </div>
 
-          <div class="mb-3" ngbDropdown>
-            <button class="btn btn-primary" type="button" ngbDropdownToggle>
-              {{ 'CATEGORY_CHECKPOINTS_DETERMINE_ZONES' | translate }}
-            </button>
-            <ul ngbDropdownMenu class="dropdown-menu">
-              <li class="dropdown-item" *ngFor="let checkpointsDetermineZones of category.checkpointsDetermineZones">
-                <nb-checkbox name="checkpointsDetermineZonesChoose" [(ngModel)]="checkpointsDetermineZones.selected">{{ checkpointsDetermineZones }}</nb-checkbox>
-              </li>
-            </ul>
+        <div class="mb-3">
+            <div class="row">
+              <h5 class="ml-3 mr-3 mt-3"> {{ 'CATEGORY_CHECKPOINTS_DETERMINE_ZONES' | translate }}:</h5>
+              <nb-radio-group name="checkpointsDetermineZones" [(value)]="category.checkpointsDetermineZones">
+                <nb-radio value=true>{{'TRUE'|translate}}</nb-radio>
+                <nb-radio value=false>{{'FALSE'|translate}}</nb-radio>
+              </nb-radio-group>
+            </div>
           </div>
 
-          <div class="mb-3" ngbDropdown>
-            <button class="btn btn-primary" type="button" ngbDropdownToggle>
-              {{ 'CATEGORY_REQUIRES_EVACUATION' | translate }}
-            </button>
-            <ul ngbDropdownMenu class="dropdown-menu">
-              <li class="dropdown-item" *ngFor="let requiresEvacuation of category.requiresEvacuation">
-                <nb-checkbox name=" requiresEvacuationChoose" [(ngModel)]=" requiresEvacuation.selected">{{  requiresEvacuation }}</nb-checkbox>
-              </li>
-            </ul>
+        <div class="mb-3">
+            <div class="row">
+              <h5 class="ml-3 mr-3 mt-3"> {{ 'CATEGORY_REQUIRES_EVACUATION' | translate }}:</h5>
+              <nb-radio-group name="requiresEvacuation" [(value)]="category.requiresEvacuation">
+                <nb-radio value=true>{{'TRUE'|translate}}</nb-radio>
+                <nb-radio value=false>{{'FALSE'|translate}}</nb-radio>
+              </nb-radio-group>
+            </div>
           </div>
 
 
-          <div class="mb-3">
-           <label for="input-defaultMaxTime" class="sr-only">{{ 'CATEGORY_DEFAULT_MAX_TIME' | translate}}</label>
-           <input nbInput
-                   [(ngModel)]="category.defaultMaxTime"
-                   #defaultMaxTime="ngModel"
-                   id="input-defaultMaxTime"
-                   name="defaultMaxTime"
-                   placeholder="{{ 'CATEGORY_DEFAULT_MAX_TIME' | translate }}"
-                   autofocus
-                   fullWidth
-                   [status]="defaultMaxTime.dirty ? (defaultMaxTime.invalid  ? 'danger' : 'success') : ''"
-                   required>
-           <small class="form-text error" *ngIf="defaultMaxTime.touched && defaultMaxTime.errors?.required">
-             {{ 'CATEGORY_DEFAULT_MAX_TIME_REQUIRED' | translate }}
-           </small>
+        <div class="mb-3">
+          <label for="input-defaultMaxTime" class="sr-only">{{ 'CATEGORY_DEFAULT_MAX_TIME' | translate}}</label>
+          <input nbInput [(ngModel)]="category.defaultMaxTime" #defaultMaxTime="ngModel" id="input-defaultMaxTime" name="defaultMaxTime"
+            placeholder="{{ 'CATEGORY_DEFAULT_MAX_TIME' | translate }}" autofocus fullWidth [status]="defaultMaxTime.dirty ? (defaultMaxTime.invalid  ? 'danger' : 'success') : ''"
+            required>
+          <small class="form-text error" *ngIf="defaultMaxTime.touched && defaultMaxTime.errors?.required">
+            {{ 'CATEGORY_DEFAULT_MAX_TIME_REQUIRED' | translate }}
+          </small>
         </div>
 
 
@@ -146,17 +115,14 @@
 </form>
 
 
-<nb-card>
+<nb-card size="xxlarge">
   <nb-card-header>
     {{'CATEGORIES'|translate}}
   </nb-card-header>
 
   <nb-card-body>
-    <ng2-smart-table [settings]="settings" [source]="source"
-                      (createConfirm)="onCreateConfirm($event)"
-                      (editConfirm)="onEditConfirm($event)"
-                      (deleteConfirm)="onDeleteConfirm($event)">
+    <ng2-smart-table [settings]="settings" [source]="source" (createConfirm)="onCreateConfirm($event)" (editConfirm)="onEditConfirm($event)"
+      (deleteConfirm)="onDeleteConfirm($event)">
     </ng2-smart-table>
   </nb-card-body>
 </nb-card>
-

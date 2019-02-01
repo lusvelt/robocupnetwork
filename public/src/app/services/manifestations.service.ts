@@ -21,6 +21,14 @@ export class ManifestationsService {
     return this.socketIoService.send('editManifestation', data);
   }
 
+  updateStart(manifestatation, startDate) {
+    return this.socketIoService.send('updateStart', { manifestatation, startDate});
+  }
+
+  updateEnd(manifestation, endDate) {
+    return this.socketIoService.send('updateEnd', { manifestation, endDate});
+  }
+
   removeManifestation(data) {
     return this.socketIoService.send('removeManifestation', data);
   }

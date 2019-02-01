@@ -10,6 +10,7 @@ import { CategoriesService } from '../../../services/categories.service';
 import { CategoryInterface } from '../../../interfaces/category.interface';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
+import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 
 @Component({
   selector: 'ngx-new-category',
@@ -21,16 +22,17 @@ export class NewCategoryComponent implements OnInit, OnDestroy {
   category: any = {
     name: '',
     description: '',
-    scoringType: ['events', 'finalJudgement'],
-    runType: ['solo', 'match'],
+    scoringType: '',
+    runType: '',
     maxRobotsPerTeam: '',
     maxTeamsPerLineUp: '',
-    isDividedIntoZones: [true, false],
-    checkpointsDetermineZones: [true, false],
-    requiresEvacuation: [true, false],
+    isDividedIntoZones: false,
+    checkpointsDetermineZones: false,
+    requiresEvacuation: false,
     defaultMaxTime: '',
-    show: false
   };
+
+  show= false;
 
   subscriptions: Subscription[] = [];
   source: DataSource= new DataSource();
@@ -62,7 +64,14 @@ export class NewCategoryComponent implements OnInit, OnDestroy {
       .subscribe(category => this.source.delete(category)));
   }
 
+
   onButtonClicked() {
+    if (this.category.isDividedIntoZones === 'false') this.category.isDividedIntoZones = false; else this.category.isDividedIntoZones = true;
+    if (this.category.checkpointsDetermineZones === 'false') this.category.checkpointsDetermineZones = false; else this.category.checkpointsDetermineZones = true;
+    if (this.category.requiresEvacuation === 'false') this.category.requiresEvacuation = false; else this.category.requiresEvacuation = true;
+    this.category.maxRobotsPerTeam = parseInt(this.category.maxRobotsPerTeam, 10);
+    this.category.maxTeamsPerLineUp = parseInt(this.category.maxTeamsPerLineUp, 10);
+    this.category.defaultMaxTime = parseInt(this.category.defaultMaxTime, 10);
     const category: CategoryInterface = _.cloneDeep(this.category);
     this.categoriesService.createCategory(category)
       .then(_category => {
@@ -142,7 +151,7 @@ export class NewCategoryComponent implements OnInit, OnDestroy {
   }
 
   toggleForm() {
-    this.category.show = !this.category.show;
+    this.show = !this.show;
   }
   ngOnDestroy() {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
