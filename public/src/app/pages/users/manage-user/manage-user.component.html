@@ -1,8 +1,7 @@
-<nb-card>
+<nb-card size="xxlarge">
   <nb-card-header>
-    {{'USERS'|translate}}
+    <h3>{{'USERS'|translate}}</h3>
   </nb-card-header>
-
   <nb-card-body>
     <ng2-smart-table [settings]="settings" [source]="source" (createConfirm)="onCreateConfirm($event)" (editConfirm)="onEditConfirm($event)"
       (deleteConfirm)="onDeleteConfirm($event)">

@@ -16,19 +16,6 @@ import { StateService } from '../../../@core/data/state.service';
         <i [attr.class]="layout.icon"></i>
       </a>
     </div>
-    <h6>SIDEBAR</h6>
-    <div class="settings-row">
-      <a *ngFor="let sidebar of sidebars"
-         href="#"
-         [class.selected]="sidebar.selected"
-         [attr.title]="sidebar.name"
-         (click)="sidebarSelect(sidebar)">
-        <i [attr.class]="sidebar.icon"></i>
-      </a>
-    </div>
-    <div class="switcher">
-      <ngx-layout-direction-switcher [vertical]="true"></ngx-layout-direction-switcher>
-    </div>
   `,
 })
 export class ThemeSettingsComponent {

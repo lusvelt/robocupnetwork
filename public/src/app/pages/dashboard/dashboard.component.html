@@ -1,11 +1,17 @@
+<div class="maintitle">
+  <h1 class="font-w-light">{{ 'WELCOME_MESSAGE' | translate }}<span class="font-w-bold">{{ 'ROBOCUP_NETWORK' |
+      translate }}</span></h1>
+</div>
 
-<h2>{{ 'WELCOME_MESSAGE' | translate }}</h2>
+<div class="subtitle">
+  <h1 class="font-w-light">{{'SELECT_A_MANIFESTATION' | translate}}</h1>
+</div>
 <div class="mb-3" ngbDropdown>
   <!--<button class="btn btn-primary" type="button" ngbDropdownToggle>
             {{ 'MANIFESTATIONS' | translate }}
           </button>-->
-  <label class="sr-only">{{ 'SELECT_MANIFESTATION' | translate }}</label>
-  <input type="text" class="form-control" placeholder="{{ 'MANIFESTATIONS' | translate }}" (selectItem)="onManifestationClicked($event)"
+<div class="col-md-6 offset-md-3">
+<input type="text" class="form-control" placeholder="{{ 'WRITE_MANIFESTATION_NAME' | translate }}" (selectItem)="onManifestationClicked($event)"
     [ngbTypeahead]="searchManifestation" [resultFormatter]="manifestationsFormatter" [inputFormatter]="manifestationsFormatter"
     (focus)="focus$.next($event.target.value)" (click)="click$.next($event.target.value)" #searchManifestationInstance="ngbTypeahead" />
   <!--<ul ngbDropdownMenu class="dropdown-menu">
@@ -13,6 +19,7 @@
                 {{ manifestation.name }}
             </li>
           </ul>-->
+        </div>
 </div>
 
 

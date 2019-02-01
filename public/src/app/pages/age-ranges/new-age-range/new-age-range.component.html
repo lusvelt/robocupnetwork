@@ -1,4 +1,5 @@
-<button class="mb-3" [ngClass]="{ 'btn': true, 'btn-success': !ageRange.show, 'btn-danger': ageRange.show }" type="button" (click)="toggleForm()">
+<button class="mb-3" [ngClass]="{ 'btn': true, 'btn-success': !ageRange.show, 'btn-danger': ageRange.show }" type="button"
+  (click)="toggleForm()">
   <i [ngClass]="{ 'fas': true, 'fa-plus': !ageRange.show, 'fa-times': ageRange.show }"></i>
   {{ (ageRange.show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
 </button>
@@ -11,52 +12,28 @@
       <nb-card-body>
         <div class="mb-3">
           <label for="input-country" class="sr-only">{{ 'AGE_RANGE_NAME' | translate}}</label>
-          <input nbInput
-                  [(ngModel)]="ageRange.name"
-                  #name="ngModel"
-                  id="input-name"
-                  name="name"
-                  placeholder="{{ 'AGE_RANGE_NAME' | translate }}"
-                  autofocus
-                  fullWidth
-                  [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : ''"
-                  required>
+          <input nbInput [(ngModel)]="ageRange.name" #name="ngModel" id="input-name" name="name" placeholder="{{ 'AGE_RANGE_NAME' | translate }}"
+            autofocus fullWidth [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : ''" required>
           <small class="form-text error" *ngIf="name.touched && name.errors?.required">
             {{ 'AGE_RANGE_NAME_REQUIRED' | translate }}
           </small>
-         </div>
-         <div class="mb-3">
-            <label for="input-min" class="sr-only">{{ 'AGE_RANGE_MIN' | translate}}</label>
-            <input nbInput
-                    [(ngModel)]="ageRange.min"
-                    #min="ngModel"
-                    id="input-min"
-                    name="min"
-                    placeholder="{{ 'AGE_RANGE_MIN' | translate }}"
-                    autofocus
-                    fullWidth
-                    [status]="min.dirty ? (min.invalid  ? 'danger' : 'success') : ''"
-                    required>
-            <small class="form-text error" *ngIf="min.touched && min.errors?.required">
-              {{ 'AGE_RANGE_MIN_REQUIRED' | translate }}
-            </small>
-           </div>
-           <div class="mb-3">
-            <label for="input-max" class="sr-only">{{ 'AGE_RANGE_MAX' | translate}}</label>
-            <input nbInput
-                    [(ngModel)]="ageRange.max"
-                    #max="ngModel"
-                    id="input-max"
-                    name="max"
-                    placeholder="{{ 'AGE_RANGE_MAX' | translate }}"
-                    autofocus
-                    fullWidth
-                    [status]="max.dirty ? (max.invalid  ? 'danger' : 'success') : ''"
-                    required>
-            <small class="form-text error" *ngIf="max.touched && max.errors?.required">
-              {{ 'AGE_RANGE_MAX_REQUIRED' | translate }}
-            </small>
-          </div>
+        </div>
+        <div class="mb-3">
+          <label for="input-min" class="sr-only">{{ 'AGE_RANGE_MIN' | translate}}</label>
+          <input nbInput [(ngModel)]="ageRange.min" #min="ngModel" id="input-min" name="min" placeholder="{{ 'AGE_RANGE_MIN' | translate }}"
+            autofocus fullWidth [status]="min.dirty ? (min.invalid  ? 'danger' : 'success') : ''" required>
+          <small class="form-text error" *ngIf="min.touched && min.errors?.required">
+            {{ 'AGE_RANGE_MIN_REQUIRED' | translate }}
+          </small>
+        </div>
+        <div class="mb-3">
+          <label for="input-max" class="sr-only">{{ 'AGE_RANGE_MAX' | translate}}</label>
+          <input nbInput [(ngModel)]="ageRange.max" #max="ngModel" id="input-max" name="max" placeholder="{{ 'AGE_RANGE_MAX' | translate }}"
+            autofocus fullWidth [status]="max.dirty ? (max.invalid  ? 'danger' : 'success') : ''" required>
+          <small class="form-text error" *ngIf="max.touched && max.errors?.required">
+            {{ 'AGE_RANGE_MAX_REQUIRED' | translate }}
+          </small>
+        </div>
 
         <button class="btn btn-primary" nbButton hero>{{'AGE_RANGE_BUTTON'|translate}}</button>
       </nb-card-body>
@@ -65,16 +42,14 @@
 </form>
 
 
-<nb-card>
+<nb-card size="xxlarge">
   <nb-card-header>
     {{'AGE_RANGES'|translate}}
   </nb-card-header>
 
   <nb-card-body>
-    <ng2-smart-table [settings]="settings" [source]="source"
-                      (createConfirm)="onCreateConfirm($event)"
-                      (editConfirm)="onEditConfirm($event)"
-                      (deleteConfirm)="onDeleteConfirm($event)">
+    <ng2-smart-table [settings]="settings" [source]="source" (createConfirm)="onCreateConfirm($event)" (editConfirm)="onEditConfirm($event)"
+      (deleteConfirm)="onDeleteConfirm($event)">
     </ng2-smart-table>
   </nb-card-body>
 </nb-card>

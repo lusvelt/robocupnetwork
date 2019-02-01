@@ -1,4 +1,8 @@
 {
+    "WELCOME_MESSAGE": "Benvenuto in ",
+    "ROBOCUP_NETWORK": "Robocup Network",
+    "SELECT_A_MANIFESTATION": "Seleziona una manifestatione",
+    "WRITE_MANIFESTATION_NAME": "Scrivi il nome della manifestazione",
     "LOGIN_TITLE": "Accedi",
     "LOGIN_INSTRUCTIONS": "Entra con email e password",
     "LOGIN_ERROR_MESSAGE": "Autenticazione fallita",

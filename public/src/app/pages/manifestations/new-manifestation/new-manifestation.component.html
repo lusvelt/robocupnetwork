@@ -42,12 +42,12 @@
 </form>
 
 
-<nb-card>
+<nb-card size="xxlarge">
   <nb-card-header>
     {{'MANIFESTATIONS'|translate}}
   </nb-card-header>
 
-  <nb-card-body>
+<nb-card-body>
     <ng2-smart-table [settings]="settings" [source]="source" (createConfirm)="onCreateConfirm($event)" (editConfirm)="onEditConfirm($event)"
       (deleteConfirm)="onDeleteConfirm($event)">
     </ng2-smart-table>
