@@ -21,13 +21,13 @@ export class NewCategoryComponent implements OnInit, OnDestroy {
   category: any = {
     name: '',
     description: '',
-    scoringType: '',
-    runType: '',
+    scoringType: ['events', 'finalJudgement'],
+    runType: ['solo', 'match'],
     maxRobotsPerTeam: '',
-    maxTeamsPerLineup: '',
-    isDividedIntoZones: '',
-    checkpointsDetermineZones: '',
-    requiresEvacuation: '',
+    maxTeamsPerLineUp: '',
+    isDividedIntoZones: [true, false],
+    checkpointsDetermineZones: [true, false],
+    requiresEvacuation: [true, false],
     defaultMaxTime: '',
     show: false
   };
@@ -98,7 +98,7 @@ export class NewCategoryComponent implements OnInit, OnDestroy {
       title: 'CATEGORY_MAX_ROBOTS_PER_TEAM',
       type: 'number',
     },
-    maxTeamsPerLineup: {
+    maxTeamsPerLineUp: {
       title: 'CATEGORY_MAX_TEAMS_PER_LINEUP',
       type: 'number',
     },
