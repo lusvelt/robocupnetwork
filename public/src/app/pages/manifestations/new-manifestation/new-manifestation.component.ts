@@ -11,6 +11,7 @@ import * as _ from 'lodash';
 import { notAddableConfig } from '../../../config/tables.config';
 import { DatePipe } from '@angular/common';
 import { Subscription } from 'rxjs/Subscription';
+import { SingleDateComponent } from '../../../shared/view-cells/single-date/single-date.component';
 
 @Component({
   selector: 'ngx-new-manifestation',
@@ -83,12 +84,32 @@ export class NewManifestationComponent implements OnInit, OnDestroy {
     },
     start: {
       title: 'START',
-      type: 'date',
+      type: 'custom',
+      editable: false,
+      renderComponent: SingleDateComponent,
+      onComponentInitFunction: (instance) => {
+        instance.internalArrayKey = 'manifestationStart';
+        instance.parentNotifier.on('change', changed => {
+          this.manifestationsService.updateStart(instance.rowData, changed)
+          .then(result => this.notificationsService.success('START_UPDATE_SUCCEDED'))
+          .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+        });
+      }
     },
     end: {
       title: 'END',
-      type: 'date',
-    },
+      type: 'custom',
+      editable: false,
+      renderComponent: SingleDateComponent,
+      onComponentInitFunction: (instance) => {
+        instance.internalArrayKey = 'manifestationEnd';
+        instance.parentNotifier.on('change', changed => {
+          this.manifestationsService.updateEnd(instance.rowData, changed)
+          .then(result => this.notificationsService.success('END_UPDATE_SUCCEDED'))
+          .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+        });
+      }
+    }
   });
 
   onEditConfirm(event) {

@@ -18,4 +18,8 @@ export class UserService {
     return currentUser.name + ' ' + currentUser.surname;
   }
 
+  getEmail(): string {
+    const currentUser = this.getUserInfo();
+    return currentUser.email;
+  }
 }

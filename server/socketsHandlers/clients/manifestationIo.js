@@ -30,7 +30,7 @@ const manifestationIo = (clientsIo, socket) => {
     const editManifestation = async (_manifestation, callback) => {
         try {
             const id = _manifestation.id;
-            const manifestation = _.omit(_manifestation, ['id']);
+            const manifestation = _.omit(_manifestation, ['id','start','end','placeId']);
             const result = await Manifestation.update(manifestation, { where: { id } });
             if (!result)
                 throw new Error();
@@ -56,10 +56,46 @@ const manifestationIo = (clientsIo, socket) => {
         }
     };
 
+    const updateStart = async (args, callback) => {
+        const _manifestation = args.manifestation;
+        const start = args.startDate;
+        console.log(start);
+        try {
+            const manifestation = await Manifestation.findById(_manifestation.id);
+            const result = await manifestation.update({ start });
+            
+            if (!result)
+                throw new Error();
+
+            callback(result);
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
+    const updateEnd = async (args, callback) => {
+        const _manifestation = args.manifestation;
+        const end = args.endDate;
+        console.log(end);
+        try {
+            const manifestation = await Manifestation.findById(_manifestation.id);
+            const result = await manifestation.update({ end });
+
+            if (!result)
+                throw new Error();
+
+            callback(result);
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
     socket.on('createManifestation', createManifestation);
     socket.on('removeManifestation',removeManifestation);
     socket.on('getManifestations',getManifestations);
     socket.on('editManifestation',editManifestation);
+    socket.on('updateStart',updateStart);
+    socket.on('updateEnd',updateEnd);
 };
 
 module.exports = manifestationIo;

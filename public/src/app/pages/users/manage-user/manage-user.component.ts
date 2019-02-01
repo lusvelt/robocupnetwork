@@ -65,8 +65,10 @@ export class ManageUserComponent implements OnInit, OnDestroy {
     birthDate: {
       title: 'BIRTHDATE',
       type: 'custom',
+      editable: false,
       renderComponent: SingleDateComponent,
       onComponentInitFunction: (instance) => {
+        instance.internalArrayKey = 'manageUser';
         instance.parentNotifier.on('change', changed => {
           this.usersService.updateUserBirthdate(instance.rowData, changed)
             .then(result => this.notificationsService.success('BIRTHDATE_UPDATE_SUCCEDED'))

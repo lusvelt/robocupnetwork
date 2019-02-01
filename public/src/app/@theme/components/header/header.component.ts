@@ -19,9 +19,7 @@ export class HeaderComponent implements OnInit {
   user: any;
   currentManifestation: string = 'NO_COMPETITONS_SELECTED';
 
-  userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
-
-  constructor(private sidebarService: NbSidebarService,
+   constructor(private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
     private userService: UserService,
     private analyticsService: AnalyticsService,
@@ -31,7 +29,9 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.user = {
-      name: this.userService.getFullName()
+      name: this.userService.getFullName(),
+      email: this.userService.getEmail()
+
     };
 
     this.authService.onManifestationChange()

@@ -5,6 +5,7 @@ const log = require('../../config/consoleMessageConfig');
 const categoryIo = (clientsIo, socket) => {
 
     const createCategory = async (_category, callback) => {
+        console.log(_category);
         try {
             const category = await Category.create(_category);
             if (!category)

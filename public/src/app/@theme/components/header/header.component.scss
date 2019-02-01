@@ -7,6 +7,8 @@
   justify-content: space-between;
   width: 100%;
 
+
+
   .left {
     display: flex;
     width: 100%;
@@ -219,4 +221,12 @@
       display: none;
     }
   }
+  .noborder {
+    outline: none;
+    border: 0px;
+  }
+  .pic {
+    font-size: 13px;
+  }
+
 }
