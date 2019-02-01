@@ -65,6 +65,7 @@ export class ActionsComponent implements OnInit, OnDestroy {
       .then(result => this.action.modules = result);
 
     this.getNotifiedForActionTypes(this.action.actionTypes);
+    this.getNotifiedForModules(this.action.modules);
   }
 
   getNotifiedForActionTypes(actionTypesArray: any[]) {
@@ -160,7 +161,7 @@ export class ActionsComponent implements OnInit, OnDestroy {
         this.privilegesService.getModules()
           .then(mod => instance.parentNotifier.emit('items', mod));
 
-       // DA FARE this.getNotifiedForModules(instance.items);
+        this.getNotifiedForModules(instance.items);
 
         instance.parentNotifier.on('change', changed => {
           this.privilegesService.updateSelectedModules(instance.rowData, changed)

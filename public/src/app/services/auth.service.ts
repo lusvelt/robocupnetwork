@@ -72,4 +72,30 @@ export class AuthService {
       this.eventEmitter.on('manifestationChange', manifestation => observer.next(manifestation));
     });
   }
+
+  canAccess(module_: string): boolean {
+    if (this.isSuperadmin() || module_ === 'dashboard')
+      return true;
+
+    const actions = this.userService.getUserInfo().actions;
+    if (!actions)
+      return false;
+
+    let can = false;
+    actions.forEach(action => {
+      action.Modules.forEach(_module_ => {
+        if (_module_.alias === module_)
+          can = true;
+      });
+    });
+    return can;
+  }
+
+  canDo(action: string): boolean {
+    if (this.isSuperadmin())
+      return true;
+
+    const actions = this.userService.getUserInfo().actions.map(_action => _action.alias);
+    return actions.includes(action);
+  }
 }

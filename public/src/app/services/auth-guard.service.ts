@@ -13,23 +13,23 @@ export class AuthGuardService implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const urlTree = state.url.split('/');
     const child = urlTree[1];
-    const module = urlTree[2];
+    const module_ = urlTree[2];
 
     if (child !== 'auth' && !this.authService.isAuthenticated()) {
       this.redirectToLogin();
       return false;
-    } else if (
-        !this.authService.isSuperadmin() && (
-          module === 'privileges'
-        )
-      )
+    } else if (!this.authService.canAccess(module_)) {
+      this.redirectToDashboard();
       return false;
-
-    else return true;
+    } else return true;
   }
 
   redirectToLogin() {
     this.router.navigate(['/auth', 'login']);
+  }
+
+  redirectToDashboard() {
+    this.router.navigate(['/pages', 'dashboard']);
   }
 
 

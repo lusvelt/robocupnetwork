@@ -165,7 +165,6 @@ const privilegesIo = (clientsIo, socket) => {
     };
 
     const updateSelectedActionTypes = async (data, callback) => {
-        //da sistemare
         try {
             const _action = data.action;
             const changedActionTypes = data.changedActionTypes;
@@ -232,7 +231,6 @@ const privilegesIo = (clientsIo, socket) => {
     };
 
     const updateSelectedAction = async (data, callback) => {
-        //da sistemare
         try {
             const _action = data.action;
             const changedAction = data.changedAction;
@@ -319,6 +317,33 @@ const privilegesIo = (clientsIo, socket) => {
         }
     };
 
+    const updateSelectedModules = async (data, callback) => {
+        try {
+            const _action = data.action;
+            const changedModules = data.changedModules;
+            const id = _action.id;
+            const action = await Action.findById(id);
+            const promises = [];
+            changedModules.forEach(changedModule => {
+                promises.push(new Promise((resolve, reject) => {
+                    Module.findById(changedModule.id)
+                        .then(module_ => {
+                            if (changedModule.selected)
+                                return action.addModule(module_);
+                            else
+                                return action.removeModule(module_);
+                        })
+                        .then(result => resolve(result))
+                        .catch(err => reject(err));
+                }));
+            });
+            const result = await Promise.all(promises);
+            callback(result);
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
 
     socket.on('getActionTypes', getActionTypes);
     socket.on('createActionType', createActionType);
@@ -331,16 +356,17 @@ const privilegesIo = (clientsIo, socket) => {
     socket.on('removeAction', removeAction);
     socket.on('editAction', editAction);
     socket.on('updateSelectedAction', updateSelectedAction);
-
+    
     socket.on('createRole',createRole);
     socket.on('getRoles',getRoles);
     socket.on('removeRole',removeRole);
     socket.on('editRole', editRole);
-
+    
     socket.on('getModules', getModules);
     socket.on('createModule',createModule);
     socket.on('editModule',editModule);
     socket.on('removeModule', removeModule);
+    socket.on('updateSelectedModules', updateSelectedModules);
 };
 
 module.exports = privilegesIo;

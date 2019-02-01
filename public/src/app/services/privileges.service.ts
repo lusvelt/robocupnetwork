@@ -58,9 +58,8 @@ export class PrivilegesService {
     return this.socketIoService.send('updateSelectedActionTypes', { action, changedActionTypes });
   }
 
-
-  updateSelectedModules(action, changedModule) {
-    return this.socketIoService.send('updateSelectedModules', { action, changedModule});
+  updateSelectedModules(action, changedModules) {
+    return this.socketIoService.send('updateSelectedModules', { action, changedModules });
   }
 
   updateSelectedAction(action, changedAction) {

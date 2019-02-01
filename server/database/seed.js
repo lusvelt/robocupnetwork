@@ -1,4 +1,4 @@
-const { User, ActionType, Action, Role, Manifestation, School, Place, AgeRange, Team, Category, Module} = require('./models');
+const { User, ActionType, Action, Role, Manifestation, School, Place, AgeRange, Team, Category, Module } = require('./models');
 
 const seed = async () => {
     const users = [
@@ -38,9 +38,9 @@ const seed = async () => {
 
     const actionTypes = [
         await ActionType.create({ name: 'Create', alias: 'create' }),
-        await ActionType.create({ name: 'Read', alias: 'read' })
-        // await ActionType.create({ name: 'Update' }),
-        // await ActionType.create({ name: 'Delete' })
+        await ActionType.create({ name: 'Read', alias: 'read' }),
+        await ActionType.create({ name: 'Update', alias: 'update' }),
+        await ActionType.create({ name: 'Delete', alias: 'delete' })
     ];
 
     const action = [
@@ -49,8 +49,8 @@ const seed = async () => {
     ];
 
     const roles = [
-        await Role.create({name:'Arbitro gare',description:'test1',alias:'referee'}),
-        await Role.create({name:'Utente',description:'test2',alias:'user'}),
+        await Role.create({name:'Arbitro gare', description:'test1',alias:'referee'}),
+        await Role.create({name:'Utente', description:'test2',alias:'user'}),
     ];
 
     const manifestation = [
@@ -78,8 +78,18 @@ const seed = async () => {
         await Category.create({name: 'Rescue Line', description: 'Seguilinea', maxRobotsPerTeam: 4, maxTeamsPerLineUp: 10, isDividedIntoZones: true, checkpointsDetermineZones: true, requiresEvacuation: true, defaultMax: 300})
     ];
 
-    const modals = [
-        await Module.create({name: 'Users',alias: 'user'})
+    const modules = [
+        await Module.create({ name: 'Users',alias: 'user' }),
+        await Module.create({ name: 'Privileges', alias: 'privileges' }),
+        await Module.create({ name: 'Manifestations', alias: 'manifestation' }),
+        await Module.create({ name: 'Places', alias: 'places' }),
+        await Module.create({ name: 'Categories', alias: 'categories' }),
+        await Module.create({ name: 'Age Ranges', alias: 'ageRanges' }),
+        await Module.create({ name: 'Referees', alias: 'referees' }),
+        await Module.create({ name: 'Schools', alias: 'schools' }),
+        await Module.create({ name: 'Teams', alias: 'teams' }),
+        await Module.create({ name: 'Phases', alias: 'phases' }),
+        await Module.create({ name: 'Runs', alias: 'runs' })
     ];
 
     /*const competitions = [
