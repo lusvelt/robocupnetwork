@@ -31,7 +31,7 @@
     border-radius: 50%; // TODO: quickfix for https://github.com/akveo/nebular/issues/275
   }
 
-  .typeAheadColors ngb-typeahead-window{
+  .typeAheadColors ngb-typeahead-window {
     background-color:  black;
   }
 
@@ -45,12 +45,12 @@
   }
 
   .dropdown-item.active {
-    background-color: #2f296b
+    background-color: #2f296b;
     //background-color: #8970FF;
   }
 
   .dropdown-item:active {
-    background-color: #242052
+    background-color: #242052;
   }
 
   @include bootstrap-rtl();
