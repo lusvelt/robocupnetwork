@@ -30,5 +30,28 @@
   .custom-control .custom-control-indicator {
     border-radius: 50%; // TODO: quickfix for https://github.com/akveo/nebular/issues/275
   }
+
+  .typeAheadColors ngb-typeahead-window{
+    background-color:  black;
+  }
+
+  .dropdown-menu {
+    background-color: #3d3780;
+    //background-color: #7659ff
+  }
+
+  .dropdown-item {
+    color: #a1a1e5;
+  }
+
+  .dropdown-item.active {
+    background-color: #2f296b
+    //background-color: #8970FF;
+  }
+
+  .dropdown-item:active {
+    background-color: #242052
+  }
+
   @include bootstrap-rtl();
 };
