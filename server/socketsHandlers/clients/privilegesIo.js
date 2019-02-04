@@ -191,7 +191,20 @@ const privilegesIo = (clientsIo, socket) => {
         }
     };
 
-    const getRoles = async(args,callback) => {
+    const updateManifestationDependency = async (data, callback) => {
+        const _action = data.action;
+        const dependsOnManifestation = data.value;
+
+        try {
+            const action = await Action.findById(_action.id);
+            const result = await action.update({ dependsOnManifestation });
+            callback(result);
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
+    const getRoles = async(args, callback) => {
         try {
             const roles = await Role.getRolesList();
             callback(roles);
@@ -356,6 +369,7 @@ const privilegesIo = (clientsIo, socket) => {
     socket.on('removeAction', removeAction);
     socket.on('editAction', editAction);
     socket.on('updateSelectedAction', updateSelectedAction);
+    socket.on('updateManifestationDependency', updateManifestationDependency);
     
     socket.on('createRole',createRole);
     socket.on('getRoles',getRoles);

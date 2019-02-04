@@ -6,6 +6,8 @@ const UserHasRoleInManifestation = sequelize.define('UserHasRoleInManifestation'
     manifestationId: { type: Sequelize.INTEGER, primaryKey: true, allowNull: false },
     userId: { type: Sequelize.INTEGER, primaryKey: true, allowNull: false },
     roleId: { type: Sequelize.INTEGER, primaryKey: true, allowNull: false }
+}, {
+    tableName: 'UserHasRoleInManifestation'
 });
 
 module.exports = UserHasRoleInManifestation;

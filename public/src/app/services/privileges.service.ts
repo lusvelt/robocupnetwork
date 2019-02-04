@@ -90,4 +90,8 @@ export class PrivilegesService {
     return this.socketIoService.send('removeModule', data);
   }
 
+  updateManifestationDependency(action, value) {
+    return this.socketIoService.send('updateManifestationDependency', { action, value });
+  }
+
 }

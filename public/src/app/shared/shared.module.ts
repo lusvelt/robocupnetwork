@@ -12,6 +12,7 @@ import { MultipleSelectDropdownComponent } from './view-cells/multiple-select-dr
 import { SingleDateComponent } from './view-cells/single-date/single-date.component';
 import { RolesListComponent } from './dialogs/roles-list/roles-list.component';
 import { UsersListComponent } from './dialogs/users-list/users-list.component';
+import { CheckboxComponent } from './view-cells/checkbox/checkbox.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { UsersListComponent } from './dialogs/users-list/users-list.component';
         MultipleSelectDropdownComponent,
         SingleDateComponent,
         RolesListComponent,
-        UsersListComponent
+        UsersListComponent,
+        CheckboxComponent
     ],
     providers: [
         HttpService,
@@ -45,7 +47,8 @@ import { UsersListComponent } from './dialogs/users-list/users-list.component';
         MultipleSelectDropdownComponent,
         SingleDateComponent,
         RolesListComponent,
-        UsersListComponent
+        UsersListComponent,
+        CheckboxComponent
     ]
 })
 export class SharedModule { }

@@ -14,7 +14,10 @@ import { EventEmitter } from 'events';
 export class AuthService {
   private eventEmitter: EventEmitter = new EventEmitter();
 
-  constructor(private http: HttpService, private tokenService: TokenService, private userService: UserService, private socketIoService: SocketIoService) { }
+  constructor(private http: HttpService,
+              private tokenService: TokenService,
+              private userService: UserService,
+              private socketIoService: SocketIoService) { }
 
   login(userCredentials: UserCredentialsInterface): Promise<any> {
     const httpRequest: Promise<any> = this.http.post('/login', userCredentials, false);

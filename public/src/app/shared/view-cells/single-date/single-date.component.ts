@@ -15,19 +15,13 @@ export class SingleDateComponent implements ViewCell, OnInit {
   date: Date;
   oldDate: Date;
   user: any [] = [] ;
-  internalArrayKey: string;
-  private status: boolean = false;
+  internalKey: string;
 
   parentNotifier: EventEmitter = new EventEmitter;
   constructor() { }
 
   ngOnInit() {
-    if (this.internalArrayKey === 'manageUser')
-      this.date = new Date(this.rowData.birthDate);
-    if (this.internalArrayKey === 'manifestationStart')
-      this.date = new Date(this.rowData.start);
-    if (this.internalArrayKey === 'manifestationEnd')
-      this.date = new Date(this.rowData.end);
+    this.date = new Date(this.rowData[this.internalKey]);
   }
 
   onDateChange(date: any) {

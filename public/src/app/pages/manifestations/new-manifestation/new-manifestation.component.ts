@@ -88,7 +88,7 @@ export class NewManifestationComponent implements OnInit, OnDestroy {
       editable: false,
       renderComponent: SingleDateComponent,
       onComponentInitFunction: (instance) => {
-        instance.internalArrayKey = 'manifestationStart';
+        instance.internalKey = 'start';
         instance.parentNotifier.on('change', changed => {
           this.manifestationsService.updateStart(instance.rowData, changed)
           .then(result => this.notificationsService.success('START_UPDATE_SUCCEDED'))
@@ -102,7 +102,7 @@ export class NewManifestationComponent implements OnInit, OnDestroy {
       editable: false,
       renderComponent: SingleDateComponent,
       onComponentInitFunction: (instance) => {
-        instance.internalArrayKey = 'manifestationEnd';
+        instance.internalKey = 'end';
         instance.parentNotifier.on('change', changed => {
           this.manifestationsService.updateEnd(instance.rowData, changed)
           .then(result => this.notificationsService.success('END_UPDATE_SUCCEDED'))

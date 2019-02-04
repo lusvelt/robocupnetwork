@@ -30,45 +30,51 @@
                     placeholder="{{'ACTION_DESCRIPTION'|translate}}" class="form-control"></textarea>
         </div>
 
-        <div class="mb-3">
-          <label for="input-alias" class="sr-only">{{ 'ALIAS' | translate}}</label>
-          <input nbInput
-                  [(ngModel)]="action.alias"
-                  #alias="ngModel"
-                  id="input-alias"
-                  name="alias"
-                  placeholder="{{ 'ALIAS' | translate }}"
-                  autofocus
-                  fullWidth
-                  [status]="alias.dirty ? (alias.invalid  ? 'danger' : 'success') : ''"
-                  required>
-          <small class="form-text error" *ngIf="alias.touched && alias.errors?.required">
-            {{ 'ALIAS_REQUIRED' | translate }}
-          </small>
+        <div class="row mb-3">
+          <div class="col-sm-9">
+            <label for="input-alias" class="sr-only">{{ 'ALIAS' | translate}}</label>
+            <input nbInput
+                    [(ngModel)]="action.alias"
+                    #alias="ngModel"
+                    id="input-alias"
+                    name="alias"
+                    placeholder="{{ 'ALIAS' | translate }}"
+                    autofocus
+                    fullWidth
+                    [status]="alias.dirty ? (alias.invalid  ? 'danger' : 'success') : ''"
+                    required>
+            <small class="form-text error" *ngIf="alias.touched && alias.errors?.required">
+              {{ 'ALIAS_REQUIRED' | translate }}
+            </small>
+          </div>
+          <div class="col-sm-3">
+            <nb-checkbox name="dependsOnManifestation" [(ngModel)]="action.dependsOnManifestation">{{ 'DEPENDS_ON_MANIFESTATION' | translate }}</nb-checkbox>
+          </div>
         </div>
 
-        <div class="mb-3" ngbDropdown>
-          <button class="btn btn-primary" type="button" ngbDropdownToggle>
-            {{ 'ACTION_TYPES' | translate }}
-          </button>
-          <ul ngbDropdownMenu class="dropdown-menu">
-            <li class="dropdown-item" *ngFor="let actionType of action.actionTypes">
-              <nb-checkbox name="actionChoose" [(ngModel)]="actionType.selected">{{ actionType.name }}</nb-checkbox>
-            </li>
-          </ul>
+        <div class="row mb-3">
+          <div class="col-sm-6" ngbDropdown>
+            <button class="btn btn-primary" type="button" ngbDropdownToggle>
+              {{ 'ACTION_TYPES' | translate }}
+            </button>
+            <ul ngbDropdownMenu class="dropdown-menu">
+              <li class="dropdown-item" *ngFor="let actionType of action.actionTypes">
+                <nb-checkbox name="actionChoose" [(ngModel)]="actionType.selected">{{ actionType.name }}</nb-checkbox>
+              </li>
+            </ul>
+          </div>
+          <div class="col-sm-6" ngbDropdown>
+            <button class="btn btn-primary" type="button" ngbDropdownToggle>
+              {{ 'MODULES' | translate }}
+            </button>
+            <ul ngbDropdownMenu class="dropdown-menu">
+              <li class="dropdown-item" *ngFor="let module of action.modules">
+                <nb-checkbox name="moduleChoose" [(ngModel)]="module.selected">{{ module.name }}</nb-checkbox>
+              </li>
+            </ul>
+          </div>
         </div>
-
-        <div class="mb-3" ngbDropdown>
-          <button class="btn btn-primary" type="button" ngbDropdownToggle>
-            {{ 'MODULES' | translate }}
-          </button>
-          <ul ngbDropdownMenu class="dropdown-menu">
-            <li class="dropdown-item" *ngFor="let module of action.modules">
-              <nb-checkbox name="moduleChoose" [(ngModel)]="module.selected">{{ module.name }}</nb-checkbox>
-            </li>
-          </ul>
-        </div>
-
+        
         <button class="btn btn-primary" nbButton hero>{{'ACTION_BUTTON'|translate}}</button>
       </nb-card-body>
     </nb-card>

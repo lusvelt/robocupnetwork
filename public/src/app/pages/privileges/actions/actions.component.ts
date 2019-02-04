@@ -13,6 +13,7 @@ import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { CheckboxComponent } from '../../../shared/view-cells/checkbox/checkbox.component';
 
 @Component({
   selector: 'ngx-action',
@@ -26,6 +27,7 @@ export class ActionsComponent implements OnInit, OnDestroy {
     alias: '',
     actionTypes: [],
     modules: [],
+    dependsOnManifestation: false,
     show: false
   };
   subscriptions: Subscription[] = [];
@@ -79,8 +81,7 @@ export class ActionsComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.privilegesService.notify('removeActionType')
-      .subscribe(actionType => actionTypesArray.splice(actionTypesArray.findIndex(el => el.id === actionType.id), 1)))
-      ;
+      .subscribe(actionType => actionTypesArray.splice(actionTypesArray.findIndex(el => el.id === actionType.id), 1)));
   }
 
   getNotifiedForModules(modulesArray: any[]) {
@@ -168,8 +169,19 @@ export class ActionsComponent implements OnInit, OnDestroy {
             .then(result => this.notificationsService.success('SELECTED_MODULES_UPDATE_SUCCEDED'))
             .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
         });
-
-      },
+      }
+    },
+    dependsOnManifestation: {
+      title: 'DEPENDS_ON_MANIFESTATION',
+      type: 'custom',
+      renderComponent: CheckboxComponent,
+      onComponentInitFunction: (instance) => {
+        instance.parentNotifier.on('change', changed => {
+          this.privilegesService.updateManifestationDependency(instance.rowData, changed)
+            .then(result => this.notificationsService.success('MANIFESTATION_DEPENDENCY_UPDATE_SUCCEDED'))
+            .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+        });
+      }
     }
   });
 
