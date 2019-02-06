@@ -13,6 +13,7 @@ const UserHasRoleInManifestation = require('./associationTables/UserHasRoleInMan
 const TeamHasUser = require('./associationTables/TeamHasUser');
 const SchoolHasSchoolType = require('./associationTables/SchoolHasSchoolType');
 const ActionBelongsToModule = require('./associationTables/ActionBelongsToModule');
+const UserHasRole = require('./associationTables/UserHasRole');
 
 module.exports = {
     RunHasParam,
@@ -29,5 +30,6 @@ module.exports = {
     UserHasRoleInManifestation,
     TeamHasUser,
     SchoolHasSchoolType,
-    ActionBelongsToModule
+    ActionBelongsToModule,
+    UserHasRole
 };

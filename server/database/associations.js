@@ -41,7 +41,8 @@ const {
     UserHasRoleInManifestation,
     TeamHasUser,
     SchoolHasSchoolType,
-    ActionBelongsToModule
+    ActionBelongsToModule,
+    UserHasRole
 } = require('./associationTables');
 
 const runFk = utils.getForeignKey(Run);
@@ -113,6 +114,10 @@ Param.belongsToMany(Run, { through: RunHasParam, foreignKey: paramFk });
 // Manifestation - User | N:M ('../database/associationTables/ManifestationHasUser.js')
 Manifestation.belongsToMany(User, { through: ManifestationHasUser, foreignKey: manifestationFk });
 User.belongsToMany(Manifestation, { through: ManifestationHasUser, foreignKey: userFk });
+
+// User - Role | N:M ('../database/associationTables/UserHasRole.js')
+User.belongsToMany(Role, { through: UserHasRole, foreignKey: userFk });
+Role.belongsToMany(User, { through: UserHasRole, foreignKey: roleFk });
 
 // Phase - Field | N:M ('../database/associationTables/PhaseHasField.js')
 Phase.belongsToMany(Field, { through: PhaseHasField, foreignKey: phaseFk });

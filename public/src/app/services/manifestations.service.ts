@@ -21,8 +21,8 @@ export class ManifestationsService {
     return this.socketIoService.send('editManifestation', data);
   }
 
-  updateStart(manifestatation, startDate) {
-    return this.socketIoService.send('updateStart', { manifestatation, startDate});
+  updateStart(manifestation, startDate) {
+    return this.socketIoService.send('updateStart', { manifestation, startDate});
   }
 
   updateEnd(manifestation, endDate) {
@@ -37,5 +37,5 @@ export class ManifestationsService {
     return new Observable(observer =>
       this.socketIoService.on(eventName).subscribe(data => observer.next(data))
     );
-    }
+  }
 }
