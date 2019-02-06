@@ -20,6 +20,7 @@ export class RolesListComponent implements OnInit {
   ngOnInit() {
     this.privilegesService.getRoles()
     .then(roles => {
+      roles = roles.filter((role: any) => role.dependsOnManifestation === true);
       this.roles = roles.map(role => {
         const oldRole = this.oldRoles.find(el => el.id === role.id);
         role.selected = oldRole ? !!oldRole.selected : false;

@@ -13,6 +13,7 @@ import { SingleDateComponent } from './view-cells/single-date/single-date.compon
 import { RolesListComponent } from './dialogs/roles-list/roles-list.component';
 import { UsersListComponent } from './dialogs/users-list/users-list.component';
 import { CheckboxComponent } from './view-cells/checkbox/checkbox.component';
+import { ViewOnlyCheckboxComponent } from './view-cells/view-only-checkbox/view-only-checkbox.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { CheckboxComponent } from './view-cells/checkbox/checkbox.component';
         SingleDateComponent,
         RolesListComponent,
         UsersListComponent,
-        CheckboxComponent
+        CheckboxComponent,
+        ViewOnlyCheckboxComponent
     ],
     providers: [
         HttpService,
@@ -48,7 +50,8 @@ import { CheckboxComponent } from './view-cells/checkbox/checkbox.component';
         SingleDateComponent,
         RolesListComponent,
         UsersListComponent,
-        CheckboxComponent
+        CheckboxComponent,
+        ViewOnlyCheckboxComponent
     ]
 })
 export class SharedModule { }

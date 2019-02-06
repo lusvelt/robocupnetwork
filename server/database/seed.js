@@ -44,13 +44,14 @@ const seed = async () => {
     ];
 
     const action = [
-        await Action.create({name:'Annulla gara', alias: 'cancelRun', description:'test1'}),
-        await Action.create({name:'Crea utente', alias: 'createUser', description:'test2'}),
+        await Action.create({name:'Annulla gara', alias: 'cancelRun', description:'test1',dependsOnManifestation:true}),
+        await Action.create({name:'Crea utente', alias: 'createUser', description:'test2',dependsOnManifestation:true}),
+        await Action.create({name:'Visualizza gara', alias: 'seeRun', description:'test3',dependsOnManifestation:false}),
     ];
 
     const roles = [
-        await Role.create({name:'Arbitro gare', description:'test1',alias:'referee'}),
-        await Role.create({name:'Utente', description:'test2',alias:'user'}),
+        await Role.create({name:'Arbitro gare', description:'test1',alias:'referee',dependsOnManifestation:true}),
+        await Role.create({name:'Utente', description:'test2',alias:'user',dependsOnManifestation:false}),
     ];
 
     const manifestation = [

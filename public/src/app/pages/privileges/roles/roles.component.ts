@@ -15,6 +15,7 @@ import { MultipleSelectDropdownComponent } from '../../../shared/view-cells/mult
 import * as _ from 'lodash';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
+import { ViewOnlyCheckboxComponent } from '../../../shared/view-cells/view-only-checkbox/view-only-checkbox.component';
 
 @Component({
   selector: 'ngx-role',
@@ -146,14 +147,16 @@ export class RolesComponent implements OnInit, OnDestroy {
     dependsOnManifestation: {
       title: 'DEPENDS_ON_MANIFESTATION',
       type: 'custom',
-      renderComponent: CheckboxComponent,
+      renderComponent: ViewOnlyCheckboxComponent,
       onComponentInitFunction: (instance) => {
-        instance.parentNotifier.on('change', changed => {
+         /*instance.parentNotifier.on('change', changed => {
           this.privilegesService.updateRoleManifestationDependency(instance.rowData, changed)
             .then(result => this.notificationsService.success('MANIFESTATION_DEPENDENCY_UPDATE_SUCCEDED'))
             .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
-        });
-      }
+        });*/
+      },
+      addable: false,
+      editable: false
     }
   });
 

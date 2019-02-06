@@ -3,6 +3,7 @@ const User = require('../../models/User');
 const Role = require('../../models/Role');
 const Manifestation = require('../../models/Manifestation');
 const UserHasRoleInManifestation = require('../../database/associationTables/UserHasRoleInManifestation');
+const UserHasRole = require('../../database/associationTables/UserHasRole');
 const log = require('../../config/consoleMessageConfig');
 
 const usersIo = (clientsIo, socket) => {
@@ -34,10 +35,10 @@ const usersIo = (clientsIo, socket) => {
 
     const createUser = async (_user, callback) => {
         try {
-            const user = await User.create(_.omit(_user,['manifestations']));
+            const user = await User.create(_.omit(_user,['manifestations','standardRoles']));
             if(!user)
                 throw new Error();
-            const promises = [];
+            let promises = [];
             _user.manifestations.forEach(_manifestation => {
                 promises.push(new Promise((resolve, reject) => {
                     Manifestation.findById(_manifestation.id)
@@ -48,6 +49,16 @@ const usersIo = (clientsIo, socket) => {
                         });
                 }));
             });
+
+            promises = [];
+            _user.standardRoles.forEach(_role => {
+                promises.push(new Promise((resolve, reject) => {
+                    Role.findById(_role.id)
+                        .then(role => {
+                            promises.push(UserHasRole.create({userId: user.dataValues.id, roleId: role.id}));
+                        })
+                }));
+            })
 
             const result = await Promise.all(promises);
             if(!result)

@@ -9,4 +9,5 @@ export interface UserInterface {
     password?: string;
     isAdmin: boolean;
     manifestations: ManifestationInterface [];
+    standardRoles: RoleInterface [];
 }

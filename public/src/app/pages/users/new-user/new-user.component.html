@@ -78,35 +78,48 @@
           <nb-checkbox status="success" class="col-sm-4" [(ngModel)]="user.isAdmin" #isAdmin="ngModel" name="isAdmin">Admin</nb-checkbox>
         </div>
 
-      <div class="mb-3" ngbDropdown [hidden]="user.isAdmin">
-          <!--<button class="btn btn-primary" type="button" ngbDropdownToggle>
-            {{ 'MANIFESTATIONS' | translate }}
-          </button>-->
-          <input type="text" class="form-control"
-                  placeholder="{{ 'MANIFESTATIONS' | translate }}"
-                  (selectItem)="onManifestationClicked($event)"
-                  [ngbTypeahead]="searchManifestation"
-                  [resultFormatter]="manifestationsFormatter"
-                  [inputFormatter]="manifestationsFormatter"
-                  (focus)="focus$.next($event.target.value)"
-                  (click)="click$.next($event.target.value)"
-                  #searchManifestationInstance="ngbTypeahead"/>
-          <!--<ul ngbDropdownMenu class="dropdown-menu">
-            <li (click)="onManifestationClicked(manifestation)" class="dropdown-item" *ngFor="let manifestation of manifestationsList">
-                {{ manifestation.name }}
-            </li>
-          </ul>-->
-      </div>
+       <div class="row"> 
+        <div class="mb-3 col-sm-6" [hidden]="user.isAdmin">
+            <!--<button class="btn btn-primary" type="button" ngbDropdownToggle>
+              {{ 'MANIFESTATIONS' | translate }}
+            </button>-->
+            <input type="text" class="form-control"
+                    placeholder="{{ 'MANIFESTATIONS' | translate }}"
+                    (selectItem)="onManifestationClicked($event)"
+                    [ngbTypeahead]="searchManifestation"
+                    [resultFormatter]="manifestationsFormatter"
+                    [inputFormatter]="manifestationsFormatter"
+                    (focus)="focus$.next($event.target.value)"
+                    (click)="click$.next($event.target.value)"
+                    #searchManifestationInstance="ngbTypeahead"/>
+            <!--<ul ngbDropdownMenu class="dropdown-menu">
+              <li (click)="onManifestationClicked(manifestation)" class="dropdown-item" *ngFor="let manifestation of manifestationsList">
+                  {{ manifestation.name }}
+              </li>
+            </ul>-->
+        </div>
+        <div class="col-sm-6">
+          <div class="col-sm-6" ngbDropdown>
+            <button class="btn btn-primary" type="button" ngbDropdownToggle>
+              {{ 'STANDARD_ROLES' | translate }}
+            </button>
+            <ul ngbDropdownMenu class="dropdown-menu">
+              <li class="dropdown-item" *ngFor="let role of user.standardRoles">
+                <nb-checkbox name="roleChoose" [(ngModel)]="role.selected">{{ role.name }}</nb-checkbox>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>  
 
-      
-      <div class="mb-3" [hidden]="isOneRoleInManifestation">
-        <ol *ngFor="let manifestation of user.manifestations">
-          {{manifestation.name}}
-          <ol>
-              <li *ngFor="let role of manifestation.roles">{{role.name}}</li>
-          </ol>
-        </ol>  
-      </div>
+        <div class="mb-3" [hidden]="isOneRoleInManifestation">
+          <ol *ngFor="let manifestation of user.manifestations">
+            {{manifestation.name}}
+            <ol>
+                <li *ngFor="let role of manifestation.roles">{{role.name}}</li>
+            </ol>
+          </ol>  
+        </div>
 
         <div class="mb-3">
           <input nbInput

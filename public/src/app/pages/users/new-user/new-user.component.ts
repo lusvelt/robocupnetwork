@@ -29,10 +29,12 @@ export class NewUserComponent implements OnInit {
     email: '',
     password: '',
     isAdmin: false,
-    manifestations: []
+    manifestations: [],
+    standardRoles: [],
   };
 
   isOneRoleInManifestation: boolean = true;
+  isOneStandardRole: boolean = true;
 
   manifestationsList: [];
   rolesList: [];
@@ -74,7 +76,10 @@ export class NewUserComponent implements OnInit {
     .then(manifestations => this.manifestationsList = manifestations);
 
     this.privilegesService.getRoles()
-    .then(roles => this.rolesList = roles);
+    .then(roles => {
+      this.user.standardRoles = roles.filter((role: any) => role.dependsOnManifestation === false);
+    });
+
   }
 
 
@@ -88,6 +93,7 @@ export class NewUserComponent implements OnInit {
       });
     } */
     const user: UserInterface = _.omit(this.user, ['confirmPassword']);
+    user.standardRoles = user.standardRoles.filter((role: any) => role.selected);
     user.birthDate = new Date(user.birthDate);
     if (user.name !== '' && user.surname !== '' && user.email !== '' && user.password !== '') {
       this.usersService.createUser(user)
