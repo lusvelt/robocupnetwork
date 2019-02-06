@@ -16,13 +16,14 @@ interface CardSettings {
   type: string;
 }
 
+
 @Component({
   selector: 'ngx-dashboard',
   styleUrls: ['./dashboard.component.scss'],
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
-
+  runs = ['miao', 'mieo'];
   manifestationsList: [];
   @ViewChild('searchManifestationInstance') searchManifestationInstance: NgbTypeahead;
   focus$ = new Subject<string>();

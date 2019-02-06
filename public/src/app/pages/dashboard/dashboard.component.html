@@ -1,25 +1,65 @@
-<div class="maintitle">
-  <h1 class="font-w-light">{{ 'WELCOME_MESSAGE' | translate }}<span class="font-w-bold">{{ 'ROBOCUP_NETWORK' |
-      translate }}</span></h1>
-</div>
+<div class="welcome" *ngIf="!authService.isManifestationSelected()">
+  <div class="maintitle">
+    <h1 class="font-w-light">{{ 'WELCOME_MESSAGE' | translate }}<span class="font-w-bold">{{ 'ROBOCUP_NETWORK' |
+        translate }}</span></h1>
+  </div>
 
-<div class="subtitle">
-  <h1 class="font-w-light">{{'SELECT_A_MANIFESTATION' | translate}}</h1>
-</div>
-<div class="mb-3" ngbDropdown>
-  <!--<button class="btn btn-primary" type="button" ngbDropdownToggle>
-            {{ 'MANIFESTATIONS' | translate }}
-          </button>-->
-<div class="col-md-6 offset-md-3">
-<input type="text" class="form-control" placeholder="{{ 'WRITE_MANIFESTATION_NAME' | translate }}" (selectItem)="onManifestationClicked($event)"
-    [ngbTypeahead]="searchManifestation" [resultFormatter]="manifestationsFormatter" [inputFormatter]="manifestationsFormatter"
-    (focus)="focus$.next($event.target.value)" (click)="click$.next($event.target.value)" #searchManifestationInstance="ngbTypeahead" />
-  <!--<ul ngbDropdownMenu class="dropdown-menu">
-            <li (click)="onManifestationClicked(manifestation)" class="dropdown-item" *ngFor="let manifestation of manifestationsList">
-                {{ manifestation.name }}
-            </li>
-          </ul>-->
-        </div>
+  <div class="subtitle">
+    <h1 class="font-w-light">{{'SELECT_A_MANIFESTATION' | translate}}</h1>
+  </div>
+  <div class="mb-3" ngbDropdown>
+    <!--<button class="btn btn-primary" type="button" ngbDropdownToggle>
+              {{ 'MANIFESTATIONS' | translate }}
+            </button>-->
+  <div class="col-md-6 offset-md-3">
+  <input type="text" class="form-control" placeholder="{{ 'WRITE_MANIFESTATION_NAME' | translate }}" (selectItem)="onManifestationClicked($event)"
+      [ngbTypeahead]="searchManifestation" [resultFormatter]="manifestationsFormatter" [inputFormatter]="manifestationsFormatter"
+      (focus)="focus$.next($event.target.value)" (click)="click$.next($event.target.value)" #searchManifestationInstance="ngbTypeahead" />
+    <!--<ul ngbDropdownMenu class="dropdown-menu">
+              <li (click)="onManifestationClicked(manifestation)" class="dropdown-item" *ngFor="let manifestation of manifestationsList">
+                  {{ manifestation.name }}
+              </li>
+            </ul>-->
+          </div>
+  </div>
+</div>  
+
+<div class="body" *ngIf="authService.isManifestationSelected()">
+    <nb-card class="col-md-12 col-lg-12 col-xxxl-12">
+      <nb-card-header>
+        {{'MANIFESTATION_STATUS' | translate}}
+      </nb-card-header>
+        <nb-card-body>
+          <nb-stepper orientation="horizontal">
+            <nb-step [label]="labelOne">
+              <ng-template #labelOne>{{'FIRST_DATE' | translate}}</ng-template>
+            </nb-step>
+            <nb-step [label]="labelTwo">
+              <ng-template #labelTwo>{{'SECOND_DATE' | translate}}</ng-template>
+            </nb-step>
+            <nb-step [label]="labelThree">
+                <ng-template #labelThree>{{'THIRD_DATE' | translate}}</ng-template>
+            </nb-step>
+          </nb-stepper>
+        </nb-card-body>
+      </nb-card>
+  <div class="row">
+    <div class="col-xxxl-6 col-xxl-8 col-lg-7 col-md-6">
+      <ngx-electricity></ngx-electricity>
+    </div>
+    <div class="col-xxxl-6 col-xxl-4 col-lg-5 col-md-6">
+        <nb-card class="list-card">
+            <nb-card-header>{{'RUNS' | translate }}</nb-card-header>
+            <nb-card-body>
+              <nb-list>
+                <nb-list-item *ngFor="let run of runs">
+                  {{ run }}
+                </nb-list-item>
+              </nb-list>
+            </nb-card-body>
+          </nb-card>
+    </div>
+  </div>
 </div>
 
 

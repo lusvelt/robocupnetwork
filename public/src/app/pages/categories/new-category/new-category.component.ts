@@ -77,7 +77,7 @@ export class NewCategoryComponent implements OnInit, OnDestroy {
       .then(_category => {
         this.notificationsService.success('CATEGORY_CREATED');
         this.source.insert(_category);
-        this.category.show = false;
+        this.show = false;
       });
   }
     settings = this.tablesService.getSettings(notAddableConfig, {
