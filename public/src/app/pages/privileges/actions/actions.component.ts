@@ -177,7 +177,7 @@ export class ActionsComponent implements OnInit, OnDestroy {
       renderComponent: CheckboxComponent,
       onComponentInitFunction: (instance) => {
         instance.parentNotifier.on('change', changed => {
-          this.privilegesService.updateManifestationDependency(instance.rowData, changed)
+          this.privilegesService.updateActionManifestationDependency(instance.rowData, changed)
             .then(result => this.notificationsService.success('MANIFESTATION_DEPENDENCY_UPDATE_SUCCEDED'))
             .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
         });

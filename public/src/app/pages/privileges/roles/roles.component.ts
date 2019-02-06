@@ -1,3 +1,5 @@
+import { filter } from 'rxjs/operators';
+import { CheckboxComponent } from './../../../shared/view-cells/checkbox/checkbox.component';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { SmartTableService } from '../../../@core/data/smart-table.service';
@@ -24,6 +26,7 @@ export class RolesComponent implements OnInit, OnDestroy {
     name: '',
     description: '',
     actions: [],
+    dependsOnManifestation: false,
     show: false
   };
   subscriptions: Subscription[] = [];
@@ -57,9 +60,18 @@ export class RolesComponent implements OnInit, OnDestroy {
       .subscribe(role => this.source.delete(role)));
 
     this.privilegesService.getActions()
-    .then(actions => this.role.actions = actions);
+    .then(actions => this.role.actions = actions.filter((action: any) => action.dependsOnManifestation === this.role.dependsOnManifestation));
 
     this.getNotifiedForActions(this.role.actions);
+  }
+
+  onCheckboxChange(event) {
+    const value = event.returnValue;
+    this.role.actions = [];
+    this.privilegesService.getActions()
+    .then(actions => {
+      this.role.actions = actions.filter((action: any) => action.dependsOnManifestation === value);
+    });
   }
 
   getNotifiedForActions(actionsArray: any[]) {
@@ -114,10 +126,12 @@ export class RolesComponent implements OnInit, OnDestroy {
       onComponentInitFunction: (instance) => {
 
         instance.internalArrayKey = 'Actions';
-
-
         this.privilegesService.getActions()
-          .then(actions => instance.parentNotifier.emit('items', actions));
+        .then(actions => {
+          actions = actions.filter((action: any) => action.dependsOnManifestation === instance.rowData.dependsOnManifestation);
+          instance.parentNotifier.emit('items', actions);
+        });
+
 
         this.getNotifiedForActions(instance.items);
         instance.parentNotifier.on('change', changed => {
@@ -128,6 +142,18 @@ export class RolesComponent implements OnInit, OnDestroy {
       },
       addable: false,
       editable: false
+    },
+    dependsOnManifestation: {
+      title: 'DEPENDS_ON_MANIFESTATION',
+      type: 'custom',
+      renderComponent: CheckboxComponent,
+      onComponentInitFunction: (instance) => {
+        instance.parentNotifier.on('change', changed => {
+          this.privilegesService.updateRoleManifestationDependency(instance.rowData, changed)
+            .then(result => this.notificationsService.success('MANIFESTATION_DEPENDENCY_UPDATE_SUCCEDED'))
+            .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+        });
+      }
     }
   });
 

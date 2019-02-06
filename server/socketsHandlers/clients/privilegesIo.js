@@ -191,13 +191,26 @@ const privilegesIo = (clientsIo, socket) => {
         }
     };
 
-    const updateManifestationDependency = async (data, callback) => {
+    const updateActionManifestationDependency = async (data, callback) => {
         const _action = data.action;
         const dependsOnManifestation = data.value;
 
         try {
             const action = await Action.findById(_action.id);
             const result = await action.update({ dependsOnManifestation });
+            callback(result);
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
+    const updateRoleManifestationDependency = async (data, callback) => {
+        const _role = data.role;
+        const dependsOnManifestation = data.value;
+
+        try {
+            const role = await Role.findById(_role.id);
+            const result = await role.update({ dependsOnManifestation });
             callback(result);
         } catch (err) {
             callback(new Error());
@@ -369,12 +382,13 @@ const privilegesIo = (clientsIo, socket) => {
     socket.on('removeAction', removeAction);
     socket.on('editAction', editAction);
     socket.on('updateSelectedAction', updateSelectedAction);
-    socket.on('updateManifestationDependency', updateManifestationDependency);
+    socket.on('updateActionManifestationDependency', updateActionManifestationDependency);
     
     socket.on('createRole',createRole);
     socket.on('getRoles',getRoles);
     socket.on('removeRole',removeRole);
     socket.on('editRole', editRole);
+    socket.on('updateRoleManifestationDependency', updateRoleManifestationDependency);
     
     socket.on('getModules', getModules);
     socket.on('createModule',createModule);
