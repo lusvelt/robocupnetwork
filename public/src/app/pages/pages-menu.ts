@@ -105,12 +105,12 @@ export const MENU_ITEMS: any[] = [
     title: 'PHASES',
     alias: 'phases',
     icon: 'fas fa-list-ul',
-    link: '/pages/manage-phase'
+    link: '/pages/phases/manage-phase'
   },
   {
     title: 'RUNS',
     alias: 'runs',
     icon: 'fas fa-trophy',
-    link: '/pages/manage-run'
+    link: '/pages/runs/manage-run'
   }
 ];
