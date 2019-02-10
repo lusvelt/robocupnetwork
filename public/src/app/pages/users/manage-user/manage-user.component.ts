@@ -9,6 +9,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataSource } from '../../../classes/data-source.class';
 import { notAddableConfig } from '../../../config/tables.config';
 import { SingleDateComponent } from '../../../shared/view-cells/single-date/single-date.component';
+import { SingleButtonComponent } from '../../../shared/view-cells/single-button/single-button.component';
 
 @Component({
   selector: 'ngx-manage-user',
@@ -80,10 +81,18 @@ export class ManageUserComponent implements OnInit, OnDestroy {
       title: 'EMAIL',
       type: 'text',
     },
-    isAdmin: {
-      title: 'ADMIN',
-      type: 'text',
-      editable: false
+    roles: {
+      title: 'ROLES',
+      type: 'custom',
+      renderComponent: SingleButtonComponent,
+      onComponentInitFunction: (instance) => {
+        instance.internalKey = 'openRolesModal'; /*
+        instance.parentNotifier.on('change', changed => {
+          this.usersService.updateUserBirthdate(instance.rowData, changed)
+            .then(result => this.notificationsService.success('BIRTHDATE_UPDATE_SUCCEDED'))
+            .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+        });*/
+      }
     }
   });
 

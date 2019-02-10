@@ -14,6 +14,7 @@ import { RolesListComponent } from './dialogs/roles-list/roles-list.component';
 import { UsersListComponent } from './dialogs/users-list/users-list.component';
 import { CheckboxComponent } from './view-cells/checkbox/checkbox.component';
 import { ViewOnlyCheckboxComponent } from './view-cells/view-only-checkbox/view-only-checkbox.component';
+import { SingleButtonComponent } from './view-cells/single-button/single-button.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { ViewOnlyCheckboxComponent } from './view-cells/view-only-checkbox/view-
         RolesListComponent,
         UsersListComponent,
         CheckboxComponent,
-        ViewOnlyCheckboxComponent
+        ViewOnlyCheckboxComponent,
+        SingleButtonComponent
     ],
     providers: [
         HttpService,
@@ -51,7 +53,8 @@ import { ViewOnlyCheckboxComponent } from './view-cells/view-only-checkbox/view-
         RolesListComponent,
         UsersListComponent,
         CheckboxComponent,
-        ViewOnlyCheckboxComponent
+        ViewOnlyCheckboxComponent,
+        SingleButtonComponent
     ]
 })
 export class SharedModule { }
