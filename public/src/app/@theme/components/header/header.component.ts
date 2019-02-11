@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   @Input() position = 'normal';
 
   user: any;
-  currentManifestation: string = 'NO_COMPETITONS_SELECTED';
+  currentManifestation: string;
 
    constructor(private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
@@ -33,6 +33,8 @@ export class HeaderComponent implements OnInit {
       email: this.userService.getEmail()
 
     };
+
+    this.currentManifestation = this.authService.isManifestationSelected() ? this.authService.getManifestation().name : 'NO_COMPETITONS_SELECTED';
 
     this.authService.onManifestationChange()
       .subscribe(manifestation => this.currentManifestation = manifestation ? manifestation.name : 'NO_COMPETITONS_SELECTED');

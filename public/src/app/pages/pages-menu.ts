@@ -12,6 +12,7 @@ export const MENU_ITEMS: any[] = [
   {
     title: 'MAIN_MENU',
     group: true,
+    show: true
   },
   {
     title: 'USERS',

@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 import { SocketIoService } from './socket-io.service';
 import { EventEmitter } from 'events';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class AuthService {
   constructor(private http: HttpService,
               private tokenService: TokenService,
               private userService: UserService,
-              private socketIoService: SocketIoService) { }
+              private socketIoService: SocketIoService,
+              private router: Router) { }
 
   login(userCredentials: UserCredentialsInterface): Promise<any> {
     const httpRequest: Promise<any> = this.http.post('/login', userCredentials, false);
@@ -65,6 +67,7 @@ export class AuthService {
     promise.then(result => {
       this.tokenService.setToken(result.token);
       this.eventEmitter.emit('manifestationChange', undefined);
+      this.router.navigate(['/pages', 'dashboard']);
     });
 
     return promise;

@@ -30,22 +30,28 @@ export class PagesComponent implements OnInit {
   }
 
   private deleteUnauthorizedItems(items) {
-    for (let i = 0; i < items.length; i++) {
-      if (!this.authService.canAccess(items[i].alias))
-        delete items[i];
-      else if (items[i].children)
-        this.deleteUnauthorizedItems(items[i].children);
+    let length = items.length;
+    let i = 0;
+
+    while (i < length) {
+      const item = items[i];
+      if (!this.authService.canAccess(item.alias) && !item.show) {
+        items.splice(i, 1);
+        length--;
+      } else {
+        if (item.children)
+          this.deleteUnauthorizedItems(item.children);
+        i++;
+      }
     }
   }
 
-  private translateTitles(menuItems) {
-    menuItems.forEach(async item => {
-      if (this.authService.canAccess(item.alias)) {
-        if (item.title)
-          item.title = await this.translateService.get(item.title).toPromise();
-        if (item.children)
-          this.translateTitles(item.children);
-      }
+  private translateTitles(items) {
+    items.forEach(async item => {
+      if (item.title)
+        item.title = await this.translateService.get(item.title).toPromise();
+      if (item.children)
+        this.translateTitles(item.children);
     });
   }
 }
