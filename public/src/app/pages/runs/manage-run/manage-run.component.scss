@@ -2,11 +2,34 @@
     font-size: 1.7rem;
 }
 
+.id-text {
+  position: absolute;
+  text-align: center;
+  font-size: 1rem;
+  margin-left: 13rem;
+  margin-top: 5px;
+}
+
+.active-id-text {
+  position: absolute;
+  text-align: center;
+  font-size: 1rem;
+  margin-left: 16rem;
+  margin-top: 5px;
+}
+
 .icon {
     font-size: 1.7rem;
     width: 100%;
     position: absolute;
     margin-left: 18rem;
+}
+
+.active-icon {
+  font-size: 1.7rem;
+  width: 100%;
+  position: absolute;
+  margin-left: 22rem;
 }
 
 .list-button {
@@ -20,4 +43,12 @@ nb-actions {
 
 nb-card-footer {
     text-align: center;
+}
+
+nb-card-body {
+  text-align: center;
+}
+
+.score {
+  font-size: 1.5rem;
 }

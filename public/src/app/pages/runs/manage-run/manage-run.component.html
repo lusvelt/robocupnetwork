@@ -1,27 +1,27 @@
 <div class="row">
     <nb-flip-card class="ml-3">
         <nb-card-front>
-            <nb-card size="xsmall">
+            <nb-card status="success" size="xsmall">
               <nb-card-header>
                 <div class="row">
                   <div class="col-md-4 title">
                     Fenix
                   </div>
-                  <div class="col-md-4">
-      
+                  <div class="col-md-4 active-id-text">
+                    id: 221
                   </div>
-                  <div class="col-md-4 icon">
-                      <i class="fas fa-tasks"></i>
+                  <div class="col-md-4 active-icon">
+                      <i class="fas fa-check"></i>
                   </div>
-                </div>  
+                </div>
               </nb-card-header>
               <nb-card-body>
                 <div class="row">
                   <div class="col-md-6">
-                    id: 221
+                    I.I.S A.Volta
                   </div>
                   <div class="col-md-6">
-                    U18 
+                    U18
                   </div>
                 </div>
                 <div class="row">
@@ -44,52 +44,55 @@
               <nb-card-footer>
                   <div class="row">
                       <div class="col-md-4"></div>
-                      <div class="col-md-4">318 PT</div>
-                      <div class="col-md-4"></div>  
+                      <div class="col-md-4 score font-w-bold">318 <span class="font-w-light">pt</span></div>
+                      <div class="col-md-4"></div>
                   </div>
               </nb-card-footer>
             </nb-card>
-          </nb-card-front>  
+          </nb-card-front>
           <nb-card-back>
               <nb-card size="xsmall">
                 <nb-card-body>
                     <nb-actions fullWidth size="large">
-                        <nb-action>
+                        <nb-action (click)="confirmRun()">
+                          <i class="fas fa-check"></i>
+                        </nb-action>
+                        <nb-action (click)="openRunModal()">
                           <i class="fas fa-tasks"></i>
                         </nb-action>
-                        <nb-action>
+                        <nb-action (click)="deleteRun()">
                           <i large class="fas fa-trash"></i>
-                        </nb-action> 
+                        </nb-action>
                     </nb-actions>
                 </nb-card-body>
               </nb-card>
             </nb-card-back>
-      </nb-flip-card> 
+      </nb-flip-card>
 
 
       <nb-flip-card class="ml-3">
           <nb-card-front>
-              <nb-card status="success" size="xsmall">
+              <nb-card size="xsmall">
                 <nb-card-header>
                   <div class="row">
                     <div class="col-md-4 title">
                       Fenix
                     </div>
-                    <div class="col-md-4">
-        
+                    <div class="col-md-4 id-text">
+                      id: 221
                     </div>
                     <div class="col-md-4 icon">
-                        <i class="fas fa-check"></i>
+                        <i class="fas fa-tasks"></i>
                     </div>
-                  </div>  
+                  </div>
                 </nb-card-header>
                 <nb-card-body>
                   <div class="row">
                     <div class="col-md-6">
-                      id: 221
+                      I.I.S A.Volta
                     </div>
                     <div class="col-md-6">
-                      U18 
+                      U18
                     </div>
                   </div>
                   <div class="row">
@@ -112,12 +115,12 @@
                 <nb-card-footer>
                     <div class="row">
                         <div class="col-md-4"></div>
-                        <div class="col-md-4">318 PT</div>
-                        <div class="col-md-4"></div>  
+                        <div class="col-md-4 score font-w-bold">318 <span class="font-w-light">pt</span> </div>
+                        <div class="col-md-4"></div>
                     </div>
                 </nb-card-footer>
               </nb-card>
-            </nb-card-front>  
+            </nb-card-front>
             <nb-card-back>
                 <nb-card size="xsmall">
                   <nb-card-body>
@@ -127,12 +130,12 @@
                           </nb-action>
                           <nb-action>
                             <i large class="fas fa-trash"></i>
-                          </nb-action> 
+                          </nb-action>
                       </nb-actions>
                   </nb-card-body>
                 </nb-card>
               </nb-card-back>
-        </nb-flip-card> 
+        </nb-flip-card>
 
         <nb-flip-card class="ml-3">
             <nb-card-front>
@@ -142,21 +145,21 @@
                       <div class="col-md-4 title">
                         Fenix
                       </div>
-                      <div class="col-md-4">
-          
+                      <div class="col-md-4 id-text">
+                        id: 221
                       </div>
                       <div class="col-md-4 icon">
                           <i class="fas fa-exclamation"></i>
                       </div>
-                    </div>  
+                    </div>
                   </nb-card-header>
                   <nb-card-body>
                     <div class="row">
                       <div class="col-md-6">
-                        id: 221
+                        I.I.S A.Volta
                       </div>
                       <div class="col-md-6">
-                        U18 
+                        U18
                       </div>
                     </div>
                     <div class="row">
@@ -179,12 +182,12 @@
                   <nb-card-footer>
                       <div class="row">
                           <div class="col-md-4"></div>
-                          <div class="col-md-4">318 PT</div>
-                          <div class="col-md-4"></div>  
+                          <div class="col-md-4 score font-w-bold">318 <span class="font-w-light">pt</span></div>
+                          <div class="col-md-4"></div>
                       </div>
                   </nb-card-footer>
                 </nb-card>
-              </nb-card-front>  
+              </nb-card-front>
               <nb-card-back>
                   <nb-card size="xsmall">
                     <nb-card-body>
@@ -194,12 +197,12 @@
                             </nb-action>
                             <nb-action>
                               <i large class="fas fa-trash"></i>
-                            </nb-action> 
+                            </nb-action>
                         </nb-actions>
                     </nb-card-body>
                   </nb-card>
                 </nb-card-back>
-          </nb-flip-card> 
+          </nb-flip-card>
 
           <nb-flip-card class="ml-3">
               <nb-card-front>
@@ -209,21 +212,21 @@
                         <div class="col-md-4 title">
                           Fenix
                         </div>
-                        <div class="col-md-4">
-            
+                        <div class="col-md-4 id-text">
+                          id: 221
                         </div>
                         <div class="col-md-4 icon">
                             <i class="fas fa-trash"></i>
                         </div>
-                      </div>  
+                      </div>
                     </nb-card-header>
                     <nb-card-body>
                       <div class="row">
                         <div class="col-md-6">
-                          id: 221
+                          I.I.S A.Volta
                         </div>
                         <div class="col-md-6">
-                          U18 
+                          U18
                         </div>
                       </div>
                       <div class="row">
@@ -246,12 +249,12 @@
                     <nb-card-footer>
                         <div class="row">
                             <div class="col-md-4"></div>
-                            <div class="col-md-4">318 PT</div>
-                            <div class="col-md-4"></div>  
+                            <div class="col-md-4 score font-w-bold">318 <span class="font-w-light">pt</span></div>
+                            <div class="col-md-4"></div>
                         </div>
                     </nb-card-footer>
                   </nb-card>
-                </nb-card-front>  
+                </nb-card-front>
                 <nb-card-back>
                     <nb-card size="xsmall">
                       <nb-card-body>
@@ -261,12 +264,12 @@
                               </nb-action>
                               <nb-action>
                                 <i large class="fas fa-trash"></i>
-                              </nb-action> 
+                              </nb-action>
                           </nb-actions>
                       </nb-card-body>
                     </nb-card>
                   </nb-card-back>
-            </nb-flip-card> 
+            </nb-flip-card>
             <nb-flip-card class="ml-3">
                 <nb-card-front>
                     <nb-card status="success" size="xsmall">
@@ -275,21 +278,21 @@
                           <div class="col-md-4 title">
                             Fenix
                           </div>
-                          <div class="col-md-4">
-              
+                          <div class="col-md-4 id-text">
+                            id: 221
                           </div>
                           <div class="col-md-4 icon">
                               <i class="fas fa-check"></i>
                           </div>
-                        </div>  
+                        </div>
                       </nb-card-header>
                       <nb-card-body>
                         <div class="row">
                           <div class="col-md-6">
-                            id: 221
+                            I.I.S A.Volta
                           </div>
                           <div class="col-md-6">
-                            U18 
+                            U18
                           </div>
                         </div>
                         <div class="row">
@@ -312,12 +315,12 @@
                       <nb-card-footer>
                           <div class="row">
                               <div class="col-md-4"></div>
-                              <div class="col-md-4">318 PT</div>
-                              <div class="col-md-4"></div>  
+                              <div class="col-md-4 score font-w-bold">318 <span class="font-w-light">pt</span></div>
+                              <div class="col-md-4"></div>
                           </div>
                       </nb-card-footer>
                     </nb-card>
-                  </nb-card-front>  
+                  </nb-card-front>
                   <nb-card-back>
                       <nb-card size="xsmall">
                         <nb-card-body>
@@ -327,9 +330,9 @@
                                 </nb-action>
                                 <nb-action>
                                   <i large class="fas fa-trash"></i>
-                                </nb-action> 
+                                </nb-action>
                             </nb-actions>
                         </nb-card-body>
                       </nb-card>
                     </nb-card-back>
-              </nb-flip-card> 
+              </nb-flip-card>

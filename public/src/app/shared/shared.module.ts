@@ -15,6 +15,7 @@ import { UsersListComponent } from './dialogs/users-list/users-list.component';
 import { CheckboxComponent } from './view-cells/checkbox/checkbox.component';
 import { ViewOnlyCheckboxComponent } from './view-cells/view-only-checkbox/view-only-checkbox.component';
 import { SingleButtonComponent } from './view-cells/single-button/single-button.component';
+import { EditRunModalComponent } from './modals/edit-run-modal/edit-run-modal.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { SingleButtonComponent } from './view-cells/single-button/single-button.
         UsersListComponent,
         CheckboxComponent,
         ViewOnlyCheckboxComponent,
-        SingleButtonComponent
+        SingleButtonComponent,
+        EditRunModalComponent
     ],
     providers: [
         HttpService,
@@ -54,7 +56,8 @@ import { SingleButtonComponent } from './view-cells/single-button/single-button.
         UsersListComponent,
         CheckboxComponent,
         ViewOnlyCheckboxComponent,
-        SingleButtonComponent
+        SingleButtonComponent,
+        EditRunModalComponent
     ]
 })
 export class SharedModule { }
