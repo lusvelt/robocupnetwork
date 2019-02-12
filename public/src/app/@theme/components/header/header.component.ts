@@ -61,4 +61,7 @@ export class HeaderComponent implements OnInit {
   unsetManifestation() {
     this.authService.unsetManifestation();
   }
+  isManifestationSelected() {
+    return this.authService.isManifestationSelected();
+  }
 }

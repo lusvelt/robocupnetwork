@@ -1,4 +1,5 @@
 module.exports = [
     'getManifestations',
-    'selectManifestation'
+    'selectManifestation',
+    'unsetManifestation'
 ];
