@@ -59,13 +59,17 @@ export class NewManifestationComponent implements OnInit, OnDestroy {
 
     manifestation.start = new Date(this.manifestation.start);
     manifestation.end = new Date(this.manifestation.end);
+    if (manifestation.name !== '' && manifestation.description !== '') {
     this.manifestationsService.createManifestation(manifestation)
       .then(_manifestation => {
         this.notificationsService.success('MANIFESTATION_CREATED');
         this.source.insert(_manifestation);
         this.manifestation.show = false;
       });
+    } else {
+      this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
     }
+  }
 
   settings = this.tablesService.getSettings(notAddableConfig, {
     id: {

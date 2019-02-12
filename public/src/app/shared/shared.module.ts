@@ -1,3 +1,4 @@
+import { ViewOnlyRolesModalComponent } from './modals/view-only-roles-modal/view-only-roles-modal.component';
 import { ConfirmModalComponent } from './modals/confirm-modal/confirm-modal.component';
 import { AlertModalComponent } from './modals/alert-modal/alert-modal.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -16,6 +17,7 @@ import { CheckboxComponent } from './view-cells/checkbox/checkbox.component';
 import { ViewOnlyCheckboxComponent } from './view-cells/view-only-checkbox/view-only-checkbox.component';
 import { SingleButtonComponent } from './view-cells/single-button/single-button.component';
 import { EditRunModalComponent } from './modals/edit-run-modal/edit-run-modal.component';
+import { SelectRolesModalComponent } from './modals/select-roles-modal/select-roles-modal.component';
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import { EditRunModalComponent } from './modals/edit-run-modal/edit-run-modal.co
         CheckboxComponent,
         ViewOnlyCheckboxComponent,
         SingleButtonComponent,
-        EditRunModalComponent
+        EditRunModalComponent,
+        ViewOnlyRolesModalComponent,
+        SelectRolesModalComponent
     ],
     providers: [
         HttpService,
@@ -57,7 +61,8 @@ import { EditRunModalComponent } from './modals/edit-run-modal/edit-run-modal.co
         CheckboxComponent,
         ViewOnlyCheckboxComponent,
         SingleButtonComponent,
-        EditRunModalComponent
+        EditRunModalComponent,
+        ViewOnlyRolesModalComponent
     ]
 })
 export class SharedModule { }

@@ -10,4 +10,12 @@ const UserHasRoleInManifestation = sequelize.define('UserHasRoleInManifestation'
     tableName: 'UserHasRoleInManifestation'
 });
 
+UserHasRoleInManifestation.getRolesInManifestationFromId = (_id, _manifestationId) => UserHasRoleInManifestation.findAll({
+    attributes: { exclude: ['createdAt', 'updatedAt'] },
+    where: {
+        userId: _id,
+        manifestationId: _manifestationId
+    }
+});
+
 module.exports = UserHasRoleInManifestation;

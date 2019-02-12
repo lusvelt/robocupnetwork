@@ -103,12 +103,16 @@ export class ActionsComponent implements OnInit, OnDestroy {
     const action: ActionInterface = _.cloneDeep(this.action);
     action.actionTypes = action.actionTypes.filter((actionType: any) => actionType.selected);
     action.modules = action.modules.filter((mod: any) => mod.selected);
+    if (action.name !== '' && action.description !== '') {
     this.privilegesService.createAction(action)
       .then(_action => {
         this.notificationsService.success('ACTION_CREATED');
         this.source.insert(_action);
         this.action.show = false;
       });
+    } else {
+      this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
+    }
   }
 
   settings = this.tablesService.getSettings(notAddableConfig, {

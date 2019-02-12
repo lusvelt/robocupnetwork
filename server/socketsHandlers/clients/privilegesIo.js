@@ -5,6 +5,8 @@ const ActionType = require('../../models/ActionType');
 const Action = require('../../models/Action');
 const Role = require('../../models/Role');
 const Module = require('../../models/Module');
+const UserHasRole = require('../../database/associationTables/UserHasRole');
+const UserHasRoleInManifestation = require('../../database/associationTables/UserHasRoleInManifestation');
 
 const privilegesIo = (clientsIo, socket) => {
 
@@ -12,7 +14,7 @@ const privilegesIo = (clientsIo, socket) => {
         try {
             const actionTypes = await ActionType.getActionTypesList();
             callback(actionTypes);
-            log.verbose('ActionType created');
+            log.verbose('ActionType data request');
         } catch (err) {
             callback(new Error());
         }
@@ -370,6 +372,28 @@ const privilegesIo = (clientsIo, socket) => {
         }
     };
 
+    const getRolesFromId = async (_userId, callback) => {
+        try {
+            const roles = await UserHasRole.getRoleFromId(_userId);
+            callback(roles);
+            log.verbose('Roles data request');
+        } catch (err) {
+            callback(new Error());
+        }
+
+    };
+
+    const getRolesInManifestationFromId = async (_userId, callback) => {
+        try {
+            const roles = await UserHasRoleInManifestation.getRolesInManifestationFromId(_userId);
+            callback(roles);
+            log.verbose('Roles data request');
+        } catch (err) {
+            callback(new Error());
+        }
+
+    };
+
 
     socket.on('getActionTypes', getActionTypes);
     socket.on('createActionType', createActionType);
@@ -383,16 +407,18 @@ const privilegesIo = (clientsIo, socket) => {
     socket.on('editAction', editAction);
     socket.on('updateSelectedAction', updateSelectedAction);
     socket.on('updateActionManifestationDependency', updateActionManifestationDependency);
-    
-    socket.on('createRole',createRole);
-    socket.on('getRoles',getRoles);
-    socket.on('removeRole',removeRole);
+
+    socket.on('createRole', createRole);
+    socket.on('getRoles', getRoles);
+    socket.on('removeRole', removeRole);
     socket.on('editRole', editRole);
     socket.on('updateRoleManifestationDependency', updateRoleManifestationDependency);
-    
+    socket.on('getRolesFromId', getRolesFromId);
+    socket.on('getRolesInManifestationFromId', getRolesInManifestationFromId);
+
     socket.on('getModules', getModules);
     socket.on('createModule',createModule);
-    socket.on('editModule',editModule);
+    socket.on('editModule', editModule);
     socket.on('removeModule', removeModule);
     socket.on('updateSelectedModules', updateSelectedModules);
 };

@@ -11,3 +11,4 @@ export const confirmSettings: NgbModalOptions = {
   backdrop: 'static',
   container: 'nb-layout'
 };
+

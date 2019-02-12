@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { confirmSettings } from './../../../config/modal.config';
+import { Component, OnInit, Input } from '@angular/core';
 import { ModalService } from '../../../services/modal.service';
+import { ViewOnlyRolesModalComponent } from '../../modals/view-only-roles-modal/view-only-roles-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'ngx-single-button',
@@ -7,15 +10,18 @@ import { ModalService } from '../../../services/modal.service';
   styleUrls: ['./single-button.component.scss']
 })
 export class SingleButtonComponent implements OnInit {
+  @Input() value: any;
+  @Input() rowData: any;
   internalKey: string;
-  constructor(private modalService: ModalService) { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
   }
 
   onClick() {
     if (this.internalKey === 'openRolesModal') {
-      this.modalService.alert('ciao', 'miao');
+      const modal = this.modalService.open(ViewOnlyRolesModalComponent);
+      modal.componentInstance.user = this.rowData;
     }
   }
 

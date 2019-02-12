@@ -62,12 +62,16 @@ export class ManagePlaceComponent implements OnInit, OnDestroy {
 
   onButtonClicked() {
     const place: PlaceInterface = _.cloneDeep(this.place);
-    this.placesService.createPlace(place)
-      .then(_place => {
-        this.notificationsService.success('PLACE_CREATED');
-        this.source.insert(_place);
-        this.place.show = false;
-      });
+    if (place.city !== '' && place.civicNumber !== '' && place.country !== '' && place.postalCode !== '' && place.province !== '' && place.region !== '' && place.street !== '') {
+      this.placesService.createPlace(place)
+        .then(_place => {
+          this.notificationsService.success('PLACE_CREATED');
+          this.source.insert(_place);
+          this.place.show = false;
+        });
+    } else {
+      this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
+    }
   }
     settings = this.tablesService.getSettings(notAddableConfig, {
     id: {

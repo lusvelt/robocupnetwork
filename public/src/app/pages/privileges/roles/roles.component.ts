@@ -93,12 +93,16 @@ export class RolesComponent implements OnInit, OnDestroy {
   onButtonClicked() {
     const role: RoleInterface = _.cloneDeep(this.role);
     role.actions = role.actions.filter((action: any) => action.selected);
+    if (role.name !== '' && role.description !== '') {
     this.privilegesService.createRole(role)
       .then(_role => {
         this.notificationsService.success('ROLE_CREATED');
         this.source.insert(_role);
         this.role.show = false;
       });
+    } else {
+      this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
+    }
   }
 
   settings = this.tablesService.getSettings(notAddableConfig, {

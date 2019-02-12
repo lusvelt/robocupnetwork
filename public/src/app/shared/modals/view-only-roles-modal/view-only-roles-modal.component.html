@@ -1,0 +1,23 @@
+<div class="modal-header">
+    <span>{{ 'ROLES_LIST' | translate }}</span>
+    <button class="close" aria-label="Close" (click)="closeModal(false)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+  <h1 class="font-w-light">{{'BASIC_ROLES' | translate}}</h1>
+    <ul>
+      <li *ngFor="let role of basicRoles">{{ role }}</li>
+    </ul>
+  <h1 class="font-w-light">{{' ROLES_IN_MANIFESTATIONS' | translate }}</h1>
+    <ol *ngFor="let manifestation of manifestations">
+            {{manifestation.name}}
+            <ol>
+                <li *ngFor="let role of manifestation.roles">{{role.name}}</li>
+            </ol>
+          </ol>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-md btn-secondary" (click)="closeModal(false)">{{'CANCEL' | translate}}</button>
+    <button class="btn btn-md btn-primary" (click)="closeModal(true)">{{'CONFIRM' | translate}}</button>
+</div>

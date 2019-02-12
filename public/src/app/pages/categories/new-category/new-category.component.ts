@@ -73,12 +73,16 @@ export class NewCategoryComponent implements OnInit, OnDestroy {
     this.category.maxTeamsPerLineUp = parseInt(this.category.maxTeamsPerLineUp, 10);
     this.category.defaultMaxTime = parseInt(this.category.defaultMaxTime, 10);
     const category: CategoryInterface = _.cloneDeep(this.category);
-    this.categoriesService.createCategory(category)
-      .then(_category => {
-        this.notificationsService.success('CATEGORY_CREATED');
-        this.source.insert(_category);
-        this.show = false;
-      });
+    if (category.name !== '' && category.description !== '' && category.scoringType !== '' && category.runType !== '') {
+      this.categoriesService.createCategory(category)
+        .then(_category => {
+          this.notificationsService.success('CATEGORY_CREATED');
+          this.source.insert(_category);
+          this.show = false;
+        });
+    } else {
+      this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
+    }
   }
     settings = this.tablesService.getSettings(notAddableConfig, {
     id: {
