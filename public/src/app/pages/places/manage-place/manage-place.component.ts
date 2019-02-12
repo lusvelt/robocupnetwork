@@ -11,6 +11,7 @@ import { PlacesService } from '../../../services/places.service';
 import { PlaceInterface } from '../../../interfaces/place.interface';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-manage-place',
@@ -38,6 +39,7 @@ export class ManagePlaceComponent implements OnInit, OnDestroy {
     private placesService: PlacesService,
     private notificationsService: NotificationsService,
     private modalService: ModalService,
+    private router: Router,
     private config: NgbDropdownConfig) {
       config.autoClose = false;
 }
@@ -133,6 +135,9 @@ export class ManagePlaceComponent implements OnInit, OnDestroy {
 
   toggleForm() {
     this.place.show = !this.place.show;
+  }
+  backToSchoolClicked() {
+    this.router.navigate(['/pages', 'schools', 'manage']);
   }
   ngOnDestroy() {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());

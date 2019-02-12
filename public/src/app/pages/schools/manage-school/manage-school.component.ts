@@ -1,17 +1,24 @@
 import { PlacesService } from '../../../services/places.service';
 import { MultipleSelectDropdownComponent } from '../../../shared/view-cells/multiple-select-dropdown/multiple-select-dropdown.component';
 import { DataSource } from '../../../classes/data-source.class';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { TablesService } from '../../../services/tables.service';
 import { NotificationsService } from '../../../services/notifications.service';
 import { ModalService } from '../../../services/modal.service';
+import { Observable } from 'rxjs/Observable';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { SchoolService } from '../../../services/schools.service';
 import { notAddableConfig } from '../../../config/tables.config';
 import { SchoolInterface } from '../../../interfaces/school.interface';
 import * as _ from 'lodash';
+import { Router } from '@angular/router';
+import { merge } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
+import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import { takeWhile, debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators' ;
 import { Subscription } from 'rxjs/Subscription';
+
 
 @Component({
   selector: 'ngx-manage-school',
@@ -28,6 +35,22 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
   source: DataSource = new DataSource();
+  @ViewChild('searchPlaceInstance') searchPlaceInstance: NgbTypeahead;
+  focus$ = new Subject<string>();
+  click$ = new Subject<string>();
+
+  placesFormatter = (value: any) => [value.country, value.region, value.province, value.postalCode, value.city, value.street, value.civicNumber];
+
+  searchPlace = (text$: Observable<string>) => {
+    const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+    const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.searchPlaceInstance.isPopupOpen()));
+    const inputFocus$ = this.focus$;
+
+    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+      map(term => (term === '' ? this.school.place
+        : this.school.place.filter((v: any) => v.street.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
+    );
+  }
 
   constructor(private tablesService: TablesService,
               private translateService: TranslateService,
@@ -35,7 +58,8 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
               private modalService: ModalService,
               private config: NgbDropdownConfig,
               private schoolService: SchoolService,
-              private placeService: PlacesService) {
+              private placeService: PlacesService,
+              private router: Router) {
     }
 
   ngOnInit() {
@@ -57,7 +81,7 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
       .subscribe(school => this.source.delete(school)));
 
     this.placeService.getPlaces()
-    .then(places => this.school.places = places)
+    .then(places => this.school.place = places)
     .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
 
     this.getNotifiedForPlaces(this.school.places);
@@ -76,8 +100,7 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
 
   onButtonClicked() {
     const school: SchoolInterface = _.cloneDeep(this.school);
-    school.places = school.places.filter((places: any) => places.selected);
-    if (school.places.length === 1) {
+    if (school.places) {
       this.schoolService.createSchool(school)
       .then(_school => {
         this.notificationsService.success('SCHOOL_CREATED');
@@ -85,7 +108,7 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
         this.school.show = false;
       });
     }else {
-      this.notificationsService.error('SELECTED_MORE_PLACES');
+      this.notificationsService.error('SELECT_A_PLACE');
     }
   }
 
@@ -126,6 +149,12 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
 
   toggleForm() {
     this.school.show = !this.school.show;
+  }
+  onPlaceClicked(event: any) {
+    const place = event.item;
+  }
+  newPlaceClicked() {
+    this.router.navigate(['/pages', 'places', 'manage-place']);
   }
   ngOnDestroy() {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
