@@ -97,4 +97,16 @@ export class PrivilegesService {
   updateRoleManifestationDependency(role, value) {
     return this.socketIoService.send('updateRoleManifestationDependency', { role, value });
   }
+
+  getRolesFromId(id) {
+    return this.socketIoService.send('getRolesFromId', id);
+  }
+
+  getManifestationsFromId(id) {
+    return this.socketIoService.send('getManifestationsFromId', id);
+  }
+
+  getRolesInManifestationFromId(userId, manifestationId) {
+    return this.socketIoService.send('getRolesInManifestationFromId', { userId, manifestationId});
+  }
 }

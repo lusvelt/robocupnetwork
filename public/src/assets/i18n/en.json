@@ -115,7 +115,7 @@
     "HIDE_FORM":"Hide add form",
     "USER_BUTTON": "Create user",
     "USER_CREATED": "User created",
-
+    "EDIT": "Modifica",
     "ROLES":"Roles",
     "NEW_ROLE":"New role",
     "ROLE":"Role",
@@ -124,6 +124,9 @@
     "ROLE_DESCRIPTION":"Role descripton",
     "ROLE_BUTTON":"Create role",
     "ROLE_UPDATED":"Role updated",
+    "ROLES_LIST": "Roles list",
+    "BASIC_ROLES": "Basic roles",
+    "ROLES_IN_MANIFESTATIONS": "Roles in manifestations",
 
     "ACTION":"Action",
     "NEW_ACTION":"New Action",

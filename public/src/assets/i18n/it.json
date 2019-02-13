@@ -39,7 +39,7 @@
     "REGISTER_CONNECT_WITH_SOCIAL": "Oppure entra con: ",
     "REGISTER_SIGNIN_DESCRIPTION": "Hai già un account?",
     "REGISTER_SIGNIN": "Accedi",
-
+    "EDIT": "Modifica",
     "NOTIFICATION_SUCCESS_TITLE": "Operazione completata",
     "OR": "Oppure",
     "NOTIFICATION_WARNING_TITLE": "Attenzione",
@@ -123,6 +123,9 @@
     "ROLE_DESCRIPTION":"Descrizione del ruolo",
     "ROLE_BUTTON":"Crea ruolo",
     "ROLE_UPDATED":"Ruolo aggiornato",
+    "ROLES_LIST": "Lista ruoli",
+    "BASIC_ROLES": "Ruoli di base",
+    "ROLES_IN_MANIFESTATIONS": "Ruoli in manifestazioni",
 
     "ACTION":"Azione",
     "NEW_ACTION":"Nuova azione",

@@ -4,8 +4,10 @@ const log = require('../../config/consoleMessageConfig');
 const ActionType = require('../../models/ActionType');
 const Action = require('../../models/Action');
 const Role = require('../../models/Role');
+const Manifestation = require('../../models/Manifestation');
 const Module = require('../../models/Module');
 const UserHasRole = require('../../database/associationTables/UserHasRole');
+const ManifestationHasUser = require('../../database/associationTables/ManifestationHasUser');
 const UserHasRoleInManifestation = require('../../database/associationTables/UserHasRoleInManifestation');
 
 const privilegesIo = (clientsIo, socket) => {
@@ -374,25 +376,68 @@ const privilegesIo = (clientsIo, socket) => {
 
     const getRolesFromId = async (_userId, callback) => {
         try {
-            const roles = await UserHasRole.getRoleFromId(_userId);
-            callback(roles);
-            log.verbose('Roles data request');
+            const promises = [];
+            const items = await UserHasRole.findAll({ where: { userId: _userId}});
+            items.forEach(item => promises.push(Role.findById(item.roleId)));
+            const result = await Promise.all(promises);   
+            callback(result);
+            log.verbose('Basic Roles by id data request');
         } catch (err) {
             callback(new Error());
         }
 
     };
 
-    const getRolesInManifestationFromId = async (_userId, callback) => {
+    const getManifestationsFromId = async (_userId, callback) => {
         try {
-            const roles = await UserHasRoleInManifestation.getRolesInManifestationFromId(_userId);
-            callback(roles);
+           const promises = [];
+            const items = await ManifestationHasUser.findAll({where: {userId: _userId}});
+            items.forEach(item => promises.push(Manifestation.findById(item.manifestationId)));
+            const result = await Promise.all(promises);   
+            callback(result);
+            log.verbose('Manifestation by id data request');
+        } catch (err) {
+            callback(new Error());
+        }
+    }
+
+    const getRolesInManifestationFromId = async (data, callback) => {
+        console.log('entrato2');
+        try {
+            const promises = [];
+            const userId = data.userId;
+            const manifestationId = data.manifestationId;
+            const items = await UserHasRoleInManifestation.findAll({where: {userId: userId, manifestationId: manifestationId}});
+            items.forEach(item => promises.push(Role.findById(item.roleId)));
+            const result = await Promise.all(promises);   
+            callback(result);
+            log.verbose('Roles in manifestation by id data request');
+        } catch (err) {
+            callback(new Error());
+        }
+    }
+
+    /*
+        const getRolesFromId = async (_userId, callback) => {
+        try {
+            const promises = [];
+            promises.push(new Promise((resolve, reject) => {
+                UserHasRole.findAll({ where: { userId: _userId}})
+                .then (items => items.forEach(item => {
+                    Role.findById(item.roleId)
+                    .then(result => resolve(result))
+                    .catch(err => reject(err));
+                }))
+                }));
+            const result = await Promise.all(promises);   
+            callback(result);
             log.verbose('Roles data request');
         } catch (err) {
             callback(new Error());
         }
 
     };
+    */
 
 
     socket.on('getActionTypes', getActionTypes);
@@ -414,7 +459,8 @@ const privilegesIo = (clientsIo, socket) => {
     socket.on('editRole', editRole);
     socket.on('updateRoleManifestationDependency', updateRoleManifestationDependency);
     socket.on('getRolesFromId', getRolesFromId);
-    socket.on('getRolesInManifestationFromId', getRolesInManifestationFromId);
+    socket.on('getManifestationsFromId', getManifestationsFromId);
+    socket.on('getRolesInManifestationFromId',getRolesInManifestationFromId);
 
     socket.on('getModules', getModules);
     socket.on('createModule',createModule);
