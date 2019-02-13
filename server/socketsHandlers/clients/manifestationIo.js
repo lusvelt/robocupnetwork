@@ -2,7 +2,7 @@ const _ = require('lodash');
 const Manifestation = require('../../models/Manifestation');
 const log = require('../../config/consoleMessageConfig');
 
-const manifestationIo = (clientsIo, socket) => {
+const manifestationIo = (clientsIo, socket, room) => {
 
     const createManifestation = async (_manifestation, callback) => {
         try {

@@ -6,7 +6,7 @@ const UserHasRoleInManifestation = require('../../database/associationTables/Use
 const UserHasRole = require('../../database/associationTables/UserHasRole');
 const log = require('../../config/consoleMessageConfig');
 
-const usersIo = (clientsIo, socket) => {
+const usersIo = (clientsIo, socket, room) => {
 /*const createAction = async (_action, callback) => {
         try {
             const action = await Action.create(_.omit(_action, ['actionTypes']));

@@ -3,7 +3,7 @@ const School = require('../../models/School');
 const Place = require('../../models/Place');
 const log = require('../../config/consoleMessageConfig');
 
-const schoolIo = (clientsIo, socket) => {
+const schoolIo = (clientsIo, socket, room) => {
 
     const createSchool = async (_school, callback) => {
         try {

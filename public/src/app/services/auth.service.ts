@@ -55,6 +55,7 @@ export class AuthService {
       this.tokenService.setToken(result.token);
       const _manifestation = this.getManifestation();
       this.eventEmitter.emit('manifestationChange', _manifestation);
+      this.socketIoService.reconnect();
     });
 
     return promise;

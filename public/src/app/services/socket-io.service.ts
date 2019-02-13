@@ -18,6 +18,10 @@ export class SocketIoService {
     this.socket = io(environment.apiUrl + namespace, { 'query': 'token=' + token });
   }
 
+  reconnect() {
+    this.connect('/clients');
+  }
+
   emit(eventName: string, args?: any, callback?) {
     if (!args)
       this.socket.emit(eventName, callback);

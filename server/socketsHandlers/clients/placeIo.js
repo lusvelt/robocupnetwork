@@ -2,7 +2,7 @@ const _ = require('lodash');
 const Place = require('../../models/Place');
 const log = require('../../config/consoleMessageConfig');
 
-const placeIo = (clientsIo, socket) => {
+const placeIo = (clientsIo, socket, room) => {
 
     const createPlace = async (_place, callback) => {
         try {

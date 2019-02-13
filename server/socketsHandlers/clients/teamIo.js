@@ -3,7 +3,7 @@ const Team = require('../../models/Team');
 const AgeRange = require('../../models/AgeRange');
 const log = require('../../config/consoleMessageConfig');
 
-const teamIo = (clientsIo, socket) => {
+const teamIo = (clientsIo, socket, room) => {
 
     const createTeam = async (_team, callback) => {
         try {
@@ -21,7 +21,7 @@ const teamIo = (clientsIo, socket) => {
             if(!result)
                 throw new Error();*/
             callback(team);
-            socket.broadcast.emit('createTeam', team);
+            socket.to(room).broadcast.emit('createTeam', team);
             log.verbose('Team created');
         } catch (err) {
             callback(new Error());

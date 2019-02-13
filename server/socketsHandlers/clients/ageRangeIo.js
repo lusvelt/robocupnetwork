@@ -2,7 +2,7 @@ const _ = require('lodash');
 const AgeRange = require('../../models/AgeRange');
 const log = require('../../config/consoleMessageConfig');
 
-const ageRangeIo = (clientsIo, socket) => {
+const ageRangeIo = (clientsIo, socket, room) => {
 
     const createAgeRange = async (_ageRange, callback) => {
         try {

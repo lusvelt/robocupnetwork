@@ -2,7 +2,7 @@ const _ = require('lodash');
 const Category = require('../../models/Category');
 const log = require('../../config/consoleMessageConfig');
 
-const categoryIo = (clientsIo, socket) => {
+const categoryIo = (clientsIo, socket, room) => {
 
     const createCategory = async (_category, callback) => {
         console.log(_category);

@@ -8,7 +8,7 @@ const Module = require('../../models/Module');
 const UserHasRole = require('../../database/associationTables/UserHasRole');
 const UserHasRoleInManifestation = require('../../database/associationTables/UserHasRoleInManifestation');
 
-const privilegesIo = (clientsIo, socket) => {
+const privilegesIo = (clientsIo, socket, room) => {
 
     const getActionTypes = async (args, callback) => {
         try {

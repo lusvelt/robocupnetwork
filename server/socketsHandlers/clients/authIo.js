@@ -5,7 +5,7 @@ const Manifestation = require('../../models/Manifestation');
 const User = require('../../models/User');
 const log = require('../../config/consoleMessageConfig');
 
-const authIo = (clientsIo, socket) => {
+const authIo = (clientsIo, socket, room) => {
 
     const selectManifestation = async (data, callback) => {
         const _manifestation = data.manifestation;

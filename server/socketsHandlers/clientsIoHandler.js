@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 const eventEmitter = require('../config/eventEmitter');
 const authIo = require('./clients/authIo');
 const privilegesIo = require('./clients/privilegesIo');
@@ -11,19 +13,26 @@ const categoryIo = require('./clients/categoryIo');
 
 const clientsAuthMiddleware = require('../auth/middlewares/clientsAuthMiddleware');
 
-
 const clientsIoHandler = (clientsIo) => (socket) => {
     socket.use(clientsAuthMiddleware(socket));
 
-    authIo(clientsIo, socket);
-    privilegesIo(clientsIo, socket);
-    usersIo(clientsIo, socket);
-    manifestationIo(clientsIo, socket);
-    schoolIo(clientsIo, socket);
-    placeIo(clientsIo, socket);
-    ageRangeIo(clientsIo, socket);
-    teamIo(clientsIo, socket);
-    categoryIo(clientsIo, socket);
+    const _user = jwt.decode(socket.handshake.query.token);
+    let room = null;
+
+    if (_user.manifestation) {
+        room = _user.manifestation.id;
+        socket.join(room);
+    }
+
+    authIo(clientsIo, socket, room);
+    privilegesIo(clientsIo, socket, room);
+    usersIo(clientsIo, socket, room);
+    manifestationIo(clientsIo, socket, room);
+    schoolIo(clientsIo, socket, room);
+    placeIo(clientsIo, socket, room);
+    ageRangeIo(clientsIo, socket, room);
+    teamIo(clientsIo, socket, room);
+    categoryIo(clientsIo, socket, room);
 };
 
 module.exports = clientsIoHandler;
