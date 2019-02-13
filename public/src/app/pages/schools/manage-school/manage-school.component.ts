@@ -100,7 +100,7 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
 
   onButtonClicked() {
     const school: SchoolInterface = _.cloneDeep(this.school);
-    if (school.places) {
+    if (school.places && school.name !== '') {
       this.schoolService.createSchool(school)
       .then(_school => {
         this.notificationsService.success('SCHOOL_CREATED');
@@ -108,7 +108,7 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
         this.school.show = false;
       });
     }else {
-      this.notificationsService.error('SELECT_A_PLACE');
+      this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
     }
   }
 

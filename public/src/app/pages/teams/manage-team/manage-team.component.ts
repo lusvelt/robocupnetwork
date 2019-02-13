@@ -129,7 +129,7 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
   onButtonClicked() {
     const team: TeamInterface = _.cloneDeep(this.team);
     team.ageRanges = team.ageRanges.filter((teams: any) => teams.selected);
-    if (team.ageRanges.length === 1) {
+    if (team.ageRanges.length === 1 && team.name !== '') {
       this.teamService.createTeam(team)
       .then(_team => {
         this.notificationsService.success('TEAM_CREATED');
@@ -137,7 +137,7 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
         this.team.show = false;
       });
     }else {
-      this.notificationsService.error('SELECTED_MORE_AGE_RANGES');
+      this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
     }
   }
 

@@ -56,12 +56,16 @@ export class NewAgeRangeComponent implements OnInit, OnDestroy {
 
   onButtonClicked() {
     const ageRange: AgeRangeInterface = _.cloneDeep(this.ageRange);
-    this.ageRangesService.createAgeRange(ageRange)
-      .then(_ageRange => {
-        this.notificationsService.success('AGE_RANGE_CREATED');
-        this.source.insert(_ageRange);
-        this.ageRange.show = false;
-      });
+    if (ageRange.name !== '' && ageRange.min !== '' && ageRange.max !== '' ) {
+      this.ageRangesService.createAgeRange(ageRange)
+        .then(_ageRange => {
+          this.notificationsService.success('AGE_RANGE_CREATED');
+          this.source.insert(_ageRange);
+          this.ageRange.show = false;
+        });
+    } else {
+      this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
+    }
   }
     settings = this.tablesService.getSettings(notAddableConfig, {
     id: {
