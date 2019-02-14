@@ -1,11 +1,15 @@
+import { SocketIoService } from './../../../services/socket-io.service';
+import { PrivilegesService } from './../../../services/privileges.service';
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
-import { NgbActiveModal, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbTypeahead, NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
-import { debounceTime, filter, distinctUntilChanged, merge, map } from 'rxjs/operators';
+import { debounceTime, filter, distinctUntilChanged, map } from 'rxjs/operators';
+import { merge } from 'rxjs/observable/merge';
 import { ManifestationsService } from '../../../services/manifestations.service';
 import * as _ from 'lodash';
+import { NotificationsService } from '../../../services/notifications.service';
 
 
 
@@ -24,11 +28,16 @@ import * as _ from 'lodash';
   styleUrls: ['./edit-roles-modal.component.scss']
 })
 export class EditRolesModalComponent implements OnInit {
-
+    showDropdown: boolean = false;
     modalHeader: string;
     modalContent: string;
 
+    user: any = [];
+    usersBasicRoles: any = [];
+    usersManifestations: any = [];
+    oldItems: any[]= [];
     manifestationsList: [];
+    standardRoles: any = [];
 
     @ViewChild('searchManifestationInstance') searchManifestationInstance: NgbTypeahead;
   focus$ = new Subject<string>();
@@ -41,7 +50,7 @@ export class EditRolesModalComponent implements OnInit {
     const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.searchManifestationInstance.isPopupOpen()));
     const inputFocus$ = this.focus$;
 
-    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
       map(term => (term === '' ? this.manifestationsList
         : this.manifestationsList.filter((v: any) => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
     );
@@ -49,7 +58,13 @@ export class EditRolesModalComponent implements OnInit {
 
     constructor(private activeModal: NgbActiveModal,
                 private translateService: TranslateService,
-                private manifestationsService: ManifestationsService) { }
+                private manifestationsService: ManifestationsService,
+                private privilegesService: PrivilegesService,
+                private config: NgbDropdownConfig,
+                private socketIoService: SocketIoService,
+                private notificationsService: NotificationsService) {
+                  config.autoClose = false;
+                }
 
     closeModal(confirmation: boolean) {
         this.activeModal.close(confirmation);
@@ -58,10 +73,37 @@ export class EditRolesModalComponent implements OnInit {
     ngOnInit() {
       this.manifestationsService.getManifestations()
     .then(manifestations => this.manifestationsList = manifestations);
+
+    this.privilegesService.getBasicRoles()
+    .then(roles => {
+      this.oldItems = roles;
+      this.standardRoles = roles;
+      this.standardRoles.forEach(item => item.selected = this.usersBasicRoles.filter(el => el.id === item.id).length > 0);
+    });
+
     }
 
     @HostListener('document:keydown.enter', ['$event']) onEnter(event: KeyboardEvent) {
         this.closeModal(true);
     }
+
+    toggleDropdown() {
+    this.showDropdown = !this.showDropdown;
+    if (!this.showDropdown) {
+      const changed = [];
+      for (let i = 0; i < this.standardRoles.length; i++) {
+        if (this.standardRoles[i].selected !== this.oldItems[i].selected)
+          changed.push(this.standardRoles[i]);
+      }
+      if (changed.length > 0)
+        this.notifyParent(changed);
+    } else this.oldItems = _.cloneDeep(this.standardRoles);
+  }
+
+  notifyParent(changed) {
+    this.privilegesService.updateUsersBasicRoles(this.user, changed)
+    .then(result => this.notificationsService.success('USERS_BASIC_ROLES_UPDATE_SUCCEDED'))
+    .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+  }
 
 }

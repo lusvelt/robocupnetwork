@@ -66,6 +66,10 @@ export class PrivilegesService {
     return this.socketIoService.send('updateSelectedAction', { action, changedAction });
   }
 
+  updateUsersBasicRoles(user, changedBasicRoles) {
+    return this.socketIoService.send('updateUsersBasicRoles', { user, changedBasicRoles});
+  }
+
   getRoles() {
     return this.socketIoService.get('getRoles');
   }
@@ -108,5 +112,9 @@ export class PrivilegesService {
 
   getRolesInManifestationFromId(userId, manifestationId) {
     return this.socketIoService.send('getRolesInManifestationFromId', { userId, manifestationId});
+  }
+
+  getBasicRoles() {
+    return this.socketIoService.get('getBasicRoles');
   }
 }

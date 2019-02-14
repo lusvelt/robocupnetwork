@@ -4,6 +4,7 @@ const log = require('../../config/consoleMessageConfig');
 const ActionType = require('../../models/ActionType');
 const Action = require('../../models/Action');
 const Role = require('../../models/Role');
+const User = require('../../models/User');
 const Manifestation = require('../../models/Manifestation');
 const Module = require('../../models/Module');
 const UserHasRole = require('../../database/associationTables/UserHasRole');
@@ -195,6 +196,24 @@ const privilegesIo = (clientsIo, socket) => {
         }
     };
 
+    const updateUsersBasicRoles = async (data, callback) => {
+        try {
+            const _user = data.user;
+            const changedBasicRoles = data.changedBasicRoles;
+            const id = _user.id;
+            const promises = [];
+            await UserHasRole.destroy({where: {userId: id}});
+            changedBasicRoles.forEach( role => {
+                if(role.selected)
+                    promises.push(UserHasRole.create({userId: id, roleId: role.id}));
+            });
+            const result = await Promise.all(promises);
+            callback(result);
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
     const updateActionManifestationDependency = async (data, callback) => {
         const _action = data.action;
         const dependsOnManifestation = data.value;
@@ -226,6 +245,16 @@ const privilegesIo = (clientsIo, socket) => {
             const roles = await Role.getRolesList();
             callback(roles);
             log.verbose('Role data request');
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
+    const getBasicRoles = async(args, callback) => {
+        try {
+            const roles = await Role.findAll({where: {dependsOnManifestation: false}});
+            callback(roles);
+            log.verbose('Basic Roles data request');
         } catch (err) {
             callback(new Error());
         }
@@ -379,7 +408,7 @@ const privilegesIo = (clientsIo, socket) => {
             const promises = [];
             const items = await UserHasRole.findAll({ where: { userId: _userId}});
             items.forEach(item => promises.push(Role.findById(item.roleId)));
-            const result = await Promise.all(promises);   
+            const result = await Promise.all(promises);
             callback(result);
             log.verbose('Basic Roles by id data request');
         } catch (err) {
@@ -390,32 +419,31 @@ const privilegesIo = (clientsIo, socket) => {
 
     const getManifestationsFromId = async (_userId, callback) => {
         try {
-           const promises = [];
+            const promises = [];
             const items = await ManifestationHasUser.findAll({where: {userId: _userId}});
             items.forEach(item => promises.push(Manifestation.findById(item.manifestationId)));
-            const result = await Promise.all(promises);   
+            const result = await Promise.all(promises);
             callback(result);
             log.verbose('Manifestation by id data request');
         } catch (err) {
             callback(new Error());
         }
-    }
+    };
 
     const getRolesInManifestationFromId = async (data, callback) => {
-        console.log('entrato2');
         try {
             const promises = [];
             const userId = data.userId;
             const manifestationId = data.manifestationId;
             const items = await UserHasRoleInManifestation.findAll({where: {userId: userId, manifestationId: manifestationId}});
             items.forEach(item => promises.push(Role.findById(item.roleId)));
-            const result = await Promise.all(promises);   
+            const result = await Promise.all(promises);
             callback(result);
             log.verbose('Roles in manifestation by id data request');
         } catch (err) {
             callback(new Error());
         }
-    }
+    };
 
     /*
         const getRolesFromId = async (_userId, callback) => {
@@ -429,7 +457,7 @@ const privilegesIo = (clientsIo, socket) => {
                     .catch(err => reject(err));
                 }))
                 }));
-            const result = await Promise.all(promises);   
+            const result = await Promise.all(promises);
             callback(result);
             log.verbose('Roles data request');
         } catch (err) {
@@ -457,10 +485,12 @@ const privilegesIo = (clientsIo, socket) => {
     socket.on('getRoles', getRoles);
     socket.on('removeRole', removeRole);
     socket.on('editRole', editRole);
+    socket.on('getBasicRoles', getBasicRoles);
     socket.on('updateRoleManifestationDependency', updateRoleManifestationDependency);
     socket.on('getRolesFromId', getRolesFromId);
     socket.on('getManifestationsFromId', getManifestationsFromId);
     socket.on('getRolesInManifestationFromId',getRolesInManifestationFromId);
+    socket.on('updateUsersBasicRoles', updateUsersBasicRoles);
 
     socket.on('getModules', getModules);
     socket.on('createModule',createModule);

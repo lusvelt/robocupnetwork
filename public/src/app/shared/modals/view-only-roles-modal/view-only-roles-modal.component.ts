@@ -46,8 +46,8 @@ export class ViewOnlyRolesModalComponent implements OnInit {
     this.activeModal.close(false);
     const modal = this.modalService.open(EditRolesModalComponent);
     modal.componentInstance.user = this.user;
-    modal.componentInstance.manifestations = this.manifestations;
-    modal.componentInstance.basicRoles = this.basicRoles;
+    modal.componentInstance.usersBasicRoles = this.basicRoles;
+    modal.componentInstance.usersManifestations = this.manifestations;
   }
 
   @HostListener('document:keydown.enter', ['$event']) onEnter(event: KeyboardEvent) {

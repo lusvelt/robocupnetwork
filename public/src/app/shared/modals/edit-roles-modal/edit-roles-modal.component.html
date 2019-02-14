@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <span>{{ 'EDIT_ROLES_LIST' | translate }}</span> 
+    <span>{{ 'EDIT_ROLES_LIST' | translate }}</span>
     <button class="close" aria-label="Close" (click)="closeModal(false)">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -16,11 +16,9 @@
     #searchManifestationInstance="ngbTypeahead"/>
 
     <div class="mt-3" ngbDropdown>
-        <button class="btn btn-primary" type="button" ngbDropdownToggle>
-          {{ 'STANDARD_ROLES' | translate }}
-        </button>
+        <button class="btn btn-primary" type="button" ngbDropdownToggle (click)="toggleDropdown()"> {{ (showDropdown ? 'CLOSE' : 'OPEN') | translate}} </button>
         <ul ngbDropdownMenu class="dropdown-menu">
-          <li class="dropdown-item" *ngFor="let role of user.standardRoles">
+          <li class="dropdown-item" *ngFor="let role of standardRoles">
             <nb-checkbox name="roleChoose" [(ngModel)]="role.selected">{{ role.name }}</nb-checkbox>
           </li>
         </ul>
