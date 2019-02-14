@@ -5,19 +5,20 @@
     </button>
 </div>
 <div class="modal-body">
-  <h1 class="font-w-light">{{'BASIC_ROLES' | translate}}</h1>
+  <nb-checkbox name="isUser" disabled [(ngModel)]="user.isAdmin">{{ 'ADMIN' | translate }}</nb-checkbox>
+  <h3 class="mt-3 font-w-light">{{'BASIC_ROLES' | translate}}</h3>
     <ul>
-      <li *ngFor="let role of basicRoles">{{ role }}</li>
+      <li *ngFor="let role of basicRoles">{{ role.name }}</li>
     </ul>
-  <h1 class="font-w-light">{{' ROLES_IN_MANIFESTATIONS' | translate }}</h1>
-    <ol *ngFor="let manifestation of manifestations">
+  <h3 class="font-w-light">{{'ROLES_IN_MANIFESTATIONS' | translate }}</h3>
+    <ul *ngFor="let manifestation of manifestations">
             {{manifestation.name}}
-            <ol>
+            <ul>
                 <li *ngFor="let role of manifestation.roles">{{role.name}}</li>
-            </ol>
-          </ol>
+            </ul>
+          </ul>
 </div>
 <div class="modal-footer">
     <button class="btn btn-md btn-secondary" (click)="closeModal(false)">{{'CANCEL' | translate}}</button>
-    <button class="btn btn-md btn-primary" (click)="closeModal(true)">{{'CONFIRM' | translate}}</button>
+    <button class="btn btn-md btn-secondary" (click)="openEditModal(true)">{{'EDIT' | translate}}</button>
 </div>

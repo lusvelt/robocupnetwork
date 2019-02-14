@@ -66,6 +66,18 @@ export class PrivilegesService {
     return this.socketIoService.send('updateSelectedAction', { action, changedAction });
   }
 
+  updateUsersBasicRoles(user, changedBasicRoles) {
+    return this.socketIoService.send('updateUsersBasicRoles', { user, changedBasicRoles});
+  }
+
+  updateUserHasRolesInManifestation(user, manifestation) {
+    return this.socketIoService.send('updateUserHasRolesInManifestation', { user, manifestation});
+  }
+
+  updateIsAdmin(user, value) {
+    return this.socketIoService.send('updateIsAdmin', {user, value});
+  }
+
   getRoles() {
     return this.socketIoService.get('getRoles');
   }
@@ -96,5 +108,21 @@ export class PrivilegesService {
 
   updateRoleManifestationDependency(role, value) {
     return this.socketIoService.send('updateRoleManifestationDependency', { role, value });
+  }
+
+  getRolesFromId(id) {
+    return this.socketIoService.send('getRolesFromId', id);
+  }
+
+  getManifestationsFromId(id) {
+    return this.socketIoService.send('getManifestationsFromId', id);
+  }
+
+  getRolesInManifestationFromId(userId, manifestationId) {
+    return this.socketIoService.send('getRolesInManifestationFromId', { userId, manifestationId});
+  }
+
+  getBasicRoles() {
+    return this.socketIoService.get('getBasicRoles');
   }
 }

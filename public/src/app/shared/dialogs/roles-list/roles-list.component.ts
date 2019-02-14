@@ -23,7 +23,9 @@ export class RolesListComponent implements OnInit {
       roles = roles.filter((role: any) => role.dependsOnManifestation === true);
       this.roles = roles.map(role => {
         const oldRole = this.oldRoles.find(el => el.id === role.id);
-        role.selected = oldRole ? !!oldRole.selected : false;
+        // role.selected = oldRole ? oldRole.selected : false;
+        if (oldRole)
+          role.selected = true;
         return role;
       });
     });

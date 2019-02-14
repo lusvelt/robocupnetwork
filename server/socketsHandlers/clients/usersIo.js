@@ -56,9 +56,9 @@ const usersIo = (clientsIo, socket, room) => {
                     Role.findById(_role.id)
                         .then(role => {
                             promises.push(UserHasRole.create({userId: user.dataValues.id, roleId: role.id}));
-                        })
+                        });
                 }));
-            })
+            });
 
             const result = await Promise.all(promises);
             if(!result)

@@ -17,7 +17,7 @@ import { CheckboxComponent } from './view-cells/checkbox/checkbox.component';
 import { ViewOnlyCheckboxComponent } from './view-cells/view-only-checkbox/view-only-checkbox.component';
 import { SingleButtonComponent } from './view-cells/single-button/single-button.component';
 import { EditRunModalComponent } from './modals/edit-run-modal/edit-run-modal.component';
-import { SelectRolesModalComponent } from './modals/select-roles-modal/select-roles-modal.component';
+import { EditRolesModalComponent } from './modals/edit-roles-modal/edit-roles-modal.component';
 
 
 @NgModule({
@@ -43,7 +43,7 @@ import { SelectRolesModalComponent } from './modals/select-roles-modal/select-ro
         SingleButtonComponent,
         EditRunModalComponent,
         ViewOnlyRolesModalComponent,
-        SelectRolesModalComponent
+        EditRolesModalComponent
     ],
     providers: [
         HttpService,
@@ -62,7 +62,8 @@ import { SelectRolesModalComponent } from './modals/select-roles-modal/select-ro
         ViewOnlyCheckboxComponent,
         SingleButtonComponent,
         EditRunModalComponent,
-        ViewOnlyRolesModalComponent
+        ViewOnlyRolesModalComponent,
+        EditRolesModalComponent
     ]
 })
 export class SharedModule { }
