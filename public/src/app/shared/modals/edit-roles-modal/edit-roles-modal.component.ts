@@ -1,3 +1,4 @@
+import { NbDialogService } from '@nebular/theme';
 import { SocketIoService } from './../../../services/socket-io.service';
 import { PrivilegesService } from './../../../services/privileges.service';
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
@@ -10,6 +11,7 @@ import { merge } from 'rxjs/observable/merge';
 import { ManifestationsService } from '../../../services/manifestations.service';
 import * as _ from 'lodash';
 import { NotificationsService } from '../../../services/notifications.service';
+import { RolesListComponent } from '../../dialogs/roles-list/roles-list.component';
 
 
 
@@ -62,7 +64,8 @@ export class EditRolesModalComponent implements OnInit {
                 private privilegesService: PrivilegesService,
                 private config: NgbDropdownConfig,
                 private socketIoService: SocketIoService,
-                private notificationsService: NotificationsService) {
+                private notificationsService: NotificationsService,
+                private dialogService: NbDialogService) {
                   config.autoClose = false;
                 }
 
@@ -106,4 +109,29 @@ export class EditRolesModalComponent implements OnInit {
     .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
   }
 
+  onManifestationClicked(event: any) {
+    this.activeModal.close(false);
+    event.preventDefault();
+    const manifestation = event.item;
+    const userManifestation = this.usersManifestations.find(m => m.id === manifestation.id);
+    this.dialogService.open(RolesListComponent, {
+      context: {
+        title: manifestation.name,
+        oldRoles: userManifestation ? userManifestation.roles : []
+      }
+    }).onClose.subscribe(roles => {
+      const index = this.usersManifestations.findIndex(el => el.id === manifestation.id);
+      if (index !== -1)
+        this.usersManifestations.splice(index, 1);
+      if (roles) {
+        if (roles.length !== 0) {
+          manifestation.roles = roles;
+          this.usersManifestations.push(manifestation);
+          this.notificationsService.success('ADDED_ROLES_IN_MANIFESTATION');
+        }
+      }
+    });
+  }
 }
+
+
