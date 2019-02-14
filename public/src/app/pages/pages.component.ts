@@ -23,10 +23,20 @@ export class PagesComponent implements OnInit {
 
   ngOnInit() {
     const promises = [];
-    this.deleteUnauthorizedItems(this.menu);
+    this.initializeMenu();
+
+    this.authService.onManifestationChange()
+      .subscribe(() => this.initializeMenu());
+
     this.translateTitles(this.menu);
     this.socketIoService.connect('/clients');
     // Aggiungi event listener per vedere se si modifica il token lato server a causa di un cambio di privilegi
+  }
+
+  private initializeMenu() {
+    this.menu = _.cloneDeep(MENU_ITEMS);
+    this.deleteUnauthorizedItems(this.menu);
+    this.translateTitles(this.menu);
   }
 
   private deleteUnauthorizedItems(items) {

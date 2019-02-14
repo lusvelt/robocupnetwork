@@ -67,8 +67,8 @@ const privilegesIo = (clientsIo, socket, room) => {
 
     const getActions = async (args, callback) => {
         try {
-            const action = await Action.getActionsList();
-            callback(action);
+            const actions = await Action.getActionsList();
+            callback(actions);
             log.verbose('Actions data request');
         } catch (err) {
             callback(new Error());
@@ -219,7 +219,7 @@ const privilegesIo = (clientsIo, socket, room) => {
         try {
             const promises = [];
             const user = data.user;
-            const manifestation = data.manifestation
+            const manifestation = data.manifestation;
             const userId = user.id;
             const manifestationId = manifestation.id;
             await UserHasRoleInManifestation.destroy({where: {userId: userId, manifestationId: manifestationId}});
@@ -227,7 +227,7 @@ const privilegesIo = (clientsIo, socket, room) => {
             if(manifestation.roles.length !== 0) {
                 manifestation.roles.forEach(_role =>
                     promises.push(UserHasRoleInManifestation.create({ userId: userId, manifestationId: manifestationId, roleId: _role.id})));
-                    promises.push(ManifestationHasUser.create({manifestationId: manifestationId, userId: userId}));
+                promises.push(ManifestationHasUser.create({manifestationId: manifestationId, userId: userId}));
             }    
             const result = await Promise.all(promises);
             callback(result);
@@ -235,7 +235,7 @@ const privilegesIo = (clientsIo, socket, room) => {
         } catch (err) {
             callback(new Error());
         }
-    }
+    };
 
     const updateActionManifestationDependency = async (data, callback) => {
         const _action = data.action;
@@ -474,14 +474,14 @@ const privilegesIo = (clientsIo, socket, room) => {
             const value = data.value;
             const result = await User.update({isAdmin: value}, {where: {id: user.id}});
             if (!result)
-            throw new Error();
+                throw new Error();
             callback(result);
             socket.broadcast.emit('updateIsAdmin', user);
             log.verbose('User is admin modified');
         } catch (err) {
             callback(new Error());
         }
-    }
+    };
 
     /*
         const getRolesFromId = async (_userId, callback) => {

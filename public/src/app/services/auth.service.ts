@@ -80,6 +80,9 @@ export class AuthService {
     });
   }
 
+  // Per mostrare elementi html in base al canAccess bisogna innanzitutto iniettare private authService: AuthService nel costruttore del component relativo
+  // E poi sull'elemento scrivere:
+  // *ngIf="authService.canDo('nomeAzione')"
   canAccess(module_: string): boolean {
     if (this.isSuperadmin() || module_ === 'dashboard')
       return true;
@@ -90,10 +93,13 @@ export class AuthService {
 
     let can = false;
     actions.forEach(action => {
-      action.Modules.forEach(_module_ => {
-        if (_module_.alias === module_)
-          can = true;
-      });
+      if (action.alias === module_)
+        can = true;
+      else
+        action.modules.forEach(_module_ => {
+          if (_module_ === module_)
+            can = true;
+        });
     });
     return can;
   }
