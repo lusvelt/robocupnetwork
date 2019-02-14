@@ -70,6 +70,14 @@ export class PrivilegesService {
     return this.socketIoService.send('updateUsersBasicRoles', { user, changedBasicRoles});
   }
 
+  updateUserHasRolesInManifestation(user, manifestation) {
+    return this.socketIoService.send('updateUserHasRolesInManifestation', { user, manifestation});
+  }
+
+  updateIsAdmin(user, value) {
+    return this.socketIoService.send('updateIsAdmin', {user, value});
+  }
+
   getRoles() {
     return this.socketIoService.get('getRoles');
   }

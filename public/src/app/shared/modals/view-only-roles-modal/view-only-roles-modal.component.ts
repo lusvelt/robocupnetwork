@@ -3,6 +3,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { PrivilegesService } from '../../../services/privileges.service';
 import { EditRolesModalComponent } from '../edit-roles-modal/edit-roles-modal.component';
+import { NbDialogConfig } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-view-only-roles-modal',
@@ -20,7 +21,8 @@ export class ViewOnlyRolesModalComponent implements OnInit {
   constructor(private activeModal: NgbActiveModal,
     private translateService: TranslateService,
     private privilegesService: PrivilegesService,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal) {
+     }
 
     ngOnInit() {
       this.privilegesService.getRolesFromId(this.user.id)

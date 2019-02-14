@@ -1,8 +1,8 @@
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogService, NbDialogConfig } from '@nebular/theme';
 import { SocketIoService } from './../../../services/socket-io.service';
 import { PrivilegesService } from './../../../services/privileges.service';
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
-import { NgbActiveModal, NgbTypeahead, NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbTypeahead, NgbDropdownConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
@@ -109,6 +109,13 @@ export class EditRolesModalComponent implements OnInit {
     .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
   }
 
+  onCheckboxChange(event: any) {
+    const value = event.returnValue;
+    this.privilegesService.updateIsAdmin( this.user, value)
+    .then(result => this.notificationsService.success('USERS_IS_ADMIN_UPDATE_SUCCEDED'))
+    .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+  }
+
   onManifestationClicked(event: any) {
     this.activeModal.close(false);
     event.preventDefault();
@@ -118,7 +125,8 @@ export class EditRolesModalComponent implements OnInit {
       context: {
         title: manifestation.name,
         oldRoles: userManifestation ? userManifestation.roles : []
-      }
+      },
+      autoFocus: true,
     }).onClose.subscribe(roles => {
       const index = this.usersManifestations.findIndex(el => el.id === manifestation.id);
       if (index !== -1)
@@ -126,8 +134,16 @@ export class EditRolesModalComponent implements OnInit {
       if (roles) {
         if (roles.length !== 0) {
           manifestation.roles = roles;
-          this.usersManifestations.push(manifestation);
-          this.notificationsService.success('ADDED_ROLES_IN_MANIFESTATION');
+          // this.usersManifestations.push(manifestation);
+          this.privilegesService.updateUserHasRolesInManifestation(this.user, manifestation)
+          .then(() => this.notificationsService.success('ADDED_ROLES_IN_MANIFESTATION'))
+          .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+        } else {
+          manifestation.roles = [];
+          // this.usersManifestations.push(manifestation);
+          this.privilegesService.updateUserHasRolesInManifestation(this.user, manifestation)
+          .then(() => this.notificationsService.success('REMOVED_ROLES_IN_MANIFESTATION'))
+          .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
         }
       }
     });

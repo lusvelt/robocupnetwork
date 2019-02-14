@@ -209,10 +209,33 @@ const privilegesIo = (clientsIo, socket) => {
             });
             const result = await Promise.all(promises);
             callback(result);
+            socket.broadcast.emit('updateUsersBasicRoles', _user);
         } catch (err) {
             callback(new Error());
         }
     };
+
+    const updateUserHasRolesInManifestation = async (data, callback) => {
+        try {
+            const promises = [];
+            const user = data.user;
+            const manifestation = data.manifestation
+            const userId = user.id;
+            const manifestationId = manifestation.id;
+            await UserHasRoleInManifestation.destroy({where: {userId: userId, manifestationId: manifestationId}});
+            await ManifestationHasUser.destroy({where: {manifestationId: manifestationId, userId: userId}});
+            if(manifestation.roles.length !== 0) {
+                manifestation.roles.forEach(_role =>
+                    promises.push(UserHasRoleInManifestation.create({ userId: userId, manifestationId: manifestationId, roleId: _role.id})));
+                    promises.push(ManifestationHasUser.create({manifestationId: manifestationId, userId: userId}));
+            }    
+            const result = await Promise.all(promises);
+            callback(result);
+            socket.broadcast.emit('updateUserHasRolesInManifestation', user);
+        } catch (err) {
+            callback(new Error());
+        }
+    }
 
     const updateActionManifestationDependency = async (data, callback) => {
         const _action = data.action;
@@ -445,6 +468,21 @@ const privilegesIo = (clientsIo, socket) => {
         }
     };
 
+    const updateIsAdmin = async (data, callback) => {
+        try {
+            const user = data.user;
+            const value = data.value;
+            const result = await User.update({isAdmin: value}, {where: {id: user.id}});
+            if (!result)
+            throw new Error();
+            callback(result);
+            socket.broadcast.emit('updateIsAdmin', user);
+            log.verbose('User is admin modified');
+        } catch (err) {
+            callback(new Error());
+        }
+    }
+
     /*
         const getRolesFromId = async (_userId, callback) => {
         try {
@@ -491,6 +529,8 @@ const privilegesIo = (clientsIo, socket) => {
     socket.on('getManifestationsFromId', getManifestationsFromId);
     socket.on('getRolesInManifestationFromId',getRolesInManifestationFromId);
     socket.on('updateUsersBasicRoles', updateUsersBasicRoles);
+    socket.on('updateUserHasRolesInManifestation', updateUserHasRolesInManifestation);
+    socket.on('updateIsAdmin', updateIsAdmin);
 
     socket.on('getModules', getModules);
     socket.on('createModule',createModule);
