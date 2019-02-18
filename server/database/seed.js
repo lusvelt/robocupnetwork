@@ -48,7 +48,7 @@ const seed = async () => {
         await Action.create({name:'Modifica utente', alias: 'editUser', description:'Puo\'modificare un utente',dependsOnManifestation:true}),
         await Action.create({name:'Elimina utente', alias: 'deleteUser', description:'Puo\'eliminare un utente',dependsOnManifestation:true}),
 
-        await Action.create({name:'Visualizza gara', alias: 'seeRun', description:'Puo\'visualizzare una gara',dependsOnManifestation:true}),
+        await Action.create({name:'Visualizza gara', alias: 'seeRun', description:'Puo\'visualizzare una gara',dependsOnManifestation: true}),
         await Action.create({name:'Arbitra gara', alias: 'arbitrateRun', description:'Puo\'arbitrare una gara',dependsOnManifestation:true}),
         await Action.create({name:'Valida gara', alias: 'validateRun', description:'Puo\'validare una gara mandata dall\'arbitro',dependsOnManifestation:true}),
         await Action.create({name:'Modifica gara contrassegnata', alias: 'editMarkedRun', description:'Puo\'modificare una gara contrassegnata dall\'arbitro',dependsOnManifestation:true}),
@@ -56,16 +56,16 @@ const seed = async () => {
         await Action.create({name:'Modifica gara', alias: 'editRun', description:'Puo\'modificare una gara',dependsOnManifestation:true}),
         await Action.create({name:'Cancella gara', alias: 'deleteRun', description:'Puo\'eliminare una gara',dependsOnManifestation:true}),
 
-        await Action.create({name:'Visualizza luoghi', alias: 'seePlaces', description:'Puo\'visualizzare i luoghi',dependsOnManifestation:true}),
+        await Action.create({name:'Visualizza luoghi', alias: 'seePlaces', description:'Puo\'visualizzare i luoghi',dependsOnManifestation: false}),
         await Action.create({name:'Crea luogo', alias: 'createPlace', description:'Puo\'creare un luogo',dependsOnManifestation:true}),
         await Action.create({name:'Modifica luogo', alias: 'editPlace', description:'Puo\'modificare un luogo',dependsOnManifestation:true}),
         await Action.create({name:'Elimina luogo', alias: 'deletePlace', description:'Puo\'eliminare un luogo',dependsOnManifestation:true}),
 
-        await Action.create({name:'Visualizza categorie', alias: 'seeCategories', description:'Puo\'visualizzare le categorie',dependsOnManifestation:true}),
+        await Action.create({name:'Visualizza categorie', alias: 'seeCategories', description:'Puo\'visualizzare le categorie',dependsOnManifestation: false}),
         await Action.create({name:'Crea categoria', alias: 'createCategory', description:'Puo\'creare una categoria',dependsOnManifestation:true}),
         await Action.create({name:'Modifica categoria', alias: 'editCategory', description:'Puo\'modificare una categoria',dependsOnManifestation:true}),
         await Action.create({name:'Elimina categoria', alias: 'deleteCategory', description:'Puo\'eliminare una categoria',dependsOnManifestation:true}),
-        
+
         await Action.create({name:'Visualizza arbitri', alias: 'seeReferees', description:'Puo\'visualizzare gli arbitri',dependsOnManifestation:true}),
         await Action.create({name:'Crea arbitro', alias: 'assignReferee', description:'Assegna ad un utente i privilegi di arbitro',dependsOnManifestation:true}),
         await Action.create({name:'Rimuovi arbitro', alias: 'removeReferee', description:'Rimuove ad un utente i privlegi di arbitro',dependsOnManifestation:true}),
@@ -84,12 +84,12 @@ const seed = async () => {
         await Action.create({name:'Crea Vicecapitano', alias: 'assignViceCaptain', description:'Assegna ad un utente il ruolo di Vicecapitano',dependsOnManifestation:true}),
         await Action.create({name:'Rimuovi Capitano', alias: 'removeViceCaptain', description:'Rimuove ad un utente il ruolo di Vicecapitano',dependsOnManifestation:true}),
 
-        await Action.create({name:'Visualizza fasce di eta', alias: 'seeAgeRanges', description:'Puo\'visualizzare le fasce di eta',dependsOnManifestation:true}),
+        await Action.create({name:'Visualizza fasce di eta', alias: 'seeAgeRanges', description:'Puo\'visualizzare le fasce di eta',dependsOnManifestation:false}),
         await Action.create({name:'Crea fascia di eta', alias: 'createAgeRange', description:'Puo\'creare una fascia di eta',dependsOnManifestation:true}),
         await Action.create({name:'Modifica fascia di eta', alias: 'editAgeRange', description:'Puo\'modificare una fascia di eta',dependsOnManifestation:true}),
         await Action.create({name:'Elimina fascia di eta', alias: 'deleteAgeRange', description:'Puo\'eliminare una fascia di eta',dependsOnManifestation:true}),
 
-        await Action.create({name:'Visualizza scuole', alias: 'seeSchools', description:'Puo\'visualizzare le scuole',dependsOnManifestation:true}),
+        await Action.create({name:'Visualizza scuole', alias: 'seeSchools', description:'Puo\'visualizzare le scuole',dependsOnManifestation:false}),
         await Action.create({name:'Crea Scuola', alias: 'createSchool', description:'Puo\'creare una scuola',dependsOnManifestation:true}),
         await Action.create({name:'Modifica Scuola', alias: 'editSchool', description:'Puo\'modificare una scuola',dependsOnManifestation:true}),
         await Action.create({name:'Elimina Scuola', alias: 'deleteSchool', description:'Puo\'eliminare una scuola',dependsOnManifestation:true}),
@@ -99,15 +99,16 @@ const seed = async () => {
         await Action.create({name:'Modifica fase', alias: 'editPhase', description:'Puo\'modificare una fase',dependsOnManifestation:true}),
         await Action.create({name:'Elimina fase', alias: 'deletePhase', description:'Puo\'eliminare una fase',dependsOnManifestation:true}),
 
-        await Action.create({name:'Visualizza utenti in manifestazioni', alias: 'seeUsersInManifestation', description:'Puo\'visualizzare gli utenti in una manifestazione',dependsOnManifestation:true}),
+        await Action.create({name:'Visualizza utenti in manifestazione', alias: 'seeUsersInManifestation', description:'Puo\'visualizzare gli utenti in una manifestazione',dependsOnManifestation:true}),
         await Action.create({name:'Crea utente in manifestazione', alias: 'createUserInManifestation', description:'Puo\'creare un utente in una manifestazione',dependsOnManifestation:true}),
         await Action.create({name:'Modifica utente in manifestazione', alias: 'editUserInManifestation', description:'Puo\'modificare un utente in una manifestazione',dependsOnManifestation:true}),
         await Action.create({name:'Elimina utente in manifestazione', alias: 'deleteUserInManifestation', description:'Puo\'eliminare un utente in una manifestazione',dependsOnManifestation:true}),
+        await Action.create({name: 'Visualizza teams in manifestazione', alias: 'seeTeamsInManifestation', description: 'Puo\'visualizzare le squadre in una manifestazione', dependsOnManifestation: true}),
     ];
 
     const roles = [
-        await Role.create({name:'Arbitro', description:'test1',alias:'referee',dependsOnManifestation:true}),
-        await Role.create({name:'Utente', description:'test2',alias:'user',dependsOnManifestation:false}),
+        await Role.create({name:'Arbitro', description:'Puo\' arbitrare le gare',alias:'referee',dependsOnManifestation:true}),
+        await Role.create({name:'Utente', description:'Utente base',alias:'user',dependsOnManifestation:false}),
         await Role.create({name:'Validatore gare', description:'Ha il compito di validare le gare',alias:'runsValidator',dependsOnManifestation:true}),
         await Role.create({name:'Gestore Manifestazione', description:'Ha tutti i privilegi nella sua manifestazione',alias:'manifestationManager',dependsOnManifestation:true}),
         await Role.create({name:'Aiutante gestore', description:'E\' stato delegato dall\'amministratore. Ha tutti i privilegi nella sua manifestazione',alias:'manifestationManagerHelper',dependsOnManifestation:true}),
@@ -161,8 +162,8 @@ const seed = async () => {
     await actions[0].addActionType(actionTypes[0]);
     await actions[1].addActionType(actionTypes[2]);
     await actions[2].addActionType(actionTypes[3]);
-    await actions[3].addActionType(actionTypes[1]);       
-    await actions[4].addActionType(actionTypes[0]);       
+    await actions[3].addActionType(actionTypes[1]);
+    await actions[4].addActionType(actionTypes[0]);
     await actions[5].addActionType(actionTypes[2]);
     await actions[6].addActionType(actionTypes[2]);
     await actions[7].addActionType(actionTypes[3]);
@@ -210,8 +211,8 @@ const seed = async () => {
     await actions[0].addModule(modules[0]);
     await actions[1].addModule(modules[0]);
     await actions[2].addModule(modules[0]);
-    await actions[3].addModule(modules[10]);       
-    await actions[4].addModule(modules[10]);       
+    await actions[3].addModule(modules[10]);
+    await actions[4].addModule(modules[10]);
     await actions[5].addModule(modules[10]);
     await actions[6].addModule(modules[10]);
     await actions[7].addModule(modules[10]);
@@ -254,7 +255,171 @@ const seed = async () => {
     await actions[44].addModule(modules[0]);
     await actions[45].addModule(modules[0]);
     await actions[46].addModule(modules[0]);
-    
+
+    // Arbitro
+    await roles[0].addAction(actions[3]);
+    await roles[0].addAction(actions[4]);
+    await roles[0].addAction(actions[10]);
+    await roles[0].addAction(actions[14]);
+    await roles[0].addAction(actions[18]);
+    await roles[0].addAction(actions[24]);
+    await roles[0].addAction(actions[31]);
+    await roles[0].addAction(actions[35]);
+    await roles[0].addAction(actions[39]);
+    await roles[0].addAction(actions[43]);
+    await roles[0].addAction(actions[47]);
+
+    // Utente
+    await roles[1].addAction(actions[3]);
+    await roles[1].addAction(actions[10]);
+    await roles[1].addAction(actions[14]);
+    await roles[1].addAction(actions[19]);
+    await roles[1].addAction(actions[31]);
+    await roles[1].addAction(actions[35]);
+    await roles[1].addAction(actions[39]);
+    await roles[1].addAction(actions[43]);
+    await roles[1].addAction(actions[47]);
+
+    // Validatore gare
+    await roles[2].addAction(actions[3]);
+    await roles[2].addAction(actions[5]);
+    await roles[2].addAction(actions[6]);
+    await roles[2].addAction(actions[7]);
+    await roles[2].addAction(actions[10]);
+    await roles[2].addAction(actions[14]);
+    await roles[2].addAction(actions[18]);
+    await roles[2].addAction(actions[21]);
+    await roles[2].addAction(actions[24]);
+    await roles[2].addAction(actions[31]);
+    await roles[2].addAction(actions[35]);
+    await roles[2].addAction(actions[39]);
+    await roles[2].addAction(actions[43]);
+    await roles[2].addAction(actions[47]);
+
+    // Gestore manifestazione
+    await roles[3].addAction(actions[0]);
+    await roles[3].addAction(actions[1]);
+    await roles[3].addAction(actions[2]);
+    await roles[3].addAction(actions[3]);
+    await roles[3].addAction(actions[6]);
+    await roles[3].addAction(actions[7]);
+    await roles[3].addAction(actions[8]);
+    await roles[3].addAction(actions[9]);
+    await roles[3].addAction(actions[10]);
+    await roles[3].addAction(actions[11]);
+    await roles[3].addAction(actions[12]);
+    await roles[3].addAction(actions[13]);
+    await roles[3].addAction(actions[14]);
+    await roles[3].addAction(actions[15]);
+    await roles[3].addAction(actions[16]);
+    await roles[3].addAction(actions[17]);
+    await roles[3].addAction(actions[18]);
+    await roles[3].addAction(actions[19]);
+    await roles[3].addAction(actions[20]);
+    await roles[3].addAction(actions[21]);
+    await roles[3].addAction(actions[22]);
+    await roles[3].addAction(actions[23]);
+    await roles[3].addAction(actions[24]);
+    await roles[3].addAction(actions[25]);
+    await roles[3].addAction(actions[26]);
+    await roles[3].addAction(actions[27]);
+    await roles[3].addAction(actions[28]);
+    await roles[3].addAction(actions[29]);
+    await roles[3].addAction(actions[30]);
+    await roles[3].addAction(actions[32]);
+    await roles[3].addAction(actions[33]);
+    await roles[3].addAction(actions[34]);
+    await roles[3].addAction(actions[35]);
+    await roles[3].addAction(actions[36]);
+    await roles[3].addAction(actions[37]);
+    await roles[3].addAction(actions[38]);
+    await roles[3].addAction(actions[39]);
+    await roles[3].addAction(actions[40]);
+    await roles[3].addAction(actions[41]);
+    await roles[3].addAction(actions[42]);
+    await roles[3].addAction(actions[43]);
+    await roles[3].addAction(actions[44]);
+    await roles[3].addAction(actions[45]);
+    await roles[3].addAction(actions[46]);
+    await roles[3].addAction(actions[47]);
+
+    // Aiutatnte gestore
+    await roles[4].addAction(actions[0]);
+    await roles[4].addAction(actions[1]);
+    await roles[4].addAction(actions[2]);
+    await roles[4].addAction(actions[3]);
+    await roles[4].addAction(actions[6]);
+    await roles[4].addAction(actions[7]);
+    await roles[4].addAction(actions[8]);
+    await roles[4].addAction(actions[9]);
+    await roles[4].addAction(actions[10]);
+    await roles[4].addAction(actions[11]);
+    await roles[4].addAction(actions[12]);
+    await roles[4].addAction(actions[13]);
+    await roles[4].addAction(actions[14]);
+    await roles[4].addAction(actions[15]);
+    await roles[4].addAction(actions[16]);
+    await roles[4].addAction(actions[17]);
+    await roles[4].addAction(actions[18]);
+    await roles[4].addAction(actions[19]);
+    await roles[4].addAction(actions[20]);
+    await roles[4].addAction(actions[21]);
+    await roles[4].addAction(actions[24]);
+    await roles[4].addAction(actions[25]);
+    await roles[4].addAction(actions[26]);
+    await roles[4].addAction(actions[27]);
+    await roles[4].addAction(actions[28]);
+    await roles[4].addAction(actions[29]);
+    await roles[4].addAction(actions[30]);
+    await roles[4].addAction(actions[32]);
+    await roles[4].addAction(actions[33]);
+    await roles[4].addAction(actions[34]);
+    await roles[4].addAction(actions[35]);
+    await roles[4].addAction(actions[36]);
+    await roles[4].addAction(actions[37]);
+    await roles[4].addAction(actions[38]);
+    await roles[4].addAction(actions[39]);
+    await roles[4].addAction(actions[40]);
+    await roles[4].addAction(actions[41]);
+    await roles[4].addAction(actions[42]);
+    await roles[4].addAction(actions[43]);
+    await roles[4].addAction(actions[44]);
+    await roles[4].addAction(actions[45]);
+    await roles[4].addAction(actions[46]);
+    await roles[4].addAction(actions[47]);
+
+    // Capitano
+    await roles[5].addAction(actions[4]);
+    await roles[5].addAction(actions[10]);
+    await roles[5].addAction(actions[14]);
+    await roles[5].addAction(actions[19]);
+    await roles[5].addAction(actions[31]);
+    await roles[5].addAction(actions[35]);
+    await roles[5].addAction(actions[39]);
+    await roles[5].addAction(actions[43]);
+    await roles[5].addAction(actions[47]);
+
+    // Vice capitano
+    await roles[6].addAction(actions[4]);
+    await roles[6].addAction(actions[10]);
+    await roles[6].addAction(actions[14]);
+    await roles[6].addAction(actions[19]);
+    await roles[6].addAction(actions[31]);
+    await roles[6].addAction(actions[35]);
+    await roles[6].addAction(actions[39]);
+    await roles[6].addAction(actions[43]);
+    await roles[6].addAction(actions[47]);
+
+    // Membro squadra
+    await roles[7].addAction(actions[4]);
+    await roles[7].addAction(actions[10]);
+    await roles[7].addAction(actions[14]);
+    await roles[7].addAction(actions[19]);
+    await roles[7].addAction(actions[31]);
+    await roles[7].addAction(actions[35]);
+    await roles[7].addAction(actions[39]);
+    await roles[7].addAction(actions[43]);
+    await roles[7].addAction(actions[47]);
 
     /*const competitions = [
         await Competition.create
