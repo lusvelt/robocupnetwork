@@ -37,9 +37,25 @@
             </li>
           </ul>
         </div>
-        <div class="mb-3" ngbDropdown>
-          <input type="text" class="form-control"
-                  placeholder="{{ 'USERS' | translate }}"
+        <div class="row mb-3">
+          <div class="col-md-5">
+              <input type="text" class="form-control"
+              placeholder="{{ 'CAPTAIN' | translate }}"
+              (selectItem)="onCaptainClicked($event)"
+              [ngbTypeahead]="searchUser"
+              [resultFormatter]="usersFormatter"
+              [inputFormatter]="usersFormatter"
+              (focus)="focus$.next($event.target.value)"
+              (click)="click$.next($event.target.value)"
+              #searchUserInstance="ngbTypeahead"/>
+          </div>
+          <div class="col-md-1">
+              <button class="btn btn-primary" nbButton hero (click)="deleteCaptain(); $event.preventDefault()"> <i class="fas fa-trash"></i> </button>
+          </div>
+          
+          <div class="col-md-5">
+            <input type="text" class="form-control"
+                  placeholder="{{ 'MEMBERS' | translate }}"
                   (selectItem)="onUserClicked($event)"
                   [ngbTypeahead]="searchUser"
                   [resultFormatter]="usersFormatter"
@@ -47,15 +63,32 @@
                   (focus)="focus$.next($event.target.value)"
                   (click)="click$.next($event.target.value)"
                   #searchUserInstance="ngbTypeahead"/>
-        </div>
-      <!--<div class="mb-3" [hidden]="isOneUserInSchool">
-        <ol *ngFor="let school of team.schools">
-          {{school.name}}
+          </div>
+          <div class="col-md-1">
+              <button class="btn btn-primary" nbButton hero (click)="deleteMembers(); $event.preventDefault()"> <i class="fas fa-trash"></i> </button>
+          </div>        
+
+
+      </div>
+
+        <div class="mb-3" [hidden]="!isCaptain">
           <ol>
-              <li *ngFor="let user of school.users">{{user.name}}</li>
-          </ol>
-        </ol>
-      </div>-->
+            {{'CAPTAIN' | translate }}
+            <ol>
+                <li>{{team.captain.name + " " +team.captain.surname}}</li>
+            </ol>
+          </ol>  
+        </div>
+
+        <div class="mb-3" [hidden]="!isOneMember">
+          <ol>
+            {{'MEMBER' | translate }}
+            <ol>
+                <li *ngFor="let user of team.members">{{user.name + " " + user.surname}}</li>
+            </ol>
+          </ol>  
+        </div>
+
         <button class="btn btn-primary" nbButton hero>{{'TEAM_BUTTON'|translate}}</button>
       </nb-card-body>
     </nb-card>

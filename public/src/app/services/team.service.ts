@@ -26,6 +26,10 @@ export class TeamService {
     return this.socketIoService.send('removeTeam', data);
   }
 
+  getCaptainFromId(id) {
+    return this.socketIoService.send('getCaptainFromId', id);
+  }
+
   notify(eventName: string): Observable<any> {
     return new Observable(observer => this.socketIoService.on(eventName)
       .subscribe(data => observer.next(data)));

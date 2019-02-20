@@ -186,6 +186,9 @@
     "TEAM_NAME_REQUIRED":"Name required!",
     "TEAM_BUTTON":"Create team",
     "TEAM_UPDATED":"Team updated",
+    "CAPTAIN": "Captain",
+    "MEMBER": "Member",
+    "MEMBERS": "Members",
 
     "CATEGORIES": "Categories",
     "NEW_CATEGORIES": "New categories",

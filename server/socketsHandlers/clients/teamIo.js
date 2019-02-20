@@ -1,32 +1,72 @@
 const _ = require('lodash');
 const Team = require('../../models/Team');
+const User = require('../../models/User');
 const AgeRange = require('../../models/AgeRange');
 const log = require('../../config/consoleMessageConfig');
+const TeamHasUser = require('../../database/associationTables/TeamHasUser');
 
 const teamIo = (clientsIo, socket, room) => {
 
     const createTeam = async (_team, callback) => {
+        console.log(_team);
         try {
             const team = await Team.create(_team);
             if (!team)
-                throw new Error();
-            /*const promise = new Promise((resolve, reject) => {
-                AgeRange.findById(_team.ageRanges.id)
-                    .then(ageRange => team.addAgeRange(ageRange))
-                    .then(result => resolve(result))
-                    .catch(err => reject(err));
-            });
+                throw new Error();   
 
-            const result = await Promise.all(promise);
+                let promises = [];
+                User.findById(_team.captain.id)
+                .then(captain => {
+                    promises.push(TeamHasUser.create({teamId: team.id, userId: captain.id, role: 'captain'}));
+                })
+                
+                promises = [];
+                _team.members.forEach(member => {        
+                    promises.push(TeamHasUser.create({teamId: team.id, userId: member.id, role: 'member'}));              
+                });
+
+            const result = await Promise.all(promises);
             if(!result)
-                throw new Error();*/
+                throw new Error();
             callback(team);
-            socket.to(room).broadcast.emit('createTeam', team);
+            socket.broadcast.emit('createTeam', team);
             log.verbose('Team created');
         } catch (err) {
             callback(new Error());
         }
     };
+
+    const getCaptainFromId = async (_id, callback) => {
+        try {
+            const promises = [];
+            const item = await TeamHasUser.find({where: {teamId: _id, role: 'captain'}})
+            
+            promises.push(User.findById(item.userId));
+
+            const result = await Promise.all(promises);
+            callback(result);
+            log.verbose('Captain of team request');
+        } catch (err) {
+            callback(new Error());
+        }
+    }
+
+    /*
+    const getRolesFromId = async (_userId, callback) => {
+        try {
+            const promises = [];
+            const items = await UserHasRole.findAll({ where: { userId: _userId}});
+            items.forEach(item => promises.push(Role.findById(item.roleId)));
+            const result = await Promise.all(promises);
+            callback(result);
+            log.verbose('Basic Roles by id data request');
+        } catch (err) {
+            callback(new Error());
+        }
+
+    };
+
+    */
 
     const getTeams = async (args, callback) => {
         try {
@@ -79,6 +119,7 @@ const teamIo = (clientsIo, socket, room) => {
     socket.on('removeTeam', removeTeam);
     socket.on('getTeams', getTeams);
     socket.on('editTeam', editTeam);
+    socket.on('getCaptainFromId',getCaptainFromId);
 };
 
 module.exports = teamIo;

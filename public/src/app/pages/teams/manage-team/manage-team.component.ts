@@ -34,10 +34,13 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
     show: false,
     ageRanges: [],
     schools: [],
-    users: []
+    members: [],
+    captain: []
   };
 
-  isOneUserInTeam: boolean = true;
+
+  isCaptain: boolean = false;
+  isOneMember: boolean = false;
 
  usersList: [];
   @ViewChild('searchUserInstance') searchUserInstance: NgbTypeahead;
@@ -75,8 +78,13 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.teamService.getTeams()
-     .then(team => {
-      this.source.load(team);
+     .then(teams => {
+       teams.forEach(team => {
+        this.teamService.getCaptainFromId(team.id).then(res => {
+          team.captain = res[0].name + ' ' + res[0].surname;
+        });
+       });
+       this.source.load(teams);
     })
     .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
     this.subscriptions.push(
@@ -128,8 +136,9 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
 
   onButtonClicked() {
     const team: TeamInterface = _.cloneDeep(this.team);
-    team.ageRanges = team.ageRanges.filter((teams: any) => teams.selected);
-    if (team.ageRanges.length === 1 && team.name !== '') {
+    team.ageRanges = team.ageRanges.filter((ageRange: any) => ageRange.selected);
+    team.schools = team.schools.filter((school: any) => school.selected);
+    if (team.ageRanges.length === 1 && team.schools.length === 1 && team.name !== '') {
       this.teamService.createTeam(team)
       .then(_team => {
         this.notificationsService.success('TEAM_CREATED');
@@ -137,7 +146,7 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
         this.team.show = false;
       });
     }else {
-      this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
+      this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE');
     }
   }
 
@@ -150,6 +159,10 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
     },
     name: {
       title: 'NAME',
+      type: 'text',
+    },
+    captain: {
+      title: 'CAPTAIN',
       type: 'text',
     }
   });
@@ -177,29 +190,25 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
   onUserClicked(event: any) {
     event.preventDefault();
     const user = event.item;
-    const teamUser = this.team.users.find(m => m.id === user.id);
-    this.dialogService.open(UsersListComponent, {
-      context: {
-        title: user.name,
-        oldUsers: teamUser ? teamUser : []
-      }
-    }).onClose.subscribe(users => {
-      const index = this.team.users.findIndex(el => el.id === user.id);
-      if (index !== -1)
-        this.team.users.splice(index, 1);
-      if (users) {
-        if (users.length !== 0) {
-          this.team.users = users;
-          this.team.users.push(user);
-          this.notificationsService.success('ADDED_USERS_IN_TEAM');
-        }
-      }
-      if (this.team.users.length === 0) {
-        this.isOneUserInTeam = true;
-      }else {
-        this.isOneUserInTeam = false;
-      }
-    });
+    this.isOneMember = true;
+    this.team.members.push(user);
+  }
+
+  deleteCaptain() {
+    this.isCaptain = false;
+    this.team.captain = [];
+  }
+
+  deleteMembers() {
+    this.isOneMember = false;
+    this.team.members = [];
+  }
+
+  onCaptainClicked(event: any) {
+    event.preventDefault();
+    const user = event.item;
+    this.isCaptain = true;
+    this.team.captain = user;
   }
 
   toggleForm() {

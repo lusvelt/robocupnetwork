@@ -6,5 +6,6 @@ export interface TeamInterface {
   name: string;
   ageRanges: AgeRangeInterface[];
   schools: SchoolInterface[];
-  users: UserInterface[];
+  members: UserInterface[];
+  captain: UserInterface;
 }
