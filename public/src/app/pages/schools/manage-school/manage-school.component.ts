@@ -30,9 +30,9 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
   school: any = {
     name: '',
     show: false,
-    places: []
+    place: []
   };
-
+  placesList: any [];
   subscriptions: Subscription[] = [];
   source: DataSource = new DataSource();
   @ViewChild('searchPlaceInstance') searchPlaceInstance: NgbTypeahead;
@@ -47,8 +47,8 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
     const inputFocus$ = this.focus$;
 
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-      map(term => (term === '' ? this.school.place
-        : this.school.place.filter((v: any) => v.street.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
+      map(term => (term === '' ? this.placesList
+        : this.placesList.filter((v: any) => v.street.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
     );
   }
 
@@ -81,7 +81,7 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
       .subscribe(school => this.source.delete(school)));
 
     this.placeService.getPlaces()
-    .then(places => this.school.place = places)
+    .then(places => this.placesList = places)
     .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
 
     this.getNotifiedForPlaces(this.school.places);
@@ -100,17 +100,18 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
 
   onButtonClicked() {
     const school: SchoolInterface = _.cloneDeep(this.school);
-    if (school.places && school.name !== '') {
-      this.schoolService.createSchool(school)
+    if (school.place && school.name !== '') {
+      /* this.schoolService.createSchool(school)
       .then(_school => {
         this.notificationsService.success('SCHOOL_CREATED');
         this.source.insert(_school);
         this.school.show = false;
-      });
+      });*/
     }else {
-      this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
+      this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE');
     }
   }
+
 
   settings = this.tablesService.getSettings(notAddableConfig, {
     id: {
@@ -151,7 +152,7 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
     this.school.show = !this.school.show;
   }
   onPlaceClicked(event: any) {
-    const place = event.item;
+    this.school.place[0] = event.item;
   }
   newPlaceClicked() {
     this.router.navigate(['/pages', 'places', 'manage-place']);

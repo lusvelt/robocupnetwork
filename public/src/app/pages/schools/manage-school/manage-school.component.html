@@ -18,53 +18,22 @@
           </small>
         </div>
 
-        <div class="mb-3">
-          <input type="text" class="form-control" placeholder="{{ 'WRITE_PLACE_NAME' | translate }}" (selectItem)="onPlaceClicked($event)"
-              [ngbTypeahead]="searchPlace" [resultFormatter]="placesFormatter" [inputFormatter]="placesFormatter"
-              (focus)="focus$.next($event.target.value)" (click)="click$.next($event.target.value)" #searchPlaceInstance="ngbTypeahead" />
-            <!--<ul ngbDropdownMenu class="dropdown-menu">
-                      <li (click)="onManifestationClicked(manifestation)" class="dropdown-item" *ngFor="let manifestation of manifestationsList">
-                          {{ manifestation.name }}
-                      </li>
-                    </ul>-->
-                  </div>
-                  <div>
-                    <p>{{'OR' | translate}}</p>
-                    <button class="btn btn-primary" nbButton (click)="newPlaceClicked(); $event.preventDefault()">{{'NEW_PLACE_BUTTON'|translate}}</button>
-                  </div>
-
-
-
-        <!--<div class="mb-3" ngbDropdown>
-          <button class="btn btn-primary" type="button" ngbDropdownToggle>
-            {{ 'PLACE' | translate }}
-          </button>
-          <ul ngbDropdownMenu class="dropdown-menu">
-            <li class="dropdown-item" *ngFor="let place of school.places">
-              <nb-checkbox name="placeChoose" [(ngModel)]="place.selected">{{ place.country }}, {{place.region}}, {{place.province}}, {{ place.city }}, {{place.street}}, {{place.civicNumber}}, {{place.postalCode}}</nb-checkbox>
-            </li>
-          </ul>
-        </div> <!--
-        <div class="mb-3" ngbDropdown>
-          <button class="btn btn-primary" type="button" ngbDropdownToggle>
-            {{ 'CITY' | translate }}
-          </button>
-          <ul ngbDropdownMenu class="dropdown-menu">
-            <li class="dropdown-item" *ngFor="let place of filterCity(school.places)">
-              <nb-checkbox name="placeChoose" [(ngModel)]="place.place.selected">{{ place.city }}</nb-checkbox>
-            </li>
-          </ul>
+        <div class="row mb-3">
+          <div class="col-md-7">
+            <input type="text" class="form-control" placeholder="{{ 'WRITE_PLACE_NAME' | translate }}"
+              (selectItem)="onPlaceClicked($event)" [ngbTypeahead]="searchPlace" [resultFormatter]="placesFormatter"
+              [inputFormatter]="placesFormatter" (focus)="focus$.next($event.target.value)"
+              (click)="click$.next($event.target.value)" #searchPlaceInstance="ngbTypeahead" />
+          </div>
+          <div class="text_or col-md-1">
+            <p>{{'OR' | translate}}</p>
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-primary" nbButton
+              (click)="newPlaceClicked(); $event.preventDefault()">{{'NEW_PLACE_BUTTON'|translate}}</button>
+          </div>
         </div>
-        <div class="mb-3" ngbDropdown>
-          <button class="btn btn-primary" type="button" ngbDropdownToggle>
-            {{ 'STREET' | translate }}
-          </button>
-          <ul ngbDropdownMenu class="dropdown-menu">
-            <li class="dropdown-item" *ngFor="let place of school.places">
-              <nb-checkbox name="placeChoose" [(ngModel)]="place.street.selected">{{ place.street }}</nb-checkbox>
-            </li>
-          </ul>
-        </div> -->
+
 
 
        <button class="mt-3 btn btn-primary" nbButton hero>{{'SCHOOL_BUTTON'|translate}}</button>
