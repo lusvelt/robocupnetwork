@@ -10,7 +10,7 @@ const schoolIo = (clientsIo, socket, room) => {
             const school = await School.create(_school);
             if (!school)
                 throw new Error();
-
+            let promises = [];
             Place.findById(_school.place[0].id)
                 .then(place => school.setPlace(place));
 
@@ -27,6 +27,22 @@ const schoolIo = (clientsIo, socket, room) => {
             const school = await School.getSchoolsList();
             callback(school);
             log.verbose('School data request');
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
+    const getPlaceFromId = async (_id, callback) => {
+        try {
+            const promises = [];
+
+            const item = await School.find({where: {id: _id}});
+
+            promises.push(Place.findById(item.placeId));
+
+            const result = await Promise.all(promises);
+            callback(result);
+            log.verbose('Place of school request');
         } catch (err) {
             callback(new Error());
         }
@@ -73,6 +89,7 @@ const schoolIo = (clientsIo, socket, room) => {
     socket.on('removeSchool', removeSchool);
     socket.on('getSchools', getSchools);
     socket.on('editSchool', editSchool);
+    socket.on('getPlaceFromId',getPlaceFromId);
 };
 
 module.exports = schoolIo;

@@ -21,6 +21,9 @@ export class SchoolService {
   editSchool(data) {
     return this.socketIoService.send('editSchool', data);
   }
+  getPlaceFromId(id) {
+    return this.socketIoService.send('getPlaceFromId', id);
+  }
 
   removeSchool(data) {
     return this.socketIoService.send('removeSchool', data);

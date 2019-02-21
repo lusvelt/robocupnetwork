@@ -65,6 +65,12 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.schoolService.getSchools()
       .then(school => {
+        // tslint:disable-next-line:no-shadowed-variable
+        school.forEach(school => {
+        this.schoolService.getPlaceFromId(school.id).then(res => {
+          school.place = res[0].country + ' ' + res[0].region + ' ' + res[0].province + ' ' + res[0].postalCode + ' ' + res[0].city + ' ' + res[0].civicNumber + ' ' + res[0].street;
+        });
+      });
         this.source.load(school);
       })
       .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
@@ -123,6 +129,12 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
     name: {
       title: 'NAME',
       type: 'text',
+    },
+    place: {
+      title: 'PLACE',
+      type: 'text',
+      addable: false,
+      editable: false
     }
   });
 

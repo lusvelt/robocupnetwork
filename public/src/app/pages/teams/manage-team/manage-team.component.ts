@@ -160,8 +160,6 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
     name: {
       title: 'NAME',
       type: 'text',
-      addable: false,
-      editable: false
     },
     captain: {
       title: 'CAPTAIN',

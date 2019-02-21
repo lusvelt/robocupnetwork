@@ -12,18 +12,18 @@ const teamIo = (clientsIo, socket, room) => {
         try {
             const team = await Team.create(_team);
             if (!team)
-                throw new Error();   
+                throw new Error();
 
-                let promises = [];
-                User.findById(_team.captain.id)
+            let promises = [];
+            User.findById(_team.captain.id)
                 .then(captain => {
                     promises.push(TeamHasUser.create({teamId: team.id, userId: captain.id, role: 'captain'}));
-                })
-                
-                promises = [];
-                _team.members.forEach(member => {        
-                    promises.push(TeamHasUser.create({teamId: team.id, userId: member.id, role: 'member'}));              
                 });
+
+            promises = [];
+            _team.members.forEach(member => {
+                promises.push(TeamHasUser.create({teamId: team.id, userId: member.id, role: 'member'}));
+            });
 
             const result = await Promise.all(promises);
             if(!result)
@@ -39,8 +39,8 @@ const teamIo = (clientsIo, socket, room) => {
     const getCaptainFromId = async (_id, callback) => {
         try {
             const promises = [];
-            const item = await TeamHasUser.find({where: {teamId: _id, role: 'captain'}})
-            
+            const item = await TeamHasUser.find({where: {teamId: _id, role: 'captain'}});
+
             promises.push(User.findById(item.userId));
 
             const result = await Promise.all(promises);
@@ -49,7 +49,7 @@ const teamIo = (clientsIo, socket, room) => {
         } catch (err) {
             callback(new Error());
         }
-    }
+    };
 
     /*
     const getRolesFromId = async (_userId, callback) => {
