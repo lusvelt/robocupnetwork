@@ -10,16 +10,10 @@ const schoolIo = (clientsIo, socket, room) => {
             const school = await School.create(_school);
             if (!school)
                 throw new Error();
-            /*const promise = new Promise((resolve, reject) => {
-                Place.findById(_school.places.id)
-                    .then(place => school.addPlace(place))
-                    .then(result => resolve(result))
-                    .catch(err => reject(err));
-            });
 
-            const result = await Promise.all(promise);
-            if(!result)
-                throw new Error();*/
+            Place.findById(_school.place[0].id)
+                .then(place => school.setPlace(place));
+
             callback(school);
             socket.broadcast.emit('createSchool', school);
             log.verbose('School created');

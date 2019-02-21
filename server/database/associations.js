@@ -102,8 +102,8 @@ SchoolType.hasMany(SchoolHasSchoolType, { schoolTypeFk });
 Place.hasMany(Manifestation, { foreignKey: placeFk });
 
 // Place - School | 1:N
-Place.hasMany(School, { foreignKey: placeFk });
-
+//Place.hasMany(School, { foreignKey: placeFk });
+School.belongsTo(Place, {foreignKey: placeFk});
 // Session - Shift | 1:N
 Session.hasMany(Shift, { foreignKey: sessionFk });
 

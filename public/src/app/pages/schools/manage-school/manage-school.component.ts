@@ -101,12 +101,12 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
   onButtonClicked() {
     const school: SchoolInterface = _.cloneDeep(this.school);
     if (school.place && school.name !== '') {
-      /* this.schoolService.createSchool(school)
+      this.schoolService.createSchool(school)
       .then(_school => {
         this.notificationsService.success('SCHOOL_CREATED');
         this.source.insert(_school);
         this.school.show = false;
-      });*/
+      });
     }else {
       this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE');
     }
