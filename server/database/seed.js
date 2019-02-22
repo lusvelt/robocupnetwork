@@ -1,4 +1,5 @@
 const { User, ActionType, Action, Role, Manifestation, School, Place, AgeRange, Team, Category, Module } = require('./models');
+const TeamHasUser = require('../database/associationTables/TeamHasUser');
 
 const seed = async () => {
     const users = [
@@ -138,6 +139,10 @@ const seed = async () => {
         await Team.create({name: 'Fenix'})
     ];
 
+    const teamsHasUser = [
+        await TeamHasUser.create({teamId: 1, userId: 1, role:'captain'})
+    ];
+
     const categories = [
         await Category.create({name: 'Rescue Line', description: 'Seguilinea', maxRobotsPerTeam: 4, maxTeamsPerLineUp: 10, isDividedIntoZones: true, checkpointsDetermineZones: true, requiresEvacuation: true, defaultMaxTime: 300})
     ];
@@ -157,7 +162,9 @@ const seed = async () => {
         await Module.create({ name: 'Staff', alias: 'staff' })
     ];
 
+    await teams[0].addManifestation(manifestation[0]);
 
+    await schools[0].setPlace(places[0]);
 
     await actions[0].addActionType(actionTypes[0]);
     await actions[1].addActionType(actionTypes[2]);

@@ -14,8 +14,12 @@ export class TeamService {
     return this.socketIoService.get('getTeams');
   }
 
-  createTeam(data) {
-    return this.socketIoService.send('createTeam', data);
+  getTeamsInManifestation(manifestation) {
+    return this.socketIoService.send('getTeamsInManifestation', manifestation);
+  }
+
+  createTeam(team, manifestation) {
+    return this.socketIoService.send('createTeam', {team, manifestation});
   }
 
   editTeam(data) {

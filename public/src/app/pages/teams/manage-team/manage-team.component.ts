@@ -21,6 +21,7 @@ import { UsersListComponent } from '../../../shared/dialogs/users-list/users-lis
 import { UserInterface } from './../../../interfaces/user.interface';
 import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'ngx-manage-team',
@@ -72,12 +73,13 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
               private teamService: TeamService,
               private schoolService: SchoolService,
               private ageRangeService: AgeRangesService,
-              private usersService: UsersService) {
+              private usersService: UsersService,
+              private authService: AuthService) {
     }
 
 
   ngOnInit() {
-    this.teamService.getTeams()
+    this.teamService.getTeamsInManifestation(this.authService.getManifestation())
      .then(teams => {
        teams.forEach(team => {
         this.teamService.getCaptainFromId(team.id).then(res => {
@@ -136,11 +138,13 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
 
   onButtonClicked() {
     const team: TeamInterface = _.cloneDeep(this.team);
+    const captain = team.captain;
     team.ageRanges = team.ageRanges.filter((ageRange: any) => ageRange.selected);
     team.schools = team.schools.filter((school: any) => school.selected);
     if (team.ageRanges.length === 1 && team.schools.length === 1 && team.name !== '') {
-      this.teamService.createTeam(team)
+      this.teamService.createTeam(team, this.authService.getManifestation())
       .then(_team => {
+        _team.captain = captain.name + ' ' + captain.surname;
         this.notificationsService.success('TEAM_CREATED');
         this.source.insert(_team);
         this.team.show = false;

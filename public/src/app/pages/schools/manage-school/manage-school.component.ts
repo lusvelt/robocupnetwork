@@ -106,9 +106,11 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
 
   onButtonClicked() {
     const school: SchoolInterface = _.cloneDeep(this.school);
+    const place = school.place;
     if (school.place && school.name !== '') {
       this.schoolService.createSchool(school)
       .then(_school => {
+        _school.place = place[0].country + ' ' + place[0].region + ' ' + place[0].province + ' ' + place[0].postalCode + ' ' + place[0].city + ' ' + place[0].civicNumber + ' ' + place[0].street;
         this.notificationsService.success('SCHOOL_CREATED');
         this.source.insert(_school);
         this.school.show = false;

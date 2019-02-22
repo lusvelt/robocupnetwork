@@ -1,14 +1,17 @@
 const _ = require('lodash');
 const Team = require('../../models/Team');
 const User = require('../../models/User');
+const Manifestation = require('../../models/Manifestation');
 const AgeRange = require('../../models/AgeRange');
 const log = require('../../config/consoleMessageConfig');
 const TeamHasUser = require('../../database/associationTables/TeamHasUser');
+const TeamParticipatesToManifestation = require('../../database/associationTables/TeamParticipatesToManifestation');
 
 const teamIo = (clientsIo, socket, room) => {
 
-    const createTeam = async (_team, callback) => {
-        console.log(_team);
+    const createTeam = async (data, callback) => {
+        _team = data.team;
+        _manifestation = data.manifestation;
         try {
             const team = await Team.create(_team);
             if (!team)
@@ -24,6 +27,12 @@ const teamIo = (clientsIo, socket, room) => {
             _team.members.forEach(member => {
                 promises.push(TeamHasUser.create({teamId: team.id, userId: member.id, role: 'member'}));
             });
+
+            promises = [];
+            Manifestation.findById(_manifestation.id)
+                .then(manifestation => {
+                    promises.push(team.addManifestation(manifestation));
+                });
 
             const result = await Promise.all(promises);
             if(!result)
@@ -78,6 +87,16 @@ const teamIo = (clientsIo, socket, room) => {
         }
     };
 
+    const getTeamsInManifestation = async (_manifestation, callback) => {
+        try {
+            await Manifestation.findById(_manifestation.id).then(manifestation => manifestation.getTeams().then(teams => callback(teams)));
+            log.verbose('Teams in manifestation data request');
+
+        } catch (err) {
+            callback(new Error());
+        }
+    }
+
     const editTeam = async (_team, callback) => {
         try {
             const id = _team.id;
@@ -118,6 +137,7 @@ const teamIo = (clientsIo, socket, room) => {
     socket.on('createTeam', createTeam);
     socket.on('removeTeam', removeTeam);
     socket.on('getTeams', getTeams);
+    socket.on('getTeamsInManifestation', getTeamsInManifestation);
     socket.on('editTeam', editTeam);
     socket.on('getCaptainFromId',getCaptainFromId);
 };

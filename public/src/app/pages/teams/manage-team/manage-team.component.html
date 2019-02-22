@@ -1,109 +1,123 @@
-<button class="mb-3" [ngClass]="{ 'btn': true, 'btn-success': !team.show, 'btn-danger': team.show }" type="button"
-  (click)="toggleForm()">
-  <i [ngClass]="{ 'fas': true, 'fa-plus': !team.show, 'fa-times': team.show }"></i>
-  {{ (team.show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
-</button>
 
-<form (ngSubmit)="onButtonClicked()" #form="ngForm" [hidden]="!team.show">
-  <div class="form-group">
-    <nb-card>
-      <nb-card-header>{{'NEW_TEAM' | translate}}</nb-card-header>
-      <nb-card-body>
-        <div class="mb-3">
-          <label for="input-name" class="sr-only">{{ 'TEM_NAME' | translate}}</label>
-          <input nbInput [(ngModel)]="team.name" #name="ngModel" id="input-name" name="name" placeholder="{{ 'TEAM_NAME' | translate }}"
-            autofocus fullWidth [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : ''" required>
-          <small class="form-text error" *ngIf="name.touched && name.errors?.required">
-            {{ 'TEAM_NAME_REQUIRED' | translate }}
-          </small>
-        </div>
-        <div class="mb-3" ngbDropdown>
-          <button class="btn btn-primary" type="button" ngbDropdownToggle>
-            {{ 'AGE_RANGES' | translate }}
-          </button>
-          <ul ngbDropdownMenu class="dropdown-menu">
-            <li class="dropdown-item" *ngFor="let ageRange of team.ageRanges">
-              <nb-checkbox name="ageRangeChoose" [(ngModel)]="ageRange.selected">{{ ageRange.name }}, {{ageRange.min}}, {{ageRange.max}}</nb-checkbox>
-            </li>
-          </ul>
-        </div>
-        <div class="mb-3" ngbDropdown>
-          <button class="btn btn-primary" type="button" ngbDropdownToggle>
-            {{ 'SCHOOLS' | translate }}
-          </button>
-          <ul ngbDropdownMenu class="dropdown-menu">
-            <li class="dropdown-item" *ngFor="let school of team.schools">
-              <nb-checkbox name="schoolChoose" [(ngModel)]="school.selected">{{ school.name }}</nb-checkbox>
-            </li>
-          </ul>
-        </div>
-        <div class="row mb-3">
-          <div class="col-md-5">
-              <input type="text" class="form-control"
-              placeholder="{{ 'CAPTAIN' | translate }}"
-              (selectItem)="onCaptainClicked($event)"
-              [ngbTypeahead]="searchUser"
-              [resultFormatter]="usersFormatter"
-              [inputFormatter]="usersFormatter"
-              (focus)="focus$.next($event.target.value)"
-              (click)="click$.next($event.target.value)"
-              #searchUserInstance="ngbTypeahead"/>
-          </div>
-          <div class="col-md-1">
-              <button class="btn btn-primary" nbButton hero (click)="deleteCaptain(); $event.preventDefault()"> <i class="fas fa-trash"></i> </button>
-          </div>
-          
-          <div class="col-md-5">
-            <input type="text" class="form-control"
-                  placeholder="{{ 'MEMBERS' | translate }}"
-                  (selectItem)="onUserClicked($event)"
-                  [ngbTypeahead]="searchUser"
-                  [resultFormatter]="usersFormatter"
-                  [inputFormatter]="usersFormatter"
-                  (focus)="focus$.next($event.target.value)"
-                  (click)="click$.next($event.target.value)"
-                  #searchUserInstance="ngbTypeahead"/>
-          </div>
-          <div class="col-md-1">
-              <button class="btn btn-primary" nbButton hero (click)="deleteMembers(); $event.preventDefault()"> <i class="fas fa-trash"></i> </button>
-          </div>        
-
-
-      </div>
-
-        <div class="mb-3" [hidden]="!isCaptain">
-          <ol>
-            {{'CAPTAIN' | translate }}
-            <ol>
-                <li>{{team.captain.name + " " +team.captain.surname}}</li>
-            </ol>
-          </ol>  
-        </div>
-
-        <div class="mb-3" [hidden]="!isOneMember">
-          <ol>
-            {{'MEMBER' | translate }}
-            <ol>
-                <li *ngFor="let user of team.members">{{user.name + " " + user.surname}}</li>
-            </ol>
-          </ol>  
-        </div>
-
-        <button class="btn btn-primary" nbButton hero>{{'TEAM_BUTTON'|translate}}</button>
-      </nb-card-body>
-    </nb-card>
+<div class="welcome" *ngIf="!authService.isManifestationSelected()">
+  <div class="maintitle">
+    <h1 class="font-w-bold">{{ 'SELECT_A_MANIFESTATION' | translate }}</h1>
   </div>
-</form>
+
+  <div class="subtitle">
+    <h1 class="font-w-light">{{'GO_TO_THE_DASHBOARD' | translate}}!</h1>
+  </div>
+</div>
+
+<div *ngIf="authService.isManifestationSelected()">
+
+  <button class="mb-3" [ngClass]="{ 'btn': true, 'btn-success': !team.show, 'btn-danger': team.show }" type="button"
+    (click)="toggleForm()">
+    <i [ngClass]="{ 'fas': true, 'fa-plus': !team.show, 'fa-times': team.show }"></i>
+    {{ (team.show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
+  </button>
+
+  <form (ngSubmit)="onButtonClicked()" #form="ngForm" [hidden]="!team.show">
+    <div class="form-group">
+      <nb-card>
+        <nb-card-header>{{'NEW_TEAM' | translate}}</nb-card-header>
+        <nb-card-body>
+          <div class="mb-3">
+            <label for="input-name" class="sr-only">{{ 'TEM_NAME' | translate}}</label>
+            <input nbInput [(ngModel)]="team.name" #name="ngModel" id="input-name" name="name" placeholder="{{ 'TEAM_NAME' | translate }}"
+              autofocus fullWidth [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : ''" required>
+            <small class="form-text error" *ngIf="name.touched && name.errors?.required">
+              {{ 'TEAM_NAME_REQUIRED' | translate }}
+            </small>
+          </div>
+          <div class="mb-3" ngbDropdown>
+            <button class="btn btn-primary" type="button" ngbDropdownToggle>
+              {{ 'AGE_RANGES' | translate }}
+            </button>
+            <ul ngbDropdownMenu class="dropdown-menu">
+              <li class="dropdown-item" *ngFor="let ageRange of team.ageRanges">
+                <nb-checkbox name="ageRangeChoose" [(ngModel)]="ageRange.selected">{{ ageRange.name }}, {{ageRange.min}}, {{ageRange.max}}</nb-checkbox>
+              </li>
+            </ul>
+          </div>
+          <div class="mb-3" ngbDropdown>
+            <button class="btn btn-primary" type="button" ngbDropdownToggle>
+              {{ 'SCHOOLS' | translate }}
+            </button>
+            <ul ngbDropdownMenu class="dropdown-menu">
+              <li class="dropdown-item" *ngFor="let school of team.schools">
+                <nb-checkbox name="schoolChoose" [(ngModel)]="school.selected">{{ school.name }}</nb-checkbox>
+              </li>
+            </ul>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-5">
+                <input type="text" class="form-control"
+                placeholder="{{ 'CAPTAIN' | translate }}"
+                (selectItem)="onCaptainClicked($event)"
+                [ngbTypeahead]="searchUser"
+                [resultFormatter]="usersFormatter"
+                [inputFormatter]="usersFormatter"
+                (focus)="focus$.next($event.target.value)"
+                (click)="click$.next($event.target.value)"
+                #searchUserInstance="ngbTypeahead"/>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-primary" nbButton hero (click)="deleteCaptain(); $event.preventDefault()"> <i class="fas fa-trash"></i> </button>
+            </div>
+            
+            <div class="col-md-5">
+              <input type="text" class="form-control"
+                    placeholder="{{ 'MEMBERS' | translate }}"
+                    (selectItem)="onUserClicked($event)"
+                    [ngbTypeahead]="searchUser"
+                    [resultFormatter]="usersFormatter"
+                    [inputFormatter]="usersFormatter"
+                    (focus)="focus$.next($event.target.value)"
+                    (click)="click$.next($event.target.value)"
+                    #searchUserInstance="ngbTypeahead"/>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-primary" nbButton hero (click)="deleteMembers(); $event.preventDefault()"> <i class="fas fa-trash"></i> </button>
+            </div>        
 
 
-<nb-card size="xxlarge">
-  <nb-card-header>
-    {{'TEAMS'|translate}}
-  </nb-card-header>
+        </div>
 
-  <nb-card-body>
-    <ng2-smart-table [settings]="settings" [source]="source" (createConfirm)="onCreateConfirm($event)" (editConfirm)="onEditConfirm($event)"
-      (deleteConfirm)="onDeleteConfirm($event)">
-    </ng2-smart-table>
-  </nb-card-body>
-</nb-card>
+          <div class="mb-3" [hidden]="!isCaptain">
+            <ol>
+              {{'CAPTAIN' | translate }}
+              <ol>
+                  <li>{{team.captain.name + " " +team.captain.surname}}</li>
+              </ol>
+            </ol>  
+          </div>
+
+          <div class="mb-3" [hidden]="!isOneMember">
+            <ol>
+              {{'MEMBER' | translate }}
+              <ol>
+                  <li *ngFor="let user of team.members">{{user.name + " " + user.surname}}</li>
+              </ol>
+            </ol>  
+          </div>
+
+          <button class="btn btn-primary" nbButton hero>{{'TEAM_BUTTON'|translate}}</button>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </form>
+
+
+  <nb-card size="xxlarge">
+    <nb-card-header>
+      {{'TEAMS'|translate}}
+    </nb-card-header>
+
+    <nb-card-body>
+      <ng2-smart-table [settings]="settings" [source]="source" (createConfirm)="onCreateConfirm($event)" (editConfirm)="onEditConfirm($event)"
+        (deleteConfirm)="onDeleteConfirm($event)">
+      </ng2-smart-table>
+    </nb-card-body>
+  </nb-card>
+</div>
