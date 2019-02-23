@@ -1,0 +1,63 @@
+<div class="row header">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-body>
+                <div class="row header">
+                        <h3 class="font-w-light welcome-back">{{'WELCOME_BACK'|translate}}</h3>  <h3 class="font-w-bold">{{ fullName }}!</h3> <h3 class="font-w-light welcome-back">{{'WELCOME_DAILY_MESSAGE'|translate}}!</h3> 
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
+
+<div class="row content">
+    <div class="col-md-6">
+        <nb-card class="list-card" size="small">
+            <nb-card-header>Gare Arbitrate</nb-card-header>
+            <nb-list>
+              <nb-list-item *ngFor="let arbitratedRun of arbitratedRuns">
+                <nb-user [name]="arbitratedRun.name" [title]="arbitratedRun.points">
+                </nb-user>
+              </nb-list-item>
+            </nb-list>
+          </nb-card>
+    </div>
+    <div class="col-md-6">
+        <nb-card>
+            <nb-card-header>
+                Arbitra una nuova gara
+            </nb-card-header>
+            <nb-card-body>
+                <button nbButton fullWidth status="danger" class="button">Scansiona il codice della squadra</button>
+            </nb-card-body>
+        </nb-card>
+        <nb-card>
+                <nb-card-header>
+                    Scarica il calendario gare
+                </nb-card-header>
+                <nb-card-body>
+                    <button nbButton fullWidth status="success" class="button">Download</button>
+                </nb-card-body>
+            </nb-card>
+    </div>
+</div>
+
+<div class="row footer">
+        <div class="col-md-12">
+            <nb-card>
+                <nb-card-body>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button nbButton status="danger" class="button"><i class="fas fa-sign-out-alt"></i></button>
+                        </div>
+                        <div class="col-md-6">
+                                <span class="created-by">
+                                        {{ 'CREATED_BY' | translate }}
+                                        <a class="font-w-bold linkschool" href="http://iisvoltapescara.gov.it/" target="_blank">I.I.S A.Volta Pescara</a> 2018-2019
+                                      </span>
+                        </div>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+        </div>
+    </div>

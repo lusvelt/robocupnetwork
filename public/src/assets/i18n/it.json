@@ -135,7 +135,8 @@
     "ACTION_DESCRIPTION":"Descrizione dell'azione",
     "ACTION_BUTTON":"Crea azione",
     "ACTION_UPDATED":"Azione aggiornato",
-
+    "WELCOME_BACK":"Bentornato",
+    "WELCOME_DAILY_MESSAGE":"Sembra un'ottima giornata per arbitrare",
     "MANIFESTATIONS":"Manifestazioni",
     "START": "Inizio",
     "END": "Fine",

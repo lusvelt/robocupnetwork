@@ -40,7 +40,8 @@
     "REGISTER_CONNECT_WITH_SOCIAL": "Or connect with: ",
     "REGISTER_SIGNIN_DESCRIPTION": "Alredy have an account?",
     "REGISTER_SIGNIN": "Sign In",
-
+    "WELCOME_BACK":"Welcome back",
+    "WELCOME_DAILY_MESSAGE":"It's look like a good day for arbitrate",
     "NOTIFICATION_SUCCESS_TITLE": "Operation successful",
     "OR": "Or",
     "NOTIFICATION_WARNING_TITLE": "Warning",
