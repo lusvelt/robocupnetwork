@@ -1,0 +1,40 @@
+
+  .list-card {
+    nb-card-header {
+      border-bottom: none;
+    }
+
+    nb-card-body {
+      padding: 0;
+    }
+  }
+
+  .header {
+      h3 {
+          margin-left: 1%;
+      }
+  }
+
+  .created-by {
+      float: right;
+      position: absolute;
+      margin-top: 6px;
+      font-size: 1.5rem;
+  }
+
+.button {
+  border-radius: 1.5rem;
+}
+
+.linkschool {
+  color: #a1a1e5;
+}
+
+.evacuation {
+  margin-left: 2px;
+}
+
+.borderclass {
+  border-right: 2px solid #37317a;
+}
+

@@ -1,3 +1,4 @@
+import { RunSettingComponent } from './@theme/components/mobileapp/runsetting/runsetting.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { LogoutComponent } from './@theme/components/auth/logout/logout.component';
 import { RequestPasswordComponent } from './@theme/components/auth/request-password/request-password.component';
@@ -52,6 +53,10 @@ const routes: Routes = [
       {
         path: 'mobiledashboard',
         component: MobiledashboardComponent
+      },
+      {
+        path: 'runsetting',
+        component: RunSettingComponent
       },
       {
         path: '',

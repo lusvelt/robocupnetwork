@@ -1,0 +1,97 @@
+<div class="row header">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-body>
+        <div class="row header">
+          <h3 class="font-w-light welcome-back">{{'RACE_SETTINGS'|translate}}: NOME SQUADRA :)</h3>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<div class="content">
+  <nb-card>
+    <nb-card-body>
+      <div class="row">
+        <div class="borderclass col-md-6">
+          <div class="mt-3">
+            <label for="input-field" class="sr-only">{{ 'FIELD' | translate}}</label>
+            <input nbInput [(ngModel)]="runsetting.field" #field="ngModel" id="input-field" name="field"
+              placeholder="{{ 'FIELD' | translate }}" autofocus fullWidth [status]="field.dirty ? (field.invalid  ? 'danger' : 'success') : ''"
+              required>
+            <small class="form-text error" *ngIf="field.touched && field.errors?.required">
+              {{ 'FIELD_REQUIRED' | translate }}
+            </small>
+          </div>
+          <div class="mt-3">
+            <label for="input-aliveVictims" class="sr-only">{{ 'ALIVE_VICTIM' | translate}}</label>
+            <input nbInput [(ngModel)]="runsetting.aliveVictim" #aliveVictim="ngModel" id="input-aliveVictim" name="aliveVictim"
+              placeholder="{{ 'ALIVE_VICTIM' | translate }}" autofocus fullWidth [status]="aliveVictim.dirty ? (aliveVictim.invalid  ? 'danger' : 'success') : ''"
+              required>
+            <small class="form-text error" *ngIf="aliveVictim.touched && aliveVictim.errors?.required">
+              {{ 'ALIVE_VICTIM_REQUIRED' | translate }}
+            </small>
+          </div>
+          <div class="mt-3">
+            <label for="input-aliveVictims" class="sr-only">{{ 'DEAD_VICTIM' | translate}}</label>
+            <input nbInput [(ngModel)]="runsetting.deadVictim" #deadVictim="ngModel" id="input-deadVictim" name="deadVictim"
+              placeholder="{{ 'DEAD_VICTIM' | translate }}" autofocus fullWidth [status]="deadVictim.dirty ? (deadVictim.invalid  ? 'danger' : 'success') : ''"
+              required>
+            <small class="form-text error" *ngIf="deadVictim.touched && deadVictim.errors?.required">
+              {{ 'DEAD_VICTIM_REQUIRED' | translate }}
+            </small>
+          </div>
+          <div class="row mt-3">
+            <h5 class="ml-3 mr-3 mt-3"> {{ 'EVACUATION_TYPE' | translate }}:</h5>
+            <nb-radio-group name="evacuationType" [(value)]="runsetting.evacuationType">
+              <nb-radio value='high'>{{'HIGH'|translate}}</nb-radio>
+              <nb-radio value='low'>{{'LOW'|translate}}</nb-radio>
+            </nb-radio-group>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="input-checkpointNumber" class="sr-only">{{ 'CHECKPOINT_NUMBER' | translate}}</label>
+            <input nbInput [(ngModel)]="runsetting.numberOfCheckpoints" #checkpointNumber="ngModel" id="input-checkpointNumber"
+              name="checkpointNumber" placeholder="{{ 'CHECKPOINT_NUMBER' | translate }}" autofocus fullWidth [status]="checkpointNumber.dirty ? (checkpointNumber.invalid  ? 'danger' : 'success') : ''"
+              required (change)="onNumberOfCheckpointChange()">
+            <small class="form-text error" *ngIf="checkpointNumber.touched && checkpointNumber.errors?.required">
+              {{ 'CHECKPOINT_NUMBER_REQUIRED' | translate }}
+            </small>
+          </div>
+          <div class="mt-3 ml-2 row">
+            <nb-checkbox status="success" (change)="onLastCheckpointIsRoomChange()"[(ngModel)]="runsetting.lastCheckpointIsRoom" #lastCheckpointIsRoom="ngModel" name="lastCheckpointIsRoom">{{'LAST_CHECKPOINT_IS_ROOM'| translate}}</nb-checkbox>
+          </div>
+          <div class="mt-3">
+            <input *ngFor="let checkpoint of runsetting.checkpoint">
+          </div>
+        </div>
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton fullWidth (click)="visualizza()">micio</button>
+    </nb-card-footer>
+  </nb-card>
+</div>
+
+<div class="row footer">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-md-6">
+            <button nbButton status="danger" class="button"><i class="fas fa-sign-out-alt"></i></button>
+          </div>
+          <div class="col-md-6">
+            <span class="created-by">
+              {{ 'CREATED_BY' | translate }}
+              <a class="font-w-bold linkschool" href="http://iisvoltapescara.gov.it/" target="_blank">I.I.S A.Volta
+                Pescara</a> 2018-2019
+            </span>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

@@ -23,7 +23,8 @@ const {
     Event,
     RobotImage,
     Robot,
-    RobotType
+    RobotType,
+    Occurence
 } = require('./models');
 
 const {
@@ -66,6 +67,8 @@ const categoryFk = utils.getForeignKey(Category);
 const robotImageFk = utils.getForeignKey(RobotImage);
 const robotTypeFk = utils.getForeignKey(RobotType);
 const moduleFk = utils.getForeignKey(Module);
+const eventFk = utils.getForeignKey(Event);
+const occurenceFk = utils.getForeignKey(Occurence);
 
 // EXAMPLE Session - Shift | 1:1
 // Session.hasOne(Shift, { foreignKey: sessionFk });
@@ -104,6 +107,25 @@ Place.hasMany(Manifestation, { foreignKey: placeFk });
 // Place - School | 1:N
 //Place.hasMany(School, { foreignKey: placeFk });
 School.belongsTo(Place, {foreignKey: placeFk});
+
+// Run - Field | 1:N
+Run.belongsTo(Field, { foreignKey: fieldFk });
+
+// Run - Session | 1:N
+// Run.belongsTo(Session, { foreignKey: sessionFk });
+
+// Occurence - Run 1:1
+Run.belongsTo(Occurence, { foreignKey: occurenceFk });
+
+// Occurence - Event 1:N
+// Occurence.belongsTo(Event, { foreignKey: eventFk });
+
+// Occurence - Lineup 1:N
+Occurence.belongsTo(Lineup, { foreignKey: lineupFk });
+
+// Session - Run 1:N
+Session.belongsTo(Phase, { foreignKey: phaseFk });
+
 // Session - Shift | 1:N
 Session.hasMany(Shift, { foreignKey: sessionFk });
 

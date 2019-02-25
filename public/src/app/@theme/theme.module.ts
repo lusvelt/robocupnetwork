@@ -79,6 +79,7 @@ import { NbAuthModule } from '@nebular/auth';
 import { MobileloginComponent } from './components/mobileapp/mobilelogin/mobilelogin.component';
 import { MobiledashboardComponent } from './components/mobileapp/mobiledashboard/mobiledashboard.component';
 import { MobileappComponent } from './components/mobileapp/mobileapp.component';
+import { RunSettingComponent } from './components/mobileapp/runsetting/runsetting.component';
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule, RouterModule];
 
@@ -141,7 +142,8 @@ const COMPONENTS = [
 
   MobileappComponent,
   MobileloginComponent,
-  MobiledashboardComponent
+  MobiledashboardComponent,
+  RunSettingComponent
 ];
 
 const ENTRY_COMPONENTS = [
