@@ -66,9 +66,6 @@ export class NewCategoryComponent implements OnInit, OnDestroy {
 
 
   onButtonClicked() {
-    if (this.category.isDividedIntoZones === 'false') this.category.isDividedIntoZones = false; else this.category.isDividedIntoZones = true;
-    if (this.category.checkpointsDetermineZones === 'false') this.category.checkpointsDetermineZones = false; else this.category.checkpointsDetermineZones = true;
-    if (this.category.requiresEvacuation === 'false') this.category.requiresEvacuation = false; else this.category.requiresEvacuation = true;
     this.category.maxRobotsPerTeam = parseInt(this.category.maxRobotsPerTeam, 10);
     this.category.maxTeamsPerLineUp = parseInt(this.category.maxTeamsPerLineUp, 10);
     this.category.defaultMaxTime = parseInt(this.category.defaultMaxTime, 10);

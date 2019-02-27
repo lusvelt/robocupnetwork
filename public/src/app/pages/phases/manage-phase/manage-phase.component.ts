@@ -1,6 +1,6 @@
-import { ManifestationInterface } from './../../../interfaces/manifestation.interface';
+import { PhaseInterface } from './../../../interfaces/phase.interface';
 import { DataSource } from './../../../classes/data-source.class';
-import { ManifestationsService } from './../../../services/manifestations.service';
+import { PhasesService } from './../../../services/phases.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TablesService } from '../../../services/tables.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -14,57 +14,61 @@ import { Subscription } from 'rxjs/Subscription';
 import { SingleDateComponent } from '../../../shared/view-cells/single-date/single-date.component';
 
 @Component({
-  selector: 'ngx-new-manifestation',
-  templateUrl: './new-manifestation.component.html',
-  styleUrls: ['./new-manifestation.component.scss']
+  selector: 'ngx-manage-phase',
+  templateUrl: './manage-phase.component.html',
+  styleUrls: ['./manage-phase.component.scss']
 })
-export class NewManifestationComponent implements OnInit, OnDestroy {
-  manifestation: any = {
+export class ManagePhaseComponent implements OnInit, OnDestroy {
+
+  phase: any = {
     name: '',
     description: '',
+    numAdmittedTeams: '',
+    numPassingTeams: '',
     show: false
   };
   subscriptions: Subscription[] = [];
   source: DataSource = new DataSource();
+
   constructor(private tablesService: TablesService,
-              private translateService: TranslateService,
-              private notificationsService: NotificationsService,
-              private modalService: ModalService,
-              private manifestationsService: ManifestationsService,
-              private config: NgbDropdownConfig,
-              private datePipe: DatePipe) {
-                config.autoClose = false;
-               }
+    private translateService: TranslateService,
+    private notificationsService: NotificationsService,
+    private modalService: ModalService,
+    private phasesService: PhasesService,
+    private config: NgbDropdownConfig,
+    private datePipe: DatePipe) {
+      config.autoClose = false;
+        }
 
   ngOnInit() {
-    this.manifestationsService.getManifestations()
-      .then(manifestation => this.source.load(manifestation))
+    this.phasesService.getPhases()
+      .then(phase => this.source.load(phase))
       .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
 
     this.subscriptions.push(
-      this.manifestationsService.notify('createManifestation')
-      .subscribe(manifestation => this.source.insert(manifestation)));
+      this.phasesService.notify('createPhase')
+      .subscribe(phase => this.source.insert(phase)));
 
     this.subscriptions.push(
-      this.manifestationsService.notify('editManifestation')
-      .subscribe(manifestation => this.source.edit(manifestation)));
+      this.phasesService.notify('editPhase')
+      .subscribe(phase => this.source.edit(phase)));
 
     this.subscriptions.push(
-      this.manifestationsService.notify('removeManifestation')
-      .subscribe(manifestation => this.source.delete(manifestation)));
+      this.phasesService.notify('removePhase')
+      .subscribe(phase => this.source.delete(phase)));
   }
 
   onButtonClicked() {
-    const manifestation: ManifestationInterface = _.cloneDeep(this.manifestation);
+    const phase: PhaseInterface = _.cloneDeep(this.phase);
 
-    manifestation.start = new Date(this.manifestation.start);
-    manifestation.end = new Date(this.manifestation.end);
-    if (manifestation.name !== '' && manifestation.description !== '') {
-    this.manifestationsService.createManifestation(manifestation)
-      .then(_manifestation => {
+    phase.start = new Date(this.phase.start);
+    phase.end = new Date(this.phase.end);
+    if (phase.name !== '' && phase.description !== '') {
+    this.phasesService.createPhase(phase)
+      .then(_phase => {
         this.notificationsService.success('MANIFESTATION_CREATED');
-        this.source.insert(_manifestation);
-        this.manifestation.show = false;
+        this.source.insert(_phase);
+        this.phase.show = false;
       });
     } else {
       this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
@@ -94,7 +98,7 @@ export class NewManifestationComponent implements OnInit, OnDestroy {
       onComponentInitFunction: (instance) => {
         instance.internalKey = 'start';
         instance.parentNotifier.on('change', changed => {
-          this.manifestationsService.updateStart(instance.rowData, changed)
+          this.phasesService.updateStart(instance.rowData, changed)
           .then(result => this.notificationsService.success('START_UPDATE_SUCCEDED'))
           .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
         });
@@ -108,18 +112,26 @@ export class NewManifestationComponent implements OnInit, OnDestroy {
       onComponentInitFunction: (instance) => {
         instance.internalKey = 'end';
         instance.parentNotifier.on('change', changed => {
-          this.manifestationsService.updateEnd(instance.rowData, changed)
+          this.phasesService.updateEnd(instance.rowData, changed)
           .then(result => this.notificationsService.success('END_UPDATE_SUCCEDED'))
           .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
         });
       }
+    },
+    numAdmittedTeams: {
+      title: 'NUM_ADMITTED_TEAMS',
+      type: 'number',
+    },
+    numPassingTeams: {
+      title: 'NUM_PASSING_TEAMS',
+      type: 'number',
     }
   });
 
   onEditConfirm(event) {
     event.confirm.resolve();
-    this.manifestationsService.editManifestation(event.newData)
-      .then(result => this.notificationsService.success('MANIFESTATION_UPDATED'))
+    this.phasesService.editPhase(event.newData)
+      .then(result => this.notificationsService.success('PHASE_UPDATED'))
       .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
   }
 
@@ -128,7 +140,7 @@ export class NewManifestationComponent implements OnInit, OnDestroy {
       .then(confirmation => {
         if (confirmation) {
           event.confirm.resolve();
-          this.manifestationsService.removeManifestation(event.data)
+          this.phasesService.removePhase(event.data)
             .then(result => this.notificationsService.success('DELETE_SUCCEDED'))
             .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
         } else {
@@ -138,10 +150,9 @@ export class NewManifestationComponent implements OnInit, OnDestroy {
   }
 
   toggleForm() {
-    this.manifestation.show = !this.manifestation.show;
+    this.phase.show = !this.phase.show;
   }
   ngOnDestroy() {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
-
 }
