@@ -3,7 +3,7 @@
     <nb-card>
       <nb-card-body>
         <div class="row header">
-          <h3 class="font-w-light welcome-back">{{'RACE_SETTINGS'|translate}}: NOME SQUADRA :)</h3>
+          <h3 class="font-w-light welcome-back">{{'RUN_SETTINGS'|translate}}:  NOME SQUADRA :)</h3>
         </div>
       </nb-card-body>
     </nb-card>
@@ -63,14 +63,18 @@
           <div class="mt-3 ml-2 row">
             <nb-checkbox status="success" (change)="onLastCheckpointIsRoomChange()"[(ngModel)]="runsetting.lastCheckpointIsRoom" #lastCheckpointIsRoom="ngModel" name="lastCheckpointIsRoom">{{'LAST_CHECKPOINT_IS_ROOM'| translate}}</nb-checkbox>
           </div>
-          <div class="mt-3">
-            <input *ngFor="let checkpoint of runsetting.checkpoint">
+
+          <div *ngFor="let checkpoint of runsetting.checkpoint" class="mt-3">
+            <input nbInput [(ngModel)]="checkpoint.value" #checkpoint="ngModel" id="input-checkpoint"
+              name="checkpointNumber" placeholder="{{ 'CHECKPOINT' | translate }}" autofocus fullWidth [status]="checkpoint.dirty ? (checkpoint.invalid  ? 'danger' : 'success') : ''"
+              required>
           </div>
+
         </div>
       </div>
     </nb-card-body>
     <nb-card-footer>
-      <button nbButton fullWidth (click)="visualizza()">micio</button>
+      <button nbButton fullWidth (click)="visualizza()">{{'CONTINUE'|translate}}</button>
     </nb-card-footer>
   </nb-card>
 </div>

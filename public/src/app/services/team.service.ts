@@ -22,12 +22,12 @@ export class TeamService {
     return this.socketIoService.send('createTeam', {team, manifestation});
   }
 
-  editTeam(data) {
-    return this.socketIoService.send('editTeam', data);
+  editTeam(team, manifestation) {
+    return this.socketIoService.send('editTeam', {team, manifestation});
   }
 
-  removeTeam(data) {
-    return this.socketIoService.send('removeTeam', data);
+  removeTeam(team, manifestation) {
+    return this.socketIoService.send('removeTeam', {team, manifestation});
   }
 
   getCaptainFromId(id) {

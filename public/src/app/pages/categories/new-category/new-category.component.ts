@@ -118,14 +118,20 @@ export class NewCategoryComponent implements OnInit, OnDestroy {
     isDividedIntoZones: {
       title: 'CATEGORY_IS_DIVIDED_INTO_ZONES',
       type: 'boolean',
+      addable: false,
+      editable: false
     },
     checkpointsDetermineZones: {
       title: 'CATEGORY_CHECKPOINTS_DETERMINE_ZONES',
       type: 'boolean',
+      addable: false,
+      editable: false
     },
     requiresEvacuation: {
       title: 'CATEGORY_REQUIRES_EVACUATION',
       type: 'boolean',
+      addable: false,
+      editable: false
     },
     defaultMaxTime: {
       title: 'CATEGORY_DEFAULT_MAX_TIME',

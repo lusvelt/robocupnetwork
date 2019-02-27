@@ -12,9 +12,9 @@ export class ModalService {
 
   constructor(private modalService: NgbModal, private translateService: TranslateService) { }
 
-  alert(header: string, message: string) {
+  async alert(header: string, message: string) {
     const modal = this.modalService.open(AlertModalComponent, alertSettings);
-    modal.componentInstance.modalHeader = header;
+    modal.componentInstance.modalHeader = await this.translateService.get(header).toPromise();
     modal.componentInstance.modalContent = message;
     return modal.result;
   }

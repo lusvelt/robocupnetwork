@@ -5,6 +5,7 @@ import { NbMenuService, NbSidebarService } from '@nebular/theme';
 import { AnalyticsService } from '../../../@core/utils/analytics.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../services/auth.service';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'ngx-header',
@@ -24,7 +25,8 @@ export class HeaderComponent implements OnInit {
     private userService: UserService,
     private analyticsService: AnalyticsService,
     private translateService: TranslateService,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private modalService: ModalService) {
   }
 
   ngOnInit() {
@@ -56,6 +58,10 @@ export class HeaderComponent implements OnInit {
 
   startSearch() {
     this.analyticsService.trackEvent('startSearch');
+  }
+
+  openContactsModal() {
+    this.modalService.alert('CONTACT_US', 'emailacasp@caso.it');
   }
 
   unsetManifestation() {

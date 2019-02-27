@@ -44,5 +44,9 @@ export class MobiledashboardComponent implements OnInit {
       this.fullName = this.userService.getFullName();
     }
 
+    qrCodeScan() {
+      this.router.navigate(['/mobileapp', 'runsetting']);
+    }
+
 
 }

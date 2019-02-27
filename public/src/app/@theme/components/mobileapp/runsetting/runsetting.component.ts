@@ -45,7 +45,7 @@ export class RunSettingComponent implements OnInit {
     field: '',
     numberOfCheckpoints: '',
     checkpoint: []
-  }
+  };
 
   submitted: boolean = false;
   rememberMe = false;
@@ -54,9 +54,7 @@ export class RunSettingComponent implements OnInit {
       this.fullName = this.userService.getFullName();
     }
 
-    visualizza() {
-      console.log(this.runsetting);
-    }
+    visualizza() { }
 
   onNumberOfCheckpointChange() {
     this.runsetting.checkpoint.length = this.runsetting.numberOfCheckpoints;

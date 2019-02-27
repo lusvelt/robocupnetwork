@@ -38,7 +38,7 @@ const teamIo = (clientsIo, socket, room) => {
             if(!result)
                 throw new Error();
             callback(team);
-            socket.broadcast.emit('createTeam', team);
+            socket.broadcast.emit('createTeam', {team,_manifestation});
             log.verbose('Team created');
         } catch (err) {
             callback(new Error());
@@ -97,8 +97,10 @@ const teamIo = (clientsIo, socket, room) => {
         }
     }
 
-    const editTeam = async (_team, callback) => {
+    const editTeam = async (data, callback) => {
         try {
+            const _team = data.team;
+            const _manifestation = data.manifestation;
             const id = _team.id;
             const team = _.omit(_team, ['id']);
             const result = await Team.update(team, {
@@ -109,15 +111,17 @@ const teamIo = (clientsIo, socket, room) => {
             if (!result)
                 throw new Error();
             callback(result);
-            socket.broadcast.emit('editTeam', _team);
+            socket.broadcast.emit('editTeam', {_team, _manifestation});
             log.verbose('Team modified');
         } catch (err) {
             callback(new Error());
         }
     };
 
-    const removeTeam = async (_team, callback) => {
+    const removeTeam = async (data, callback) => {
         try {
+            const _team = data.team;
+            const _manifestation = data.manifestation;
             const id = _team.id;
             const result = await Team.destroy({
                 where: {
@@ -127,7 +131,7 @@ const teamIo = (clientsIo, socket, room) => {
             if (!result)
                 throw new Error();
             callback(result);
-            socket.broadcast.emit('removeTeam', _team);
+            socket.broadcast.emit('removeTeam', {_team,_manifestation});
             log.verbose('Team removed');
         } catch (err) {
             callback(new Error());

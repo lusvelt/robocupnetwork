@@ -150,6 +150,7 @@
     "ADDED_ROLES_IN_MANIFESTATION":"Added roles in manifestation",
 
     "SUBMIT":"Submit",
+    "CONTACT_US":"Contact us",
 
     "PLACES": "Places",
     "MANAGE_PLACES": "Manage places",
@@ -219,5 +220,21 @@
 
     "MODULES": "Modules",
     "ALIAS": "Alias",
-    "ALIAS_REQUIRED": "Alias required"
+    "ALIAS_REQUIRED": "Alias required",
+
+    "RUN_SETTINGS":"Run settings",
+    "FIELD":"Field",
+    "FIELD_REQUIRED":"Field required!",
+    "ALIVE_VICTIM":"Alive victim",
+    "ALIVE_VICTIM_REQEUIRED":"Alive victim required!",
+    "DEAD_VICTIM":"Dead victim",
+    "DEAD_VICTIM_REQUIRED":"Dead victim required!",
+    "EVACUATION_TYPE":"Evacuation type",
+    "HIGH":"High",
+    "LOW":"Low",
+    "CHECKPOINT_NUMBER":"Checkpoint number",
+    "CHECKPOINT_NUMBER_REQUIRED":"Checkpoint number required!",
+    "LAST_CHECKPOINT_IS_ROOM":"Last checkpoint is the room",
+    "CHECKPOINT":"Checkpoint",
+    "CONTINUE":"Continue"
 }

@@ -149,6 +149,7 @@
     "ADDED_ROLES_IN_MANIFESTATION":"Aggiunti ruoli in manifestazione",
 
     "SUBMIT":"Conferma",
+    "CONTACT_US":"Contattaci",
 
     "PLACES": "Luoghi",
     "MANAGE_PLACES": "Gestisci Luoghi",
@@ -219,5 +220,21 @@
 
     "MODULES": "Moduli",
     "ALIAS": "Alias",
-    "ALIAS_REQUIRED": "Alias richiesto!"
+    "ALIAS_REQUIRED": "Alias richiesto!",
+
+    "RUN_SETTINGS":"Impostazioni gara",
+    "FIELD":"Campo",
+    "FIELD_REQUIRED":"Campo richiesto!",
+    "ALIVE_VICTIM":"Vittime vive",
+    "ALIVE_VICTIM_REQEUIRED":"Vittime vive richieste!",
+    "DEAD_VICTIM":"Vittime morte",
+    "DEAD_VICTIM_REQUIRED":"Vittime morte richieste!",
+    "EVACUATION_TYPE":"Tipo di evacuazione",
+    "HIGH":"Alto",
+    "LOW":"Basso",
+    "CHECKPOINT_NUMBER":"Numero di checkpoint",
+    "CHECKPOINT_NUMBER_REQUIRED":"Numero di checkpoint richiesto!",
+    "LAST_CHECKPOINT_IS_ROOM":"L'ultimo checkpoint è la stanza",
+    "CHECKPOINT":"Checkpoint",
+    "CONTINUE":"Prosegui"
 }

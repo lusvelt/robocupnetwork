@@ -84,12 +84,12 @@ export const MENU_ITEMS: any[] = [
     icon: 'fas fa-exchange-alt',
     link: '/pages/age-ranges/new-age-range'
   },
-  {
+  /* {
     title: 'REFEREES',
     alias: 'referees',
     icon: 'fas fa-user-tie',
     link: '/pages/referees/manage-referees'
-  },
+  },*/
   {
     title: 'SCHOOLS',
     alias: 'schools',

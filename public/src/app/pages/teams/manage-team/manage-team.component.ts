@@ -43,7 +43,7 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
   isCaptain: boolean = false;
   isOneMember: boolean = false;
 
- usersList: [];
+  usersList: [];
   @ViewChild('searchUserInstance') searchUserInstance: NgbTypeahead;
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
@@ -89,16 +89,29 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
        this.source.load(teams);
     })
     .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+
     this.subscriptions.push(
      this.teamService.notify('createTeam')
-      .subscribe(team => this.source.insert(team)));
+      .subscribe(data => {
+        if (data._manifestation.id === this.authService.getManifestation().id) {
+          this.source.insert(data.team);
+        }
+      }));
     this.subscriptions.push(
      this.teamService.notify('editTeam')
-      .subscribe(team => this.source.edit(team)));
+      .subscribe(data => {
+        if (data._manifestation.id === this.authService.getManifestation().id) {
+         this.source.edit(data._team);
+        }
+      }));
 
     this.subscriptions.push(
      this.teamService.notify('removeTeam')
-      .subscribe(team => this.source.delete(team)));
+      .subscribe(data => {
+        if (data._manifestation.id === this.authService.getManifestation().id) {
+         this.source.delete(data._team);
+        }
+      }));
 
     this.ageRangeService.getAgeRanges()
     .then(ageRanges => this.team.ageRanges = ageRanges)
@@ -106,13 +119,22 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
 
     this.getNotifiedForAgeRanges(this.team.ageRanges);
     this.schoolService.getSchools()
-    .then(schools => this.team.schools = schools)
+    .then(schools => {
+      this.team.schools = schools;
+      this.getNotifiedForSchools(this.team.schools);
+    })
     .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
 
-    this.getNotifiedForSchools(this.team.schools);
+
 
     this.usersService.getUsers()
-    .then(users => this.usersList = users);
+    .then(users => {
+      this.usersList = users;
+      this.getNotifiedForUsers(this.usersList);
+    })
+    .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+
+
   }
 
   getNotifiedForAgeRanges(ageRangesArray: any[]) {
@@ -125,6 +147,7 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
     this.ageRangeService.notify('removeAgeRange')
       .subscribe(ageRange => ageRangesArray.splice(ageRangesArray.findIndex(el => el.id === ageRange.id), 1));
   }
+
   getNotifiedForSchools(schoolsArray: any[]) {
     this.schoolService.notify('createSchool')
     .subscribe(school => schoolsArray.push(school));
@@ -134,6 +157,21 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
 
     this.schoolService.notify('removeSchool')
       .subscribe(school => schoolsArray.splice(schoolsArray.findIndex(el => el.id === school.id), 1));
+  }
+
+  getNotifiedForUsers(usersArray: any[]) {
+    this.usersService.notify('createUser')
+    .subscribe(user => {
+      usersArray.push(user);
+    });
+
+    this.usersService.notify('editUser')
+      .subscribe(user => usersArray.splice(usersArray.findIndex(el => el.id === user.id), 1, user));
+
+    this.usersService.notify('removeUser')
+      .subscribe(user => {
+        usersArray.splice(usersArray.findIndex(el => el.id === user.id), 1);
+      });
   }
 
   onButtonClicked() {
@@ -175,7 +213,7 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
 
   onEditConfirm(event) {
     event.confirm.resolve();
-    this.teamService.editTeam(event.newData)
+    this.teamService.editTeam(event.newData, this.authService.getManifestation())
       .then(result => this.notificationsService.success('TEAM_UPDATED'))
       .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
   }
@@ -185,7 +223,7 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
       .then(confirmation => {
         if (confirmation) {
           event.confirm.resolve();
-          this.teamService.removeTeam(event.data)
+          this.teamService.removeTeam(event.data, this.authService.getManifestation())
             .then(result => this.notificationsService.success('DELETE_SUCCEDED'))
             .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
         } else {
