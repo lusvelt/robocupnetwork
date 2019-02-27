@@ -2,17 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Router } from '@angular/router';
-import { AuthService } from '../../../../services/auth.service';
-import { NotificationsService } from '../../../../services/notifications.service';
+import { AuthService } from '../../services/auth.service';
+import { NotificationsService } from '../../services/notifications.service';
 
 import 'rxjs/add/operator/catch';
-import { UserService } from './../../../../services/user.service';
+import { UserService } from '../../services/user.service';
+
 @Component({
-  selector: 'ngx-mobiledashboard',
-  templateUrl: './mobiledashboard.component.html',
-  styleUrls: ['./mobiledashboard.component.scss']
+  selector: 'ngx-dashboard-mobile',
+  templateUrl: './dashboard-mobile.component.html',
+  styleUrls: ['./dashboard-mobile.component.scss']
 })
-export class MobiledashboardComponent implements OnInit {
+export class DashboardMobileComponent implements OnInit {
 
   constructor(private translate: TranslateService,
               private authService: AuthService,
@@ -45,7 +46,8 @@ export class MobiledashboardComponent implements OnInit {
     }
 
     qrCodeScan() {
-      this.router.navigate(['/mobileapp', 'runsetting']);
+      /*this.qrCodeService.scan()
+        .then(data => this.router.navigate(['/mobile', 'run-setting', data]));*/
     }
 
 

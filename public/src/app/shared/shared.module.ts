@@ -1,3 +1,4 @@
+import { QRCodesPDFService } from './../services/qr-codes-pdf.service';
 import { ViewOnlyRolesModalComponent } from './modals/view-only-roles-modal/view-only-roles-modal.component';
 import { ConfirmModalComponent } from './modals/confirm-modal/confirm-modal.component';
 import { AlertModalComponent } from './modals/alert-modal/alert-modal.component';
@@ -49,7 +50,8 @@ import { EditRolesModalComponent } from './modals/edit-roles-modal/edit-roles-mo
         HttpService,
         AuthService,
         TokenService,
-        NotificationsService
+        NotificationsService,
+        QRCodesPDFService
     ],
     entryComponents: [
         AlertModalComponent,

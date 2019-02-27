@@ -2,18 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Router } from '@angular/router';
-import { AuthService } from '../../../../services/auth.service';
-import { NotificationsService } from '../../../../services/notifications.service';
+import { AuthService } from '../../services/auth.service';
+import { NotificationsService } from '../../services/notifications.service';
 
 import 'rxjs/add/operator/catch';
 import { style } from '@angular/animations';
 
 @Component({
-  selector: 'ngx-mobilelogin',
-  templateUrl: './mobilelogin.component.html',
-  styleUrls: ['./mobilelogin.component.scss']
+  selector: 'ngx-login-mobile',
+  templateUrl: './login-mobile.component.html',
+  styleUrls: ['./login-mobile.component.scss']
 })
-export class MobileloginComponent {
+export class LoginMobileComponent {
 
   constructor(private translate: TranslateService,
               private authService: AuthService,
@@ -38,7 +38,7 @@ export class MobileloginComponent {
     this.authService.login(this.user)
       .then(() => {
         this.notificationsService.success('LOGIN_SUCCESSFUL');
-        this.router.navigate(['/mobileapp', 'mobiledashboard']);
+        this.router.navigate(['/mobile', 'dashboard']);
       }, err => this.notificationsService.error('WRONG_EMAIL_OR_PASSWORD'));
   }
 
