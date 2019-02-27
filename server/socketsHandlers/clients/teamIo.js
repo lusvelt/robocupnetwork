@@ -10,8 +10,8 @@ const TeamParticipatesToManifestation = require('../../database/associationTable
 const teamIo = (clientsIo, socket, room) => {
 
     const createTeam = async (data, callback) => {
-        _team = data.team;
-        _manifestation = data.manifestation;
+        const _team = data.team;
+        const _manifestation = data.manifestation;
         try {
             const team = await Team.create(_team);
             if (!team)
@@ -89,13 +89,15 @@ const teamIo = (clientsIo, socket, room) => {
 
     const getTeamsInManifestation = async (_manifestation, callback) => {
         try {
-            await Manifestation.findById(_manifestation.id).then(manifestation => manifestation.getTeams().then(teams => callback(teams)));
+            console.log(_manifestation);
+            Manifestation.findById(_manifestation.id)
+                .then(manifestation => manifestation.getTeams())
+                .then(teams => callback(teams));
             log.verbose('Teams in manifestation data request');
-
         } catch (err) {
             callback(new Error());
         }
-    }
+    };
 
     const editTeam = async (data, callback) => {
         try {

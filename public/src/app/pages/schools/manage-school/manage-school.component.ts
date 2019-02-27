@@ -1,3 +1,4 @@
+import { AuthService } from './../../../services/auth.service';
 import { PlacesService } from '../../../services/places.service';
 import { MultipleSelectDropdownComponent } from '../../../shared/view-cells/multiple-select-dropdown/multiple-select-dropdown.component';
 import { DataSource } from '../../../classes/data-source.class';
@@ -59,6 +60,7 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
               private config: NgbDropdownConfig,
               private schoolService: SchoolService,
               private placeService: PlacesService,
+              private authService: AuthService,
               private router: Router) {
     }
 

@@ -49,6 +49,13 @@ const usersIo = (clientsIo, socket, room) => {
                         });
                 }));
             });
+            
+            /*
+            _user.password = randomstring.generate();
+            mailer.send({
+
+            });
+            */
 
             promises = [];
             _user.standardRoles.forEach(_role => {

@@ -1,5 +1,5 @@
 <button class="mb-3" [ngClass]="{ 'btn': true, 'btn-success': !school.show, 'btn-danger': school.show }" type="button"
-  (click)="toggleForm()">
+  (click)="toggleForm()" *ngIf="authService.canDo('createSchool')">
   <i [ngClass]="{ 'fas': true, 'fa-plus': !school.show, 'fa-times': school.show }"></i>
   {{ (school.show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
 </button>
