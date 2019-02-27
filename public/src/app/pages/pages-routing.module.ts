@@ -106,6 +106,11 @@ const routes: Routes = [{
     canActivate: [AuthGuardService]
   },
   {
+    path: 'phases',
+    loadChildren: './phases/phases.module#PhasesModule',
+    canActivate: [AuthGuardService]
+  },
+  {
     path: 'places',
     loadChildren: './places/places.module#PlacesModule',
     canActivate: [AuthGuardService]

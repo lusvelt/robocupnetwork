@@ -66,6 +66,7 @@
           </small>
         </div>
 
+        <!--
         <div class="mb-3">
             <div class="row">
               <h5 class="ml-3 mr-3 mt-3"> {{ 'CATEGORY_IS_DIVIDED_INTO_ZONES' | translate }}:</h5>
@@ -94,6 +95,16 @@
                 <nb-radio value=false>{{'FALSE'|translate}}</nb-radio>
               </nb-radio-group>
             </div>
+          </div> -->
+
+          <div class="mb-3">
+            <nb-checkbox class="col-sm-4" [(ngModel)]="category.isDividedIntoZones" #isDividedIntoZones="ngModel" name="isDividedIntoZones">{{ 'CATEGORY_IS_DIVIDED_INTO_ZONES' | translate }}</nb-checkbox>
+          </div>
+          <div class="mb-3">
+            <nb-checkbox class="col-sm-4" [(ngModel)]="category.checkpointsDetermineZones" #checkpointsDetermineZones="ngModel" name="checkpointsDetermineZones">{{ 'CATEGORY_CHECKPOINTS_DETERMINE_ZONES' | translate }}</nb-checkbox>
+          </div>
+          <div class="mb-3">
+            <nb-checkbox class="col-sm-4" [(ngModel)]="category.requiresEvacuation" #requiresEvacuation="ngModel" name="requiresEvacuation">{{ 'CATEGORY_REQUIRES_EVACUATION' | translate }}</nb-checkbox>
           </div>
 
 
