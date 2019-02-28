@@ -2,35 +2,36 @@ import { HttpService } from './http.service';
 import { Injectable } from '@angular/core';
 import { SocketIoService } from './socket-io.service';
 import { Observable } from 'rxjs/Observable';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PhasesService {
-  constructor(private socketIoService: SocketIoService) {}
+  constructor(private socketIoService: SocketIoService, private authService: AuthService) {}
 
-  getPhases() {
-    return this.socketIoService.get('getPhases');
+  getPhasesInManifestation() {
+    return this.socketIoService.send('getPhasesInManifestation', this.authService.getManifestation());
   }
 
-  createPhase(data) {
-    return this.socketIoService.send('createPhase', data);
+  createPhase(phase, manifestation) {
+    return this.socketIoService.send('createPhase', {phase, manifestation});
   }
 
-  editPhase(data) {
-    return this.socketIoService.send('editPhase', data);
+  editPhase(phase, manifestation) {
+    return this.socketIoService.send('editPhase', {phase, manifestation});
   }
 
-  updateStart(phase, startDate) {
-    return this.socketIoService.send('updateStart', { phase, startDate});
+  updateStart(phase, manifestation, startDate) {
+    return this.socketIoService.send('updatePhaseStart', {phase, manifestation, startDate});
   }
 
-  updateEnd(phase, endDate) {
-    return this.socketIoService.send('updateEnd', { phase, endDate});
+  updateEnd(phase, manifestation, endDate) {
+    return this.socketIoService.send('updatePhaseEnd', {phase, manifestation, endDate});
   }
 
-  removePhase(data) {
-    return this.socketIoService.send('removePhase', data);
+  removePhase(phase, manifestation) {
+    return this.socketIoService.send('removePhase', {phase, manifestation});
   }
 
   notify(eventName: string): Observable<any> {

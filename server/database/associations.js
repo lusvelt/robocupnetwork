@@ -104,6 +104,9 @@ SchoolType.hasMany(SchoolHasSchoolType, { schoolTypeFk });
 // Place - Manifestation | 1:N
 Place.hasMany(Manifestation, { foreignKey: placeFk });
 
+// Manifestation - Phase | 1:N
+Manifestation.hasMany(Phase, { foreignKey: manifestationFk });
+
 // Place - School | 1:N
 //Place.hasMany(School, { foreignKey: placeFk });
 School.belongsTo(Place, {foreignKey: placeFk});

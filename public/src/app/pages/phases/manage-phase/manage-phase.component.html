@@ -14,7 +14,7 @@
           <input nbInput [(ngModel)]="phase.name" #name="ngModel" id="input-name" name="name" placeholder="{{ 'PHASE_NAME' | translate }}"
             autofocus fullWidth [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : ''" required>
           <small class="form-text error" *ngIf="name.touched && name.errors?.required">
-            {{ 'MANIFESTATION_NAME_REQUIRED' | translate }}
+            {{ 'PHASE_NAME_REQUIRED' | translate }}
           </small>
         </div>
         <div class="mb-3">
@@ -42,6 +42,7 @@
                  #numAdmittedTeams="ngModel"
                  id="input-numAdmittedTeams"
                  name="numAdmittedTeams"
+                 type="number"
                  placeholder="{{ 'PHASE_NUM_ADMITTED_TEAMS' | translate }}"
                  autofocus
                  fullWidth
@@ -61,15 +62,16 @@
                  name="numPassingTeams"
                  placeholder="{{ 'PHASE_NUM_PASSING_TEAMS' | translate }}"
                  autofocus
+                 type="number"
                  fullWidth
                  [status]="numPassingTeams.dirty ? (numPassingTeams.invalid  ? 'danger' : 'success') : ''"
                  required>
          <small class="form-text error" *ngIf="numPassingTeams.touched && numPassingTeams.errors?.required">
-           {{ 'PHASE_NUM_Passing_TEAMS_REQUIRED' | translate }}
+           {{ 'PHASE_NUM_PASSING_TEAMS_REQUIRED' | translate }}
          </small>
         </div>
 
-        <button class="btn btn-primary" nbButton hero>{{'PHASE_BUTTON'|translate}}</button>
+        <button class="btn btn-primary" [disabled]="submitted || !form.valid" nbButton hero>{{'CREATE_PHASE'|translate}}</button>
       </nb-card-body>
     </nb-card>
   </div>
