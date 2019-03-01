@@ -104,7 +104,11 @@ const seed = async () => {
         await Action.create({name:'Crea utente in manifestazione', alias: 'createUserInManifestation', description:'Puo\'creare un utente in una manifestazione',dependsOnManifestation:true}),
         await Action.create({name:'Modifica utente in manifestazione', alias: 'editUserInManifestation', description:'Puo\'modificare un utente in una manifestazione',dependsOnManifestation:true}),
         await Action.create({name:'Elimina utente in manifestazione', alias: 'deleteUserInManifestation', description:'Puo\'eliminare un utente in una manifestazione',dependsOnManifestation:true}),
-        await Action.create({name: 'Visualizza teams in manifestazione', alias: 'seeTeamsInManifestation', description: 'Puo\'visualizzare le squadre in una manifestazione', dependsOnManifestation: true}),
+       
+        await Action.create({name: 'Visualizza teams', alias: 'seeTeams', description: 'Puo\'visualizzare le squadre', dependsOnManifestation: true}),
+        await Action.create({name:'Crea team', alias: 'createTeam', description:'Puo\'creare una squadra',dependsOnManifestation:true}),
+        await Action.create({name:'Modifica team', alias: 'editTeam', description:'Puo\'modificare una squadra',dependsOnManifestation:true}),
+        await Action.create({name:'Elimina team', alias: 'deleteTeam', description:'Puo\'eliminare una squadra',dependsOnManifestation:true}),
     ];
 
     const roles = [
@@ -349,6 +353,9 @@ const seed = async () => {
     await roles[3].addAction(actions[45]);
     await roles[3].addAction(actions[46]);
     await roles[3].addAction(actions[47]);
+    await roles[3].addAction(actions[48]);
+    await roles[3].addAction(actions[49]);
+    await roles[3].addAction(actions[50]);
 
     // Aiutatnte gestore
     await roles[4].addAction(actions[0]);
@@ -394,6 +401,9 @@ const seed = async () => {
     await roles[4].addAction(actions[45]);
     await roles[4].addAction(actions[46]);
     await roles[4].addAction(actions[47]);
+    await roles[4].addAction(actions[48]);
+    await roles[4].addAction(actions[49]);
+    await roles[4].addAction(actions[50]);
 
     // Capitano
     await roles[5].addAction(actions[4]);

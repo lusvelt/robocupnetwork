@@ -1,5 +1,5 @@
 <button class="mb-3" [ngClass]="{ 'btn': true, 'btn-success': !ageRange.show, 'btn-danger': ageRange.show }" type="button"
-  (click)="toggleForm()">
+  (click)="toggleForm()" *ngIf="authService.canDo('createAgeRange')">
   <i [ngClass]="{ 'fas': true, 'fa-plus': !ageRange.show, 'fa-times': ageRange.show }"></i>
   {{ (ageRange.show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
 </button>
@@ -42,7 +42,7 @@
 </form>
 
 
-<nb-card size="xxlarge">
+<nb-card *ngIf="authService.canDo('seeAgeRanges')" size="xxlarge">
   <nb-card-header>
     {{'AGE_RANGES'|translate}}
   </nb-card-header>

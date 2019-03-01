@@ -1,4 +1,4 @@
-<button class="mb-3" [ngClass]="{ 'btn': true, 'btn-success': !show, 'btn-danger': show }" type="button"
+<button class="mb-3" *ngIf="authService.canDo('createCategory')" [ngClass]="{ 'btn': true, 'btn-success': !show, 'btn-danger': show }" type="button"
   (click)="toggleForm()">
   <i [ngClass]="{ 'fas': true, 'fa-plus': !show, 'fa-times': show }"></i>
   {{ (show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
@@ -126,7 +126,7 @@
 </form>
 
 
-<nb-card size="xxlarge">
+<nb-card *ngIf="authService.canDo('seeCategories')" size="xxlarge">
   <nb-card-header>
     {{'CATEGORIES'|translate}}
   </nb-card-header>

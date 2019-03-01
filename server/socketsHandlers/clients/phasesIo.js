@@ -10,7 +10,6 @@ const TeamParticipatesToManifestation = require('../../database/associationTable
 const phasesIo = (clientsIo, socket, room) => {
 
     const createPhase = async (data, callback) => {
-        console.log('miao');
         const _phase = data.phase;
         const _manifestation = data.manifestation;
 

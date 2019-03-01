@@ -81,16 +81,18 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.teamService.getTeamsInManifestation()
-     .then(teams => {
-       teams.forEach(team => {
-        this.teamService.getCaptainFromId(team.id).then(res => {
-          team.captain = res[0].name + ' ' + res[0].surname;
+    if (this.authService.isManifestationSelected() && this.authService.canDo('seeTeams')) {
+      this.teamService.getTeamsInManifestation()
+      .then(teams => {
+        teams.forEach(team => {
+          this.teamService.getCaptainFromId(team.id).then(res => {
+            team.captain = res[0].name + ' ' + res[0].surname;
+          });
         });
-       });
-       this.source.load(teams);
-    })
-    .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+        this.source.load(teams);
+      })
+      .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+    }
 
     this.subscriptions.push(
      this.teamService.notify('createTeam')
@@ -214,24 +216,32 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
   });
 
   onEditConfirm(event) {
-    event.confirm.resolve();
-    this.teamService.editTeam(event.newData, this.authService.getManifestation())
-      .then(result => this.notificationsService.success('TEAM_UPDATED'))
-      .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+    if (this.authService.canDo('editTeam')) {
+      event.confirm.resolve();
+      this.teamService.editTeam(event.newData, this.authService.getManifestation())
+        .then(result => this.notificationsService.success('TEAM_UPDATED'))
+        .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+    } else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
   }
 
   onDeleteConfirm(event): void {
-    this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
-      .then(confirmation => {
-        if (confirmation) {
-          event.confirm.resolve();
-          this.teamService.removeTeam(event.data, this.authService.getManifestation())
-            .then(result => this.notificationsService.success('DELETE_SUCCEDED'))
-            .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
-        } else {
-          event.confirm.reject();
-        }
-      });
+    if (this.authService.canDo('deleteTeam')) {
+      this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
+        .then(confirmation => {
+          if (confirmation) {
+            event.confirm.resolve();
+            this.teamService.removeTeam(event.data, this.authService.getManifestation())
+              .then(result => this.notificationsService.success('DELETE_SUCCEDED'))
+              .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+          } else {
+            event.confirm.reject();
+          }
+        });
+    } else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
   }
   onUserClicked(event: any) {
     event.preventDefault();

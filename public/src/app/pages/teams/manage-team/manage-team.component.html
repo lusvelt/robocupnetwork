@@ -11,7 +11,7 @@
 <div *ngIf="authService.isManifestationSelected()">
 
   <div class="row mb-3">
-    <button class="mr-3" [ngClass]="{ 'btn': true, 'btn-success': !team.show, 'btn-danger': team.show }" type="button"
+    <button *ngIf="authService.canDo('createTeam')" class="mr-3" [ngClass]="{ 'btn': true, 'btn-success': !team.show, 'btn-danger': team.show }" type="button"
       (click)="toggleForm()">
       <i [ngClass]="{ 'fas': true, 'fa-plus': !team.show, 'fa-times': team.show }"></i>
       {{ (team.show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
@@ -116,7 +116,7 @@
   </form>
 
 
-  <nb-card size="xxlarge">
+  <nb-card *ngIf="authService.canDo('seeTeams')" size="xxlarge">
     <nb-card-header>
       {{'TEAMS'|translate}}
     </nb-card-header>

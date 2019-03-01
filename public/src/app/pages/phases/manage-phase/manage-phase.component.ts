@@ -43,9 +43,11 @@ export class ManagePhaseComponent implements OnInit, OnDestroy {
         }
 
   ngOnInit() {
-    this.phasesService.getPhasesInManifestation()
-      .then(phase => this.source.load(phase))
-      .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+    if (this.authService.isManifestationSelected() && this.authService.canDo('seePhases')) {
+      this.phasesService.getPhasesInManifestation()
+        .then(phase => this.source.load(phase))
+        .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+    }
 
     this.subscriptions.push(
       this.phasesService.notify('createPhase')
@@ -156,24 +158,32 @@ export class ManagePhaseComponent implements OnInit, OnDestroy {
   });
 
   onEditConfirm(event) {
-    event.confirm.resolve();
-    this.phasesService.editPhase(event.newData,  this.authService.getManifestation())
-      .then(result => this.notificationsService.success('PHASE_UPDATED'))
-      .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+    if (this.authService.canDo('editPhase')) {
+      event.confirm.resolve();
+      this.phasesService.editPhase(event.newData,  this.authService.getManifestation())
+        .then(result => this.notificationsService.success('PHASE_UPDATED'))
+        .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+    } else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
   }
 
   onDeleteConfirm(event): void {
-    this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
-      .then(confirmation => {
-        if (confirmation) {
-          event.confirm.resolve();
-          this.phasesService.removePhase(event.data,  this.authService.getManifestation())
-            .then(result => this.notificationsService.success('DELETE_SUCCEDED'))
-            .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
-        } else {
-          event.confirm.reject();
-        }
-      });
+    if (this.authService.canDo('deletePhase')) {
+      this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
+        .then(confirmation => {
+          if (confirmation) {
+            event.confirm.resolve();
+            this.phasesService.removePhase(event.data,  this.authService.getManifestation())
+              .then(result => this.notificationsService.success('DELETE_SUCCEDED'))
+              .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+          } else {
+            event.confirm.reject();
+          }
+        });
+    } else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
   }
 
   toggleForm() {
