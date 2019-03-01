@@ -1,0 +1,14 @@
+<nb-card>
+    <nb-card-header>{{ title }}</nb-card-header>
+    <nb-card-body>
+      <li *ngFor="let team of teams">
+          <nb-checkbox name="team" [(ngModel)]="team.selected">{{ team.name }}</nb-checkbox>
+          
+      </li>
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton hero status="danger" (click)="cancel()">{{ 'CANCEL' | translate }}</button>
+      <button class="submit" nbButton hero status="success" (click)="submit(teams)">{{ 'SUBMIT' | translate }}</button>
+    </nb-card-footer>
+  </nb-card>
+  

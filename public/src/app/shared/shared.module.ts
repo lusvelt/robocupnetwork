@@ -19,6 +19,7 @@ import { ViewOnlyCheckboxComponent } from './view-cells/view-only-checkbox/view-
 import { SingleButtonComponent } from './view-cells/single-button/single-button.component';
 import { EditRunModalComponent } from './modals/edit-run-modal/edit-run-modal.component';
 import { EditRolesModalComponent } from './modals/edit-roles-modal/edit-roles-modal.component';
+import { TeamsListComponent } from './dialogs/teams-list/teams-list.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { EditRolesModalComponent } from './modals/edit-roles-modal/edit-roles-mo
         SingleButtonComponent,
         EditRunModalComponent,
         ViewOnlyRolesModalComponent,
-        EditRolesModalComponent
+        EditRolesModalComponent,
+        TeamsListComponent
     ],
     providers: [
         HttpService,
@@ -65,7 +67,8 @@ import { EditRolesModalComponent } from './modals/edit-roles-modal/edit-roles-mo
         SingleButtonComponent,
         EditRunModalComponent,
         ViewOnlyRolesModalComponent,
-        EditRolesModalComponent
+        EditRolesModalComponent,
+        TeamsListComponent
     ]
 })
 export class SharedModule { }

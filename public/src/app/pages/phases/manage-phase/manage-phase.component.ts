@@ -13,6 +13,9 @@ import { DatePipe } from '@angular/common';
 import { Subscription } from 'rxjs/Subscription';
 import { SingleDateComponent } from '../../../shared/view-cells/single-date/single-date.component';
 import { AuthService } from '../../../services/auth.service';
+import { CategoriesService } from '../../../services/categories.service';
+import { NbDialogService } from '@nebular/theme';
+import { TeamsListComponent } from '../../../shared/dialogs/teams-list/teams-list.component';
 
 @Component({
   selector: 'ngx-manage-phase',
@@ -31,6 +34,9 @@ export class ManagePhaseComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   source: DataSource = new DataSource();
 
+  categoriesList: any = [];
+  sessions: any = [];
+
   constructor(private tablesService: TablesService,
     private translateService: TranslateService,
     private notificationsService: NotificationsService,
@@ -38,16 +44,24 @@ export class ManagePhaseComponent implements OnInit, OnDestroy {
     private phasesService: PhasesService,
     private config: NgbDropdownConfig,
     private datePipe: DatePipe,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private categoriesService: CategoriesService,
+    private dialogService: NbDialogService) {
       config.autoClose = false;
         }
 
   ngOnInit() {
-    if (this.authService.isManifestationSelected() && this.authService.canDo('seePhases')) {
+    if (this.authService.isManifestationSelected() && this.authService.canDo('getPhasesInManifestation')) {
       this.phasesService.getPhasesInManifestation()
         .then(phase => this.source.load(phase))
         .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
     }
+
+    this.categoriesService.getCategories()
+    .then(categories => {
+      this.categoriesList = categories;
+    })
+    .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
 
     this.subscriptions.push(
       this.phasesService.notify('createPhase')
@@ -85,18 +99,39 @@ export class ManagePhaseComponent implements OnInit, OnDestroy {
       }));
   }
 
+
+  onTeamCliked() {
+    this.dialogService.open(TeamsListComponent, {
+      context: {
+        title: 'Teams',
+        oldTeams: this.phase.teams ? this.phase.teams : []
+      },
+      autoFocus: true,
+    }).onClose.subscribe(teams => {
+      this.phase.teams = teams;
+    });
+  }
+
+  addSession() {
+    this.sessions.length ++;
+  }
+
+  destroySession() {
+    this.sessions.length--;
+  }
+
   onButtonClicked() {
     const phase: PhaseInterface = _.cloneDeep(this.phase);
 
     phase.start = new Date(this.phase.start);
     phase.end = new Date(this.phase.end);
     if (phase.name !== '' && phase.description !== '') {
-    this.phasesService.createPhase(phase, this.authService.getManifestation())
+    /*this.phasesService.createPhase(phase, this.authService.getManifestation())
       .then(_phase => {
         this.notificationsService.success('PHASES_CREATED');
         this.source.insert(_phase);
         this.phase.show = false;
-      });
+      });*/
     } else {
       this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
     }

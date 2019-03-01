@@ -1,3 +1,5 @@
+import { CategoryInterface } from './category.interface';
+
 export interface PhaseInterface {
   id?: number;
   name: string;
@@ -6,4 +8,5 @@ export interface PhaseInterface {
   end: Date;
   numAdmittedTeams: number;
   numPassingTeams: number;
+  category: CategoryInterface;
 }
