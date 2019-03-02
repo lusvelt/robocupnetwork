@@ -42,7 +42,7 @@ export class NewManifestationComponent implements OnInit, OnDestroy {
       .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
 
     this.subscriptions.push(
-      this.manifestationsService.notify('createManifestaton')
+      this.manifestationsService.notify('createManifestation')
       .subscribe(manifestation => this.source.insert(manifestation)));
 
     this.subscriptions.push(

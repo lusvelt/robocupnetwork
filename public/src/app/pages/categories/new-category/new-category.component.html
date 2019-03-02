@@ -1,4 +1,4 @@
-<button class="mb-3" [ngClass]="{ 'btn': true, 'btn-success': !show, 'btn-danger': show }" type="button"
+<button class="mb-3" *ngIf="authService.canDo('createCategory')" [ngClass]="{ 'btn': true, 'btn-success': !show, 'btn-danger': show }" type="button"
   (click)="toggleForm()">
   <i [ngClass]="{ 'fas': true, 'fa-plus': !show, 'fa-times': show }"></i>
   {{ (show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
@@ -48,7 +48,7 @@
         <div class="mb-3">
           <label for="input-maxRobotsPerTeam" class="sr-only">{{ 'CATEGORY_MAX_ROBOTS_PER_TEAM' | translate}}</label>
           <input nbInput [(ngModel)]="category.maxRobotsPerTeam" #maxRobotsPerTeam="ngModel" id="input-maxRobotsPerTeam"
-            name="maxRobotsPerTeam" placeholder="{{ 'CATEGORY_MAX_ROBOTS_PER_TEAM' | translate }}" autofocus fullWidth
+            name="maxRobotsPerTeam" placeholder="{{ 'CATEGORY_MAX_ROBOTS_PER_TEAM' | translate }}" type="number" autofocus fullWidth
             [status]="maxRobotsPerTeam.dirty ? (maxRobotsPerTeam.invalid  ? 'danger' : 'success') : ''" required>
           <small class="form-text error" *ngIf="maxRobotsPerTeam.touched && maxRobotsPerTeam.errors?.required">
             {{ 'CATEGORY_MAX_ROBOTS_PER_TEAM_REQUIRED' | translate }}
@@ -58,7 +58,7 @@
         <div class="mb-3">
           <label for="input-maxTeamsPerLineUp" class="sr-only">{{ 'CATEGORY_MAX_TEAMS_PER_LINEUP' | translate}}</label>
           <input nbInput [(ngModel)]="category.maxTeamsPerLineUp" #maxTeamsPerLineUp="ngModel" id="input-maxTeamsPerLineUp"
-            name="maxTeamsPerLineUp" placeholder="{{ 'CATEGORY_MAX_TEAMS_PER_LINEUP' | translate }}" autofocus
+            name="maxTeamsPerLineUp" placeholder="{{ 'CATEGORY_MAX_TEAMS_PER_LINEUP' | translate }}" type="number" autofocus
             fullWidth [status]="maxTeamsPerLineUp.dirty ? (maxTeamsPerLineUp.invalid  ? 'danger' : 'success') : ''"
             required>
           <small class="form-text error" *ngIf="maxTeamsPerLineUp.touched && maxTeamsPerLineUp.errors?.required">
@@ -66,6 +66,7 @@
           </small>
         </div>
 
+        <!--
         <div class="mb-3">
             <div class="row">
               <h5 class="ml-3 mr-3 mt-3"> {{ 'CATEGORY_IS_DIVIDED_INTO_ZONES' | translate }}:</h5>
@@ -94,13 +95,23 @@
                 <nb-radio value=false>{{'FALSE'|translate}}</nb-radio>
               </nb-radio-group>
             </div>
+          </div> -->
+
+          <div class="mb-3">
+            <nb-checkbox class="col-sm-4" [(ngModel)]="category.isDividedIntoZones" #isDividedIntoZones="ngModel" name="isDividedIntoZones">{{ 'CATEGORY_IS_DIVIDED_INTO_ZONES' | translate }}</nb-checkbox>
+          </div>
+          <div class="mb-3">
+            <nb-checkbox class="col-sm-4" [(ngModel)]="category.checkpointsDetermineZones" #checkpointsDetermineZones="ngModel" name="checkpointsDetermineZones">{{ 'CATEGORY_CHECKPOINTS_DETERMINE_ZONES' | translate }}</nb-checkbox>
+          </div>
+          <div class="mb-3">
+            <nb-checkbox class="col-sm-4" [(ngModel)]="category.requiresEvacuation" #requiresEvacuation="ngModel" name="requiresEvacuation">{{ 'CATEGORY_REQUIRES_EVACUATION' | translate }}</nb-checkbox>
           </div>
 
 
         <div class="mb-3">
           <label for="input-defaultMaxTime" class="sr-only">{{ 'CATEGORY_DEFAULT_MAX_TIME' | translate}}</label>
           <input nbInput [(ngModel)]="category.defaultMaxTime" #defaultMaxTime="ngModel" id="input-defaultMaxTime" name="defaultMaxTime"
-            placeholder="{{ 'CATEGORY_DEFAULT_MAX_TIME' | translate }}" autofocus fullWidth [status]="defaultMaxTime.dirty ? (defaultMaxTime.invalid  ? 'danger' : 'success') : ''"
+            placeholder="{{ 'CATEGORY_DEFAULT_MAX_TIME' | translate }}" type="number" autofocus fullWidth [status]="defaultMaxTime.dirty ? (defaultMaxTime.invalid  ? 'danger' : 'success') : ''"
             required>
           <small class="form-text error" *ngIf="defaultMaxTime.touched && defaultMaxTime.errors?.required">
             {{ 'CATEGORY_DEFAULT_MAX_TIME_REQUIRED' | translate }}
@@ -108,14 +119,14 @@
         </div>
 
 
-        <button class="btn btn-primary" nbButton hero>{{'CATEGORY_BUTTON'|translate}}</button>
+        <button class="btn btn-primary" [disabled]="submitted || !form.valid" nbButton hero>{{'CATEGORY_BUTTON'|translate}}</button>
       </nb-card-body>
     </nb-card>
   </div>
 </form>
 
 
-<nb-card size="xxlarge">
+<nb-card *ngIf="authService.canDo('seeCategories')" size="xxlarge">
   <nb-card-header>
     {{'CATEGORIES'|translate}}
   </nb-card-header>

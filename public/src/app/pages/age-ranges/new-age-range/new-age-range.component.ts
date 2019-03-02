@@ -10,6 +10,7 @@ import { AgeRangesService } from '../../../services/age-ranges.service';
 import { AgeRangeInterface } from '../../../interfaces/age-range.interface';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'ngx-new-age-range',
@@ -33,7 +34,8 @@ export class NewAgeRangeComponent implements OnInit, OnDestroy {
     private ageRangesService: AgeRangesService,
     private notificationsService: NotificationsService,
     private modalService: ModalService,
-    private config: NgbDropdownConfig) {
+    private config: NgbDropdownConfig,
+    private authService: AuthService) {
       config.autoClose = false;
   }
   ngOnInit() {
@@ -90,23 +92,31 @@ export class NewAgeRangeComponent implements OnInit, OnDestroy {
 
   onEditConfirm(event) {
     event.confirm.resolve();
-    this.ageRangesService.editAgeRange(event.newData)
-      .then(result => this.notificationsService.success('AGE_RANGE_UPDATED'))
-      .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+    if (this.authService.canDo('editAgeRange')) {
+      this.ageRangesService.editAgeRange(event.newData)
+        .then(result => this.notificationsService.success('AGE_RANGE_UPDATED'))
+        .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+    } else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
   }
 
   onDeleteConfirm(event): void {
-    this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
-      .then(confirmation => {
-        if (confirmation) {
-          event.confirm.resolve();
-          this.ageRangesService.removeAgeRange(event.data)
-            .then(result => this.notificationsService.success('DELETE_SUCCEDED'))
-            .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
-        } else {
-          event.confirm.reject();
-        }
-      });
+    if (this.authService.canDo('deleteAgeRange')) {
+      this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
+        .then(confirmation => {
+          if (confirmation) {
+            event.confirm.resolve();
+            this.ageRangesService.removeAgeRange(event.data)
+              .then(result => this.notificationsService.success('DELETE_SUCCEDED'))
+              .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+          } else {
+            event.confirm.reject();
+          }
+        });
+      } else {
+        this.notificationsService.error('UNAUTHORIZED');
+      }
   }
 
   toggleForm() {

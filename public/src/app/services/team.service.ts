@@ -2,20 +2,21 @@ import { HttpService } from './http.service';
 import { Injectable } from '@angular/core';
 import { SocketIoService } from './socket-io.service';
 import { Observable } from 'rxjs/Observable';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeamService {
 
-  constructor(private socketIoService: SocketIoService) { }
+  constructor(private socketIoService: SocketIoService, private authService: AuthService) { }
 
   getTeams() {
     return this.socketIoService.get('getTeams');
   }
 
-  getTeamsInManifestation(manifestation) {
-    return this.socketIoService.send('getTeamsInManifestation', manifestation);
+  getTeamsInManifestation() {
+    return this.socketIoService.send('getTeamsInManifestation', this.authService.getManifestation());
   }
 
   createTeam(team, manifestation) {
@@ -32,6 +33,10 @@ export class TeamService {
 
   getCaptainFromId(id) {
     return this.socketIoService.send('getCaptainFromId', id);
+  }
+
+  getQRCodesData() {
+    return this.socketIoService.send('getQRCodesData', this.authService.getManifestation());
   }
 
   notify(eventName: string): Observable<any> {

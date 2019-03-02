@@ -236,5 +236,18 @@
     "CHECKPOINT_NUMBER_REQUIRED":"Checkpoint number required!",
     "LAST_CHECKPOINT_IS_ROOM":"Last checkpoint is the room",
     "CHECKPOINT":"Checkpoint",
-    "CONTINUE":"Continue"
+    "CONTINUE":"Continue",
+
+    "NEW_PHASE":"New phase",
+    "PHASE_NAME":"Phase name",
+    "PHASE_NAME_REQUIRED":"Phase name required!",
+    "PHASE_DESCRIPTION":"Phase description",
+    "PHASE_DESCRIPTION_REQUIRED":"Phase description required!",
+    "PHASE_DATE":"Phase dates",
+    "PHASE_NUM_ADMITTED_TEAMS":"Number of teams admitted to the phase",
+    "PHASE_NUM_ADMITTED_TEAMS_REQUIRED":"Number of team admitted to the phase required!",
+    "PHASE_NUM_PASSING_TEAMS":"Number of Teams passing to the next phase",
+    "PHASE_NUM_PASSING_TEAMS_REQUIRED":"Number of Teams passing to the next phase required!",
+    "CREATE_PHASE":"Create phase"
+
 }

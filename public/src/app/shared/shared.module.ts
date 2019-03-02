@@ -1,3 +1,4 @@
+import { QRCodesPDFService } from './../services/qr-codes-pdf.service';
 import { ViewOnlyRolesModalComponent } from './modals/view-only-roles-modal/view-only-roles-modal.component';
 import { ConfirmModalComponent } from './modals/confirm-modal/confirm-modal.component';
 import { AlertModalComponent } from './modals/alert-modal/alert-modal.component';
@@ -18,6 +19,7 @@ import { ViewOnlyCheckboxComponent } from './view-cells/view-only-checkbox/view-
 import { SingleButtonComponent } from './view-cells/single-button/single-button.component';
 import { EditRunModalComponent } from './modals/edit-run-modal/edit-run-modal.component';
 import { EditRolesModalComponent } from './modals/edit-roles-modal/edit-roles-modal.component';
+import { TeamsListComponent } from './dialogs/teams-list/teams-list.component';
 
 
 @NgModule({
@@ -43,13 +45,15 @@ import { EditRolesModalComponent } from './modals/edit-roles-modal/edit-roles-mo
         SingleButtonComponent,
         EditRunModalComponent,
         ViewOnlyRolesModalComponent,
-        EditRolesModalComponent
+        EditRolesModalComponent,
+        TeamsListComponent
     ],
     providers: [
         HttpService,
         AuthService,
         TokenService,
-        NotificationsService
+        NotificationsService,
+        QRCodesPDFService
     ],
     entryComponents: [
         AlertModalComponent,
@@ -63,7 +67,8 @@ import { EditRolesModalComponent } from './modals/edit-roles-modal/edit-roles-mo
         SingleButtonComponent,
         EditRunModalComponent,
         ViewOnlyRolesModalComponent,
-        EditRolesModalComponent
+        EditRolesModalComponent,
+        TeamsListComponent
     ]
 })
 export class SharedModule { }

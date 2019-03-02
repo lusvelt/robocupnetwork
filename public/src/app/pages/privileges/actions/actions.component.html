@@ -74,8 +74,8 @@
             </ul>
           </div>
         </div>
-        
-        <button class="btn btn-primary" nbButton hero>{{'ACTION_BUTTON'|translate}}</button>
+
+        <button class="btn btn-primary" [disabled]="submitted || !form.valid" nbButton hero>{{'ACTION_BUTTON'|translate}}</button>
       </nb-card-body>
     </nb-card>
   </div>

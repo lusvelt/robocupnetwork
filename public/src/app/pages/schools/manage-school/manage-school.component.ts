@@ -144,24 +144,32 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
 
 
   onEditConfirm(event) {
-    event.confirm.resolve();
-    this.schoolService.editSchool(event.newData)
-      .then(result => this.notificationsService.success('SCHOOL_UPDATED'))
-      .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+    if (this.authService.canDo('editSchool')) {
+      event.confirm.resolve();
+      this.schoolService.editSchool(event.newData)
+        .then(result => this.notificationsService.success('SCHOOL_UPDATED'))
+        .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+    } else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
   }
 
   onDeleteConfirm(event): void {
-    this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
-      .then(confirmation => {
-        if (confirmation) {
-          event.confirm.resolve();
-          this.schoolService.removeSchool(event.data)
-            .then(result => this.notificationsService.success('DELETE_SUCCEDED'))
-            .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
-        } else {
-          event.confirm.reject();
-        }
-      });
+    if (this.authService.canDo('deleteSchool')) {
+      this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
+        .then(confirmation => {
+          if (confirmation) {
+            event.confirm.resolve();
+            this.schoolService.removeSchool(event.data)
+              .then(result => this.notificationsService.success('DELETE_SUCCEDED'))
+              .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+          } else {
+            event.confirm.reject();
+          }
+        });
+    } else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
   }
 
   toggleForm() {

@@ -76,10 +76,6 @@ import { ResetPasswordComponent } from './components/auth/reset-password/reset-p
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { NbAuthModule } from '@nebular/auth';
-import { MobileloginComponent } from './components/mobileapp/mobilelogin/mobilelogin.component';
-import { MobiledashboardComponent } from './components/mobileapp/mobiledashboard/mobiledashboard.component';
-import { MobileappComponent } from './components/mobileapp/mobileapp.component';
-import { RunSettingComponent } from './components/mobileapp/runsetting/runsetting.component';
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule, RouterModule];
 
@@ -139,11 +135,6 @@ const COMPONENTS = [
   LogoutComponent,
   RequestPasswordComponent,
   ResetPasswordComponent,
-
-  MobileappComponent,
-  MobileloginComponent,
-  MobiledashboardComponent,
-  RunSettingComponent
 ];
 
 const ENTRY_COMPONENTS = [

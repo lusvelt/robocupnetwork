@@ -11,6 +11,7 @@ import { CategoryInterface } from '../../../interfaces/category.interface';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
 import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'ngx-new-category',
@@ -42,7 +43,8 @@ export class NewCategoryComponent implements OnInit, OnDestroy {
     private categoriesService: CategoriesService,
     private notificationsService: NotificationsService,
     private modalService: ModalService,
-    private config: NgbDropdownConfig) {
+    private config: NgbDropdownConfig,
+    private authService: AuthService) {
       config.autoClose = false;
 }
 
@@ -66,9 +68,6 @@ export class NewCategoryComponent implements OnInit, OnDestroy {
 
 
   onButtonClicked() {
-    if (this.category.isDividedIntoZones === 'false') this.category.isDividedIntoZones = false; else this.category.isDividedIntoZones = true;
-    if (this.category.checkpointsDetermineZones === 'false') this.category.checkpointsDetermineZones = false; else this.category.checkpointsDetermineZones = true;
-    if (this.category.requiresEvacuation === 'false') this.category.requiresEvacuation = false; else this.category.requiresEvacuation = true;
     this.category.maxRobotsPerTeam = parseInt(this.category.maxRobotsPerTeam, 10);
     this.category.maxTeamsPerLineUp = parseInt(this.category.maxTeamsPerLineUp, 10);
     this.category.defaultMaxTime = parseInt(this.category.defaultMaxTime, 10);
@@ -140,24 +139,32 @@ export class NewCategoryComponent implements OnInit, OnDestroy {
   });
 
   onEditConfirm(event) {
-    event.confirm.resolve();
-    this.categoriesService.editCategory(event.newData)
-      .then(result => this.notificationsService.success('CATEGORY_UPDATED'))
-      .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+    if (this.authService.canDo('editCategory')) {
+      event.confirm.resolve();
+      this.categoriesService.editCategory(event.newData)
+        .then(result => this.notificationsService.success('CATEGORY_UPDATED'))
+        .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+    } else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
   }
 
   onDeleteConfirm(event): void {
-    this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
-      .then(confirmation => {
-        if (confirmation) {
-          event.confirm.resolve();
-          this.categoriesService.removeCategory(event.data)
-            .then(result => this.notificationsService.success('DELETE_SUCCEDED'))
-            .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
-        } else {
-          event.confirm.reject();
-        }
-      });
+    if (this.authService.canDo('deleteCategory')) {
+      this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
+        .then(confirmation => {
+          if (confirmation) {
+            event.confirm.resolve();
+            this.categoriesService.removeCategory(event.data)
+              .then(result => this.notificationsService.success('DELETE_SUCCEDED'))
+              .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+          } else {
+            event.confirm.reject();
+          }
+        });
+    } else {
+      this.notificationsService.error('UNATHORIZED');
+    }
   }
 
   toggleForm() {

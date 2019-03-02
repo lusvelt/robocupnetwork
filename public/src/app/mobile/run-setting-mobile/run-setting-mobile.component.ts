@@ -2,17 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Router } from '@angular/router';
-import { AuthService } from '../../../../services/auth.service';
-import { NotificationsService } from '../../../../services/notifications.service';
+import { AuthService } from '../../services/auth.service';
+import { NotificationsService } from '../../services/notifications.service';
 
 import 'rxjs/add/operator/catch';
-import { UserService } from '../../../../services/user.service';
+import { UserService } from '../../services/user.service';
 @Component({
   selector: 'ngx-runsetting',
-  templateUrl: './runsetting.component.html',
-  styleUrls: ['./runsetting.component.scss']
+  templateUrl: './run-setting-mobile.component.html',
+  styleUrls: ['./run-setting-mobile.component.scss']
 })
-export class RunSettingComponent implements OnInit {
+export class RunSettingMobileComponent implements OnInit {
 
   constructor(private translate: TranslateService,
               private authService: AuthService,

@@ -364,6 +364,9 @@ const seed = async () => {
     await roles[3].addAction(actions[45]);
     await roles[3].addAction(actions[46]);
     await roles[3].addAction(actions[47]);
+    await roles[3].addAction(actions[48]);
+    await roles[3].addAction(actions[49]);
+    await roles[3].addAction(actions[50]);
 
     // Aiutatnte gestore
     await roles[4].addAction(actions[0]);
@@ -409,6 +412,9 @@ const seed = async () => {
     await roles[4].addAction(actions[45]);
     await roles[4].addAction(actions[46]);
     await roles[4].addAction(actions[47]);
+    await roles[4].addAction(actions[48]);
+    await roles[4].addAction(actions[49]);
+    await roles[4].addAction(actions[50]);
 
     // Capitano
     await roles[5].addAction(actions[4]);
