@@ -35,7 +35,7 @@
         </div>
 
 
-        <button class="btn btn-primary" nbButton hero>{{'MANIFESTATION_BUTTON'|translate}}</button>
+        <button class="btn btn-primary" [disabled]="submitted || !form.valid" nbButton hero>{{'MANIFESTATION_BUTTON'|translate}}</button>
       </nb-card-body>
     </nb-card>
   </div>

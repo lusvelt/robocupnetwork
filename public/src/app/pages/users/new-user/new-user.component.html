@@ -11,7 +11,7 @@
               {{ 'NAME_REQUIRED' | translate }}
             </small>
             <small class="form-text error" *ngIf="surname.touched && surname.errors?.required">
-              {{'  '}} 
+              {{'  '}}
              </small>
           </div>
           <div class="col-sm-6 input-group">
@@ -21,7 +21,7 @@
               {{ 'SURNAME_REQUIRED' | translate }}
             </small>
             <small class="form-text error" *ngIf="name.touched && name.errors?.required">
-             {{'  '}} 
+             {{'  '}}
             </small>
           </div>
         </div>
@@ -78,7 +78,7 @@
           <nb-checkbox status="success" class="col-sm-4" [(ngModel)]="user.isAdmin" #isAdmin="ngModel" name="isAdmin">Admin</nb-checkbox>
         </div>
 
-       <div class="row"> 
+       <div class="row">
         <div class="mb-3 col-sm-6" [hidden]="user.isAdmin">
             <!--<button class="btn btn-primary" type="button" ngbDropdownToggle>
               {{ 'MANIFESTATIONS' | translate }}
@@ -99,7 +99,7 @@
             </ul>-->
         </div>
         <div class="col-sm-6">
-          <div class="col-sm-6" ngbDropdown>
+          <div class="col-sm-6" [hidden]="user.isAdmin" ngbDropdown>
             <button class="btn btn-primary" type="button" ngbDropdownToggle>
               {{ 'STANDARD_ROLES' | translate }}
             </button>
@@ -110,7 +110,7 @@
             </ul>
           </div>
         </div>
-      </div>  
+      </div>
 
         <div class="mb-3" [hidden]="isOneRoleInManifestation">
           <ol *ngFor="let manifestation of user.manifestations">
@@ -118,7 +118,7 @@
             <ol>
                 <li *ngFor="let role of manifestation.roles">{{role.name}}</li>
             </ol>
-          </ol>  
+          </ol>
         </div>
 
         <div class="mb-3">
@@ -136,7 +136,7 @@
 
 
         <div class="mb-3">
-          <button class="btn btn-primary" nbButton hero>{{'USER_BUTTON'|translate}}</button>
+          <button class="btn btn-primary" [disabled]="submitted || !form.valid" nbButton hero>{{'USER_BUTTON'|translate}}</button>
         </div>
       </nb-card-body>
     </nb-card>

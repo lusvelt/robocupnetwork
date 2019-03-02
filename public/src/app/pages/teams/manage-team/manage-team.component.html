@@ -72,7 +72,7 @@
             <div class="col-md-1">
                 <button class="btn btn-primary" nbButton hero (click)="deleteCaptain(); $event.preventDefault()"> <i class="fas fa-trash"></i> </button>
             </div>
-            
+
             <div class="col-md-5">
               <input type="text" class="form-control"
                     placeholder="{{ 'MEMBERS' | translate }}"
@@ -86,7 +86,7 @@
             </div>
             <div class="col-md-1">
                 <button class="btn btn-primary" nbButton hero (click)="deleteMembers(); $event.preventDefault()"> <i class="fas fa-trash"></i> </button>
-            </div>        
+            </div>
 
 
         </div>
@@ -97,7 +97,7 @@
               <ol>
                   <li>{{team.captain.name + " " +team.captain.surname}}</li>
               </ol>
-            </ol>  
+            </ol>
           </div>
 
           <div class="mb-3" [hidden]="!isOneMember">
@@ -106,10 +106,10 @@
               <ol>
                   <li *ngFor="let user of team.members">{{user.name + " " + user.surname}}</li>
               </ol>
-            </ol>  
+            </ol>
           </div>
 
-          <button class="btn btn-primary" nbButton hero>{{'TEAM_BUTTON'|translate}}</button>
+          <button class="btn btn-primary" [disabled]="submitted || !form.valid" nbButton hero>{{'TEAM_BUTTON'|translate}}</button>
         </nb-card-body>
       </nb-card>
     </div>

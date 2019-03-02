@@ -1,5 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { delay, withLatestFrom, takeWhile } from 'rxjs/operators';
+import { Router } from '@angular/router';
+
 import {
   NbMediaBreakpoint,
   NbMediaBreakpointsService,
@@ -10,6 +12,9 @@ import {
 } from '@nebular/theme';
 
 import { StateService } from '../../../@core/data/state.service';
+import { NbTokenService } from '@nebular/auth/services/token/token.service';
+import { TokenService } from '../../../services/token.service';
+
 
 // TODO: move layouts into the framework
 @Component({
@@ -26,8 +31,8 @@ import { StateService } from '../../../@core/data/state.service';
                    responsive
                    [end]="sidebar.id === 'end'">
         <nb-sidebar-header *ngIf="currentTheme !== 'corporate'">
-          <a href="#" class="btn btn-hero-success main-btn">
-            <i class="fas fa-sign-out-alt"></i> <span>LogOut</span>
+          <a href="#" class="btn btn-hero-success main-btn"(click)="logOut(); $event.preventDefault()">
+            <i class="fas fa-sign-out-alt"> </i> <span>LogOut</span>
           </a>
         </nb-sidebar-header>
         <ng-content select="nb-menu"></ng-content>
@@ -113,7 +118,10 @@ export class SampleLayoutComponent implements OnDestroy {
     protected menuService: NbMenuService,
     protected themeService: NbThemeService,
     protected bpService: NbMediaBreakpointsService,
-    protected sidebarService: NbSidebarService) {
+    protected sidebarService: NbSidebarService,
+    private router: Router,
+    private nbTokenService: NbTokenService,
+    private tokenService: TokenService ) {
     this.stateService.onLayoutState()
       .pipe(takeWhile(() => this.alive))
       .subscribe((layout: string) => this.layout = layout);
@@ -143,6 +151,11 @@ export class SampleLayoutComponent implements OnDestroy {
       .subscribe(theme => {
         this.currentTheme = theme.name;
       });
+  }
+
+  logOut() {
+    this.tokenService.setToken('');
+    this.router.navigate(['/auth', 'login']);
   }
 
   ngOnDestroy() {

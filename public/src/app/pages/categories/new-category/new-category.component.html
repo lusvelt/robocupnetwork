@@ -48,7 +48,7 @@
         <div class="mb-3">
           <label for="input-maxRobotsPerTeam" class="sr-only">{{ 'CATEGORY_MAX_ROBOTS_PER_TEAM' | translate}}</label>
           <input nbInput [(ngModel)]="category.maxRobotsPerTeam" #maxRobotsPerTeam="ngModel" id="input-maxRobotsPerTeam"
-            name="maxRobotsPerTeam" placeholder="{{ 'CATEGORY_MAX_ROBOTS_PER_TEAM' | translate }}" autofocus fullWidth
+            name="maxRobotsPerTeam" placeholder="{{ 'CATEGORY_MAX_ROBOTS_PER_TEAM' | translate }}" type="number" autofocus fullWidth
             [status]="maxRobotsPerTeam.dirty ? (maxRobotsPerTeam.invalid  ? 'danger' : 'success') : ''" required>
           <small class="form-text error" *ngIf="maxRobotsPerTeam.touched && maxRobotsPerTeam.errors?.required">
             {{ 'CATEGORY_MAX_ROBOTS_PER_TEAM_REQUIRED' | translate }}
@@ -58,7 +58,7 @@
         <div class="mb-3">
           <label for="input-maxTeamsPerLineUp" class="sr-only">{{ 'CATEGORY_MAX_TEAMS_PER_LINEUP' | translate}}</label>
           <input nbInput [(ngModel)]="category.maxTeamsPerLineUp" #maxTeamsPerLineUp="ngModel" id="input-maxTeamsPerLineUp"
-            name="maxTeamsPerLineUp" placeholder="{{ 'CATEGORY_MAX_TEAMS_PER_LINEUP' | translate }}" autofocus
+            name="maxTeamsPerLineUp" placeholder="{{ 'CATEGORY_MAX_TEAMS_PER_LINEUP' | translate }}" type="number" autofocus
             fullWidth [status]="maxTeamsPerLineUp.dirty ? (maxTeamsPerLineUp.invalid  ? 'danger' : 'success') : ''"
             required>
           <small class="form-text error" *ngIf="maxTeamsPerLineUp.touched && maxTeamsPerLineUp.errors?.required">
@@ -111,7 +111,7 @@
         <div class="mb-3">
           <label for="input-defaultMaxTime" class="sr-only">{{ 'CATEGORY_DEFAULT_MAX_TIME' | translate}}</label>
           <input nbInput [(ngModel)]="category.defaultMaxTime" #defaultMaxTime="ngModel" id="input-defaultMaxTime" name="defaultMaxTime"
-            placeholder="{{ 'CATEGORY_DEFAULT_MAX_TIME' | translate }}" autofocus fullWidth [status]="defaultMaxTime.dirty ? (defaultMaxTime.invalid  ? 'danger' : 'success') : ''"
+            placeholder="{{ 'CATEGORY_DEFAULT_MAX_TIME' | translate }}" type="number" autofocus fullWidth [status]="defaultMaxTime.dirty ? (defaultMaxTime.invalid  ? 'danger' : 'success') : ''"
             required>
           <small class="form-text error" *ngIf="defaultMaxTime.touched && defaultMaxTime.errors?.required">
             {{ 'CATEGORY_DEFAULT_MAX_TIME_REQUIRED' | translate }}
@@ -119,7 +119,7 @@
         </div>
 
 
-        <button class="btn btn-primary" nbButton hero>{{'CATEGORY_BUTTON'|translate}}</button>
+        <button class="btn btn-primary" [disabled]="submitted || !form.valid" nbButton hero>{{'CATEGORY_BUTTON'|translate}}</button>
       </nb-card-body>
     </nb-card>
   </div>

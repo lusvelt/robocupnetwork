@@ -65,6 +65,7 @@
                     id="input-postalCode"
                     name="postalCode"
                     placeholder="{{ 'PLACE_POSTAL_CODE' | translate }}"
+                    type="number"
                     autofocus
                     fullWidth
                     [status]="postalCode.dirty ? (postalCode.invalid  ? 'danger' : 'success') : ''"
@@ -97,6 +98,7 @@
                       id="input-civicNumber"
                       name="civicNumber"
                       placeholder="{{ 'PLACE_CIVIC_NUMBER' | translate }}"
+                      type="number"
                       autofocus
                       fullWidth
                       [status]="civicNumber.dirty ? (civicNumber.invalid  ? 'danger' : 'success') : ''"
@@ -123,7 +125,7 @@
            </div>
 
 
-        <button class="btn btn-primary" nbButton hero>{{'PLACE_BUTTON'|translate}}</button>
+        <button class="btn btn-primary" [disabled]="submitted || !form.valid" nbButton hero>{{'PLACE_BUTTON'|translate}}</button>
         <div><button class="mt-3 btn btn-primary" nbButton (click)="backToSchoolClicked(); $event.preventDefault()" >{{'BACK_TO_SCHOOL_BUTTON'|translate}}</button></div>
       </nb-card-body>
     </nb-card>

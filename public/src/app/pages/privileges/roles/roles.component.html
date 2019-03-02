@@ -47,7 +47,7 @@
         </div>
         <div class="col-sm-3">
             <nb-checkbox name="dependsOnManifestation" (change)="onCheckboxChange($event)" [(ngModel)]="role.dependsOnManifestation">{{ 'DEPENDS_ON_MANIFESTATION' | translate }}</nb-checkbox>
-        </div>  
+        </div>
       </div>
 
       <div class="mb-3" ngbDropdown>
@@ -60,7 +60,7 @@
               </li>
             </ul>
       </div>
-      <button class="btn btn-primary" nbButton hero>{{'ROLE_BUTTON'|translate}}</button>
+      <button class="btn btn-primary" [disabled]="submitted || !form.valid" nbButton hero>{{'ROLE_BUTTON'|translate}}</button>
     </nb-card-body>
   </nb-card>
   </div>
