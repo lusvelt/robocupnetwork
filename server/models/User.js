@@ -55,16 +55,16 @@ User.prototype.regenerateAuthToken = async function (_manifestation) {
         try {
             const manifestation = await Manifestation.findById(_manifestation.id);
             const userHasRoleInManifestationAssociations = await this.getUserHasRoleInManifestations({ where: { manifestationId: _manifestation.id }});
-            
+
             let promises = [];
             userHasRoleInManifestationAssociations.forEach(association =>
                 promises.push(Role.findById(association.dataValues.roleId)));
 
             const roles = await Promise.all(promises);
-                
+
             promises = [];
             roles.forEach(role => promises.push(role.getActions()));
-            
+
             const actionsPerRole = await Promise.all(promises);
             let actions = [];
             actionsPerRole.forEach(_actions => {
