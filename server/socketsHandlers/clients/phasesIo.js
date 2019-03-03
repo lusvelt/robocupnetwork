@@ -1,17 +1,23 @@
 const _ = require('lodash');
 const Phase = require('../../models/Phase');
+const Category = require('../../models/Category');
 const User = require('../../models/User');
 const Manifestation = require('../../models/Manifestation');
 const AgeRange = require('../../models/AgeRange');
 const log = require('../../config/consoleMessageConfig');
 const TeamHasUser = require('../../database/associationTables/TeamHasUser');
+const Team = require('../../models/Team');
+const TeamIsInPhase = require('../../database/associationTables/TeamIsInPhase');
 const TeamParticipatesToManifestation = require('../../database/associationTables/TeamParticipatesToManifestation');
 
 const phasesIo = (clientsIo, socket, room) => {
 
     const createPhase = async (data, callback) => {
+
         const _phase = data.phase;
         const _manifestation = data.manifestation;
+        const _category = _phase.category;
+        const _teams = _phase.teams; 
 
         try {
             const phase = await Phase.create(_phase);
@@ -20,11 +26,23 @@ const phasesIo = (clientsIo, socket, room) => {
 
             let promises = [];
 
-            console.log('arrivo');
             Manifestation.findById(_manifestation.id)
                 .then(manifestation => {
                     promises.push(manifestation.addPhase(phase));
                 });
+
+            promises = [];
+            
+            Category.findById(_category.id)
+                .then(category => {
+                    promises.push(category.addPhase(phase));
+                });
+
+            promises = [];
+
+            _teams.forEach(team => {
+                promises.push(TeamIsInPhase.create({teamId: team.id, phaseId: phase.id}));
+            });    
 
             const result = await Promise.all(promises);
             if(!result)
@@ -80,11 +98,58 @@ const phasesIo = (clientsIo, socket, room) => {
             Manifestation.findById(_manifestation.id)
                 .then(manifestation => manifestation.getPhases())
                 .then(phases => callback(phases));
+
             log.verbose('Phases in manifestation data request');
         } catch (err) {
             callback(new Error());
         }
     };
+
+    const getTeamsInPhase = async (_phase, callback) => {
+        try {
+            console.log(_phase.id);
+            const promises = [];
+            const items = await TeamIsInPhase.findAll({where: {phaseId: _phase.id}});
+            items.forEach(item => promises.push(Team.findById(item.teamId)));      
+            const result = await Promise.all(promises);
+            
+            if (!result)
+                throw new Error();
+
+            callback(result);
+
+            log.verbose('Teams in phase data request');
+        } catch (err) {
+            callback(new Error());
+        }
+    }
+
+    const updateTeamsInPhase = async (data, callback) => {
+        try {
+            const phase = data.phase;
+            const teams = data.teams;
+
+            await TeamIsInPhase.destroy({where: {phaseId: phase.id}});
+
+            const promises = [];
+
+            teams.forEach(team => {
+                promises.push(TeamIsInPhase.create({teamId: team.id, phaseId: phase.id}));
+            });
+
+            const result = await Promise.all(promises);
+
+            if (!result)
+                throw new Error();
+
+            callback(result);
+
+            log.verbose('Updated teams in phase data request');
+            
+        } catch (err) {
+            callback(new Error());
+        }
+    }
 
     const editPhase = async (data, callback) => {
         try {
@@ -133,6 +198,8 @@ const phasesIo = (clientsIo, socket, room) => {
     socket.on('editPhase', editPhase);
     socket.on('updatePhaseEnd',updatePhaseEnd);
     socket.on('updatePhaseStart', updatePhaseStart);
+    socket.on('getTeamsInPhase',getTeamsInPhase);
+    socket.on('updateTeamsInPhase',updateTeamsInPhase);
 };
 
 module.exports = phasesIo;
