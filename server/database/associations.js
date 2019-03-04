@@ -83,8 +83,8 @@ Phase.hasOne(Phase, { foreignKey: 'nextPhaseId'});
 // Phase - Category | 1:N
 Category.hasMany(Phase, { foreignKey: categoryFk });
 
-// Event - Event | 1:1
-Event.hasOne(Event, { foreignKey: 'triggerId'});
+// Event - Event | 1:N
+Event.hasMany(Event, { foreignKey: 'triggerId'});
 
 // Event - Category | 1:N
 Category.hasMany(Event, { foreignKey: categoryFk });

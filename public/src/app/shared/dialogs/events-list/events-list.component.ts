@@ -8,6 +8,7 @@ import { standardConfig } from '../../../config/tables.config';
 import { NotificationsService } from '../../../services/notifications.service';
 import { ModalService } from '../../../services/modal.service';
 import { Subscription } from 'rxjs';
+import { MultipleSelectDropdownComponent } from '../../view-cells/multiple-select-dropdown/multiple-select-dropdown.component';
 
 @Component({
   selector: 'ngx-events-list',
@@ -61,7 +62,34 @@ export class EventsListComponent implements OnInit {
 
   }
 
+  getNotifiedForEvents(eventsArray: any) {
+    this.subscriptions.push(
+      this.eventsService.notify('createEvent')
+        .subscribe(data => {
+          const event = data.event;
+          const category = data._category;
+          if (category.id === this.category.id)
+           eventsArray.push(event);
+        }));
 
+      this.subscriptions.push(
+        this.eventsService.notify('editEvent')
+        .subscribe(data => {
+          const event = data._event;
+          const category = data._category;
+          if (category.id === this.category.id)
+            eventsArray.splice(eventsArray.findIndex(el => el.id === event.id), 1, event);
+        }));
+
+      this.subscriptions.push(
+        this.eventsService.notify('removeEvent')
+        .subscribe(data => {
+          const event = data._event;
+          const category = data._category;
+          if (category.id === this.category.id)
+          eventsArray.splice(eventsArray.findIndex(el => el.id === event.id), 1);
+        }));
+  }
 
   settings = this.tablesService.getSettings(standardConfig, {
     id: {
@@ -78,6 +106,28 @@ export class EventsListComponent implements OnInit {
     description: {
       title: 'DESCRIPTION',
       type: 'text',
+    },
+    event: {
+      title: 'EVENT',
+      type: 'custom',
+      renderComponent: MultipleSelectDropdownComponent,
+      onComponentInitFunction: (instance) => {
+        instance.internalArrayKey = 'Events';
+        this.eventsService.getEventsInCategory(this.category)
+        .then(events => {
+          instance.parentNotifier.emit('items', events);
+        });
+
+        this.getNotifiedForEvents(instance.items);
+
+        instance.parentNotifier.on('change', changed => {
+          this.eventsService.updateEventsInEvent(instance.rowData, changed)
+          .then(() => this.notificationsService.success('UPDATED_EVENTS_IN_EVENT_SUCCEDDED'))
+          .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+        });
+      },
+      addable: false,
+      editable: false
     },
     pointsJSCalculator: {
       title: 'POINTS_JS_CALCULATOR',

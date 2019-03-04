@@ -25,6 +25,10 @@ export class EventsService {
     return this.socketIoService.send('removeEvent', {event, category});
   }
 
+  updateEventsInEvent(event, eventToUpdate) {
+    return this.socketIoService.send('updateEventsInEvent', {event, eventToUpdate});
+  }
+
   notify(eventName: string): Observable<any> {
     return new Observable(observer => this.socketIoService.on(eventName)
       .subscribe(data => observer.next(data)));
