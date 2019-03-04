@@ -138,7 +138,7 @@ export class NewCategoryComponent implements OnInit, OnDestroy {
       type: 'number',
     },
     settings: {
-      title: 'SETTINGS',
+      title: 'EVENTS',
       type: 'custom',
       renderComponent: SingleButtonComponent,
       onComponentInitFunction: (instance) => {

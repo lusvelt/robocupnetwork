@@ -7,6 +7,8 @@ import { TeamsListComponent } from '../../dialogs/teams-list/teams-list.componen
 import { NbDialogService } from '@nebular/theme';
 import { PhasesService } from '../../../services/phases.service';
 import { NotificationsService } from '../../../services/notifications.service';
+import { EventsService } from '../../../services/events.service';
+import { EventsListComponent } from '../../dialogs/events-list/events-list.component';
 
 @Component({
   selector: 'ngx-single-button',
@@ -20,7 +22,8 @@ export class SingleButtonComponent implements OnInit {
   constructor(private modalService: NgbModal,
               private dialogService: NbDialogService,
               private phasesService: PhasesService,
-              private notificationsService: NotificationsService) { }
+              private notificationsService: NotificationsService,
+              private eventsService: EventsService) { }
 
   ngOnInit() {
   }
@@ -53,7 +56,18 @@ export class SingleButtonComponent implements OnInit {
     }
 
     if (this.internalKey === 'openSettingsInCategoryModal') {
-
+      this.eventsService.getEventsInCategory(this.rowData)
+      .then(res => {
+        this.dialogService.open(EventsListComponent, {
+          context: {
+            title: 'EVENTS',
+            events: res ? res : [],
+            category: this.rowData
+          },
+          closeOnBackdropClick: false,
+          autoFocus: true
+        });
+      });
 
     }
   }

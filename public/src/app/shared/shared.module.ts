@@ -21,6 +21,7 @@ import { EditRunModalComponent } from './modals/edit-run-modal/edit-run-modal.co
 import { EditRolesModalComponent } from './modals/edit-roles-modal/edit-roles-modal.component';
 import { TeamsListComponent } from './dialogs/teams-list/teams-list.component';
 import { SingleDateTimeComponent } from './view-cells/single-date-time/single-date-time.component';
+import { EventsListComponent } from './dialogs/events-list/events-list.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { SingleDateTimeComponent } from './view-cells/single-date-time/single-da
         EditRunModalComponent,
         ViewOnlyRolesModalComponent,
         EditRolesModalComponent,
-        TeamsListComponent
+        TeamsListComponent,
+        EventsListComponent
     ],
     providers: [
         HttpService,
@@ -71,7 +73,8 @@ import { SingleDateTimeComponent } from './view-cells/single-date-time/single-da
         EditRunModalComponent,
         ViewOnlyRolesModalComponent,
         EditRolesModalComponent,
-        TeamsListComponent
+        TeamsListComponent,
+        EventsListComponent
     ]
 })
 export class SharedModule { }

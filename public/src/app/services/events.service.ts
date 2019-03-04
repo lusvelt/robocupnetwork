@@ -9,20 +9,20 @@ export class EventsService {
 
   constructor(private socketIoService: SocketIoService) { }
 
-  getEvents() {
-    return this.socketIoService.get('getEvents');
+  getEventsInCategory(category) {
+    return this.socketIoService.send('getEventsInCategory', category);
   }
 
-  createEvent(data) {
-    return this.socketIoService.send('createEvent', data);
+  createEventInCategory(event, category) {
+    return this.socketIoService.send('createEventInCategory', {event, category});
   }
 
-  editEvent(data) {
-    return this.socketIoService.send('editEvent', data);
+  editEvent(event, category) {
+    return this.socketIoService.send('editEvent', {event, category});
   }
 
-  removeEvent(data) {
-    return this.socketIoService.send('removeEvent', data);
+  removeEvent(event, category) {
+    return this.socketIoService.send('removeEvent', {event, category});
   }
 
   notify(eventName: string): Observable<any> {

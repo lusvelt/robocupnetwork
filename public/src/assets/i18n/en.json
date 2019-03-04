@@ -248,6 +248,7 @@
     "PHASE_NUM_ADMITTED_TEAMS_REQUIRED":"Number of team admitted to the phase required!",
     "PHASE_NUM_PASSING_TEAMS":"Number of Teams passing to the next phase",
     "PHASE_NUM_PASSING_TEAMS_REQUIRED":"Number of Teams passing to the next phase required!",
-    "CREATE_PHASE":"Create phase"
+    "CREATE_PHASE":"Create phase",
 
+    "EVENTS": "Events"
 }

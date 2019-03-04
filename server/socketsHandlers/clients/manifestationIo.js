@@ -6,7 +6,6 @@ const Place = require('../../models/Place');
 const manifestationIo = (clientsIo, socket, room) => {
 
     const createManifestation = async (_manifestation, callback) => {
-        console.log(_manifestation);
         try {
             const manifestation = await Manifestation.create(_manifestation);
             if(!manifestation)
@@ -25,17 +24,6 @@ const manifestationIo = (clientsIo, socket, room) => {
     const getManifestations = async (args,callback) => {
         try {
             const manifestations = await Manifestation.getManifestationsList();
-            const promises = [];
-            manifestations.forEach(manifestation => {
-                promises.push(new Promise((resolve, reject) => {
-                    Place.findById(manifestation.placeId)
-                        .then(place => manifestation.place = place.dataValues)
-                        .then(result => resolve(result))
-                        .catch(err => reject(err));
-                }));
-            });
-
-            const result  = await Promise.all(promises);
             callback(manifestations);
             log.verbose('Manifestation data request');
         }catch (err) {

@@ -11,6 +11,7 @@ const ageRangeIo = require('./clients/ageRangeIo');
 const teamIo = require('./clients/teamIo');
 const categoryIo = require('./clients/categoryIo');
 const phasesIo = require('./clients/phasesIo');
+const eventsIo = require('./clients/eventsIo');
 
 const clientsAuthMiddleware = require('../auth/middlewares/clientsAuthMiddleware');
 
@@ -35,6 +36,7 @@ const clientsIoHandler = (clientsIo) => (socket) => {
     teamIo(clientsIo, socket, room);
     categoryIo(clientsIo, socket, room);
     phasesIo(clientsIo, socket, room);
+    eventsIo(clientsIo, socket, room);
 };
 
 module.exports = clientsIoHandler;

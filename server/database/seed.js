@@ -1,4 +1,4 @@
-const { User, ActionType, Action, Role, Manifestation, School, Place, AgeRange, Team, Category, Module } = require('./models');
+const { User, ActionType, Action, Role, Manifestation, School, Place, AgeRange, Team, Category, Module, Event } = require('./models');
 const TeamHasUser = require('../database/associationTables/TeamHasUser');
 
 const seed = async () => {
@@ -131,6 +131,10 @@ const seed = async () => {
         await Role.create({ name:'Capitano', description:'Capitano di una squadra',alias:'captain',dependsOnManifestation:true}),
         await Role.create({ name:'Vice capitano', description:'Vicecapitano di una squadra',alias:'viceCaptain',dependsOnManifestation:true}),
         await Role.create({ name:'Membro squadra', description:'Componente base di una squadra',alias:'teamMember',dependsOnManifestation:true}),
+    ];
+
+    const events = [
+        await Event.create({name:'Intersezione',description:'Intersezione in una mattonella',pointsJSCalculator:'15',affectsZone: false, affectsAttempt: false, manuallyTriggerable: true,needsStartCountForZones: false, triggerOnStart: false,waitLastIterationToTrigger: false,cancelPendingEvents: false}),
     ];
 
     const manifestation = [
@@ -451,7 +455,9 @@ const seed = async () => {
 
     await places[0].addManifestation(manifestation[0]);
     await places[0].addManifestation(manifestation[1]);
-    /*const competitions = [
+
+    await categories[0].addEvent(events[0]);
+        /*const competitions = [
         await Competition.create
     ];*/
 

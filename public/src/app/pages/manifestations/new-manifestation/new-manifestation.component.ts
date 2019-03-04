@@ -65,12 +65,10 @@ export class NewManifestationComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.manifestationsService.getManifestations()
       .then(manifestations => {
-        this.source.load(manifestations);
-        /*
         manifestations.forEach(manifestation => {
-        this.manifestationsService.getPlaceFromId(manifestation.id).then(res => {
-          manifestation.place = res[0].country + ' ' + res[0].region + ' ' + res[0].province + ' ' + res[0].postalCode + ' ' + res[0].city + ' ' + res[0].civicNumber + ' ' + res[0].street;
-        });*/
+          manifestation.Place = manifestation.Place.street + ' ' + manifestation.Place.civicNumber + ', ' + manifestation.Place.city + ' ' + manifestation.Place.postalCode + ', ' + manifestation.Place.country;
+        });
+        this.source.load(manifestations);
       })
       .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
 
@@ -113,8 +111,8 @@ export class NewManifestationComponent implements OnInit, OnDestroy {
     if (manifestation.name !== '' && manifestation.description !== '') {
     this.manifestationsService.createManifestation(manifestation)
       .then(_manifestation => {
-        // _manifestation.place = place.country + ' ' + place.region + ' ' + place.province + ' ' + place.postalCode + ' ' + place.city + ' ' + place.civicNumber + ' ' + place.street;
-        _manifestation.placeId = place.id;
+         _manifestation.Place = place.street + ' ' + place.civicNumber + ', ' + place.city + ' ' + place.postalCode + ', ' + place.country;
+        // _manifestation.placeId = place.id;
         this.notificationsService.success('MANIFESTATION_CREATED');
         this.source.insert(_manifestation);
         this.manifestation.show = false;
@@ -167,7 +165,7 @@ export class NewManifestationComponent implements OnInit, OnDestroy {
         });
       }
     },
-    placeId: {
+    Place: {
       title: 'PLACE',
       type: 'text',
       addable: false,
