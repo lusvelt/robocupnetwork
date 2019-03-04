@@ -9,6 +9,7 @@ const eventEmitter = require('./../config/eventEmitter');
 const Manifestation = require('./Manifestation');
 const Role = require('./Role');
 const ActionType = require('./ActionType');
+const UserHasRole = require('../database/associationTables/UserHasRole');
 
 const User = sequelize.define('User', {
     name: { type: Sequelize.STRING, allowNull: false },
@@ -50,6 +51,59 @@ User.prototype.regenerateAuthToken = async function (_manifestation) {
         email: this.email,
         isAdmin: this.isAdmin
     };
+
+
+    try {
+        const items = await UserHasRole.findAll({ where: { userId: jwtPayload.id }});
+
+        let promises = [];
+        items.forEach(association =>
+            promises.push(Role.findById(association.dataValues.roleId)));
+        items.forEach(item => promises.push(Role.findById(item.roleId)));
+
+        const basicRoles = await Promise.all(promises);
+
+        promises = [];
+        basicRoles.forEach(role => promises.push(role.getActions()));
+
+        const basicActionsPerRole = await Promise.all(promises);
+        let basicActions = [];
+        basicActionsPerRole.forEach(_actions => {
+            _actions.forEach(_action => {
+                if (basicActions.findIndex(action => action.id === _action.id) === -1)
+                    basicActions.push(_action);
+            });
+        });
+
+        promises = [];
+        basicActions.forEach(action => promises.push(new Promise((resolve, reject) => {
+            const actionTypesPromise = action.getActionTypes();
+            const modulesPromise = action.getModules();
+
+            Promise.all([actionTypesPromise, modulesPromise])
+                .then(results => {
+                    action.dataValues.actionTypes = results[0];
+                    action.dataValues.modules = results[1];
+                    resolve();
+                })
+                .catch(err => reject(err));
+        })));
+        await Promise.all(promises);
+
+        basicActions = basicActions.map(action => {
+            return {
+                alias: action.dataValues.alias,
+                actionTypes: action.dataValues.actionTypes.map(actionType => actionType.dataValues.alias),
+                modules: action.dataValues.modules.map(_module => _module.dataValues.alias)
+            };
+        });
+
+        jwtPayload.basicRoles = basicRoles;
+        jwtPayload.basicActions = basicActions;
+    } catch (err) {
+        // Error handling
+    }
+
 
     if (_manifestation) {
         try {

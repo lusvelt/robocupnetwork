@@ -292,7 +292,7 @@ const seed = async () => {
     await roles[0].addAction(actions[47]);
 
     // Utente
-    await roles[1].addAction(actions[3]);
+    /*await roles[1].addAction(actions[3]);
     await roles[1].addAction(actions[10]);
     await roles[1].addAction(actions[14]);
     await roles[1].addAction(actions[19]);
@@ -300,7 +300,7 @@ const seed = async () => {
     await roles[1].addAction(actions[35]);
     await roles[1].addAction(actions[39]);
     await roles[1].addAction(actions[43]);
-    await roles[1].addAction(actions[47]);
+    await roles[1].addAction(actions[47]);*/
 
     // Validatore gare
     await roles[2].addAction(actions[3]);
