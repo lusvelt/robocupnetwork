@@ -1,4 +1,5 @@
 import { RoleInterface } from './role.interface';
+import { PlaceInterface } from './place.interface';
 
 export interface ManifestationInterface {
   id?: number;
@@ -7,4 +8,5 @@ export interface ManifestationInterface {
   start: Date;
   end: Date;
   roles?: RoleInterface[];
+  place: PlaceInterface;
 }

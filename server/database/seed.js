@@ -449,6 +449,8 @@ const seed = async () => {
     await roles[7].addAction(actions[43]);
     await roles[7].addAction(actions[47]);
 
+    await places[0].addManifestation(manifestation[0]);
+    await places[0].addManifestation(manifestation[1]);
     /*const competitions = [
         await Competition.create
     ];*/

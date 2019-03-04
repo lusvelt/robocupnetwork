@@ -20,6 +20,7 @@ import { SingleButtonComponent } from './view-cells/single-button/single-button.
 import { EditRunModalComponent } from './modals/edit-run-modal/edit-run-modal.component';
 import { EditRolesModalComponent } from './modals/edit-roles-modal/edit-roles-modal.component';
 import { TeamsListComponent } from './dialogs/teams-list/teams-list.component';
+import { SingleDateTimeComponent } from './view-cells/single-date-time/single-date-time.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { TeamsListComponent } from './dialogs/teams-list/teams-list.component';
         ConfirmModalComponent,
         MultipleSelectDropdownComponent,
         SingleDateComponent,
+        SingleDateTimeComponent,
         RolesListComponent,
         UsersListComponent,
         CheckboxComponent,
@@ -60,6 +62,7 @@ import { TeamsListComponent } from './dialogs/teams-list/teams-list.component';
         ConfirmModalComponent,
         MultipleSelectDropdownComponent,
         SingleDateComponent,
+        SingleDateTimeComponent,
         RolesListComponent,
         UsersListComponent,
         CheckboxComponent,

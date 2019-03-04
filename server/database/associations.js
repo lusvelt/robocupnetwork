@@ -43,7 +43,8 @@ const {
     TeamHasUser,
     SchoolHasSchoolType,
     ActionBelongsToModule,
-    UserHasRole
+    UserHasRole,
+    TeamIsInPhase
 } = require('./associationTables');
 
 const runFk = utils.getForeignKey(Run);
@@ -161,8 +162,12 @@ Lineup.belongsToMany(Team, { through: LineupHasTeam, foreignKey: lineupFk });
 Team.belongsToMany(Lineup, { through: LineupHasTeam, foreignKey: teamFk });
 
 // Lineup - Phase | N:M ('../database/associationTables/LineupIsInPhase.js')
-Lineup.belongsToMany(Phase, { through: LineupIsInPhase, foreignKey: lineupFk });
-Phase.belongsToMany(Lineup, { through: LineupIsInPhase, foreignKey: lineupFk });
+// Lineup.belongsToMany(Phase, { through: LineupIsInPhase, foreignKey: lineupFk });
+// Phase.belongsToMany(Lineup, { through: LineupIsInPhase, foreignKey: lineupFk });
+
+// Lineup - Phase | N:M ('../database/associationTables/TeamIsInPhase.js')
+ Team.belongsToMany(Phase, { through: TeamIsInPhase, foreignKey: teamFk });
+ Phase.belongsToMany(Team, { through: TeamIsInPhase, foreignKey: phaseFk });
 
 // Role - Action | N:M ('../database/associationTables/RoleCanDoAction.js)
 Role.belongsToMany(Action, { through: RoleCanDoAction, foreignKey: roleFk });

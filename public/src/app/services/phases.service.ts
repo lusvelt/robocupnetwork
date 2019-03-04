@@ -29,9 +29,16 @@ export class PhasesService {
   updateEnd(phase, manifestation, endDate) {
     return this.socketIoService.send('updatePhaseEnd', {phase, manifestation, endDate});
   }
+  updateTeamsInPhase(phase, teams) {
+    return this.socketIoService.send('updateTeamsInPhase', {phase, teams});
+  }
 
   removePhase(phase, manifestation) {
     return this.socketIoService.send('removePhase', {phase, manifestation});
+  }
+
+  getTeamsInPhase(phase) {
+    return this.socketIoService.send('getTeamsInPhase', phase);
   }
 
   notify(eventName: string): Observable<any> {

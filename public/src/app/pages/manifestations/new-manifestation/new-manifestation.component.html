@@ -34,6 +34,22 @@
         <nb-rangepicker #rangepicker></nb-rangepicker>
         </div>
 
+        <div class="row mb-3">
+          <div class="col-md-7">
+            <input type="text" class="form-control" placeholder="{{ 'WRITE_PLACE_NAME' | translate }}"
+              (selectItem)="onPlaceClicked($event)" [ngbTypeahead]="searchPlace" [resultFormatter]="placesFormatter"
+              [inputFormatter]="placesFormatter" (focus)="focus$.next($event.target.value)"
+              (click)="click$.next($event.target.value)" #searchPlaceInstance="ngbTypeahead" />
+          </div>
+          <div class="text_or col-md-1">
+            <p>{{'OR' | translate}}</p>
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-primary" nbButton
+              (click)="newPlaceClicked(); $event.preventDefault()">{{'NEW_PLACE_BUTTON'|translate}}</button>
+          </div>
+        </div>
+
 
         <button class="btn btn-primary" [disabled]="submitted || !form.valid" nbButton hero>{{'MANIFESTATION_BUTTON'|translate}}</button>
       </nb-card-body>

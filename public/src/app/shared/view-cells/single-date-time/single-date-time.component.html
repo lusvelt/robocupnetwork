@@ -1,0 +1,11 @@
+<!--<input nbInput
+  placeholder="{{'BIRTHDATE'| translate}}"
+  [nbDatepicker]="formpicker"
+  name="birthDate"
+  #birthdate="ngModel"
+  [(ngModel)]="date"
+  >
+<nb-datepicker #formpicker (dateChange)="onDateChange($event)"></nb-datepicker>
+-->
+<input class="datetime" [(ngModel)]="dateTimeLocal" type="datetime-local" id="meeting-time"
+            name="meeting-time" (change)="onDateChange($event)">

@@ -16,6 +16,8 @@ import { AuthService } from '../../../services/auth.service';
 import { CategoriesService } from '../../../services/categories.service';
 import { NbDialogService } from '@nebular/theme';
 import { TeamsListComponent } from '../../../shared/dialogs/teams-list/teams-list.component';
+import { SingleDateTimeComponent } from '../../../shared/view-cells/single-date-time/single-date-time.component';
+import { SingleButtonComponent } from '../../../shared/view-cells/single-button/single-button.component';
 
 @Component({
   selector: 'ngx-manage-phase',
@@ -53,7 +55,9 @@ export class ManagePhaseComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if (this.authService.isManifestationSelected() && this.authService.canDo('getPhasesInManifestation')) {
       this.phasesService.getPhasesInManifestation()
-        .then(phase => this.source.load(phase))
+        .then(phase => {
+          this.source.load(phase);
+        })
         .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
     }
 
@@ -120,18 +124,34 @@ export class ManagePhaseComponent implements OnInit, OnDestroy {
     this.sessions.length--;
   }
 
+  checkIfDateNotValid(d) {
+    try {
+        const date = new Date(d);
+        return !(d.getTime() === d.getTime());
+    }catch (e) {
+        return true;
+    }
+
+}
+
   onButtonClicked() {
     const phase: PhaseInterface = _.cloneDeep(this.phase);
 
     phase.start = new Date(this.phase.start);
     phase.end = new Date(this.phase.end);
-    if (phase.name !== '' && phase.description !== '') {
-    /*this.phasesService.createPhase(phase, this.authService.getManifestation())
-      .then(_phase => {
-        this.notificationsService.success('PHASES_CREATED');
-        this.source.insert(_phase);
-        this.phase.show = false;
-      });*/
+
+
+    if (phase.name !== '' && phase.description !== '' && phase.teams !== undefined && phase.teams.length !== 0) {
+      if (!this.checkIfDateNotValid(phase.start) && !this.checkIfDateNotValid(phase.end)) {
+        this.phasesService.createPhase(phase, this.authService.getManifestation())
+        .then(_phase => {
+          this.notificationsService.success('PHASES_CREATED');
+          this.source.insert(_phase);
+          this.phase.show = false;
+        });
+      } else {
+        this.notificationsService.error('DATA_IS_NOT_VALID');
+      }
     } else {
       this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
     }
@@ -154,10 +174,10 @@ export class ManagePhaseComponent implements OnInit, OnDestroy {
     },
     start: {
       title: 'START',
-      type: 'custom',
-      editable: false,
-      addable: false,
-      renderComponent: SingleDateComponent,
+      type: 'number',
+      editable: true,
+      addable: false, /*
+      renderComponent: SingleDateTimeComponent,
       onComponentInitFunction: (instance) => {
         instance.internalKey = 'start';
         instance.parentNotifier.on('change', changed => {
@@ -165,13 +185,13 @@ export class ManagePhaseComponent implements OnInit, OnDestroy {
           .then(result => this.notificationsService.success('START_UPDATE_SUCCEDED'))
           .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
         });
-      }
+      }*/
     },
     end: {
       title: 'END',
-      type: 'custom',
-      editable: false,
-      addable: false,
+      type: 'number',
+      editable: true,
+      addable: false, /*
       renderComponent: SingleDateComponent,
       onComponentInitFunction: (instance) => {
         instance.internalKey = 'end';
@@ -180,7 +200,7 @@ export class ManagePhaseComponent implements OnInit, OnDestroy {
           .then(result => this.notificationsService.success('END_UPDATE_SUCCEDED'))
           .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
         });
-      }
+      }*/
     },
     numAdmittedTeams: {
       title: 'PHASE_NUM_ADMITTED_TEAMS',
@@ -189,6 +209,25 @@ export class ManagePhaseComponent implements OnInit, OnDestroy {
     numPassingTeams: {
       title: 'PHASE_NUM_PASSING_TEAMS',
       type: 'number',
+    },
+    teams: {
+      title: 'TEAMS',
+      type: 'custom',
+      renderComponent: SingleButtonComponent,
+      onComponentInitFunction: (instance) => {
+        instance.internalKey = 'openTeamInPhaseModal'; /*
+        instance.parentNotifier.on('change', changed => {
+          this.usersService.updateUserBirthdate(instance.rowData, changed)
+            .then(result => this.notificationsService.success('BIRTHDATE_UPDATE_SUCCEDED'))
+            .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+        });*/
+      }
+    },
+    categoryId: {
+      title: 'CATEGORY',
+      type: 'text',
+      editable: true,
+      addable: false
     }
   });
 
