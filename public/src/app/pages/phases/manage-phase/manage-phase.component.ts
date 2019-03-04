@@ -222,6 +222,12 @@ export class ManagePhaseComponent implements OnInit, OnDestroy {
             .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
         });*/
       }
+    },
+    categoryId: {
+      title: 'CATEGORY',
+      type: 'text',
+      editable: true,
+      addable: false
     }
   });
 

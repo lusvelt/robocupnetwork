@@ -29,6 +29,10 @@ export class ManifestationsService {
     return this.socketIoService.send('updateEnd', { manifestation, endDate});
   }
 
+  getPlaceFromId(id) {
+    return this.socketIoService.send('getPlaceFromId', id);
+  }
+
   removeManifestation(data) {
     return this.socketIoService.send('removeManifestation', data);
   }

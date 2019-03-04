@@ -1,14 +1,19 @@
 const _ = require('lodash');
 const Manifestation = require('../../models/Manifestation');
 const log = require('../../config/consoleMessageConfig');
+const Place = require('../../models/Place');
 
 const manifestationIo = (clientsIo, socket, room) => {
 
     const createManifestation = async (_manifestation, callback) => {
+        console.log(_manifestation);
         try {
             const manifestation = await Manifestation.create(_manifestation);
             if(!manifestation)
                 throw new Error();
+            let promises = [];
+            Place.findById(_manifestation.place.id)
+                .then(place => place.addManifestation(manifestation));
             callback(manifestation);
             socket.broadcast.emit('createManifestation',manifestation);
             log.verbose('Manifestation created');
@@ -20,9 +25,32 @@ const manifestationIo = (clientsIo, socket, room) => {
     const getManifestations = async (args,callback) => {
         try {
             const manifestations = await Manifestation.getManifestationsList();
+
+            const promises = [];
+            manifestations.forEach(manifestation => {
+                promises.push(manifestation.place = Place.findById(manifestation.placeId));
+            });
+
+            const result  = await Promise.all(promises);
             callback(manifestations);
             log.verbose('Manifestation data request');
         }catch (err) {
+            callback(new Error());
+        }
+    };
+
+    const getPlaceFromId = async (_id, callback) => {
+        try {
+            const promises = [];
+
+            const item = await Manifestation.find({where: {id: _id}});
+
+            promises.push(Place.findById(item.placeId));
+
+            const result = await Promise.all(promises);
+            callback(result);
+            log.verbose('Place of manifestation request');
+        } catch (err) {
             callback(new Error());
         }
     };
@@ -63,7 +91,7 @@ const manifestationIo = (clientsIo, socket, room) => {
         try {
             const manifestation = await Manifestation.findById(_manifestation.id);
             const result = await manifestation.update({ start });
-            
+
             if (!result)
                 throw new Error();
 
@@ -96,6 +124,7 @@ const manifestationIo = (clientsIo, socket, room) => {
     socket.on('editManifestation',editManifestation);
     socket.on('updateStart',updateStart);
     socket.on('updateEnd',updateEnd);
+    socket.on('getPlaceFromId',getPlaceFromId);
 };
 
 module.exports = manifestationIo;

@@ -5,6 +5,7 @@ const sequelize = require('../config/sequelize');
 
 const Lineup = require('./Lineup');
 const Phase = require('./Phase');
+const Place = require('./Place');
 
 const Manifestation = sequelize.define('Manifestation', {
     name: { type: Sequelize.STRING, allowNull: false },
@@ -13,7 +14,9 @@ const Manifestation = sequelize.define('Manifestation', {
     end: { type: Sequelize.DATEONLY, allowNull: false }
 });
 
-Manifestation.getManifestationsList = () => Manifestation.findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] } });
+Manifestation.getManifestationsList = () => Manifestation.findAll(
+    { attributes: { exclude: ['createdAt', 'updatedAt'] }
+    });
 
 Manifestation.prototype.getQRCodesData = async function () {
     const teams = await this.getTeams({
