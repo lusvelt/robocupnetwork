@@ -12,6 +12,7 @@ import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
 import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 import { AuthService } from '../../../services/auth.service';
+import { SingleButtonComponent } from '../../../shared/view-cells/single-button/single-button.component';
 
 @Component({
   selector: 'ngx-new-category',
@@ -135,6 +136,19 @@ export class NewCategoryComponent implements OnInit, OnDestroy {
     defaultMaxTime: {
       title: 'CATEGORY_DEFAULT_MAX_TIME',
       type: 'number',
+    },
+    settings: {
+      title: 'SETTINGS',
+      type: 'custom',
+      renderComponent: SingleButtonComponent,
+      onComponentInitFunction: (instance) => {
+        instance.internalKey = 'openSettingsInCategoryModal'; /*
+        instance.parentNotifier.on('change', changed => {
+          this.usersService.updateUserBirthdate(instance.rowData, changed)
+            .then(result => this.notificationsService.success('BIRTHDATE_UPDATE_SUCCEDED'))
+            .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+        });*/
+      }
     }
   });
 

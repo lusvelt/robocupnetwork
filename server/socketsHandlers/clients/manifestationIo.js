@@ -25,10 +25,14 @@ const manifestationIo = (clientsIo, socket, room) => {
     const getManifestations = async (args,callback) => {
         try {
             const manifestations = await Manifestation.getManifestationsList();
-
             const promises = [];
             manifestations.forEach(manifestation => {
-                promises.push(manifestation.place = Place.findById(manifestation.placeId));
+                promises.push(new Promise((resolve, reject) => {
+                    Place.findById(manifestation.placeId)
+                        .then(place => manifestation.place = place.dataValues)
+                        .then(result => resolve(result))
+                        .catch(err => reject(err));
+                }));
             });
 
             const result  = await Promise.all(promises);

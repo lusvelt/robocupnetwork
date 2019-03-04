@@ -51,6 +51,11 @@ export class SingleButtonComponent implements OnInit {
         });
       });
     }
+
+    if (this.internalKey === 'openSettingsInCategoryModal') {
+
+
+    }
   }
 
 }
