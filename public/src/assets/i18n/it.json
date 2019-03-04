@@ -250,5 +250,13 @@
     "PHASE_NUM_PASSING_TEAMS_REQUIRED":"Numero di team che accedono alla fase successiva richiesto!",
     "CREATE_PHASE":"Crea fase",
 
-    "EVENTS": "Eventi"
+    "EVENTS": "Eventi",
+    "POINTS_JS_CALCULATOR": "Calcolatore punti \n JS",
+    "AFFECTS_ZONE": "Influisce sulle \n zone",
+    "AFFECTS_ATTEMPT": "Influisce sul \n tentativo",
+    "MANUALLY_TRIGGERABLE": "Scatenabile \n manualmente",
+    "NEEDS_START_COUNT_FOR_ZONES": "traduci sta cosa",
+    "TRIGGER_ON_START": "Si scatena \n all' inizio",
+    "WAIT_LAST_ITERATION_TO_TRIGGER": "traduci sta cosa",
+    "CANCEL_PENDING_EVENTS": "Cancella eventi \n in attesa"
 }

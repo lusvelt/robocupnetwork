@@ -250,5 +250,14 @@
     "PHASE_NUM_PASSING_TEAMS_REQUIRED":"Number of Teams passing to the next phase required!",
     "CREATE_PHASE":"Create phase",
 
-    "EVENTS": "Events"
+    "EVENTS": "Events",
+    "POINTS_JS_CALCULATOR": "Points JS \n calculator",
+    "AFFECTS_ZONE": "Affects zone",
+    "AFFECTS_ATTEMPT": "Affects attempt",
+    "MANUALLY_TRIGGERABLE": "Manually \n triggerable",
+    "NEEDS_START_COUNT_FOR_ZONES": "Need start count \n for zones",
+    "TRIGGER_ON_START": "Trigger on \n start",
+    "WAIT_LAST_ITERATION_TO_TRIGGER": "Wait last iteration \n to trigger",
+    "CANCEL_PENDING_EVENTS": "Cancel pending \n events"
+
 }
