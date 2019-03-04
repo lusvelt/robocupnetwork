@@ -258,6 +258,9 @@
     "NEEDS_START_COUNT_FOR_ZONES": "Need start count \n for zones",
     "TRIGGER_ON_START": "Trigger on \n start",
     "WAIT_LAST_ITERATION_TO_TRIGGER": "Wait last iteration \n to trigger",
-    "CANCEL_PENDING_EVENTS": "Cancel pending \n events"
+    "CANCEL_PENDING_EVENTS": "Cancel pending \n events",
+
+    "DEPENDS_ON_MANIFESTATIONS": "Depends on \n manifestation",
+    "START_END": "Start and end"
 
 }

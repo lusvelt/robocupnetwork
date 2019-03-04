@@ -24,6 +24,7 @@ export class QRCodesPDFService {
 
   private initialize(params: any) {
     this.doc = new jsPDF(params);
+    this.moveTo ({x: 0, y: 0});
   }
 
   private moveTo(position: CoordinatesInterface) {
@@ -68,10 +69,14 @@ export class QRCodesPDFService {
   private async addQRCode(qrCode) {
     const startX = this.avgFontWidth * qrCode.id;
     this.moveOf({ x: startX + this.margins.x, y: this.fontSize });
-    // this.write(qrCode.id);
-    this.moveOf({ x: -startX, y: this.textMargin });
+    this.moveOf({ x: -startX, y: 0 });
+    this.moveOf({ x: 3, y: 0 });
+    this.write(qrCode.name);
+    this.moveOf({ x: -3, y: 0 });
+    this.moveOf({ x: 0, y: this.textMargin });
     this.addImage(this.qrCodes[qrCode.id]);
     this.moveOf({ x: this.qrSize, y: - (this.fontSize + this.textMargin) });
+    this.moveOf({ x: 20, y: 0 });
     this.checkForMargins();
   }
 

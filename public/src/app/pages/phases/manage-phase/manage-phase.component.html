@@ -9,11 +9,19 @@
 </div>
 
 <div *ngIf="authService.isManifestationSelected()">
+
+  <div class="row mb-3">
   <button *ngIf="authService.canDo('createPhase')" class="mb-3" [ngClass]="{ 'btn': true, 'btn-success': !phase.show, 'btn-danger': phase.show }"
     type="button" (click)="toggleForm()">
     <i [ngClass]="{ 'fas': true, 'fa-plus': !phase.show, 'fa-times': phase.show }"></i>
     {{ (phase.show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
   </button>
+  <!--<button class="ml-2" class="btn btn-primary" type="button"
+      (click)="generateQRCodes()">
+      <i class="fas fa-qrcode"></i>
+      {{ 'GENERATE_QR_CODE' | translate }}
+    </button>-->
+  </div>
 
   <form (ngSubmit)="onButtonClicked()" #form="ngForm" [hidden]="!phase.show">
     <div class="form-group">
@@ -49,7 +57,7 @@
                   </select>
                 </div>
             </div>
-              
+
 
 
           <div class="mt-3 mb-3">
@@ -97,13 +105,13 @@
           </div>
 
           -->
-          
+
 
           <button class="btn btn-primary mt-3" [disabled]="submitted || !form.valid" nbButton hero>{{'CREATE_PHASE'|translate}}</button>
           <!--
             DA AGGIUNGERE PER INSERIRE PIU' SESSIONI
             <button class="mt-3 ml-3" status="danger" nbButton (click)="addSession(); $event.preventDefault()">{{'ADD_SESSION'|translate}}</button>
-          --> 
+          -->
         </nb-card-body>
       </nb-card>
     </div>

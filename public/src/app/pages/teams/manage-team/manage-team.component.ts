@@ -1,4 +1,3 @@
-import { QRCodesPDFService } from './../../../services/qr-codes-pdf.service';
 import { AgeRangesService } from './../../../services/age-ranges.service';
 import { MultipleSelectDropdownComponent } from './../../../shared/view-cells/multiple-select-dropdown/multiple-select-dropdown.component';
 import { DataSource } from './../../../classes/data-source.class';
@@ -75,7 +74,6 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
               private schoolService: SchoolService,
               private ageRangeService: AgeRangesService,
               private usersService: UsersService,
-              private qrCodesPdfService: QRCodesPDFService,
               private authService: AuthService) {
     }
 
@@ -269,12 +267,6 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
 
   toggleForm() {
     this.team.show = !this.team.show;
-  }
-
-  generateQRCodes() {
-    this.teamService.getQRCodesData()
-      .then(data => this.qrCodesPdfService.generateQRCodes(data, 40, 18, 'a4', 24, 4))
-      .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
   }
 
   ngOnDestroy() {

@@ -9,6 +9,8 @@ import { PhasesService } from '../../../services/phases.service';
 import { NotificationsService } from '../../../services/notifications.service';
 import { EventsService } from '../../../services/events.service';
 import { EventsListComponent } from '../../dialogs/events-list/events-list.component';
+import { TeamService } from '../../../services/team.service';
+import { QRCodesPDFService } from './../../../services/qr-codes-pdf.service';
 
 @Component({
   selector: 'ngx-single-button',
@@ -23,7 +25,9 @@ export class SingleButtonComponent implements OnInit {
               private dialogService: NbDialogService,
               private phasesService: PhasesService,
               private notificationsService: NotificationsService,
-              private eventsService: EventsService) { }
+              private eventsService: EventsService,
+              private teamService: TeamService,
+              private qrCodesPdfService: QRCodesPDFService) { }
 
   ngOnInit() {
   }
@@ -69,6 +73,11 @@ export class SingleButtonComponent implements OnInit {
         });
       });
 
+    }
+    if (this.internalKey === 'generateQrCodeModal') {
+      this.phasesService.getQRCodesData()
+      .then(data => this.qrCodesPdfService.generateQRCodes(data, 40, 18, 'a4', 24, 4))
+      .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
     }
   }
 

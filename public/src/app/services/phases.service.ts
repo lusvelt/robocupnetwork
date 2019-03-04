@@ -41,6 +41,10 @@ export class PhasesService {
     return this.socketIoService.send('getTeamsInPhase', phase);
   }
 
+  getQRCodesData() {
+    return this.socketIoService.send('getQRCodesData', this.authService.getManifestation());
+  }
+
   notify(eventName: string): Observable<any> {
     return new Observable(observer =>
       this.socketIoService.on(eventName).subscribe(data => observer.next(data))

@@ -17,7 +17,7 @@ const phasesIo = (clientsIo, socket, room) => {
         const _phase = data.phase;
         const _manifestation = data.manifestation;
         const _category = _phase.category;
-        const _teams = _phase.teams; 
+        const _teams = _phase.teams;
 
         try {
             const phase = await Phase.create(_phase);
@@ -32,7 +32,7 @@ const phasesIo = (clientsIo, socket, room) => {
                 });
 
             promises = [];
-            
+
             Category.findById(_category.id)
                 .then(category => {
                     promises.push(category.addPhase(phase));
@@ -42,7 +42,7 @@ const phasesIo = (clientsIo, socket, room) => {
 
             _teams.forEach(team => {
                 promises.push(TeamIsInPhase.create({teamId: team.id, phaseId: phase.id}));
-            });    
+            });
 
             const result = await Promise.all(promises);
             if(!result)
@@ -63,7 +63,7 @@ const phasesIo = (clientsIo, socket, room) => {
         try {
             const phase = await Phase.findById(_phase.id);
             const result = await phase.update({ start });
-            
+
             if (!result)
                 throw new Error();
 
@@ -82,7 +82,7 @@ const phasesIo = (clientsIo, socket, room) => {
         try {
             const phase = await Phase.findById(_phase.id);
             const result = await phase.update({ end });
-            
+
             if (!result)
                 throw new Error();
 
@@ -110,9 +110,9 @@ const phasesIo = (clientsIo, socket, room) => {
             console.log(_phase.id);
             const promises = [];
             const items = await TeamIsInPhase.findAll({where: {phaseId: _phase.id}});
-            items.forEach(item => promises.push(Team.findById(item.teamId)));      
+            items.forEach(item => promises.push(Team.findById(item.teamId)));
             const result = await Promise.all(promises);
-            
+
             if (!result)
                 throw new Error();
 
@@ -145,7 +145,7 @@ const phasesIo = (clientsIo, socket, room) => {
             callback(result);
 
             log.verbose('Updated teams in phase data request');
-            
+
         } catch (err) {
             callback(new Error());
         }
@@ -192,6 +192,16 @@ const phasesIo = (clientsIo, socket, room) => {
         }
     };
 
+    const getQRCodesData = async (_phase, callback) => {
+        try {
+            const phase = await Phase.findById(_phase.id);
+            const data = await phase.getQRCodesData();
+            callback(JSON.parse(JSON.stringify(data)));
+        } catch (err) {
+            callback(err);
+        }
+    };
+
     socket.on('createPhase', createPhase);
     socket.on('removePhase', removePhase);
     socket.on('getPhasesInManifestation', getPhasesInManifestation);
@@ -200,6 +210,7 @@ const phasesIo = (clientsIo, socket, room) => {
     socket.on('updatePhaseStart', updatePhaseStart);
     socket.on('getTeamsInPhase',getTeamsInPhase);
     socket.on('updateTeamsInPhase',updateTeamsInPhase);
+    socket.on('getQRCodesData', getQRCodesData);
 };
 
 module.exports = phasesIo;

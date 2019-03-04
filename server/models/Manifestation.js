@@ -16,10 +16,10 @@ const Manifestation = sequelize.define('Manifestation', {
 
 Manifestation.getManifestationsList = () => Manifestation.findAll(
     { attributes: { exclude: ['createdAt', 'updatedAt'] },
-    include: [{ 
-        model: Place,
-        attributes: { exclude: ['createdAt', 'updatedAt'] },
-    }]
+        include: [{
+            model: Place,
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
+        }]
     });
 
 Manifestation.prototype.getQRCodesData = async function () {

@@ -258,5 +258,8 @@
     "NEEDS_START_COUNT_FOR_ZONES": "traduci sta cosa",
     "TRIGGER_ON_START": "Si scatena \n all' inizio",
     "WAIT_LAST_ITERATION_TO_TRIGGER": "traduci sta cosa",
-    "CANCEL_PENDING_EVENTS": "Cancella eventi \n in attesa"
+    "CANCEL_PENDING_EVENTS": "Cancella eventi \n in attesa",
+
+    "DEPENDS_ON_MANIFESTATIONS": "Dipende dalla \n manifestazione",
+    "START_END": "Inizio e fine"
 }

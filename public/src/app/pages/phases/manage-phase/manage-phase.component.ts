@@ -18,6 +18,8 @@ import { NbDialogService } from '@nebular/theme';
 import { TeamsListComponent } from '../../../shared/dialogs/teams-list/teams-list.component';
 import { SingleDateTimeComponent } from '../../../shared/view-cells/single-date-time/single-date-time.component';
 import { SingleButtonComponent } from '../../../shared/view-cells/single-button/single-button.component';
+import { QRCodesPDFService } from './../../../services/qr-codes-pdf.service';
+import { TeamService } from '../../../services/team.service';
 
 @Component({
   selector: 'ngx-manage-phase',
@@ -47,6 +49,8 @@ export class ManagePhaseComponent implements OnInit, OnDestroy {
     private config: NgbDropdownConfig,
     private datePipe: DatePipe,
     private authService: AuthService,
+    private teamService: TeamService,
+    private qrCodesPdfService: QRCodesPDFService,
     private categoriesService: CategoriesService,
     private dialogService: NbDialogService) {
       config.autoClose = false;
@@ -228,6 +232,14 @@ export class ManagePhaseComponent implements OnInit, OnDestroy {
       type: 'text',
       editable: true,
       addable: false
+    },
+    qrCode: {
+      title: 'GENERATE_QR_CODE',
+      type: 'custom',
+      renderComponent: SingleButtonComponent,
+      onComponentInitFunction: (instance) => {
+        instance.internalKey = 'generateQrCodeModal';
+      }
     }
   });
 
@@ -263,7 +275,9 @@ export class ManagePhaseComponent implements OnInit, OnDestroy {
   toggleForm() {
     this.phase.show = !this.phase.show;
   }
+
   ngOnDestroy() {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
+
 }

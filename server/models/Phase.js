@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/sequelize');
 const Category = require('./Category');
+const _ = require('lodash');
 
 const Phase = sequelize.define('Phase', {
     name: { type: Sequelize.STRING, allowNull: false },
@@ -13,10 +14,21 @@ const Phase = sequelize.define('Phase', {
 
 Phase.getPhasesList = () => Phase.findAll(
     { attributes: {exclude: ['createdAt', 'updatedAt'] },
-    include: [{ 
-        model: Category,
-        attributes: { exclude: ['createdAt', 'updatedAt'] },
-    }]
+        include: [{
+            model: Category,
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
+        }]
     });
+
+Phase.prototype.getQRCodesData = async function () {
+    const teams = await this.getTeams({
+        attributes: { exclude: ['createdAt', 'updatedAt'] },
+        include: [{
+            model: Phase,
+            attributes: { include: ['id', 'name'] }
+        }]
+    });
+    return teams.map(team => _.omit(JSON.parse(JSON.stringify(team)), ['TeamParticipatesToPhase']));
+};
 
 module.exports = Phase;

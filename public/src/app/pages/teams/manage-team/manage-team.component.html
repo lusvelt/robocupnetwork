@@ -16,12 +16,6 @@
       <i [ngClass]="{ 'fas': true, 'fa-plus': !team.show, 'fa-times': team.show }"></i>
       {{ (team.show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
     </button>
-
-    <button class="ml-2" class="btn btn-primary" type="button"
-      (click)="generateQRCodes()">
-      <i class="fas fa-qrcode"></i>
-      {{ 'GENERATE_QR_CODE' | translate }}
-    </button>
   </div>
 
   <form (ngSubmit)="onButtonClicked()" #form="ngForm" [hidden]="!team.show">
