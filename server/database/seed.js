@@ -457,6 +457,8 @@ const seed = async () => {
     await places[0].addManifestation(manifestation[1]);
 
     await categories[0].addEvent(events[0]);
+
+    await events[0].addEvent(events[0]);
         /*const competitions = [
         await Competition.create
     ];*/

@@ -32,10 +32,61 @@ User.afterCreate((user, options) => {
 User.generateAuthToken = async (email, clearTextPassword) => {
     const user = await User.findOne({ where: { email } });
 
+    const jwtPayload = _.pick(user, ['id', 'name', 'surname', 'email', 'isAdmin']);
+
+    try {
+        const items = await UserHasRole.findAll({ where: { userId: jwtPayload.id }});
+
+        let promises = [];
+        items.forEach(association =>
+            promises.push(Role.findById(association.dataValues.roleId)));
+
+        const basicRoles = await Promise.all(promises);
+
+        promises = [];
+        basicRoles.forEach(role => promises.push(role.getActions()));
+
+        const basicActionsPerRole = await Promise.all(promises);
+        let basicActions = [];
+        basicActionsPerRole.forEach(_actions => {
+            _actions.forEach(_action => {
+                if (basicActions.findIndex(action => action.id === _action.id) === -1)
+                    basicActions.push(_action);
+            });
+        });
+
+        promises = [];
+        basicActions.forEach(action => promises.push(new Promise((resolve, reject) => {
+            const actionTypesPromise = action.getActionTypes();
+            const modulesPromise = action.getModules();
+
+            Promise.all([actionTypesPromise, modulesPromise])
+                .then(results => {
+                    action.dataValues.actionTypes = results[0];
+                    action.dataValues.modules = results[1];
+                    resolve();
+                })
+                .catch(err => reject(err));
+        })));
+        await Promise.all(promises);
+
+        basicActions = basicActions.map(action => {
+            return {
+                alias: action.dataValues.alias,
+                actionTypes: action.dataValues.actionTypes.map(actionType => actionType.dataValues.alias),
+                modules: action.dataValues.modules.map(_module => _module.dataValues.alias)
+            };
+        });
+
+        jwtPayload.basicRoles = basicRoles;
+        jwtPayload.basicActions = basicActions;
+    } catch (err) {
+        // Error handling
+    }
+
     if (!user || !bcrypt.compareSync(clearTextPassword, user.password))
         throw new Error();
 
-    const jwtPayload = _.pick(user, ['id', 'name', 'surname', 'email', 'isAdmin']);
     const token = jwt.sign(jwtPayload, process.env.JWT_SECRET).toString();
 
     return token;
@@ -59,7 +110,6 @@ User.prototype.regenerateAuthToken = async function (_manifestation) {
         let promises = [];
         items.forEach(association =>
             promises.push(Role.findById(association.dataValues.roleId)));
-        items.forEach(item => promises.push(Role.findById(item.roleId)));
 
         const basicRoles = await Promise.all(promises);
 
