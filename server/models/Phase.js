@@ -28,11 +28,13 @@ Phase.prototype.getQRCodesData = async function () {
             attributes: ['id', 'name']
         }]
     });
+    teams = JSON.parse(JSON.stringify(teams));
     teams = teams.map(team => {
         team.Phases = team.Phases.map(phase => _.omit(phase, ['TeamIsInPhase']));
         return team;
     });
-    return teams.map(team => _.omit(JSON.parse(JSON.stringify(team)), ['TeamIsInPhase']));
+    teams = teams.map(team => _.omit(team, ['TeamIsInPhase']));
+    return teams;
 };
 
 module.exports = Phase;

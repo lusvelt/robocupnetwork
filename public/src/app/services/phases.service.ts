@@ -29,6 +29,7 @@ export class PhasesService {
   updateEnd(phase, manifestation, endDate) {
     return this.socketIoService.send('updatePhaseEnd', {phase, manifestation, endDate});
   }
+
   updateTeamsInPhase(phase, teams) {
     return this.socketIoService.send('updateTeamsInPhase', {phase, teams});
   }
@@ -41,8 +42,8 @@ export class PhasesService {
     return this.socketIoService.send('getTeamsInPhase', phase);
   }
 
-  getQRCodesData() {
-    return this.socketIoService.send('getQRCodesData', this.authService.getManifestation());
+  getQRCodesData(phase) {
+    return this.socketIoService.send('getQRCodesData', phase);
   }
 
   notify(eventName: string): Observable<any> {

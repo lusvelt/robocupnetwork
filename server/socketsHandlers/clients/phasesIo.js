@@ -78,7 +78,6 @@ const phasesIo = (clientsIo, socket, room) => {
         const _phase = data.phase;
         const _manifestation = data.manifestation;
         const end = data.endDate;
-        console.log(end);
         try {
             const phase = await Phase.findById(_phase.id);
             const result = await phase.update({ end });
@@ -122,7 +121,7 @@ const phasesIo = (clientsIo, socket, room) => {
         } catch (err) {
             callback(new Error());
         }
-    }
+    };
 
     const updateTeamsInPhase = async (data, callback) => {
         try {
@@ -149,7 +148,7 @@ const phasesIo = (clientsIo, socket, room) => {
         } catch (err) {
             callback(new Error());
         }
-    }
+    };
 
     const editPhase = async (data, callback) => {
         try {
@@ -196,7 +195,8 @@ const phasesIo = (clientsIo, socket, room) => {
         try {
             const phase = await Phase.findById(_phase.id);
             const data = await phase.getQRCodesData();
-            callback(JSON.parse(JSON.stringify(data)));
+            console.log(data);
+            callback(data);
         } catch (err) {
             callback(err);
         }

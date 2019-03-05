@@ -21,6 +21,7 @@ export class SingleButtonComponent implements OnInit {
   @Input() value: any;
   @Input() rowData: any;
   internalKey: string;
+  params: any;
   constructor(private modalService: NgbModal,
               private dialogService: NbDialogService,
               private phasesService: PhasesService,
@@ -75,9 +76,11 @@ export class SingleButtonComponent implements OnInit {
 
     }
     if (this.internalKey === 'generateQrCodeModal') {
-      this.phasesService.getQRCodesData()
-      .then(data => this.qrCodesPdfService.generateQRCodes(data, 40, 18, 'a4', 24, 4))
-      .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+      this.phasesService.getQRCodesData(this.rowData)
+        .then(data => {
+          this.qrCodesPdfService.generateQRCodes(data, 40, 18, 'a4', 24, 4);
+        })
+        .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
     }
   }
 

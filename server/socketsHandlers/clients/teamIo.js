@@ -139,23 +139,12 @@ const teamIo = (clientsIo, socket, room) => {
         }
     };
 
-    const getQRCodesData = async (_manifestation, callback) => {
-        try {
-            const manifestation = await Manifestation.findById(_manifestation.id);
-            const data = await manifestation.getQRCodesData();
-            callback(JSON.parse(JSON.stringify(data)));
-        } catch (err) {
-            callback(err);
-        }
-    };
-
     socket.on('createTeam', createTeam);
     socket.on('removeTeam', removeTeam);
     socket.on('getTeams', getTeams);
     socket.on('getTeamsInManifestation', getTeamsInManifestation);
     socket.on('editTeam', editTeam);
     socket.on('getCaptainFromId',getCaptainFromId);
-    socket.on('getQRCodesData', getQRCodesData);
 };
 
 module.exports = teamIo;
