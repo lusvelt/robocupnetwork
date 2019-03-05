@@ -26,6 +26,10 @@ export class CategoriesService {
     return this.socketIoService.send('removeCategory', data);
   }
 
+  findCategoryFromPhaseId(data) {
+    return this.socketIoService.send('findCategoryFromPhaseId', data);
+  }
+
   notify(eventName: string): Observable<any> {
     return new Observable(observer => this.socketIoService.on(eventName)
       .subscribe(data => observer.next(data)));

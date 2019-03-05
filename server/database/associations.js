@@ -80,8 +80,11 @@ Category.hasMany(Param, { foreignKey: categoryFk });
 // Phase - Phase | 1:1
 Phase.hasOne(Phase, { foreignKey: 'nextPhaseId'});
 
-// Phase - Category | 1:N
+// Category - Phase | 1:N
 Category.hasMany(Phase, { foreignKey: categoryFk });
+
+//Phase - Category | N:1
+Phase.belongsTo(Category, {foreignKey: phaseFk});
 
 // Event - Event | 1:N
 Event.hasMany(Event, { foreignKey: 'triggerId'});

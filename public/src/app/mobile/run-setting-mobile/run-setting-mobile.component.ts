@@ -7,6 +7,8 @@ import { NotificationsService } from '../../services/notifications.service';
 
 import 'rxjs/add/operator/catch';
 import { UserService } from '../../services/user.service';
+import { TeamComponent } from '../../pages/dashboard/team/team.component';
+import { CategoriesService } from '../../services/categories.service';
 @Component({
   selector: 'ngx-runsetting',
   templateUrl: './run-setting-mobile.component.html',
@@ -19,7 +21,8 @@ export class RunSettingMobileComponent implements OnInit {
               private router: Router,
               private notificationsService: NotificationsService,
               private userService: UserService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private categoriesService: CategoriesService) { }
 
 
   redirectDelay: number = 0;
@@ -37,6 +40,7 @@ export class RunSettingMobileComponent implements OnInit {
   messages: string[] = [];
 
   user: any = {};
+  team: any = {};
 
   runsetting: any = {
     evacuationType: '',
@@ -53,7 +57,14 @@ export class RunSettingMobileComponent implements OnInit {
 
     ngOnInit() {
       this.fullName = this.userService.getFullName();
-      // console.log(this.route.snapshot.params);
+      const data = this.route.snapshot.params;
+      this.team = JSON.parse(data.text);
+      // console.log(this.team.Phases[0].id);
+
+      this.categoriesService.findCategoryFromPhaseId(this.team.Phases[0])
+      .then(category => {
+        this.team.category = category;
+      });
     }
 
     visualizza() { }

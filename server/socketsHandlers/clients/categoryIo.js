@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const Category = require('../../models/Category');
+const Phase = require('../../models/Phase');
 const log = require('../../config/consoleMessageConfig');
 
 const categoryIo = (clientsIo, socket, room) => {
@@ -65,10 +66,25 @@ const categoryIo = (clientsIo, socket, room) => {
         }
     };
 
+    const findCategoryFromPhaseId = (data, callback) => {
+        try {
+            const id = data.id;
+            console.log(id);
+           Phase.findById(id)
+           .then(phase => callback(phase)/*phase.getCategory()*/)
+           /*.then(category => {
+               console.log(category);
+               callback(category)});*/
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
     socket.on('createCategory', createCategory);
     socket.on('removeCategory', removeCategory);
     socket.on('getCategories', getCategories);
     socket.on('editCategory', editCategory);
+    socket.on('findCategoryFromPhaseId',findCategoryFromPhaseId);
 };
 
 module.exports = categoryIo;

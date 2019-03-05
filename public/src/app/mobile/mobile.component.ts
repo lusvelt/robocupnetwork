@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SocketIoService } from '../services/socket-io.service';
 
 @Component({
     selector: 'ngx-mobileapp',
@@ -12,4 +13,12 @@ import { Component } from '@angular/core';
 
   })
 
-  export class MobileComponent { }
+
+
+  export class MobileComponent implements OnInit {
+    constructor(private socketIoService: SocketIoService) { }
+    ngOnInit() {
+      this.socketIoService.connect('/clients');
+    }
+
+   }
