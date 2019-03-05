@@ -8,6 +8,7 @@ import { RegisterComponent } from './@theme/components/auth/register/register.co
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { NbAuthComponent } from '@nebular/auth';
+import { environment } from '../environments/environment';
 
 const routes: Routes = [
   { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule', canActivate: [AuthGuardService] },
@@ -39,8 +40,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'login', pathMatch: 'full' }
     ],
   },
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
-  { path: '**', redirectTo: 'mobile' },
+  { path: '', redirectTo: environment.mobile ? 'mobile' : 'auth', pathMatch: 'full' }
 ];
 
 const config: ExtraOptions = {

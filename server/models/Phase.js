@@ -21,14 +21,18 @@ Phase.getPhasesList = () => Phase.findAll(
     });
 
 Phase.prototype.getQRCodesData = async function () {
-    const teams = await this.getTeams({
+    let teams = await this.getTeams({
         attributes: { exclude: ['createdAt', 'updatedAt'] },
         include: [{
             model: Phase,
-            attributes: { include: ['id', 'name'] }
+            attributes: ['id', 'name']
         }]
     });
-    return teams.map(team => _.omit(JSON.parse(JSON.stringify(team)), ['TeamParticipatesToPhase']));
+    teams = teams.map(team => {
+        team.Phases = team.Phases.map(phase => _.omit(phase, ['TeamIsInPhase']));
+        return team;
+    });
+    return teams.map(team => _.omit(JSON.parse(JSON.stringify(team)), ['TeamIsInPhase']));
 };
 
 module.exports = Phase;

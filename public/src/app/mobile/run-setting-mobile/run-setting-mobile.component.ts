@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { NotificationsService } from '../../services/notifications.service';
 
@@ -18,7 +18,8 @@ export class RunSettingMobileComponent implements OnInit {
               private authService: AuthService,
               private router: Router,
               private notificationsService: NotificationsService,
-              private userService: UserService) { }
+              private userService: UserService,
+              private route: ActivatedRoute) { }
 
 
   redirectDelay: number = 0;
@@ -52,6 +53,7 @@ export class RunSettingMobileComponent implements OnInit {
 
     ngOnInit() {
       this.fullName = this.userService.getFullName();
+      // console.log(this.route.snapshot.params);
     }
 
     visualizza() { }

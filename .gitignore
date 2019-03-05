@@ -65,3 +65,5 @@ dist/
 .vscode/*
 
 public_old/
+
+mobile/

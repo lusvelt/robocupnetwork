@@ -7,6 +7,7 @@ import { NotificationsService } from '../../services/notifications.service';
 
 import 'rxjs/add/operator/catch';
 import { UserService } from '../../services/user.service';
+import { QrCodeService } from '../../services/qr-code.service';
 
 @Component({
   selector: 'ngx-dashboard-mobile',
@@ -19,7 +20,8 @@ export class DashboardMobileComponent implements OnInit {
               private authService: AuthService,
               private router: Router,
               private notificationsService: NotificationsService,
-              private userService: UserService) { }
+              private userService: UserService,
+              private qrCodeService: QrCodeService) { }
 
 
   redirectDelay: number = 0;
@@ -46,8 +48,8 @@ export class DashboardMobileComponent implements OnInit {
     }
 
     qrCodeScan() {
-      /*this.qrCodeService.scan()
-        .then(data => this.router.navigate(['/mobile', 'run-setting', data]));*/
+      this.qrCodeService.scan()
+        .then(data => this.router.navigate(['/mobile', 'run-setting', data]));
     }
 
 

@@ -11,7 +11,10 @@
     "build": "cd public && ng build",
     "postinstall": "cd public && npm install",
     "precommit": "eslint index.js server/**",
-    "serve": "cd public && ng serve"
+    "serve": "cd public && ng serve",
+    "mobile": "cd public && npm run mobile",
+    "browser": "cd mobile && cordova run browser",
+    "android": "cd mobile && cordova run android"
   },
   "repository": {
     "type": "git",
