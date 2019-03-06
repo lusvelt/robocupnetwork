@@ -2,16 +2,17 @@ const fs = require('fs-extra');
 const path = require('path');
 const { execSync } = require('child_process');
 
+const rootDir = path.join(__dirname);
+const cordovaDir = path.join(__dirname, 'mobile');
+const publicDir = path.join(__dirname, 'public');
+const wwwCordovaDir = path.join(__dirname, 'mobileApp', 'www');
+
 const utils = {
-    buildMobile: () => {
-        const rootDir = path.join(__dirname);
-        const cordovaDir = path.join(__dirname, 'mobile');
-        const wwwCordovaDir = path.join(__dirname, 'mobile', 'www');
-        
+    buildMobile: function () {        
         if (!fs.existsSync(cordovaDir)) {
             console.log('Directory \'mobile\' does not exist');
             console.log('Initializing cordova project...');
-            execSync('cordova create mobile it.robocupnetwork.mobile Robocup\\ Network', { cwd: rootDir });
+            execSync('cordova create mobileApp it.robocupnetwork.mobile Robocup\\ Network', { cwd: rootDir });
             execSync('cordova platform add browser', { cwd: cordovaDir });
             execSync('cordova platform add android', { cwd: cordovaDir });
             console.log('Directory \'mobile\' initialized');
@@ -24,9 +25,13 @@ const utils = {
         if (fs.existsSync(wwwCordovaDir))
             fs.removeSync(wwwCordovaDir);
         
-        execSync('npm run mobile', { cwd: rootDir });
+        execSync('ng build --output-path="../mobile/www"', { cwd: publicDir });
         console.log('Angular application built successfully');
-        // execSync('npm run android', { cwd: rootDir });
+    },
+    runBrowser: function () {
+        this.buildMobile();
+        console.log('Application running on browser');
+        execSync('cordova run browser', { cwd: cordovaDir });
     }
 };
 

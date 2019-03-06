@@ -9,6 +9,8 @@ import 'rxjs/add/operator/catch';
 import { UserService } from '../../services/user.service';
 import { TeamComponent } from '../../pages/dashboard/team/team.component';
 import { CategoriesService } from '../../services/categories.service';
+import { RunService } from '../../services/run.service';
+import { ParamsService } from '../../services/params.service';
 @Component({
   selector: 'ngx-runsetting',
   templateUrl: './run-setting-mobile.component.html',
@@ -22,7 +24,9 @@ export class RunSettingMobileComponent implements OnInit {
               private notificationsService: NotificationsService,
               private userService: UserService,
               private route: ActivatedRoute,
-              private categoriesService: CategoriesService) { }
+              private categoriesService: CategoriesService,
+              private runService: RunService,
+              private paramsService: ParamsService) { }
 
 
   redirectDelay: number = 0;
@@ -39,45 +43,65 @@ export class RunSettingMobileComponent implements OnInit {
   errors: string[] = [];
   messages: string[] = [];
 
+  category: any;
+
   user: any = {};
   team: any = {};
 
   runsetting: any = {
-    evacuationType: '',
-    aliveVictim: '',
-    deadVictim: '',
+    evacuationType: undefined,
+    aliveVictims: undefined,
+    deadVictims: undefined,
     lastCheckpointIsRoom: true,
-    field: '',
-    numberOfCheckpoints: '',
-    checkpoint: []
+    field: undefined,
+    numberOfCheckpoints: undefined,
+    checkpoints: [ ],
+    maxTime: undefined
   };
 
   submitted: boolean = false;
   rememberMe = false;
 
-    ngOnInit() {
-      this.fullName = this.userService.getFullName();
-      const data = this.route.snapshot.params;
-      this.team = JSON.parse(data.text);
-      // console.log(this.team.Phases[0].id);
+  ngOnInit() {
+    this.fullName = this.userService.getFullName();
+    const data = this.route.snapshot.params;
+    this.team = JSON.parse('{"id":1,"name":"Fenix","Phases":[{"id":1,"name":"Fase"}]}');
+    // console.log(this.team.Phases[0].id);
 
-      this.categoriesService.findCategoryFromPhaseId(this.team.Phases[0])
-      .then(category => {
-        this.team.category = category;
+    this.categoriesService.findCategoryFromPhaseId(this.team.Phases[0])
+    .then(category => {
+      this.runsetting.maxTime = category.defaultMaxTime;
+      this.category = category;
+    });
+  }
+
+  visualizza() {
+    this.runService.startRun(this.runsetting, this.team)
+      .then(run => {
+        this.paramsService.setParams({
+          runSettings: this.runsetting,
+          team: this.team,
+          category: this.category
+        });
+        this.router.navigate(['/mobile', 'scoring-run']);
       });
-    }
-
-    visualizza() { }
+  }
 
   onNumberOfCheckpointChange() {
-    this.runsetting.checkpoint.length = this.runsetting.numberOfCheckpoints;
+    this.runsetting.checkpoint = [];
+    for (let i = 0; i < this.runsetting.numberOfCheckpoints; i++)
+      this.runsetting.checkpoints.push(0);
   }
 
   onLastCheckpointIsRoomChange() {
     if (!this.runsetting.lastCheckpointIsRoom)
-      this.runsetting.checkpoint.length++;
+      this.runsetting.checkpoints.push(0);
     else
-      this.runsetting.checkpoint.length--;
+      this.runsetting.checkpoints.splice(this.runsetting.checkpoints.length - 1, 1);
+  }
+
+  trackByIndex(index: number, obj: any): any {
+    return index;
   }
 
 }

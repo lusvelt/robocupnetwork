@@ -6,6 +6,7 @@ import { ThemeModule } from '../@theme/theme.module';
 import { LoginMobileComponent } from './login-mobile/login-mobile.component';
 import { RunSettingMobileComponent } from './run-setting-mobile/run-setting-mobile.component';
 import { MobileComponent } from './mobile.component';
+import { ScoringRunMobileComponent } from './scoring-run-mobile/scoring-run-mobile.component';
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import { MobileComponent } from './mobile.component';
         MobileComponent,
         DashboardMobileComponent,
         LoginMobileComponent,
-        RunSettingMobileComponent
+        RunSettingMobileComponent,
+        ScoringRunMobileComponent
     ],
 })
 export class MobileModule {

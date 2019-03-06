@@ -111,4 +111,19 @@ export class AuthService {
     const actions = this.userService.getUserInfo().actions.map(_action => _action.alias);
     return actions.includes(action);
   }
+
+  getUserInfo() {
+    // lodash se volete eliminare o aggiungere campi al json returnato dal tokenService
+    return this.tokenService.getDecodedToken();
+  }
+
+  getFullName(): string {
+    const currentUser = this.getUserInfo();
+    return currentUser.name + ' ' + currentUser.surname;
+  }
+
+  getEmail(): string {
+    const currentUser = this.getUserInfo();
+    return currentUser.email;
+  }
 }

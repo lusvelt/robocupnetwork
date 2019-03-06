@@ -12,9 +12,8 @@
     "postinstall": "cd public && npm install",
     "precommit": "eslint index.js server/**",
     "serve": "cd public && ng serve",
-    "mobile": "cd public && npm run mobile",
-    "browser": "cd mobile && cordova run browser",
-    "android": "cd mobile && cordova run android",
+    "browser": "node utils runBrowser",
+    "android": "node utils runAndroid",
     "buildMobile": "node utils buildMobile"
   },
   "repository": {

@@ -1,3 +1,4 @@
+import { ScoringRunMobileComponent } from './scoring-run-mobile/scoring-run-mobile.component';
 import { DashboardMobileComponent } from './dashboard-mobile/dashboard-mobile.component';
 import { LoginMobileComponent } from './login-mobile/login-mobile.component';
 import { MobileComponent } from './mobile.component';
@@ -22,6 +23,10 @@ const routes: Routes = [{
         {
             path: 'run-setting',
             component: RunSettingMobileComponent
+        },
+        {
+            path: 'scoring-run',
+            component: ScoringRunMobileComponent
         },
         {
             path: '',

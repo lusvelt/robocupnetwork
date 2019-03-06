@@ -83,8 +83,8 @@ Phase.hasOne(Phase, { foreignKey: 'nextPhaseId'});
 // Category - Phase | 1:N
 Category.hasMany(Phase, { foreignKey: categoryFk });
 
-//Phase - Category | N:1
-Phase.belongsTo(Category, {foreignKey: phaseFk});
+// Phase - Category | N:1
+Phase.belongsTo(Category, { foreignKey: categoryFk });
 
 // Event - Event | 1:N
 Event.hasMany(Event, { foreignKey: 'triggerId'});
@@ -170,8 +170,8 @@ Team.belongsToMany(Lineup, { through: LineupHasTeam, foreignKey: teamFk });
 // Phase.belongsToMany(Lineup, { through: LineupIsInPhase, foreignKey: lineupFk });
 
 // Lineup - Phase | N:M ('../database/associationTables/TeamIsInPhase.js')
- Team.belongsToMany(Phase, { through: TeamIsInPhase, foreignKey: teamFk });
- Phase.belongsToMany(Team, { through: TeamIsInPhase, foreignKey: phaseFk });
+Team.belongsToMany(Phase, { through: TeamIsInPhase, foreignKey: teamFk });
+Phase.belongsToMany(Team, { through: TeamIsInPhase, foreignKey: phaseFk });
 
 // Role - Action | N:M ('../database/associationTables/RoleCanDoAction.js)
 Role.belongsToMany(Action, { through: RoleCanDoAction, foreignKey: roleFk });

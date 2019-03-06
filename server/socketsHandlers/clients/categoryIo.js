@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const Category = require('../../models/Category');
 const Phase = require('../../models/Phase');
+const Event = require('../../models/Event');
 const log = require('../../config/consoleMessageConfig');
 
 const categoryIo = (clientsIo, socket, room) => {
@@ -66,15 +67,12 @@ const categoryIo = (clientsIo, socket, room) => {
         }
     };
 
-    const findCategoryFromPhaseId = (data, callback) => {
+    const findCategoryFromPhaseId = async (data, callback) => {
         try {
             const id = data.id;
-            console.log(id);
-           Phase.findById(id)
-           .then(phase => callback(phase)/*phase.getCategory()*/)
-           /*.then(category => {
-               console.log(category);
-               callback(category)});*/
+            const phase = await Phase.findById(id);
+            const category = await phase.getCategory({ include: [ Event ] });
+            callback(category);
         } catch (err) {
             callback(new Error());
         }

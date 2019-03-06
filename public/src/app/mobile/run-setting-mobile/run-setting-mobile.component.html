@@ -10,14 +10,14 @@
   </div>
 </div>
 
-<div class="content">
+<div class="content" [hidden]="category?.scoringType !== 'events'">
   <nb-card>
     <nb-card-body>
       <div class="row">
         <div class="borderclass col-md-6">
           <div class="mt-3">
             <label for="input-field" class="sr-only">{{ 'FIELD' | translate}}</label>
-            <input nbInput [(ngModel)]="runsetting.field" #field="ngModel" id="input-field" name="field"
+            <input type="number" nbInput [(ngModel)]="runsetting.field" #field="ngModel" id="input-field" name="field"
               placeholder="{{ 'FIELD' | translate }}" autofocus fullWidth [status]="field.dirty ? (field.invalid  ? 'danger' : 'success') : ''"
               required>
             <small class="form-text error" *ngIf="field.touched && field.errors?.required">
@@ -26,7 +26,7 @@
           </div>
           <div class="mt-3">
             <label for="input-aliveVictims" class="sr-only">{{ 'ALIVE_VICTIM' | translate}}</label>
-            <input nbInput [(ngModel)]="runsetting.aliveVictim" #aliveVictim="ngModel" id="input-aliveVictim" name="aliveVictim"
+            <input type="number" nbInput [(ngModel)]="runsetting.aliveVictims" #aliveVictim="ngModel" id="input-aliveVictim" name="aliveVictim"
               placeholder="{{ 'ALIVE_VICTIM' | translate }}" autofocus fullWidth [status]="aliveVictim.dirty ? (aliveVictim.invalid  ? 'danger' : 'success') : ''"
               required>
             <small class="form-text error" *ngIf="aliveVictim.touched && aliveVictim.errors?.required">
@@ -35,7 +35,7 @@
           </div>
           <div class="mt-3">
             <label for="input-aliveVictims" class="sr-only">{{ 'DEAD_VICTIM' | translate}}</label>
-            <input nbInput [(ngModel)]="runsetting.deadVictim" #deadVictim="ngModel" id="input-deadVictim" name="deadVictim"
+            <input type="number" nbInput [(ngModel)]="runsetting.deadVictims" #deadVictim="ngModel" id="input-deadVictim" name="deadVictim"
               placeholder="{{ 'DEAD_VICTIM' | translate }}" autofocus fullWidth [status]="deadVictim.dirty ? (deadVictim.invalid  ? 'danger' : 'success') : ''"
               required>
             <small class="form-text error" *ngIf="deadVictim.touched && deadVictim.errors?.required">
@@ -49,11 +49,20 @@
               <nb-radio value='low'>{{'LOW'|translate}}</nb-radio>
             </nb-radio-group>
           </div>
+          <div class="mt-3">
+            <label for="input-maxTime" class="sr-only">{{ 'MAX_TIME' | translate }}</label>
+            <input type="number" nbInput [(ngModel)]="runsetting.maxTime" #maxTime="ngModel" id="input-maxTime" name="maxTime"
+              placeholder="{{ 'MAX_TIME' | translate }}" fullWidth
+              [status]="maxTime.dirty ? (maxTime.invalid ? 'danger' : 'success') : ''" required>
+            <small class="form-text error" *ngIf="maxTime.touched && maxTime.errors?.required">
+              {{ 'MAX_TIME_REQUIRED' | translate }}
+            </small>
+          </div>
         </div>
         <div class="col-md-6">
           <div class="mb-3">
             <label for="input-checkpointNumber" class="sr-only">{{ 'CHECKPOINT_NUMBER' | translate}}</label>
-            <input nbInput [(ngModel)]="runsetting.numberOfCheckpoints" #checkpointNumber="ngModel" id="input-checkpointNumber"
+            <input type="number" nbInput [(ngModel)]="runsetting.numberOfCheckpoints" #checkpointNumber="ngModel" id="input-checkpointNumber"
               name="checkpointNumber" placeholder="{{ 'CHECKPOINT_NUMBER' | translate }}" autofocus fullWidth [status]="checkpointNumber.dirty ? (checkpointNumber.invalid  ? 'danger' : 'success') : ''"
               required (change)="onNumberOfCheckpointChange()">
             <small class="form-text error" *ngIf="checkpointNumber.touched && checkpointNumber.errors?.required">
@@ -63,13 +72,10 @@
           <div class="mt-3 ml-2 row">
             <nb-checkbox status="success" (change)="onLastCheckpointIsRoomChange()"[(ngModel)]="runsetting.lastCheckpointIsRoom" #lastCheckpointIsRoom="ngModel" name="lastCheckpointIsRoom">{{'LAST_CHECKPOINT_IS_ROOM'| translate}}</nb-checkbox>
           </div>
-
-          <div *ngFor="let checkpoint of runsetting.checkpoint" class="mt-3">
-            <input nbInput [(ngModel)]="checkpoint.value" #checkpoint="ngModel" id="input-checkpoint"
-              name="checkpointNumber" placeholder="{{ 'CHECKPOINT' | translate }}" autofocus fullWidth [status]="checkpoint.dirty ? (checkpoint.invalid  ? 'danger' : 'success') : ''"
-              required>
+          <div class="mt-3" *ngFor="let cp of runsetting.checkpoints; let i = index; trackBy: trackByIndex">
+            <input type="number" nbInput [(ngModel)]="runsetting.checkpoints[i]"
+              name="checkpointNumber-{{i}}" placeholder="{{ ('ZONE' | translate) + ' ' + (i + 1) }}" fullWidth required>
           </div>
-
         </div>
       </div>
     </nb-card-body>
