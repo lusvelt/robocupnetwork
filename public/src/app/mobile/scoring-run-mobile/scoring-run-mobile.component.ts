@@ -21,6 +21,7 @@ export class ScoringRunMobileComponent implements OnInit {
   zone: number = 1;
 
   timer: any;
+  time: number;
 
   constructor(private route: ActivatedRoute, private paramsService: ParamsService) { }
 

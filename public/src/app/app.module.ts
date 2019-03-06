@@ -25,6 +25,10 @@ export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+export function tokenGetterFunction() {
+  return localStorage.getItem(values.tokenKey);
+}
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -39,7 +43,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CoreModule.forRoot(),
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => localStorage.getItem(values.tokenKey),
+        tokenGetter: tokenGetterFunction,
         whitelistedDomains: values.whitelistedDomains,
         blacklistedRoutes: values.whitelistedRoutes
       }

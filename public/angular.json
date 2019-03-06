@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-admin-demo": {
+    "robocupnetwork": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -69,24 +69,44 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ]
+            },
+            "mobile": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.mobile.ts"
+                }
+              ]
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngx-admin-demo:build"
+            "browserTarget": "robocupnetwork:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ngx-admin-demo:build:production"
+              "browserTarget": "robocupnetwork:build:production"
+            },
+            "mobile": {
+              "browserTarget": "robocupnetwork:build:mobile"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-admin-demo:build"
+            "browserTarget": "robocupnetwork:build"
           }
         },
         "test": {
@@ -143,7 +163,7 @@
         }
       }
     },
-    "ngx-admin-demo-e2e": {
+    "robocupnetwork-e2e": {
       "root": "",
       "sourceRoot": "",
       "projectType": "application",
@@ -152,7 +172,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "ngx-admin-demo:serve"
+            "devServerTarget": "robocupnetwork:serve"
           }
         },
         "lint": {
@@ -167,7 +187,7 @@
       }
     }
   },
-  "defaultProject": "ngx-admin-demo",
+  "defaultProject": "robocupnetwork",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "ngx",

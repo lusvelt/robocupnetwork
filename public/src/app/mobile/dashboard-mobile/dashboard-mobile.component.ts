@@ -17,7 +17,7 @@ import { QrCodeService } from '../../services/qr-code.service';
 export class DashboardMobileComponent implements OnInit {
 
   constructor(private translate: TranslateService,
-              private authService: AuthService,
+              protected authService: AuthService,
               private router: Router,
               private notificationsService: NotificationsService,
               private userService: UserService,

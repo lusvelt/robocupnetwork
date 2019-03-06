@@ -125,7 +125,7 @@
            </div>
 
 
-        <button class="btn btn-primary" [disabled]="submitted || !form.valid" nbButton hero>{{'PLACE_BUTTON'|translate}}</button>
+        <button class="btn btn-primary" [disabled]="form.submitted || !form.valid" nbButton hero>{{'PLACE_BUTTON'|translate}}</button>
         <!--<div><button class="mt-3 btn btn-primary" nbButton (click)="backToSchoolClicked(); $event.preventDefault()" >{{'BACK_TO_SCHOOL_BUTTON'|translate}}</button></div>-->
       </nb-card-body>
     </nb-card>
@@ -140,7 +140,6 @@
 
   <nb-card-body>
     <ng2-smart-table [settings]="settings" [source]="source"
-                      (createConfirm)="onCreateConfirm($event)"
                       (editConfirm)="onEditConfirm($event)"
                       (deleteConfirm)="onDeleteConfirm($event)">
     </ng2-smart-table>

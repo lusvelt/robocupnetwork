@@ -74,7 +74,7 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
               private schoolService: SchoolService,
               private ageRangeService: AgeRangesService,
               private usersService: UsersService,
-              private authService: AuthService) {
+              public authService: AuthService) {
     }
 
 

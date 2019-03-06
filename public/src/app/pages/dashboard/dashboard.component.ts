@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
   }
 
   constructor(private manifestationsService: ManifestationsService,
-              private authService: AuthService,
+              public authService: AuthService,
               private notificationsService: NotificationsService) { }
 
   ngOnInit() {

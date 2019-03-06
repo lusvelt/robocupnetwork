@@ -35,7 +35,7 @@ export class NewAgeRangeComponent implements OnInit, OnDestroy {
     private notificationsService: NotificationsService,
     private modalService: ModalService,
     private config: NgbDropdownConfig,
-    private authService: AuthService) {
+    public authService: AuthService) {
       config.autoClose = false;
   }
   ngOnInit() {

@@ -4,7 +4,7 @@
   {{ (referee.show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
 </button>
 
-<form (ngSubmit)="onButtonClicked()" #form="ngForm" [hidden]="!referee.show">
+<form (ngSubmit)="onConfirm()" #form="ngForm" [hidden]="!referee.show">
   <div class="form-group">
     <nb-card>
       <nb-card-header>{{'NEW_REFEREE' | translate}}</nb-card-header>

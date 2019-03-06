@@ -60,7 +60,7 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
               private config: NgbDropdownConfig,
               private schoolService: SchoolService,
               private placeService: PlacesService,
-              private authService: AuthService,
+              public authService: AuthService,
               private router: Router) {
     }
 

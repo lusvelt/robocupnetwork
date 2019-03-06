@@ -48,7 +48,7 @@ export class ManagePhaseComponent implements OnInit, OnDestroy {
     private phasesService: PhasesService,
     private config: NgbDropdownConfig,
     private datePipe: DatePipe,
-    private authService: AuthService,
+    public authService: AuthService,
     private teamService: TeamService,
     private qrCodesPdfService: QRCodesPDFService,
     private categoriesService: CategoriesService,

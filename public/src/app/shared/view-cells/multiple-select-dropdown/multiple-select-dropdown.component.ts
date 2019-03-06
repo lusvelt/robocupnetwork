@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./multiple-select-dropdown.component.scss']
 })
 export class MultipleSelectDropdownComponent implements ViewCell, OnInit {
-  private showDropdown: boolean = false;
+  showDropdown: boolean = false;
 
   @Input() value;
   @Input() rowData;

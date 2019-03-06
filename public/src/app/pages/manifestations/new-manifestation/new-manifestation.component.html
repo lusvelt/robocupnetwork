@@ -51,7 +51,7 @@
         </div>
 
 
-        <button class="btn btn-primary" [disabled]="submitted || !form.valid" nbButton hero>{{'MANIFESTATION_BUTTON'|translate}}</button>
+        <button class="btn btn-primary" [disabled]="form.submitted || !form.valid" nbButton hero>{{'MANIFESTATION_BUTTON'|translate}}</button>
       </nb-card-body>
     </nb-card>
   </div>
@@ -64,7 +64,7 @@
   </nb-card-header>
 
 <nb-card-body>
-    <ng2-smart-table [settings]="settings" [source]="source" (createConfirm)="onCreateConfirm($event)" (editConfirm)="onEditConfirm($event)"
+    <ng2-smart-table [settings]="settings" [source]="source" (editConfirm)="onEditConfirm($event)"
       (deleteConfirm)="onDeleteConfirm($event)">
     </ng2-smart-table>
   </nb-card-body>
