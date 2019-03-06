@@ -1,4 +1,17 @@
-const { User, ActionType, Action, Role, Manifestation, School, Place, AgeRange, Team, Category, Module, Event } = require('./models');
+const {
+    User,
+    ActionType,
+    Action,
+    Role,
+    Manifestation,
+    School,
+    Place,
+    AgeRange,
+    Team,
+    Category,
+    Module,
+    Event
+} = require('./models');
 const TeamHasUser = require('../database/associationTables/TeamHasUser');
 
 const seed = async () => {
@@ -38,147 +51,524 @@ const seed = async () => {
     ];
 
     const actionTypes = [
-        await ActionType.create({ name: 'Create', alias: 'create' }),
-        await ActionType.create({ name: 'Read', alias: 'read' }),
-        await ActionType.create({ name: 'Update', alias: 'update' }),
-        await ActionType.create({ name: 'Delete', alias: 'delete' })
+        await ActionType.create({
+            name: 'Create',
+            alias: 'create'
+        }),
+        await ActionType.create({
+            name: 'Read',
+            alias: 'read'
+        }),
+        await ActionType.create({
+            name: 'Update',
+            alias: 'update'
+        }),
+        await ActionType.create({
+            name: 'Delete',
+            alias: 'delete'
+        })
     ];
 
     const actions = [
 
         // Utente
-        await Action.create({ name:'Crea utente', alias: 'createUser', description:'Puo\'creare un utente',dependsOnManifestation:true}),
-        await Action.create({ name:'Modifica utente', alias: 'editUser', description:'Puo\'modificare un utente',dependsOnManifestation:true}),
-        await Action.create({ name:'Elimina utente', alias: 'deleteUser', description:'Puo\'eliminare un utente',dependsOnManifestation:true}),
+        await Action.create({
+            name: 'Crea utente',
+            alias: 'createUser',
+            description: 'Puo\'creare un utente',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Modifica utente',
+            alias: 'editUser',
+            description: 'Puo\'modificare un utente',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Elimina utente',
+            alias: 'deleteUser',
+            description: 'Puo\'eliminare un utente',
+            dependsOnManifestation: true
+        }),
 
         // Gara
-        await Action.create({ name:'Visualizza gara', alias: 'getRun', description:'Puo\'visualizzare una gara',dependsOnManifestation: true}),
-        await Action.create({ name:'Arbitra gara', alias: 'arbitrateRun', description:'Puo\'arbitrare una gara',dependsOnManifestation:true}),
-        await Action.create({ name:'Valida gara', alias: 'validateRun', description:'Puo\'validare una gara mandata dall\'arbitro',dependsOnManifestation:true}),
-        await Action.create({ name:'Modifica gara contrassegnata', alias: 'editMarkedRun', description:'Puo\'modificare una gara contrassegnata dall\'arbitro',dependsOnManifestation:true}),
-        await Action.create({ name:'Cancella gara contrassegnata', alias: 'deleteMarkedRun', description:'Puo\'eliminare una gara contrassegnata dall\'arbitro',dependsOnManifestation:true}),
-        await Action.create({ name:'Modifica gara', alias: 'editRun', description:'Puo\'modificare una gara',dependsOnManifestation:true}),
-        await Action.create({ name:'Cancella gara', alias: 'deleteRun', description:'Puo\'eliminare una gara',dependsOnManifestation:true}),
+        await Action.create({
+            name: 'Visualizza gara',
+            alias: 'getRun',
+            description: 'Puo\'visualizzare una gara',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Arbitra gara',
+            alias: 'arbitrateRun',
+            description: 'Puo\'arbitrare una gara',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Valida gara',
+            alias: 'validateRun',
+            description: 'Puo\'validare una gara mandata dall\'arbitro',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Modifica gara contrassegnata',
+            alias: 'editMarkedRun',
+            description: 'Puo\'modificare una gara contrassegnata dall\'arbitro',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Cancella gara contrassegnata',
+            alias: 'deleteMarkedRun',
+            description: 'Puo\'eliminare una gara contrassegnata dall\'arbitro',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Modifica gara',
+            alias: 'editRun',
+            description: 'Puo\'modificare una gara',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Cancella gara',
+            alias: 'deleteRun',
+            description: 'Puo\'eliminare una gara',
+            dependsOnManifestation: true
+        }),
 
         // Luoghi
-        await Action.create({ name:'Visualizza luoghi', alias: 'getPlaces', description:'Puo\'visualizzare i luoghi',dependsOnManifestation: false}),
-        await Action.create({ name:'Crea luogo', alias: 'createPlace', description:'Puo\'creare un luogo',dependsOnManifestation:true}),
-        await Action.create({ name:'Modifica luogo', alias: 'editPlace', description:'Puo\'modificare un luogo',dependsOnManifestation:true}),
-        await Action.create({ name:'Elimina luogo', alias: 'removePlace', description:'Puo\'eliminare un luogo',dependsOnManifestation:true}),
+        await Action.create({
+            name: 'Visualizza luoghi',
+            alias: 'getPlaces',
+            description: 'Puo\'visualizzare i luoghi',
+            dependsOnManifestation: false
+        }),
+        await Action.create({
+            name: 'Crea luogo',
+            alias: 'createPlace',
+            description: 'Puo\'creare un luogo',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Modifica luogo',
+            alias: 'editPlace',
+            description: 'Puo\'modificare un luogo',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Elimina luogo',
+            alias: 'removePlace',
+            description: 'Puo\'eliminare un luogo',
+            dependsOnManifestation: true
+        }),
 
         // Categorie
-        await Action.create({ name:'Visualizza categorie', alias: 'getCategories', description:'Puo\'visualizzare le categorie',dependsOnManifestation: false}),
-        await Action.create({ name:'Crea categoria', alias: 'createCategory', description:'Puo\'creare una categoria',dependsOnManifestation:true}),
-        await Action.create({ name:'Modifica categoria', alias: 'editCategory', description:'Puo\'modificare una categoria',dependsOnManifestation:true}),
-        await Action.create({ name:'Elimina categoria', alias: 'removeCategory', description:'Puo\'eliminare una categoria',dependsOnManifestation:true}),
+        await Action.create({
+            name: 'Visualizza categorie',
+            alias: 'getCategories',
+            description: 'Puo\'visualizzare le categorie',
+            dependsOnManifestation: false
+        }),
+        await Action.create({
+            name: 'Crea categoria',
+            alias: 'createCategory',
+            description: 'Puo\'creare una categoria',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Modifica categoria',
+            alias: 'editCategory',
+            description: 'Puo\'modificare una categoria',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Elimina categoria',
+            alias: 'removeCategory',
+            description: 'Puo\'eliminare una categoria',
+            dependsOnManifestation: true
+        }),
 
         // Arbitri
-        await Action.create({ name:'Visualizza arbitri', alias: 'getReferees', description:'Puo\'visualizzare gli arbitri',dependsOnManifestation:true}),
-        await Action.create({ name:'Crea arbitro', alias: 'assignReferee', description:'Assegna ad un utente i privilegi di arbitro',dependsOnManifestation:true}),
-        await Action.create({ name:'Rimuovi arbitro', alias: 'removeReferee', description:'Rimuove ad un utente i privlegi di arbitro',dependsOnManifestation:true}),
+        await Action.create({
+            name: 'Visualizza arbitri',
+            alias: 'getReferees',
+            description: 'Puo\'visualizzare gli arbitri',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Crea arbitro',
+            alias: 'assignReferee',
+            description: 'Assegna ad un utente i privilegi di arbitro',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Rimuovi arbitro',
+            alias: 'removeReferee',
+            description: 'Rimuove ad un utente i privlegi di arbitro',
+            dependsOnManifestation: true
+        }),
 
         // Gestore gara
-        await Action.create({ name:'Visualizza aiutanti gestore', alias: 'getManifestationManagerHelpers', description:'Puo\'visualizzare gli aiutanti del gestore della manifestazione',dependsOnManifestation:true}),
-        await Action.create({ name:'Crea aiutante gestore', alias: 'assignManifestationManagerHelpers', description:'Assegna ad un utente i privilegi di aiutanti del gestore della manifestazione',dependsOnManifestation:true}),
-        await Action.create({ name:'Rimuovi aiutante gestore', alias: 'removeManifestationManagerHelpers', description:'Rimuove ad un utente i privlegi di aiutanti del gestore della manifestazione',dependsOnManifestation:true}),
+        await Action.create({
+            name: 'Visualizza aiutanti gestore',
+            alias: 'getManifestationManagerHelpers',
+            description: 'Puo\'visualizzare gli aiutanti del gestore della manifestazione',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Crea aiutante gestore',
+            alias: 'assignManifestationManagerHelpers',
+            description: 'Assegna ad un utente i privilegi di aiutanti del gestore della manifestazione',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Rimuovi aiutante gestore',
+            alias: 'removeManifestationManagerHelpers',
+            description: 'Rimuove ad un utente i privlegi di aiutanti del gestore della manifestazione',
+            dependsOnManifestation: true
+        }),
 
         // Validatore gara
-        await Action.create({ name:'Visualizza validatori gare', alias: 'getRunsValidators', description:'Puo\'visualizzare i validatori gare',dependsOnManifestation:true}),
-        await Action.create({ name:'Crea validatore gare', alias: 'assignRunsValidator', description:'Assegna ad un utente i privilegi di validatore gare',dependsOnManifestation:true}),
-        await Action.create({ name:'Rimuovi validatore gare', alias: 'removeRunsValidator', description:'Rimuove ad un utente i privlegi di validatore gare',dependsOnManifestation:true}),
+        await Action.create({
+            name: 'Visualizza validatori gare',
+            alias: 'getRunsValidators',
+            description: 'Puo\'visualizzare i validatori gare',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Crea validatore gare',
+            alias: 'assignRunsValidator',
+            description: 'Assegna ad un utente i privilegi di validatore gare',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Rimuovi validatore gare',
+            alias: 'removeRunsValidator',
+            description: 'Rimuove ad un utente i privlegi di validatore gare',
+            dependsOnManifestation: true
+        }),
 
         // Capitano
-        await Action.create({ name:'Crea Capitano', alias: 'assignCaptain', description:'Assegna ad un utente il ruolo di capitano',dependsOnManifestation:true}),
-        await Action.create({ name:'Rimuovi Capitano', alias: 'removeCaptain', description:'Rimuove ad un utente il ruolo di capitano',dependsOnManifestation:true}),
+        await Action.create({
+            name: 'Crea Capitano',
+            alias: 'assignCaptain',
+            description: 'Assegna ad un utente il ruolo di capitano',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Rimuovi Capitano',
+            alias: 'removeCaptain',
+            description: 'Rimuove ad un utente il ruolo di capitano',
+            dependsOnManifestation: true
+        }),
 
         // Vice-capitano
-        await Action.create({ name:'Crea Vicecapitano', alias: 'assignViceCaptain', description:'Assegna ad un utente il ruolo di Vicecapitano',dependsOnManifestation:true}),
-        await Action.create({ name:'Rimuovi Capitano', alias: 'removeViceCaptain', description:'Rimuove ad un utente il ruolo di Vicecapitano',dependsOnManifestation:true}),
+        await Action.create({
+            name: 'Crea Vicecapitano',
+            alias: 'assignViceCaptain',
+            description: 'Assegna ad un utente il ruolo di Vicecapitano',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Rimuovi Capitano',
+            alias: 'removeViceCaptain',
+            description: 'Rimuove ad un utente il ruolo di Vicecapitano',
+            dependsOnManifestation: true
+        }),
 
         // Fascie d'età
-        await Action.create({ name:'Visualizza fasce di eta', alias: 'getAgeRanges', description:'Puo\'visualizzare le fasce di eta',dependsOnManifestation:false}),
-        await Action.create({ name:'Crea fascia di eta', alias: 'createAgeRange', description:'Puo\'creare una fascia di eta',dependsOnManifestation:true}),
-        await Action.create({ name:'Modifica fascia di eta', alias: 'editAgeRange', description:'Puo\'modificare una fascia di eta',dependsOnManifestation:true}),
-        await Action.create({ name:'Elimina fascia di eta', alias: 'removeAgeRange', description:'Puo\'eliminare una fascia di eta',dependsOnManifestation:true}),
+        await Action.create({
+            name: 'Visualizza fasce di eta',
+            alias: 'getAgeRanges',
+            description: 'Puo\'visualizzare le fasce di eta',
+            dependsOnManifestation: false
+        }),
+        await Action.create({
+            name: 'Crea fascia di eta',
+            alias: 'createAgeRange',
+            description: 'Puo\'creare una fascia di eta',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Modifica fascia di eta',
+            alias: 'editAgeRange',
+            description: 'Puo\'modificare una fascia di eta',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Elimina fascia di eta',
+            alias: 'removeAgeRange',
+            description: 'Puo\'eliminare una fascia di eta',
+            dependsOnManifestation: true
+        }),
 
         // Scuole
-        await Action.create({ name:'Visualizza scuole', alias: 'getSchools', description:'Puo\'visualizzare le scuole',dependsOnManifestation:false}),
-        await Action.create({ name:'Crea Scuola', alias: 'createSchool', description:'Puo\'creare una scuola',dependsOnManifestation:true}),
-        await Action.create({ name:'Modifica Scuola', alias: 'editSchool', description:'Puo\'modificare una scuola',dependsOnManifestation:true}),
-        await Action.create({ name:'Elimina Scuola', alias: 'removeSchool', description:'Puo\'eliminare una scuola',dependsOnManifestation:true}),
+        await Action.create({
+            name: 'Visualizza scuole',
+            alias: 'getSchools',
+            description: 'Puo\'visualizzare le scuole',
+            dependsOnManifestation: false
+        }),
+        await Action.create({
+            name: 'Crea Scuola',
+            alias: 'createSchool',
+            description: 'Puo\'creare una scuola',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Modifica Scuola',
+            alias: 'editSchool',
+            description: 'Puo\'modificare una scuola',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Elimina Scuola',
+            alias: 'removeSchool',
+            description: 'Puo\'eliminare una scuola',
+            dependsOnManifestation: true
+        }),
 
         // Fasi
-        await Action.create({ name:'Visualizza fasi', alias: 'getPhases', description:'Puo\'visualizzare una fase',dependsOnManifestation:true}),
-        await Action.create({ name:'Crea fase', alias: 'createPhase', description:'Puo\'creare una fase',dependsOnManifestation:true}),
-        await Action.create({ name:'Modifica fase', alias: 'editPhase', description:'Puo\'modificare una fase',dependsOnManifestation:true}),
-        await Action.create({ name:'Elimina fase', alias: 'removePhase', description:'Puo\'eliminare una fase',dependsOnManifestation:true}),
+        await Action.create({
+            name: 'Visualizza fasi',
+            alias: 'getPhases',
+            description: 'Puo\'visualizzare una fase',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Crea fase',
+            alias: 'createPhase',
+            description: 'Puo\'creare una fase',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Modifica fase',
+            alias: 'editPhase',
+            description: 'Puo\'modificare una fase',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Elimina fase',
+            alias: 'removePhase',
+            description: 'Puo\'eliminare una fase',
+            dependsOnManifestation: true
+        }),
 
         // Manifestazione
-        await Action.create({ name:'Visualizza utenti in manifestazione', alias: 'getUsersInManifestation', description:'Puo\'visualizzare gli utenti in una manifestazione',dependsOnManifestation:true}),
-        await Action.create({ name:'Crea utente in manifestazione', alias: 'createUserInManifestation', description:'Puo\'creare un utente in una manifestazione',dependsOnManifestation:true}),
-        await Action.create({ name:'Modifica utente in manifestazione', alias: 'editUserInManifestation', description:'Puo\'modificare un utente in una manifestazione',dependsOnManifestation:true}),
-        await Action.create({ name:'Elimina utente in manifestazione', alias: 'removeUserInManifestation', description:'Puo\'eliminare un utente in una manifestazione',dependsOnManifestation:true}),
-        await Action.create({ name: 'Visualizza teams in manifestazione', alias: 'getTeamsInManifestation', description: 'Puo\'visualizzare le squadre in una manifestazione', dependsOnManifestation: true}),
+        await Action.create({
+            name: 'Visualizza utenti in manifestazione',
+            alias: 'getUsersInManifestation',
+            description: 'Puo\'visualizzare gli utenti in una manifestazione',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Crea utente in manifestazione',
+            alias: 'createUserInManifestation',
+            description: 'Puo\'creare un utente in una manifestazione',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Modifica utente in manifestazione',
+            alias: 'editUserInManifestation',
+            description: 'Puo\'modificare un utente in una manifestazione',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Elimina utente in manifestazione',
+            alias: 'removeUserInManifestation',
+            description: 'Puo\'eliminare un utente in una manifestazione',
+            dependsOnManifestation: true
+        }),
+        await Action.create({
+            name: 'Visualizza teams in manifestazione',
+            alias: 'getTeamsInManifestation',
+            description: 'Puo\'visualizzare le squadre in una manifestazione',
+            dependsOnManifestation: true
+        }),
 
     ];
 
     const roles = [
-        await Role.create({ name:'Arbitro', description:'Puo\' arbitrare le gare',alias:'referee',dependsOnManifestation:true}),
-        await Role.create({ name:'Utente', description:'Utente base',alias:'user',dependsOnManifestation:false}),
-        await Role.create({ name:'Validatore gare', description:'Ha il compito di validare le gare',alias:'runsValidator',dependsOnManifestation:true}),
-        await Role.create({ name:'Gestore Manifestazione', description:'Ha tutti i privilegi nella sua manifestazione',alias:'manifestationManager',dependsOnManifestation:true}),
-        await Role.create({ name:'Aiutante gestore', description:'E\' stato delegato dall\'amministratore. Ha tutti i privilegi nella sua manifestazione',alias:'manifestationManagerHelper',dependsOnManifestation:true}),
-        await Role.create({ name:'Capitano', description:'Capitano di una squadra',alias:'captain',dependsOnManifestation:true}),
-        await Role.create({ name:'Vice capitano', description:'Vicecapitano di una squadra',alias:'viceCaptain',dependsOnManifestation:true}),
-        await Role.create({ name:'Membro squadra', description:'Componente base di una squadra',alias:'teamMember',dependsOnManifestation:true}),
+        await Role.create({
+            name: 'Arbitro',
+            description: 'Puo\' arbitrare le gare',
+            alias: 'referee',
+            dependsOnManifestation: true
+        }),
+        await Role.create({
+            name: 'Utente',
+            description: 'Utente base',
+            alias: 'user',
+            dependsOnManifestation: false
+        }),
+        await Role.create({
+            name: 'Validatore gare',
+            description: 'Ha il compito di validare le gare',
+            alias: 'runsValidator',
+            dependsOnManifestation: true
+        }),
+        await Role.create({
+            name: 'Gestore Manifestazione',
+            description: 'Ha tutti i privilegi nella sua manifestazione',
+            alias: 'manifestationManager',
+            dependsOnManifestation: true
+        }),
+        await Role.create({
+            name: 'Aiutante gestore',
+            description: 'E\' stato delegato dall\'amministratore. Ha tutti i privilegi nella sua manifestazione',
+            alias: 'manifestationManagerHelper',
+            dependsOnManifestation: true
+        }),
+        await Role.create({
+            name: 'Capitano',
+            description: 'Capitano di una squadra',
+            alias: 'captain',
+            dependsOnManifestation: true
+        }),
+        await Role.create({
+            name: 'Vice capitano',
+            description: 'Vicecapitano di una squadra',
+            alias: 'viceCaptain',
+            dependsOnManifestation: true
+        }),
+        await Role.create({
+            name: 'Membro squadra',
+            description: 'Componente base di una squadra',
+            alias: 'teamMember',
+            dependsOnManifestation: true
+        }),
     ];
 
     const events = [
-        await Event.create({name:'Intersezione',description:'Intersezione in una mattonella',pointsJSCalculator:'15',affectsZone: false, affectsAttempt: false, manuallyTriggerable: true,needsStartCountForZones: false, triggerOnStart: false,waitLastIterationToTrigger: false,cancelPendingEvents: false}),
+        await Event.create({
+            name: 'Intersezione',
+            description: 'Intersezione in una mattonella',
+            pointsJSCalculator: '15',
+            affectsZone: false,
+            affectsAttempt: false,
+            manuallyTriggerable: true,
+            needsStartCountForZones: false,
+            triggerOnStart: false,
+            waitLastIterationToTrigger: false,
+            cancelPendingEvents: false
+        })
     ];
 
     const manifestation = [
-        await Manifestation.create({ name:'Nazionali',description:'ciao', start: new Date(), end: new Date()}),
-        await Manifestation.create({ name:'Regionali',description:'ciao', start: new Date(), end: new Date()}),
+        await Manifestation.create({
+            name: 'Regionali Abruzzo',
+            description: 'Competizione regionale della regione Abruzzo',
+            start: new Date('Marzo 08, 2019 08:00:00'),
+            end: new Date('Marzo 08, 2019 18:00:00')
+        }),
     ];
 
     const schools = [
-        await School.create({ name:'Volta'})
+        await School.create({
+            name: 'I.I.S "A. Volta" Pescara'
+        })
     ];
 
     const places = [
-        await Place.create({ street:'Via Perna',civicNumber:'4',city:'Sambuceto',postalCode:'66020',province:'Chieti',region:'Abruzzo',country:'Italia'})
+        await Place.create({
+            street: 'Via Alessandro Volta',
+            civicNumber: '15',
+            city: 'Pescara',
+            postalCode: '65129',
+            province: 'Pescara',
+            region: 'Abruzzo',
+            country: 'Italia'
+        })
     ];
 
     const ageRanges = [
-        await AgeRange.create({ name:'under19',min:'14',max:'18'})
+        await AgeRange.create({
+            name: 'under19',
+            min: '14',
+            max: '18'
+        }),
+        await AgeRange.create({
+            name: 'under14',
+            min: '10',
+            max: '13'
+        })
     ];
 
     const teams = [
-        await Team.create({ name: 'Fenix'})
+        await Team.create({
+            name: 'Fenix'
+        })
     ];
 
     const teamsHasUser = [
-        await TeamHasUser.create({ teamId: 1, userId: 1, role:'captain'})
+        await TeamHasUser.create({
+            teamId: 1,
+            userId: 1,
+            role: 'captain'
+        })
     ];
 
     const categories = [
-        await Category.create({ name: 'Rescue Line', description: 'Seguilinea', maxRobotsPerTeam: 4, maxTeamsPerLineUp: 10, isDividedIntoZones: true, checkpointsDetermineZones: true, requiresEvacuation: true, defaultMaxTime: 300})
+        await Category.create({
+            name: 'Rescue Line',
+            description: 'Seguilinea',
+            maxRobotsPerTeam: 1,
+            maxTeamsPerLineUp: 1,
+            isDividedIntoZones: true,
+            checkpointsDetermineZones: true,
+            requiresEvacuation: true,
+            defaultMaxTime: 480
+        })
     ];
 
     const modules = [
-        await Module.create({ name: 'Users',alias: 'user' }),
-        await Module.create({ name: 'Privileges', alias: 'privileges' }),
-        await Module.create({ name: 'Manifestations', alias: 'manifestation' }),
-        await Module.create({ name: 'Places', alias: 'places' }),
-        await Module.create({ name: 'Categories', alias: 'categories' }),
-        await Module.create({ name: 'Age Ranges', alias: 'ageRanges' }),
-        await Module.create({ name: 'Referees', alias: 'referees' }),
-        await Module.create({ name: 'Schools', alias: 'schools' }),
-        await Module.create({ name: 'Teams', alias: 'teams' }),
-        await Module.create({ name: 'Phases', alias: 'phases' }),
-        await Module.create({ name: 'Runs', alias: 'runs' }),
-        await Module.create({ name: 'Staff', alias: 'staff' })
+        await Module.create({
+            name: 'Users',
+            alias: 'user'
+        }),
+        await Module.create({
+            name: 'Privileges',
+            alias: 'privileges'
+        }),
+        await Module.create({
+            name: 'Manifestations',
+            alias: 'manifestation'
+        }),
+        await Module.create({
+            name: 'Places',
+            alias: 'places'
+        }),
+        await Module.create({
+            name: 'Categories',
+            alias: 'categories'
+        }),
+        await Module.create({
+            name: 'Age Ranges',
+            alias: 'ageRanges'
+        }),
+        await Module.create({
+            name: 'Referees',
+            alias: 'referees'
+        }),
+        await Module.create({
+            name: 'Schools',
+            alias: 'schools'
+        }),
+        await Module.create({
+            name: 'Teams',
+            alias: 'teams'
+        }),
+        await Module.create({
+            name: 'Phases',
+            alias: 'phases'
+        }),
+        await Module.create({
+            name: 'Runs',
+            alias: 'runs'
+        }),
+        await Module.create({
+            name: 'Staff',
+            alias: 'staff'
+        })
     ];
 
     await teams[0].addManifestation(manifestation[0]);
@@ -297,14 +687,14 @@ const seed = async () => {
 
     // Utente
     /*await roles[1].addAction(actions[3]);
-    await roles[1].addAction(actions[10]);
-    await roles[1].addAction(actions[14]);
-    await roles[1].addAction(actions[19]);
-    await roles[1].addAction(actions[31]);
-    await roles[1].addAction(actions[35]);
-    await roles[1].addAction(actions[39]);
-    await roles[1].addAction(actions[43]);
-    await roles[1].addAction(actions[47]);*/
+  await roles[1].addAction(actions[10]);
+  await roles[1].addAction(actions[14]);
+  await roles[1].addAction(actions[19]);
+  await roles[1].addAction(actions[31]);
+  await roles[1].addAction(actions[35]);
+  await roles[1].addAction(actions[39]);
+  await roles[1].addAction(actions[43]);
+  await roles[1].addAction(actions[47]);*/
 
     // Validatore gare
     await roles[2].addAction(actions[3]);
@@ -459,9 +849,9 @@ const seed = async () => {
     await categories[0].addEvent(events[0]);
 
     await events[0].addEvent(events[0]);
-        /*const competitions = [
-        await Competition.create
-    ];*/
+    /*const competitions = [
+      await Competition.create
+  ];*/
 
     // users[0].addCompetition(competitions[0]);
 };
