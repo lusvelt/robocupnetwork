@@ -20,7 +20,7 @@ const sockets = require('./server/config/sockets');
 const internalEventsSystem = require('./server/config/internalEventsSystem');
 
 const port = process.env.PORT;
-const distPath = path.join('dist');
+const distPath = path.join(__dirname, 'public', 'dist');
 
 const app = express();
 const server = http.createServer(app);
@@ -42,4 +42,3 @@ console.log();
 
 database.initialize(argv.reset)
     .then(() => server.listen(port, () => log.info('Server is listening on port: ' + port)));
-
