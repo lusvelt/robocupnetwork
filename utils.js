@@ -3,19 +3,19 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 const rootDir = path.join(__dirname);
-const cordovaDir = path.join(__dirname, 'mobile');
+const cordovaDir = path.join(__dirname, 'mobileApp');
 const publicDir = path.join(__dirname, 'public');
 const wwwCordovaDir = path.join(__dirname, 'mobileApp', 'www');
 
 const utils = {
     buildMobile: function () {        
         if (!fs.existsSync(cordovaDir)) {
-            console.log('Directory \'mobile\' does not exist');
+            console.log('Directory \'mobileApp\' does not exist');
             console.log('Initializing cordova project...');
-            execSync('cordova create mobileApp it.robocupnetwork.mobile Robocup\\ Network', { cwd: rootDir });
+            execSync('cordova create mobileApp', { cwd: rootDir }); //it.robocupnetwork.mobile Robocup\\ Network
             execSync('cordova platform add browser', { cwd: cordovaDir });
             execSync('cordova platform add android', { cwd: cordovaDir });
-            console.log('Directory \'mobile\' initialized');
+            console.log('Directory \'mobileApp\' initialized');
             console.log('Adding plugins for cordova...');
             execSync('cordova plugin add https://github.com/phonegap/phonegap-plugin-barcodescanner', { cwd: cordovaDir });
             console.log('Cordova plugins added successfully');
@@ -25,7 +25,7 @@ const utils = {
         if (fs.existsSync(wwwCordovaDir))
             fs.removeSync(wwwCordovaDir);
         
-        execSync('ng build --output-path="../mobile/www"', { cwd: publicDir });
+        execSync('ng build --output-path="../mobileApp/www"', { cwd: publicDir });
         console.log('Angular application built successfully');
     },
     runBrowser: function () {

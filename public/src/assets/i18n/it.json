@@ -261,5 +261,14 @@
     "CANCEL_PENDING_EVENTS": "Cancella eventi \n in attesa",
 
     "DEPENDS_ON_MANIFESTATIONS": "Dipende dalla \n manifestazione",
-    "START_END": "Inizio e fine"
+    "START_END": "Inizio e fine",
+
+    "TEAM":"Squadra",
+    "SCORE":"Punti",
+    "TIME_LEFT":"Tempo",
+    "ZONE":"Zona",
+    "ATTEMPT":"Tentativo",
+    "PAUSE":"Pausa",
+    "FINISH":"Termina",
+    "ARE_YOU_SURE_YOU_WANT_TO_START":"Sei sicuro di voler iniziare la gara?"
 }

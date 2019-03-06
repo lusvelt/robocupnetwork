@@ -261,6 +261,15 @@
     "CANCEL_PENDING_EVENTS": "Cancel pending \n events",
 
     "DEPENDS_ON_MANIFESTATIONS": "Depends on \n manifestation",
-    "START_END": "Start and end"
+    "START_END": "Start and end",
+
+    "TEAM":"Team",
+    "SCORE":"Score",
+    "TIME_LEFT":"Time left",
+    "ZONE":"Zone",
+    "ATTEMPT":"Attempt",
+    "PAUSE":"Pause",
+    "FINISH":"Finish",
+    "ARE_YOU_SURE_YOU_WANT_TO_START":"Are you sure you want to start the run?"
 
 }

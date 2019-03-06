@@ -11,6 +11,7 @@ import { TeamComponent } from '../../pages/dashboard/team/team.component';
 import { CategoriesService } from '../../services/categories.service';
 import { RunService } from '../../services/run.service';
 import { ParamsService } from '../../services/params.service';
+import { ModalService } from '../../services/modal.service';
 @Component({
   selector: 'ngx-runsetting',
   templateUrl: './run-setting-mobile.component.html',
@@ -26,7 +27,8 @@ export class RunSettingMobileComponent implements OnInit {
               private route: ActivatedRoute,
               private categoriesService: CategoriesService,
               private runService: RunService,
-              private paramsService: ParamsService) { }
+              private paramsService: ParamsService,
+              private modalService: ModalService) { }
 
 
   redirectDelay: number = 0;
@@ -49,7 +51,7 @@ export class RunSettingMobileComponent implements OnInit {
   team: any = {};
 
   runsetting: any = {
-    evacuationType: undefined,
+    evacuationType: 'high',
     aliveVictims: undefined,
     deadVictims: undefined,
     lastCheckpointIsRoom: true,
@@ -65,7 +67,7 @@ export class RunSettingMobileComponent implements OnInit {
   ngOnInit() {
     this.fullName = this.userService.getFullName();
     const data = this.route.snapshot.params;
-    this.team = JSON.parse('{"id":1,"name":"Fenix","Phases":[{"id":1,"name":"Fase"}]}');
+    this.team = JSON.parse('{"id":1,"name":"Fenix","Phases":[{"id":1,"name":"ds"}]}'); // data.text
     // console.log(this.team.Phases[0].id);
 
     this.categoriesService.findCategoryFromPhaseId(this.team.Phases[0])
@@ -76,20 +78,25 @@ export class RunSettingMobileComponent implements OnInit {
   }
 
   visualizza() {
-    this.runService.startRun(this.runsetting, this.team)
-      .then(run => {
-        this.paramsService.setParams({
-          runSettings: this.runsetting,
-          team: this.team,
-          category: this.category
+    this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_START')
+        .then(confirmation => {
+          if (confirmation) {
+            this.runService.startRun(this.runsetting, this.team)
+            .then(run => {
+              this.paramsService.setParams({
+                runSettings: this.runsetting,
+                team: this.team,
+                category: this.category
+              });
+              this.router.navigate(['/mobile', 'scoring-run']);
+            });
+          }
         });
-        this.router.navigate(['/mobile', 'scoring-run']);
-      });
   }
 
   onNumberOfCheckpointChange() {
     this.runsetting.checkpoint = [];
-    for (let i = 0; i < this.runsetting.numberOfCheckpoints; i++)
+    for (let i = 0; i < this.runsetting.numberOfCheckpoints; i++);
       this.runsetting.checkpoints.push(0);
   }
 

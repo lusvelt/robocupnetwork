@@ -1,6 +1,8 @@
 import { ParamsService } from './../../services/params.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+// import * as Timer from 'tiny-timer';
+
 
 @Component({
   selector: 'ngx-scoring-run-mobile',
@@ -18,6 +20,8 @@ export class ScoringRunMobileComponent implements OnInit {
   attempt: number = 1;
   zone: number = 1;
 
+  timer: any;
+
   constructor(private route: ActivatedRoute, private paramsService: ParamsService) { }
 
   ngOnInit() {
@@ -25,6 +29,10 @@ export class ScoringRunMobileComponent implements OnInit {
     this.category = params.category;
     this.runSettings = params.runSettings;
     this.team = params.team;
+
+    /*this.timer = new Timer([{ interval: 1000 }]);
+    this.timer.start(this.runSettings.maxTime * 1000);
+    this.timer.on('tick', (ms) => console.log('tick', ms));*/
   }
 
   fireEvent(event) {

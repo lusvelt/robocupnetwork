@@ -1,3 +1,4 @@
+<!--
 <div class="row">
   <div class="col-sm-6">
     <nb-card>
@@ -39,3 +40,67 @@
   <button type="button" class="btn btn-secondary" *ngFor="let event of category.Events" (click)="fireEvent(event)">{{ event.name | translate }}</button>
 </div>
 {{ events | json }}
+
+-->
+
+<div class="row">
+  <div class="col-md-6 borderclass">
+    <div class="info">
+
+      <div class="row">
+        <div class="row col-md-6">
+          <h3 class="font-w-bold">{{'TEAM' | translate }}</h3><h3 class="font-w-light">: {{team.name}}</h3>
+        </div>
+        <div class="row col-md-6">
+          <h3 class="font-w-bold">{{'SCORE' | translate }}</h3><h3 class="font-w-light">: {{score}}</h3>
+        </div>
+      </div>
+
+      
+      
+      <div class="row">
+          <div class="row col-md-6">
+            <h3 class="font-w-bold">{{'TIME_LEFT' | translate }}</h3><h3 class="font-w-light">: {{time}}</h3>
+          </div>
+          <div class="row col-md-6">
+            <h3 class="font-w-bold">{{'ATTEMPT' | translate }}</h3><h3 class="font-w-light">: {{attempt}}</h3>
+          </div>
+        </div>
+
+      <div class="row">
+        <div class="row col-md-6">
+          <h3 class="font-w-bold">{{'ZONE' | translate }}</h3><h3 class="font-w-light">: {{zone}}</h3>
+        </div>
+        <div class="row col-md-6">
+          <h3 class="font-w-bold">{{'FIELD' | translate }}</h3><h3 class="font-w-light">: {{runSettings.field}}</h3>
+        </div>
+      </div>
+
+    </div>  
+    <nb-card class="list-card" size="small">
+      <nb-card-header>{{'EVENTS'|translate}}</nb-card-header>
+      <nb-list>
+        <nb-list-item *ngFor="let event of events">
+          <nb-user [name]="event.name" [title]="event.description">
+          </nb-user>
+        </nb-list-item>
+      </nb-list>
+    </nb-card>
+  </div>
+  <div class="col-md-6">
+      <nb-card>
+          <nb-card-body>
+              <div class="row header">
+                  <div class="col-md-1"></div>
+                  <button nbButton class="col-md-4" type="button" status="warning">{{'PAUSE'|translate}}</button>
+                  <div class="col-md-2"></div>
+                  <button nbButton class="col-md-4" type="button" status="danger">{{'FINISH'|translate}}</button>
+                  <div class="col-md-1"></div>
+              </div>
+          </nb-card-body>
+      </nb-card>
+    <div class="d-flex flex-wrap">
+      <button type="button" class="events btn btn-secondary" *ngFor="let event of category.Events" (click)="fireEvent(event)">{{ event.name | translate }}</button>
+    </div>
+  </div>
+</div>
