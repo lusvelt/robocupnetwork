@@ -8,7 +8,7 @@
     "reset": "node index -r",
     "debug": "node index -d",
     "watch": "nodemon index",
-    "build": "cd public && ng build",
+    "build": "cd public && ng build --prod",
     "postinstall": "cd public && npm install",
     "precommit": "eslint index.js server/**",
     "serve": "cd public && ng serve",
