@@ -83,6 +83,8 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
       this.teamService.getTeamsInManifestation()
       .then(teams => {
         teams.forEach(team => {
+          team.ageRange = team.AgeRange.name;
+          team.school = team.School.name;
           this.teamService.getCaptainFromId(team.id).then(res => {
             team.captain = res[0].name + ' ' + res[0].surname;
           });
@@ -181,10 +183,14 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
     const captain = team.captain;
     team.ageRanges = team.ageRanges.filter((ageRange: any) => ageRange.selected);
     team.schools = team.schools.filter((school: any) => school.selected);
+    const schools = team.schools[0].name;
+    const ageRanges = team.ageRanges[0].name;
     if (team.ageRanges.length === 1 && team.schools.length === 1 && team.name !== '') {
       this.teamService.createTeam(team, this.authService.getManifestation())
       .then(_team => {
         _team.captain = captain.name + ' ' + captain.surname;
+        _team.ageRange = ageRanges;
+        _team.school = schools;
         this.notificationsService.success('TEAM_CREATED');
         this.source.insert(_team);
         this.team.show = false;
@@ -207,6 +213,18 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
     },
     captain: {
       title: 'CAPTAIN',
+      type: 'text',
+      addable: false,
+      editable: false
+    },
+    school: {
+      title: 'SCHOOL',
+      type: 'text',
+      addable: false,
+      editable: false
+    },
+    ageRange: {
+      title: 'AGE_RANGE',
       type: 'text',
       addable: false,
       editable: false

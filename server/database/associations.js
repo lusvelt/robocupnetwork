@@ -24,7 +24,8 @@ const {
     RobotImage,
     Robot,
     RobotType,
-    Occurence
+    Occurence,
+    AgeRange
 } = require('./models');
 
 const {
@@ -70,6 +71,7 @@ const robotTypeFk = utils.getForeignKey(RobotType);
 const moduleFk = utils.getForeignKey(Module);
 const eventFk = utils.getForeignKey(Event);
 const occurenceFk = utils.getForeignKey(Occurence);
+const ageRangeFk = utils.getForeignKey(AgeRange);
 
 // EXAMPLE Session - Shift | 1:1
 // Session.hasOne(Shift, { foreignKey: sessionFk });
@@ -83,8 +85,16 @@ Phase.hasOne(Phase, { foreignKey: 'nextPhaseId'});
 // Category - Phase | 1:N
 Category.hasMany(Phase, { foreignKey: categoryFk });
 
-// Phase - Category | N:1
+// Phase - Category | 1:N
 Phase.belongsTo(Category, { foreignKey: categoryFk });
+
+// AgeRange - Team | 1:N
+Team.belongsTo(AgeRange, {foreignKey: ageRangeFk});
+// AgeRange.hasMany(Team, {foreignKey: ageRangeFk});
+
+// School - Team | 1:N
+Team.belongsTo(School, {foreignKey: schoolFk});
+// School.hasMany(Team, {foreignKey: schoolFk});
 
 // Event - Event | 1:N
 Event.hasMany(Event, { foreignKey: 'triggerId'});

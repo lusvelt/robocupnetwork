@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const Team = require('../../models/Team');
 const User = require('../../models/User');
+const School = require('../../models/School');
 const Manifestation = require('../../models/Manifestation');
 const AgeRange = require('../../models/AgeRange');
 const log = require('../../config/consoleMessageConfig');
@@ -12,6 +13,8 @@ const teamIo = (clientsIo, socket, room) => {
     const createTeam = async (data, callback) => {
         const _team = data.team;
         const _manifestation = data.manifestation;
+        const _ageRange = _team.ageRanges[0];
+        const _school = _team.schools[0];
         try {
             const team = await Team.create(_team);
             if (!team)
@@ -33,6 +36,14 @@ const teamIo = (clientsIo, socket, room) => {
                 .then(manifestation => {
                     promises.push(team.addManifestation(manifestation));
                 });
+
+            promises = [];
+            School.findById(_school.id)
+            .then(school => promises.push(team.setSchool(school)));   
+
+            promises = [];
+            AgeRange.findById(_ageRange.id)
+            .then(agerange => promises.push(team.setAgeRange(agerange)));
 
             const result = await Promise.all(promises);
             if(!result)
@@ -90,7 +101,7 @@ const teamIo = (clientsIo, socket, room) => {
     const getTeamsInManifestation = async (_manifestation, callback) => {
         try {
             Manifestation.findById(_manifestation.id)
-                .then(manifestation => manifestation.getTeams())
+                .then(manifestation => manifestation.getTeams({include : [School, AgeRange]}))
                 .then(teams => callback(teams));
             log.verbose('Teams in manifestation data request');
         } catch (err) {

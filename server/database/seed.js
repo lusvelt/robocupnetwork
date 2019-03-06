@@ -10,9 +10,11 @@ const {
     Team,
     Category,
     Module,
-    Event
+    Event,
+    Phase
 } = require('./models');
 const TeamHasUser = require('../database/associationTables/TeamHasUser');
+const TeamIsInPhase = require('../database/associationTables/TeamIsInPhase');
 
 const seed = async () => {
     const users = [
@@ -501,8 +503,8 @@ const seed = async () => {
 
     const teamsHasUser = [
         await TeamHasUser.create({
-            teamId: 1,
-            userId: 1,
+            teamId: teams[0].id,
+            userId: users[0].id,
             role: 'captain'
         })
     ];
@@ -519,6 +521,17 @@ const seed = async () => {
             defaultMaxTime: 480
         })
     ];
+
+    const phase = [
+        await Phase.create({
+            name: 'Qualificazioni',
+            description: 'Qualificazioni per le nazionali.',
+            start: new Date('Marzo 08, 2019 08:00:00'),
+            end: new Date('Marzo 08, 2019 18:00:00'),
+            numAdmittedTeams: 40,
+            numPassingTeams: 40
+        })
+    ]
 
     const modules = [
         await Module.create({
@@ -572,6 +585,8 @@ const seed = async () => {
     ];
 
     await teams[0].addManifestation(manifestation[0]);
+    await teams[0].setSchool(schools[0]);
+    await teams[0].setAgeRange(ageRanges[0]);
 
     await schools[0].setPlace(places[0]);
 
@@ -848,7 +863,14 @@ const seed = async () => {
 
     await categories[0].addEvent(events[0]);
 
-    await events[0].addEvent(events[0]);
+    // await events[0].addEvent(events[0]);
+
+    await manifestation[0].addPhase(phase[0]);
+
+    await categories[0].addPhase(phase[0]);
+
+    await TeamIsInPhase.create({teamId: teams[0].id, phaseId: phase[0].id})
+
     /*const competitions = [
       await Competition.create
   ];*/
