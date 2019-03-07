@@ -1,67 +1,98 @@
 const fs = require('fs-extra');
 const path = require('path');
+const xml = require('xml-parse');
 const { execSync } = require('child_process');
 
 const rootDir = path.join(__dirname);
 const cordovaDir = path.join(__dirname, 'mobileApp');
 const publicDir = path.join(__dirname, 'public');
 const wwwCordovaDir = path.join(__dirname, 'mobileApp', 'www');
+const configXmlPath = path.join(__dirname, 'mobileApp', 'config.xml');
+const packagePath = path.join(__dirname, 'package.json');
 
 const stdio = 'inherit';
 
 const utils = {
     buildMobile: function () {
-        if (!fs.existsSync(cordovaDir)) {
-            console.log('Directory \'mobileApp\' does not exist');
-            console.log('Initializing cordova project...');
-            execSync('cordova create mobileApp', { cwd: rootDir, stdio }); //it.robocupnetwork.mobile Robocup\\ Network
-            execSync('cordova platform add browser', { cwd: cordovaDir, stdio });
-            execSync('cordova platform add android', { cwd: cordovaDir, stdio });
-            console.log('Directory \'mobileApp\' initialized');
-            console.log('Adding plugins for cordova...');
-            execSync('cordova plugin add https://github.com/phonegap/phonegap-plugin-barcodescanner', { cwd: cordovaDir, stdio });
-            console.log('Cordova plugins added successfully');
-        }
-
-        console.log('Building Angular application...');
+        fs.removeSync(cordovaDir);
+        execSync('cordova create mobileApp com.robocupnetwork.mobile Robocup\\ Network', { cwd: rootDir, stdio }); 
+        execSync('cordova platform add browser', { cwd: cordovaDir, stdio });
+        execSync('cordova platform add android', { cwd: cordovaDir, stdio });
+        execSync('cordova plugin add https://github.com/phonegap/phonegap-plugin-barcodescanner', { cwd: cordovaDir, stdio });
+        execSync('cordova plugin add cordova-plugin-app-version', { cwd: cordovaDir, stdio });
+        
         if (fs.existsSync(wwwCordovaDir))
             fs.removeSync(wwwCordovaDir);
 
         execSync('ng build -c mobile --output-path="../mobileApp/www"', { cwd: publicDir, stdio });
-        console.log('Angular application built successfully');
     },
     runBrowser: function () {
         this.buildMobile();
         console.log('Application running on browser');
         execSync('cordova run browser', { cwd: cordovaDir, stdio });
     },
+    runAndroid: function () {
+        this.buildMobile();
+        execSync('cordova run android', { cwd: cordovaDir, stdio });
+    },
     publish: function (args) {
-        let remotes = execSync('git remote -v', { cwd: rootDir })
+        if (!args || !args.m)
+            return console.log('You must specify a commit message');
+
+        const info = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
+
+        const remotes = execSync('git remote -v', { cwd: rootDir })
             .toString('utf8')
             .split('\n')
             .filter(remote => !!remote)
             .map(remote => remote.split('\t')[0]);
         
-        if (!remotes.includes('production')) {
-            console.log('Adding production remote to git remotes');
+        if (!remotes.includes('production'))
             execSync('git remote add production git@robocupnetwork.it:/opt/git/robocupnetwork.git', { cwd: rootDir, stdio });
-            console.log('Remote added successfully');
+        
+        if (!args.n) {
+            execSync('ng build --prod', { cwd: publicDir, stdio });
+            this.buildMobile();
         }
         
-        if (!args || !args.n) {
-            console.log('Building Angular application, this may take several time...');
-            execSync('ng build --prod', { cwd: publicDir, stdio });
-            console.log('Angular application built successfully');
+        let configXml = fs.readFileSync(configXmlPath).toString('utf8');
+        const config = xml.parse(configXml);
+        config[0].attributes.version = '1.0';
+        config[0].attributes.encoding = 'utf8';
+        config[2].childNodes[3].childNodes[0].text = info.description;
+        config[2].childNodes[3].innerXML = info.description;
+        config[2].childNodes[5].attributes.email = 'robocup.network@gmail.com';
+        config[2].childNodes[5].attributes.href = 'https://robocupnetwork.it';
+        config[2].childNodes[5].childNodes[0].text = info.author;
+        config[2].childNodes[5].innerXML = info.author;
+
+        if (args.v) {
+            info.mobileAppVersion = args.v;
+            config[2].attributes.version = args.v;
+            configXml = xml.stringify(config, 0);
+            fs.writeFileSync(configXmlPath, configXml);
         }
+        
+        if (args.t)
+            info.version = args.t;
 
-        console.log('Uploading files to GitHub...');
+        fs.writeFileSync(packagePath, JSON.stringify(info, undefined, 2));
+
+        execSync('git add .', { cwd: rootDir, stdio });
+        execSync('git commit -m "' + args.m + '"', { cwd: rootDir, stdio });
+        
+        if (args.t)
+            execSync('git tag v' + args.t, { cwd: rootDir, stdio });
+        
         execSync('git push', { cwd: rootDir, stdio });
-        console.log('Push to GitHub done successfully');
 
-        console.log('Uploading files on the server...');
+        if (args.t)
+            execSync('git push --tags', { cwd: rootDir, stdio });
+
         execSync('git push production', { cwd: rootDir, stdio });
         execSync('scp -r dist git@robocupnetwork.it:/opt/apps/robocupnetwork', { cwd: publicDir, stdio });
-        console.log('Files uploaded successfully');
+        // execSync('scp mobileApp git@robocupnetwork.it:/opt/apps/robocupnetwork', { cwd: publicDir, stdio });
+        console.log('Publishing process completed successfully');
         console.log('You can now access the website at robocupnetwork.it');
     },
     seed: async function () {

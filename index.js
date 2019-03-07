@@ -64,5 +64,5 @@ if (process.env.SSL) {
 }
 
 database.initialize(argv.reset)
-    .then(() => server.listen(port, () => log.info('Server is listening on port: ' + port)));
+    .then(() => server.listen(port, () => log.info('Server is listening on port ' + port)));
 

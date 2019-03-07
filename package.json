@@ -1,6 +1,7 @@
 {
   "name": "robocupnetwork",
   "version": "4.0.0",
+  "mobileAppVersion": "1.0.0",
   "description": "Programma ufficiale italiano per la gestione delle gare di robotica",
   "main": "index.js",
   "scripts": {
@@ -34,6 +35,7 @@
     "cors": "^2.8.4",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
+    "fast-xml-parser": "^3.12.14",
     "fs-extra": "^7.0.1",
     "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.10",
@@ -47,6 +49,7 @@
     "socket.io": "^2.1.1",
     "socketio-jwt": "^4.5.0",
     "winston": "^3.1.0",
+    "xml-parse": "^0.3.1",
     "yargs": "^12.0.5"
   },
   "devDependencies": {
