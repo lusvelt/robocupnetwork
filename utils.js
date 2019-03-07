@@ -48,7 +48,7 @@ const utils = {
             console.log('Remote added successfully');
         }
         
-        if (!args.n) {
+        if (!args || !args.n) {
             console.log('Building Angular application, this may take several time...');
             execSync('ng build --prod', { cwd: publicDir, stdio });
             console.log('Angular application built successfully');
