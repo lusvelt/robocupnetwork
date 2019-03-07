@@ -7,6 +7,7 @@ import { AuthGuardService } from './../services/auth-guard.service';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { RunSettingMobileComponent } from './run-setting-mobile/run-setting-mobile.component';
+import { AfterRunMobileComponent } from './after-run-mobile/after-run-mobile.component';
 
 const routes: Routes = [{
     path: '',
@@ -29,10 +30,14 @@ const routes: Routes = [{
             component: ScoringRunMobileComponent
         },
         {
+            path: 'after-run',
+            component: AfterRunMobileComponent
+        },
+        {
             path: '',
             redirectTo: 'login',
             pathMatch: 'full'
-        }
+        },
     ],
 }];
 

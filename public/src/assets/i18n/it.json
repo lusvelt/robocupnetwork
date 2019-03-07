@@ -269,6 +269,8 @@
     "ZONE":"Zona",
     "ATTEMPT":"Tentativo",
     "PAUSE":"Pausa",
+    "RESUME":"Riprendi",
     "FINISH":"Termina",
+    "GOOD_RACE": "Bella gara!",
     "ARE_YOU_SURE_YOU_WANT_TO_START":"Sei sicuro di voler iniziare la gara?"
 }
