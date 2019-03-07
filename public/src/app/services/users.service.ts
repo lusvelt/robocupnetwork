@@ -30,6 +30,10 @@ export class UsersService {
     return this.socketIoService.send('removeUser', data);
   }
 
+  changePassword(user, data) {
+    return this.socketIoService.send('changePassword', { user, data} );
+  }
+
   notify(eventName: string): Observable<any> {
     return new Observable(observer => this.socketIoService.on(eventName)
       .subscribe(data => observer.next(data)));
