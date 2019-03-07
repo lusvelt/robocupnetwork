@@ -20,6 +20,15 @@ export class ScoringRunMobileComponent implements OnInit {
   attempt: number = 1;
   zone: number = 1;
 
+  livingVictimsRescued = 0;
+  deadVictimsRescued = 0;
+  lacksOfProgressAfterTheFinalCheck = 0;
+
+  pointsForALivingVictim = 0;
+  pointsForADeadVictim = 0;
+
+  subtractedPointsForLackOfProgressAfterTheFinalCheck = 0;
+
   timer: any;
   time: number;
 
@@ -40,6 +49,71 @@ export class ScoringRunMobileComponent implements OnInit {
     this.evaluate(event.pointsJSCalculator);
     this.events.push(event);
   }
+
+  nextZone() {
+    this.attempt = 1;
+    this.zone++;
+  }
+
+  checkpoint() {
+    if ( this.attempt === 1 )
+      this.score += this.runSettings.checkpoints[this.zone - 1] * 5;
+    if ( this.attempt === 2 )
+      this.score += this.runSettings.checkpoints[this.zone - 1] * 3;
+    if ( this.attempt === 3 )
+      this.score += this.runSettings.checkpoints[this.zone - 1] * 1;
+    this.nextZone();
+  }
+
+  deadVictim() {
+    if ( this.livingVictimsRescued === this.runSettings.aliveVictims ) {
+      if (this.runSettings.evacuationType === 'high') {
+        this.pointsForADeadVictim = ( 30 - ( 5 * this.lacksOfProgressAfterTheFinalCheck ) );
+        if ( this.pointsForADeadVictim < 0)
+          this.pointsForADeadVictim = 0;
+        this.score +=  this.pointsForADeadVictim;
+      } else {
+        this.pointsForADeadVictim = ( 20 - ( 5 * this.lacksOfProgressAfterTheFinalCheck ) );
+        if ( this.pointsForADeadVictim < 0)
+          this.pointsForADeadVictim = 0;
+        this.score +=  this.pointsForADeadVictim;
+      }
+    } else {
+      this.pointsForADeadVictim = ( 5 - ( 5 * this.lacksOfProgressAfterTheFinalCheck ) );
+        if ( this.pointsForADeadVictim < 0)
+          this.pointsForADeadVictim = 0;
+        this.score +=  this.pointsForADeadVictim;
+    }
+    this.deadVictimsRescued ++;
+
+  }
+
+  livingVictim() {
+    if (this.runSettings.evacuationType === 'high') {
+      this.pointsForALivingVictim = ( 40 - ( 5 * this.lacksOfProgressAfterTheFinalCheck ) );
+        if ( this.pointsForALivingVictim < 0)
+          this.pointsForALivingVictim = 0;
+        this.score +=  this.pointsForALivingVictim;
+    } else {
+      this.pointsForALivingVictim = ( 30 - ( 5 * this.lacksOfProgressAfterTheFinalCheck ) );
+        if ( this.pointsForALivingVictim < 0)
+          this.pointsForALivingVictim = 0;
+        this.score +=  this.pointsForALivingVictim;
+    }
+    this.livingVictimsRescued ++;
+
+  }
+
+  lackOfProgress() {
+    if (this.zone > this.runSettings.numberOfCheckpoints) {
+        this.lacksOfProgressAfterTheFinalCheck ++;
+        this.subtractedPointsForLackOfProgressAfterTheFinalCheck = ( 5 * this.livingVictimsRescued ) + ( 5 * this.deadVictimsRescued );
+        this.score -= this.subtractedPointsForLackOfProgressAfterTheFinalCheck;
+    }
+    this.attempt ++;
+  }
+
+  endOfPlay() { }
 
   evaluate(command: string) {
     this.events.push();

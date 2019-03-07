@@ -444,7 +444,7 @@ const seed = async () => {
         await Event.create({
             name: 'Intersezione',
             description: 'Intersezione in una mattonella',
-            pointsJSCalculator: '15',
+            pointsJSCalculator: 'this.score += 15;',
             affectsZone: false,
             affectsAttempt: false,
             manuallyTriggerable: true,
@@ -452,7 +452,164 @@ const seed = async () => {
             triggerOnStart: false,
             waitLastIterationToTrigger: false,
             cancelPendingEvents: false
-        })
+        }),
+        await Event.create({
+            name:'Dead end',
+            description:'Un intersezione in cui il robot deve invertire il proprio senso di marcia',
+            pointsJSCalculator:'this.score += 15;',
+            affectsZone: false,
+            affectsAttempt: false,
+            manuallyTriggerable:true,
+            needsStartCountForZones: false,
+            triggerOnStart: false,
+            waitLastIterationToTrigger: false,
+            cancelPendingEvents: false
+        }),
+        await Event.create({
+            name:'Ramp',
+            description:'Una salita o una discesa',
+            pointsJSCalculator:'this.score += 5;',
+            affectsZone: false,
+            affectsAttempt: false,
+            manuallyTriggerable:true,
+            needsStartCountForZones: false,
+            triggerOnStart: false,
+            waitLastIterationToTrigger: false,
+            cancelPendingEvents: false
+        }),
+        await Event.create({
+            name:'Speed bump',
+            description:'Un dosso da superare',
+            pointsJSCalculator:'this.score += 5;',
+            affectsZone: false,
+            affectsAttempt: false,
+            manuallyTriggerable:true,
+            needsStartCountForZones: false,
+            triggerOnStart: false,
+            waitLastIterationToTrigger: false,
+            cancelPendingEvents: false
+        }),
+        await Event.create({
+            name:'Obstacle',
+            description:'Un ostacolo da superare',
+            pointsJSCalculator:'this.score += 10;',
+            affectsZone: false,
+            affectsAttempt: false,
+            manuallyTriggerable:true,
+            needsStartCountForZones: false,
+            triggerOnStart: false,
+            waitLastIterationToTrigger: false,
+            cancelPendingEvents: false
+        }),
+        await Event.create({
+            name:'Gap',
+            description:'Un interruzione momentanea della linea',
+            pointsJSCalculator:'this.score += 10;',
+            affectsZone: false,
+            affectsAttempt: false,
+            manuallyTriggerable:true,
+            needsStartCountForZones: false,
+            triggerOnStart: false,
+            waitLastIterationToTrigger: false,
+            cancelPendingEvents: false
+        }),
+        await Event.create({
+            name:'Lack of progress',
+            description:'Nuovo tentativo',
+            pointsJSCalculator:'this.lackOfProgress();',
+            affectsZone: false,
+            affectsAttempt: true,
+            manuallyTriggerable:true,
+            needsStartCountForZones: false,
+            triggerOnStart: false,
+            waitLastIterationToTrigger: false,
+            cancelPendingEvents: false
+        }),
+        await Event.create({
+            name:'Jump zone',
+            description:'La zona non completata viene saltata',
+            pointsJSCalculator:'this.nextZone();',
+            affectsZone: true,
+            affectsAttempt: true,
+            manuallyTriggerable:true,
+            needsStartCountForZones: false,
+            triggerOnStart: false,
+            waitLastIterationToTrigger: false,
+            cancelPendingEvents: false
+        }),
+        /*await Event.create({
+            name:'Next zone',
+            description:'Completata una zona si passa a quella successiva',
+            pointsJSCalculator:'this.nextZone();',
+            affectsZone: true,
+            affectsAttempt: true,
+            manuallyTriggerable: false,
+            needsStartCountForZones: false,
+            triggerOnStart: false,
+            waitLastIterationToTrigger: true,
+            cancelPendingEvents: false
+        }),*/
+        await Event.create({
+            name:'Checkpoint',
+            description:'Viene raggiunto un checkpoint',
+            pointsJSCalculator:'this.checkpoint();',
+            affectsZone: true,
+            affectsAttempt: true,
+            manuallyTriggerable: true,
+            needsStartCountForZones: false,
+            triggerOnStart: false,
+            waitLastIterationToTrigger: false,
+            cancelPendingEvents: false
+        }),
+        await Event.create({
+            name:'End of play',
+            description:'Si verifica quando il robot completa il percorso, oppure quando la squadra dichiara di non voler continuare, oppure allo scadere del tempo ',
+            pointsJSCalculator:'this.endOfPlay();',
+            affectsZone: false,
+            affectsAttempt: false,
+            manuallyTriggerable:true,
+            needsStartCountForZones: false,
+            triggerOnStart: false,
+            waitLastIterationToTrigger: false,
+            cancelPendingEvents: true
+        }),
+        await Event.create({
+            name:'Living victim',
+            description:'Corretta evacuazione di una pallina argentata',
+            pointsJSCalculator:'this.livingVictim();',
+            affectsZone: false,
+            affectsAttempt: false,
+            manuallyTriggerable:true,
+            needsStartCountForZones: false,
+            triggerOnStart: false,
+            waitLastIterationToTrigger: false,
+            cancelPendingEvents: false
+        }),
+        await Event.create({
+            name:'Dead victim',
+            description:'Corretta evacuazione di una pallina nera',
+            pointsJSCalculator:'this.deadVictim();',
+            affectsZone: false,
+            affectsAttempt: false,
+            manuallyTriggerable:true,
+            needsStartCountForZones: false,
+            triggerOnStart: false,
+            waitLastIterationToTrigger: false,
+            cancelPendingEvents: false
+        }),
+        await Event.create({
+            name:'Exit',
+            description:'Il robot è uscito dalla stanza e ha percorso correttamente tre mattonelle, dopo aver toccato o salvato una vittima',
+            pointsJSCalculator:'this.score += 20;;',
+            affectsZone: false,
+            affectsAttempt: false,
+            manuallyTriggerable:true,
+            needsStartCountForZones: false,
+            triggerOnStart: false,
+            waitLastIterationToTrigger: false,
+            cancelPendingEvents: false
+        }),
+
     ];
 
     const manifestation = [
@@ -862,6 +1019,19 @@ const seed = async () => {
     await places[0].addManifestation(manifestation[1]);
 
     await categories[0].addEvent(events[0]);
+    await categories[0].addEvent(events[1]);
+    await categories[0].addEvent(events[2]);
+    await categories[0].addEvent(events[3]);
+    await categories[0].addEvent(events[4]);
+    await categories[0].addEvent(events[5]);
+    await categories[0].addEvent(events[6]);
+    await categories[0].addEvent(events[7]);
+    await categories[0].addEvent(events[8]);
+    await categories[0].addEvent(events[9]);
+    await categories[0].addEvent(events[10]);
+    await categories[0].addEvent(events[11]);
+    await categories[0].addEvent(events[12]);
+    await categories[0].addEvent(events[13]);
 
     // await events[0].addEvent(events[0]);
 
