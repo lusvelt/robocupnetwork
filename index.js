@@ -25,8 +25,10 @@ const port = process.env.PORT;
 const distPath = path.join(__dirname, 'dist');
 
 const app = express();
+const redirect = express();
 
 let server;
+let redirectServer;
 
 if (process.env.SSL) {
     const options = {
@@ -34,6 +36,7 @@ if (process.env.SSL) {
         cert: fs.readFileSync('/etc/letsencrypt/live/robocupnetwork.it/fullchain.pem')
     };
     server = https.createServer(options, app);
+    redirectServer = http.createServer(redirect);
 } else
     server = http.createServer(app);
 
@@ -53,5 +56,13 @@ sockets.initialize(io);
 
 console.log();
 
+if (process.env.SSL) {
+    const redirectFromPort = process.env.REDIRECT_FROM_PORT;
+    const redirectToHttps = require('./server/routes/redirect');
+    redirect.get('*', redirectToHttps);
+    redirectServer.listen(redirectFromPort, () => log.info('Redirection to https enabled'));
+}
+
 database.initialize(argv.reset)
     .then(() => server.listen(port, () => log.info('Server is listening on port: ' + port)));
+
