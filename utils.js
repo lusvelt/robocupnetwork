@@ -1,6 +1,6 @@
 const fs = require('fs-extra');
 const path = require('path');
-const xml = require('xml-parse');
+const parser = require('xml2json');
 const { execSync } = require('child_process');
 
 const rootDir = path.join(__dirname);
@@ -56,15 +56,12 @@ const utils = {
         }
         
         let configXml = fs.readFileSync(configXmlPath).toString('utf8');
-        const config = xml.parse(configXml);
-        config[0].attributes.version = '1.0';
-        config[0].attributes.encoding = 'utf8';
-        config[2].childNodes[3].childNodes[0].text = info.description;
-        config[2].childNodes[3].innerXML = info.description;
-        config[2].childNodes[5].attributes.email = 'robocup.network@gmail.com';
-        config[2].childNodes[5].attributes.href = 'https://robocupnetwork.it';
-        config[2].childNodes[5].childNodes[0].text = info.author;
-        config[2].childNodes[5].innerXML = info.author;
+        const config = JSON.parse(parser.toJson(configXml, {reversible: true}));
+        
+        config.widget.description.$t = info.description;
+        config.widget.author.email = 'robocup.network@gmail.com';
+        config.widget.author.href = 'https://robocupnetwork.it';
+        config.widget.author.$t = info.author;
 
         if (args.v)
             info.mobileAppVersion = args.v;
@@ -74,8 +71,9 @@ const utils = {
             oldMobileAppVersionArray[lastIndex] = (parseInt(oldMobileAppVersionArray[lastIndex]) + 1).toString();
             info.mobileAppVersion = oldMobileAppVersionArray.join('.');
         }
-        config[2].attributes.version = info.mobileAppVersion;
-        configXml = xml.stringify(config, 0);
+
+        config.widget.version = info.mobileAppVersion;
+        configXml = parser.toXml(JSON.stringify(config));
         fs.writeFileSync(configXmlPath, configXml);
         
         if (args.t)

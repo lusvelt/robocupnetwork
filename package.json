@@ -1,7 +1,7 @@
 {
   "name": "robocupnetwork",
-  "version": "4.0.2",
-  "mobileAppVersion": "1.0.2",
+  "version": "4.0.3",
+  "mobileAppVersion": "1.0.3",
   "description": "Programma ufficiale italiano per la gestione delle gare di robotica",
   "main": "index.js",
   "scripts": {
@@ -50,6 +50,7 @@
     "socketio-jwt": "^4.5.0",
     "winston": "^3.1.0",
     "xml-parse": "^0.3.1",
+    "xml2json": "^0.11.2",
     "yargs": "^12.0.5"
   },
   "devDependencies": {
