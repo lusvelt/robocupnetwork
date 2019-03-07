@@ -26,7 +26,7 @@
 }
 
 .active-icon {
-  font-size: 1.7rem;
+  font-size: 1.4rem;
   width: 100%;
   position: absolute;
   margin-left: 22rem;
@@ -43,6 +43,10 @@ nb-actions {
 
 nb-card-footer {
     text-align: center;
+}
+
+nb-flip-card {
+  width: 30%;
 }
 
 nb-card-body {

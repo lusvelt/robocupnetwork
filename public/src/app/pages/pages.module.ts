@@ -6,6 +6,7 @@ import { ECommerceModule } from './e-commerce/e-commerce.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { ThemeModule } from '../@theme/theme.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
+import { ChangePasswordComponent } from './settings/change-password/change-password.component';
 
 
 const PAGES_COMPONENTS = [
@@ -21,7 +22,7 @@ const PAGES_COMPONENTS = [
     MiscellaneousModule,
   ],
   declarations: [
-    ...PAGES_COMPONENTS
+    ...PAGES_COMPONENTS,
   ],
 })
 export class PagesModule {
