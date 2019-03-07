@@ -45,7 +45,7 @@
             {{ 'LOGIN_PASSWORD_REQUIRED' | translate }}
           </small>
           <small class="form-text error" *ngIf="password.invalid && password.touched && (password.errors?.minlength || password.errors?.maxlength)">
-            Password should contains
+            Password should contain
             from {{ getConfigValue('forms.validation.password.minLength') }}
             to {{ getConfigValue('forms.validation.password.maxLength') }}
             characters
@@ -63,14 +63,23 @@
 
         <p class="font-w-light footer">I.I.S. A.Volta Pescara 2018-2019</p> 
       </div>
-
+      
       <div class="col-md-4">
-
+        
       </div>
-
+      
     </div>
-
+    
   </form>
+  
+  <div class="form-group mt-3">
+    <label for="input-password" class="sr-only">URL</label>
+    <input nbInput [(ngModel)]="settings.apiUrl" name="apiurl" type="text"
+      placeholder="https://robocupnetwork.it" fullWidth>
+  </div>
+  <button nbButton status="warning" fullWidth (click)="changeApiUrl()">
+    {{ 'SET_URL' | translate }}
+  </button>
 
 
 </div>

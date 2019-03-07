@@ -43,7 +43,6 @@ const runsIo = (clientsIo, socket, room) => {
             console.log(data.events);
 
             _events = JSON.stringify({ events: _events });
-            console.log('arrivo');
 
             if (_toEliminate === true) {
                 status = 'toBeCanceled';

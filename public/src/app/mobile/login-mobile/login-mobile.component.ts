@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { MobileService } from './../../services/mobile.service';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
@@ -29,12 +30,18 @@ export class LoginMobileComponent implements OnInit {
   messages: string[] = [];
 
   user: any = {};
+  settings: any = {
+    apiUrl: ''
+  };
 
   submitted: boolean = false;
   rememberMe = false;
   updatesChecked: boolean = false;
 
   ngOnInit() {
+    if (!environment.mobile)
+      this.updatesChecked = true;
+    this.settings.apiUrl = environment.apiUrl;
     this.mobileService.checkForUpdates()
       .then(result => {
         this.updatesChecked = true;
@@ -50,6 +57,11 @@ export class LoginMobileComponent implements OnInit {
         this.notificationsService.success('LOGIN_SUCCESSFUL');
         this.router.navigate(['/mobile', 'dashboard']);
       }, err => this.notificationsService.error('WRONG_EMAIL_OR_PASSWORD'));
+  }
+
+  changeApiUrl() {
+    environment.apiUrl = this.settings.apiUrl;
+    this.notificationsService.success('URL_MODIFIED');
   }
 
   qrCode() {
