@@ -272,6 +272,28 @@
     "RESUME":"Resume",
     "FINISH":"Finish",
     "GOOD_RACE":"Good race!",
-    "ARE_YOU_SURE_YOU_WANT_TO_START":"Are you sure you want to start the run?"
+    "ARE_YOU_SURE_YOU_WANT_TO_START":"Are you sure you want to start this run?",
+
+    "TIME_ENDED":"Time ended",
+    "GO_TO_RESUME":"Go to resume",
+    "ARE_YOU_SURE_YOU_WANT_TO_END":"Are you sure you want to end this run?",
+
+    "DEAD_END":"Dead end",
+    "RAMP":"Ramp",
+    "SPEED_BUMP":"Speed bump",
+    "OBSTACLE":"Obstacle",
+    "GAP":"Gap",
+    "LACK_OF_PROGRESS":"Lack of progress",
+    "JUMP_ZONE":"Jump zone",
+    "END_OF_PLAY":"End of play",
+    "LIVING_VICTIM":"Living victim",
+    "EXIT":"Exit",
+
+    "CONTESTATION":"Contestation",
+    "TO_ELIMINATE":"To eliminate",
+    "SEND_RACE":"Send run",
+
+    "RACE_UPLOADED_SUCCESSFUL":"Run sended successfully",
+    "RACE_UPLOAD_ERROR":"Error sending the run. Save the points on your phone and send it to the judges :("
 
 }

@@ -31,10 +31,39 @@ const runsIo = (clientsIo, socket, room) => {
 
     const endRun = async (data, callback) => {
         try {
-            console.log(data);
-            callback();
-        } catch (err) {
-            throw(new Error());
+            const id = data.run.id;
+            const _runSettings = data.runSettings;
+            const _score = data.score;
+            let _events = data.events || [];
+            const _toEliminate = data.toEliminate;
+            const _isContestation = data.isContestation;
+            const contestation = data.contestation;
+            let status = 'toBeValidated';
+
+            console.log(data.events);
+
+            _events = JSON.stringify({ events: _events });
+            console.log('arrivo');
+
+            if (_toEliminate === true) {
+                status = "toBeCanceled";
+            } else {
+                if (_isContestation === true)
+                    status = 'toBeReviewed';
+            }    
+            
+            
+            const result = await Run.update({end: new Date(), status: status, contestationMessage: contestation, score: _score, events: _events}, {where: {id}});
+            
+            if(!result)
+                throw new Error();
+            callback(result);
+
+            // socket.broadcast.emit('endRun', result);
+            log.verbose('Run modified');
+        } catch (err) { 
+            console.log(err);
+            callback(new Error());
         }
     };
 

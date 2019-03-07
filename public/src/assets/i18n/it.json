@@ -272,5 +272,27 @@
     "RESUME":"Riprendi",
     "FINISH":"Termina",
     "GOOD_RACE": "Bella gara!",
-    "ARE_YOU_SURE_YOU_WANT_TO_START":"Sei sicuro di voler iniziare la gara?"
+    "ARE_YOU_SURE_YOU_WANT_TO_START":"Sei sicuro di voler iniziare la gara?",
+
+    "TIME_ENDED":"Tempo scaduto",
+    "GO_TO_RESUME":"Vai al resoconto",
+    "ARE_YOU_SURE_YOU_WANT_TO_END":"Sei sicuro di voler terminare questa gara?",
+
+    "DEAD_END":"Vicolo cieco",
+    "RAMP":"Rampa",
+    "SPEED_BUMP":"Bumper",
+    "OBSTACLE":"Ostacolo",
+    "GAP":"Gap",
+    "LACK_OF_PROGRESS":"Ritenta zona",
+    "JUMP_ZONE":"Salta zona",
+    "END_OF_PLAY":"Fine partita",
+    "LIVING_VICTIM":"Vittima viva",
+    "EXIT":"Uscita",
+
+    "CONTESTATION":"Contestazione",
+    "TO_ELIMINATE":"Da eliminare",
+    "SEND_RACE":"Manda gara",
+
+    "RACE_UPLOADED_SUCCESSFUL":"Gara inviata con successo",
+    "RACE_UPLOAD_ERROR":"Errore nell'invio della gara. Salvare il punteggio sul proprio telefono e riferirlo ai giudici :("
 }
