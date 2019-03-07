@@ -25,13 +25,18 @@ const utils = {
         if (fs.existsSync(wwwCordovaDir))
             fs.removeSync(wwwCordovaDir);
         
-        execSync('ng build --output-path="../mobileApp/www"', { cwd: publicDir });
+        execSync('ng build -c mobile --output-path="../mobileApp/www"', { cwd: publicDir });
         console.log('Angular application built successfully');
     },
     runBrowser: function () {
         this.buildMobile();
         console.log('Application running on browser');
         execSync('cordova run browser', { cwd: cordovaDir });
+    },
+    publish: function () {
+        execSync('ng build --prod', { cwd: publicDir });
+        execSync('git push production', { cwd: rootDir });
+        execSync('scp -r dist git@robocupnetwork.it:/opt/apps/robocupnetwork', { cwd: publicDir });
     }
 };
 

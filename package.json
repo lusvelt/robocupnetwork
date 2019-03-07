@@ -14,7 +14,8 @@
     "serve": "cd public && ng serve",
     "browser": "node utils runBrowser",
     "android": "node utils runAndroid",
-    "buildMobile": "node utils buildMobile"
+    "buildMobile": "node utils buildMobile",
+    "publish": "node utils publish"
   },
   "repository": {
     "type": "git",
