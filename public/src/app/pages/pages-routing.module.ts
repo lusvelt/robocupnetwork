@@ -86,6 +86,11 @@ const routes: Routes = [{
     canActivate: [AuthGuardService]
   },
   {
+    path: 'ranking',
+    loadChildren: './ranking/ranking.module#RankingModule',
+    canActivate: [AuthGuardService]
+  },
+  {
     path: 'users',
     loadChildren: './users/users.module#UsersModule',
     canActivate: [AuthGuardService]

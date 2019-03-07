@@ -9,6 +9,9 @@ import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { merge } from 'rxjs';
 import { NotificationsService } from '../../services/notifications.service';
 import { AuthService } from '../../services/auth.service';
+import { notAddableConfig } from '../../config/tables.config';
+import { TablesService } from '../../services/tables.service';
+
 
 interface CardSettings {
   title: string;
@@ -42,9 +45,11 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+
   constructor(private manifestationsService: ManifestationsService,
               public authService: AuthService,
-              private notificationsService: NotificationsService) { }
+              private notificationsService: NotificationsService,
+              private tablesService: TablesService) { }
 
   ngOnInit() {
     this.manifestationsService.getManifestations()
@@ -133,4 +138,6 @@ export class DashboardComponent implements OnInit {
     this.alive = false;
   }
   */
+
+
 }

@@ -1,0 +1,41 @@
+<div class="welcome" *ngIf="!authService.isManifestationSelected()">
+  <div class="maintitle">
+    <h1 class="font-w-bold">{{ 'SELECT_A_MANIFESTATION' | translate }}</h1>
+  </div>
+
+  <div class="subtitle">
+    <h1 class="font-w-light">{{'GO_TO_THE_DASHBOARD' | translate}}!</h1>
+  </div>
+</div>
+
+
+
+<div *ngIf="authService.isManifestationSelected()">
+
+<div class="subtitle">
+  <h1 class="font-w-light">{{'SELECT_A_PHASE' | translate}}</h1>
+</div>
+
+<div class="mb-3" ngbDropdown>
+
+  <div class="col-md-6 offset-md-3">
+    <input type="text" class="form-control" placeholder="{{ 'WRITE_PHASE_NAME' | translate }}" (selectItem)="onPhaseClicked($event)"
+     [ngbTypeahead]="searchPhase" [resultFormatter]="phasesFormatter" [inputFormatter]="phasesFormatter"
+      (focus)="focus$.next($event.target.value)" (click)="click$.next($event.target.value)" #searchPhaseInstance="ngbTypeahead" />
+  </div>
+</div>
+
+<div class="body" *ngIf="this.phaseSelected">
+  <nb-card>
+   <nb-card-header>
+    {{'RANKING'|translate}}
+   </nb-card-header>
+
+   <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source" (createConfirm)="onCreateConfirm($event)" (editConfirm)="onEditConfirm($event)"
+      (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+</div>
+</div>

@@ -97,6 +97,12 @@ export const MENU_ITEMS: any[] = [
     link: '/pages/schools/manage'
   },
   {
+    title: 'RANKING',
+    alias: 'ranking',
+    icon: 'fas fa-list-ol',
+    link: '/pages/ranking/manage-ranking'
+  },
+  {
     title: 'TEAMS',
     alias: 'teams',
     icon: 'fas fa-users',
