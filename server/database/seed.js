@@ -653,17 +653,9 @@ const seed = async () => {
     ];
 
     const teams = [
-        await Team.create({
-            name: 'Fenix'
-        })
     ];
 
     const teamsHasUser = [
-        await TeamHasUser.create({
-            teamId: teams[0].id,
-            userId: users[0].id,
-            role: 'captain'
-        })
     ];
 
     const categories = [
@@ -688,7 +680,7 @@ const seed = async () => {
             numAdmittedTeams: 40,
             numPassingTeams: 40
         })
-    ]
+    ];
 
     const modules = [
         await Module.create({
@@ -1038,8 +1030,6 @@ const seed = async () => {
     await manifestation[0].addPhase(phase[0]);
 
     await categories[0].addPhase(phase[0]);
-
-    await TeamIsInPhase.create({teamId: teams[0].id, phaseId: phase[0].id})
 
     /*const competitions = [
       await Competition.create
