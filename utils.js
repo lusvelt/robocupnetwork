@@ -9,7 +9,7 @@ const publicDir = path.join(__dirname, 'public');
 const wwwCordovaDir = path.join(__dirname, 'mobileApp', 'www');
 const configXmlPath = path.join(__dirname, 'mobileApp', 'config.xml');
 const packagePath = path.join(__dirname, 'package.json');
-const appPath = path.join(__dirname, 'mobileApp', 'platforms', 'android', 'app', 'build', 'outputs', 'apk', 'app-debug.apk');
+const appPath = path.join(__dirname, 'mobileApp', 'platforms', 'android', 'app', 'build', 'outputs', 'apk', 'debug', 'app-debug.apk');
 
 const stdio = 'inherit';
 
