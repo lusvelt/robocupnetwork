@@ -60,7 +60,7 @@
       
       <div class="row">
           <div class="row col-md-6">
-            <h3 class="font-w-bold">{{'TIME_LEFT' | translate }}</h3><h3 class="font-w-light">: {{time}}</h3>
+            <h3 class="font-w-bold">{{'TIME_LEFT' | translate }}</h3><h3 class="font-w-light">: <countdown #cd1 (finished)="onFinished()" [config]="{leftTime: runSettings.maxTime}">$!m!:$!s!</countdown> </h3>
           </div>
           <div class="row col-md-6">
             <h3 class="font-w-bold">{{'ATTEMPT' | translate }}</h3><h3 class="font-w-light">: {{attempt}}</h3>
@@ -92,7 +92,7 @@
           <nb-card-body>
               <div class="row header">
                   <div class="col-md-1"></div>
-                  <button nbButton class="col-md-4" type="button" status="warning">{{'PAUSE'|translate}}</button>
+                  <button nbButton class="col-md-4" type="button" status="warning" (click)="changeStatus(cd1)">{{ (cd1.paused ? 'RESUME' : 'PAUSE') | translate }}</button>
                   <div class="col-md-2"></div>
                   <button nbButton class="col-md-4" type="button" status="danger">{{'FINISH'|translate}}</button>
                   <div class="col-md-1"></div>

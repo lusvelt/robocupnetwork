@@ -5,6 +5,6 @@
  */
 export const environment = {
   production: true,
-  apiUrl: 'https://robocupnetwork.it',
+  apiUrl: 'http://192.168.1.55:3000',
   mobile: false
 };

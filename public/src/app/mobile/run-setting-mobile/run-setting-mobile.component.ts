@@ -68,7 +68,7 @@ export class RunSettingMobileComponent implements OnInit {
   ngOnInit() {
     this.fullName = this.userService.getFullName();
     const data = this.route.snapshot.params;
-    this.team = JSON.parse( '{"id":1,"name":"Fenix","Phases":[{"id":1,"name":"ds"}]}' );
+    this.team = JSON.parse('{"id":1,"name":"Fenix","Phases":[{"id":1,"name":"ds"}]}');
     // (environment.production ? '{"id":1,"name":"Fenix","Phases":[{"id":1,"name":"ds"}]}' : data.text);
     // console.log(this.team.Phases[0].id);
 
@@ -97,8 +97,8 @@ export class RunSettingMobileComponent implements OnInit {
   }
 
   onNumberOfCheckpointChange() {
-    this.runsetting.checkpoint = [];
-    for (let i = 0; i < this.runsetting.numberOfCheckpoints; i++);
+    this.runsetting.checkpoints = [];
+    for (let i = 0; i < this.runsetting.numberOfCheckpoints; i++)
       this.runsetting.checkpoints.push(0);
   }
 
@@ -107,6 +107,10 @@ export class RunSettingMobileComponent implements OnInit {
       this.runsetting.checkpoints.push(0);
     else
       this.runsetting.checkpoints.splice(this.runsetting.checkpoints.length - 1, 1);
+  }
+
+  backToDashboard() {
+    this.router.navigate(['/mobile', 'dashboard']);
   }
 
   trackByIndex(index: number, obj: any): any {

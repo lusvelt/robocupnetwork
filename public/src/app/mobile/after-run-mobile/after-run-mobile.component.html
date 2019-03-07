@@ -1,0 +1,22 @@
+<div class="header">
+  <h1 class="font-w-light subtitle">{{'GOOD_RACE'|translate}}</h1>
+  <h1 class="font-w-bold maintitle">{{team.name}}</h1>
+  <h2 class="font-w-bold subtitle">{{score}}</h2>
+</div>
+
+<div class="content">
+  <nb-card class="list-card" size="small">
+    <nb-card-header>{{'EVENTS'|translate}}</nb-card-header>
+    <nb-list>
+      <nb-list-item *ngFor="let event of events">
+        <nb-user [name]="event.name" [title]="event.description">
+        </nb-user>
+      </nb-list-item>
+    </nb-list>
+  </nb-card>
+</div>
+<nb-checkbox class="mt-3" name="isContestations" status="warning" [(ngModel)]="isContestation">{{ 'CONTESTATION' |
+  translate }}</nb-checkbox>
+<input nbInput class="mt-3" *ngIf="isContestation" [(ngModel)]="contestation" #contestationmessage="ngModel" name="contestationmessage"
+  type="text" placeholder="{{'CONTESTATION'|translate}}" fullWidth required>
+<button class="mt-3" nbButton fullWidth status="success" (click)="sendRace()">{{'SEND_RACE'}}</button>

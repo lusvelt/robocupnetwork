@@ -7,18 +7,22 @@ import { LoginMobileComponent } from './login-mobile/login-mobile.component';
 import { RunSettingMobileComponent } from './run-setting-mobile/run-setting-mobile.component';
 import { MobileComponent } from './mobile.component';
 import { ScoringRunMobileComponent } from './scoring-run-mobile/scoring-run-mobile.component';
+import { CountdownModule } from 'ngx-countdown';
+import { AfterRunMobileComponent } from './after-run-mobile/after-run-mobile.component';
 
 @NgModule({
     imports: [
         ThemeModule,
-        MobileRoutingModule
+        MobileRoutingModule,
+        CountdownModule
     ],
     declarations: [
         MobileComponent,
         DashboardMobileComponent,
         LoginMobileComponent,
         RunSettingMobileComponent,
-        ScoringRunMobileComponent
+        ScoringRunMobileComponent,
+        AfterRunMobileComponent
     ],
 })
 export class MobileModule {

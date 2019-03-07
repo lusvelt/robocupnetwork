@@ -269,7 +269,9 @@
     "ZONE":"Zone",
     "ATTEMPT":"Attempt",
     "PAUSE":"Pause",
+    "RESUME":"Resume",
     "FINISH":"Finish",
+    "GOOD_RACE":"Good race!",
     "ARE_YOU_SURE_YOU_WANT_TO_START":"Are you sure you want to start the run?"
 
 }

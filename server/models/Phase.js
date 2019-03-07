@@ -22,7 +22,7 @@ Phase.getPhasesList = () => Phase.findAll(
 
 Phase.prototype.getQRCodesData = async function () {
     let teams = await this.getTeams({
-        attributes: { exclude: ['createdAt', 'updatedAt'] },
+        attributes: { exclude: ['createdAt', 'updatedAt','agerangeId','schoolId'] },
         include: [{
             model: Phase,
             attributes: ['id', 'name']
