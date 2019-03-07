@@ -20,7 +20,7 @@ const sockets = require('./server/config/sockets');
 const internalEventsSystem = require('./server/config/internalEventsSystem');
 
 const port = process.env.PORT;
-const distPath = path.join(__dirname, 'public', 'dist');
+const distPath = path.join(__dirname, 'dist');
 
 const app = express();
 const server = http.createServer(app);
