@@ -9,6 +9,7 @@ const publicDir = path.join(__dirname, 'public');
 const wwwCordovaDir = path.join(__dirname, 'mobileApp', 'www');
 const configXmlPath = path.join(__dirname, 'mobileApp', 'config.xml');
 const packagePath = path.join(__dirname, 'package.json');
+const appPath = path.join(__dirname, 'mobileApp', 'platforms', 'android', 'app', 'build', 'outputs', 'apk', 'app-debug.apk');
 
 const stdio = 'inherit';
 
@@ -101,7 +102,7 @@ const utils = {
         execSync('git push production', { cwd: rootDir, stdio });
         execSync('scp -r dist git@robocupnetwork.it:/opt/apps/robocupnetwork', { cwd: publicDir, stdio });
         execSync('cordova build android', { cwd: cordovaDir, stdio });
-        execSync('scp mobileApp/platforms/android/app/build/outputs/apk/app-debug.apk git@robocupnetwork.it:/opt/apps/robocupnetwork/robocapp.apk', { cwd: publicDir, stdio });
+        execSync('scp ' + appPath + ' git@robocupnetwork.it:/opt/apps/robocupnetwork/robocapp.apk', { cwd: publicDir, stdio });
         console.log('Publishing process completed successfully');
         console.log('You can now access the website at robocupnetwork.it');
     },
