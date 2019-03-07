@@ -35,7 +35,7 @@ const utils = {
         console.log('Application running on browser');
         execSync('cordova run browser', { cwd: cordovaDir, stdio });
     },
-    publish: function () {
+    publish: function (args) {
         let remotes = execSync('git remote -v', { cwd: rootDir })
             .toString('utf8')
             .split('\n')
@@ -48,9 +48,12 @@ const utils = {
             console.log('Remote added successfully');
         }
         
-        console.log('Building Angular application, this may take several time...');
-        execSync('ng build --prod', { cwd: publicDir, stdio });
-        console.log('Angular application built successfully');
+        if (!args.n) {
+            console.log('Building Angular application, this may take several time...');
+            execSync('ng build --prod', { cwd: publicDir, stdio });
+            console.log('Angular application built successfully');
+        }
+
         console.log('Uploading files on the server...');
         execSync('git push production', { cwd: rootDir, stdio });
         execSync('scp -r dist git@robocupnetwork.it:/opt/apps/robocupnetwork', { cwd: publicDir, stdio });
@@ -59,8 +62,8 @@ const utils = {
     },
     seed: async function () {
         console.log('Adding seed data to database...');
-        const seed = require('./server/database/seed');
-        await seed();
+        const database = require('./server/config/database');
+        await database.initialize(true);
         console.log('Seed data added successfully');
     }
 };
