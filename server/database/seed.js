@@ -688,7 +688,7 @@ const seed = async () => {
             numAdmittedTeams: 40,
             numPassingTeams: 40
         })
-    ]
+    ];
 
     const modules = [
         await Module.create({
@@ -1039,7 +1039,7 @@ const seed = async () => {
 
     await categories[0].addPhase(phase[0]);
 
-    await TeamIsInPhase.create({teamId: teams[0].id, phaseId: phase[0].id})
+    await TeamIsInPhase.create({teamId: teams[0].id, phaseId: phase[0].id});
 
     /*const competitions = [
       await Competition.create

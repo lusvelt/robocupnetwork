@@ -16,6 +16,7 @@ export class ScoringRunMobileComponent implements OnInit {
   category: any;
   runSettings: any;
   team: any;
+  run: any;
 
   subtractablePoints: number = 0;
 
@@ -44,6 +45,7 @@ export class ScoringRunMobileComponent implements OnInit {
     this.category = params.category;
     this.runSettings = params.runSettings;
     this.team = params.team;
+    this.run = params.run;
   }
 
   fireEvent(event) {
@@ -143,6 +145,7 @@ export class ScoringRunMobileComponent implements OnInit {
     this.modalService.alert('TIME_ENDED', 'GO_TO_RESUME')
     .then(result => {
       this.paramsService.setParams({
+        run: this.run,
         runSettings: this.runSettings,
         team: this.team,
         category: this.category,

@@ -86,6 +86,7 @@ export class RunSettingMobileComponent implements OnInit {
             this.runService.startRun(this.runsetting, this.team)
             .then(run => {
               this.paramsService.setParams({
+                run : run,
                 runSettings: this.runsetting,
                 team: this.team,
                 category: this.category
