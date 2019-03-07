@@ -10,7 +10,7 @@ const wwwCordovaDir = path.join(__dirname, 'mobileApp', 'www');
 const stdio = 'inherit';
 
 const utils = {
-    buildMobile: function () {        
+    buildMobile: function () {
         if (!fs.existsSync(cordovaDir)) {
             console.log('Directory \'mobileApp\' does not exist');
             console.log('Initializing cordova project...');
@@ -19,14 +19,14 @@ const utils = {
             execSync('cordova platform add android', { cwd: cordovaDir, stdio });
             console.log('Directory \'mobileApp\' initialized');
             console.log('Adding plugins for cordova...');
-            execSync('cordova plugin add https://github.com/phonegap/phonegap-plugin-barcodescanner', { cwd: cordovaDir, stdio });
+            execSync('cordova plugin add https://github.com/phonegap/phonegap-plugin-barcodescanner', { cwd: cordovaDir });
             console.log('Cordova plugins added successfully');
         }
-        
+
         console.log('Building Angular application...');
         if (fs.existsSync(wwwCordovaDir))
             fs.removeSync(wwwCordovaDir);
-        
+
         execSync('ng build -c mobile --output-path="../mobileApp/www"', { cwd: publicDir, stdio });
         console.log('Angular application built successfully');
     },

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ParamsService } from '../../services/params.service';
 import { TranslateService } from '@ngx-translate/core';
+import { RunService } from '../../services/run.service';
+import { NotificationsService } from '../../services/notifications.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-afterrun',
@@ -13,11 +16,17 @@ export class AfterRunMobileComponent implements OnInit {
   team: any;
   events: any;
   score: any;
+  run: any;
 
   isContestation: false;
+  toEliminate: false;
   contestation: any;
 
-  constructor(private paramsService: ParamsService, private translateService: TranslateService) { }
+  constructor(private paramsService: ParamsService,
+              private translateService: TranslateService,
+              private runService: RunService,
+              private notificationsService: NotificationsService,
+              private router: Router) { }
 
   ngOnInit() {
     const data = this.paramsService.getParams();
@@ -26,6 +35,16 @@ export class AfterRunMobileComponent implements OnInit {
     this.team = data.team;
     this.events = data.events;
     this.score = data.score;
+    this.run = data.run;
+  }
+
+  sendRace() {
+      this.runService.endRun(this.run, this.isContestation, this.contestation, this.score, this.events)
+      .then(() => {
+        this.notificationsService.success('RACE_UPLOADED_SUCCESSFUL');
+        this.router.navigate(['/mobile', 'dashboard']);
+      })
+      .catch(err => this.notificationsService.error('RACE_UPLOAD_ERROR'));
   }
 
 }

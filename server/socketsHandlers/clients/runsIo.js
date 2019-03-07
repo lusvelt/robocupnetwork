@@ -16,19 +16,30 @@ const runsIo = (clientsIo, socket, room) => {
 
             const team = await Team.findById(_team.id);
             const referee = await User.findById(_referee.id);
-            
+
             runSettings.start = new Date();
             runSettings.zones = JSON.stringify({ zones: runSettings.checkpoints });
             const run = await Run.create(runSettings);
             await run.addUser(referee);
-            await team.addRun(run);
-
+            await run.setTeam(team);
+            log.verbose('Run started');
             callback(run);
         } catch (err) {
             callback(new Error());
         }
     };
 
+    const endRun = async (data, callback) => {
+        try {
+            console.log(data);
+            callback();
+        } catch (err) {
+            throw(new Error());
+        }
+    };
+
+
+    socket.on('endRun', endRun);
     socket.on('startRun', startRun);
 };
 

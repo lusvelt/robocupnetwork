@@ -15,4 +15,8 @@ export class RunService {
   startRun(runSettings, team) {
     return this.socketIoService.send('startRun', { runSettings, team, referee: _.pick(this.authService.getUserInfo(), ['id']) });
   }
+
+  endRun(run, isContestation, contestation, score, events) {
+    return this.socketIoService.send('endRun', { run, isContestation, contestation, score, events });
+  }
 }

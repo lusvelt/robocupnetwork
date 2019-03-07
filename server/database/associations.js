@@ -88,6 +88,9 @@ Category.hasMany(Phase, { foreignKey: categoryFk });
 // Phase - Category | 1:N
 Phase.belongsTo(Category, { foreignKey: categoryFk });
 
+// Team - Run | 1:N
+Run.belongsTo(Team, {foreignKey: teamFk});
+
 // AgeRange - Team | 1:N
 Team.belongsTo(AgeRange, {foreignKey: ageRangeFk});
 // AgeRange.hasMany(Team, {foreignKey: ageRangeFk});
