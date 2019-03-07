@@ -1,3 +1,4 @@
+import { ParamsService } from './../../services/params.service';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -23,7 +24,8 @@ export class DashboardMobileComponent implements OnInit {
               private notificationsService: NotificationsService,
               private userService: UserService,
               private qrCodeService: QrCodeService,
-              private tokenService: TokenService) { }
+              private tokenService: TokenService,
+              private paramsService: ParamsService) { }
 
 
   redirectDelay: number = 0;
@@ -51,7 +53,10 @@ export class DashboardMobileComponent implements OnInit {
 
     qrCodeScan() {
       this.qrCodeService.scan()
-        .then(data => this.router.navigate(['/mobile', 'run-setting', data]));
+        .then(data => {
+          this.paramsService.setParams(data);
+          this.router.navigate(['/mobile', 'run-setting']);
+        });
     }
 
     logout() {

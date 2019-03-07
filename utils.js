@@ -21,6 +21,7 @@ const utils = {
         execSync('cordova platform add android', { cwd: cordovaDir, stdio });
         execSync('cordova plugin add https://github.com/phonegap/phonegap-plugin-barcodescanner', { cwd: cordovaDir, stdio });
         execSync('cordova plugin add cordova-plugin-app-version', { cwd: cordovaDir, stdio });
+        execSync('cordova plugin add cordova-plugin-device', { cwd: cordovaDir, stdio });
         
         if (fs.existsSync(wwwCordovaDir))
             fs.removeSync(wwwCordovaDir);

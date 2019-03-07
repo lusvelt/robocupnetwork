@@ -67,8 +67,8 @@ export class RunSettingMobileComponent implements OnInit {
 
   ngOnInit() {
     this.fullName = this.userService.getFullName();
-    const data = this.route.snapshot.params;
-    this.team = JSON.parse(environment.production ? data.text : '{"id":1,"name":"asd","Phases":[{"id":1,"name":"ds"}]}');
+    const data = this.paramsService.getParams();
+    this.team = JSON.parse(data.text);
 
     this.categoriesService.findCategoryFromPhaseId(this.team.Phases[0])
     .then(category => {

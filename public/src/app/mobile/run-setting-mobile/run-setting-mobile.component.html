@@ -87,23 +87,18 @@
   </div>
 </form>  
 
+<div class="row">
+  <div class="col-md-12">
+    <button nbButton status="danger" class="button" (click)="backToDashboard()"><i class="fas fa-sign-out-alt"></i></button>
+  </div>
+</div>
+
 <div class="row footer">
   <div class="col-md-12">
-    <nb-card>
-      <nb-card-body>
-        <div class="row">
-          <div class="col-md-6">
-            <button nbButton status="danger" class="button" (click)="backToDashboard()"><i class="fas fa-chevron-left"></i></button>
-          </div>
-          <div class="col-md-6">
-            <span class="created-by">
-              {{ 'CREATED_BY' | translate }}
-              <a class="font-w-bold linkschool" href="http://iisvoltapescara.gov.it/" target="_blank">I.I.S A.Volta
-                Pescara</a> 2018-2019
-            </span>
-          </div>
-        </div>
-      </nb-card-body>
-    </nb-card>
+    <span class="created-by">
+      {{ 'CREATED_BY' | translate }}
+      <a class="font-w-bold linkschool" href="http://iisvoltapescara.gov.it/" target="_blank">I.I.S A.Volta Pescara</a>
+      2018-2019
+    </span>
   </div>
 </div>

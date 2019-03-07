@@ -50,7 +50,7 @@
             -->
 
             <div class="row">
-                <label class="col-md-1 mt-3">{{'CATEGORIES'|translate}}</label>
+                <label class="col-md-1 mt-3">{{'CATEGORY'|translate}}</label>
                 <div class="col-md-11">
                   <select name="category" [(ngModel)]="phase.category" class="form-control">
                     <option *ngFor="let category of categoriesList" [ngValue]="category">{{category.name}}</option>
