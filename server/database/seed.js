@@ -733,10 +733,6 @@ const seed = async () => {
         })
     ];
 
-    await teams[0].addManifestation(manifestation[0]);
-    await teams[0].setSchool(schools[0]);
-    await teams[0].setAgeRange(ageRanges[0]);
-
     await schools[0].setPlace(places[0]);
 
     await actions[0].addActionType(actionTypes[0]);
