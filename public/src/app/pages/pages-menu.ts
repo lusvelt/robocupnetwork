@@ -113,5 +113,18 @@ export const MENU_ITEMS: any[] = [
     alias: 'runs',
     icon: 'fas fa-trophy',
     link: '/pages/runs/manage-run'
-  }
+  },
+  {
+    title: 'SETTINGS',
+    alias: 'settings',
+    icon: 'fa fa-user',
+    link: ' /pages/settings',
+    children: [
+      {
+        title: 'CHANGE_PASSWORD',
+        alias: 'newPassword',
+        link: '/pages/settings/change-password',
+      }
+    ]
+  },
 ];

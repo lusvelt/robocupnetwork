@@ -25,6 +25,11 @@ User.beforeCreate((user, options) => {
     user.password = hashedPassword;
 });
 
+User.beforeUpdate((user, options) => {
+    const hashedPassword = bcrypt.hashSync(user.password, saltRounds);
+    user.password = hashedPassword;
+});
+
 User.afterCreate((user, options) => {
     eventEmitter.emit('userCreated', user);
 });

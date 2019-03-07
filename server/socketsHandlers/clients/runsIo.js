@@ -22,12 +22,75 @@ const runsIo = (clientsIo, socket, room) => {
             const run = await Run.create(runSettings);
             await run.addUser(referee);
             await run.setTeam(team);
+
+            const res = await Run.getRunInfo(run.id);
             log.verbose('Run started');
+            socket.broadcast.emit('startRun', res);
             callback(run);
         } catch (err) {
             callback(new Error());
         }
     };
+
+    const getRuns = async (args, callback) => {
+        try {
+            const runs = await Run.getRunsList();
+            callback(runs);
+            log.verbose('Runs data request');
+        } catch (err) {
+            callback(new Error());
+        }
+    }
+
+    const fastValidateRun = async (run, callback) => {
+        try {
+            const id = run.id;
+            run.status = 'validated';
+            run.cardStatus = '';
+            const result = Run.update({status: 'validated'}, {where: {id}});
+            if(!result)
+                throw new Error();
+            callback(result);
+            socket.broadcast.emit('validateRun', run);
+            log.verbose('Run validated');
+        } catch {
+            callback(new Error());
+        }
+    }
+
+    const deleteRun = async (run, callback) => {
+        try {
+            const id = run.id;
+            run.status = 'deleted';
+            run.cardStatus = '';
+            const result = Run.update({status: 'deleted'}, {where: {id}});
+            if(!result)
+                throw new Error();
+            callback(result);
+            socket.broadcast.emit('deleteRun', run);
+            log.verbose('Run deleted');
+        } catch {
+            callback(new Error());
+        }
+    }
+
+    const validateRunWithPoint = async (run, callback) => {
+        try {
+            const id = run.id;
+            run.status = 'validated';
+            run.cardStatus = '';
+            const result = Run.update({status: 'validated',score: run.score}, {where: {id}});
+            if(!result)
+                throw new Error();
+            callback(result);
+            socket.broadcast.emit('validateRun', run);
+            log.verbose('Run validated');
+        } catch {
+            callback(new Error());
+        }
+    }
+
+
 
     const endRun = async (data, callback) => {
         try {
@@ -40,8 +103,6 @@ const runsIo = (clientsIo, socket, room) => {
             const contestation = data.contestation;
             let status = 'toBeValidated';
 
-            console.log(data.events);
-
             _events = JSON.stringify({ events: _events });
 
             if (_toEliminate === true) {
@@ -51,14 +112,17 @@ const runsIo = (clientsIo, socket, room) => {
                     status = 'toBeReviewed';
             }    
             
-            
-            const result = await Run.update({end: new Date(), status: status, contestationMessage: contestation, score: _score, events: _events}, {where: {id}});
-            
+            const result = await Run.update({end: new Date(), status: status, contestationMessage: contestation, score: _score, events: _events}, {where: {id}});      
             if(!result)
                 throw new Error();
-            callback(result);
+            
 
-            // socket.broadcast.emit('endRun', result);
+            const res = await Run.getRunInfo(id);
+            
+
+            callback(res);
+
+            socket.broadcast.emit('endRun', res);
             log.verbose('Run modified');
         } catch (err) { 
             console.log(err);
@@ -69,6 +133,10 @@ const runsIo = (clientsIo, socket, room) => {
 
     socket.on('endRun', endRun);
     socket.on('startRun', startRun);
+    socket.on('getRuns', getRuns);
+    socket.on('fastValidateRun',fastValidateRun);
+    socket.on('deleteRun',deleteRun);
+    socket.on('validateRunWithPoint',validateRunWithPoint);
 };
 
 module.exports = runsIo;

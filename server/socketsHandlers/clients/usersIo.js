@@ -49,7 +49,7 @@ const usersIo = (clientsIo, socket, room) => {
                         });
                 }));
             });
-            
+
             /*
             _user.password = randomstring.generate();
             mailer.send({
@@ -135,11 +135,27 @@ const usersIo = (clientsIo, socket, room) => {
         }
     };
 
+    const changePassword = async (args, callback) => {
+        try {
+            const id = args.user.id;
+            const user = await User.findById(id);
+            const result = await user.update(args.data);
+            if (!result)
+                throw new Error();
+            callback(result);
+            socket.broadcast.emit('changePassword', args.id);
+            log.verbose('User modified');
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
     socket.on('createUser', createUser);
     socket.on('getUsers', getUsers);
     socket.on('editUser', editUser);
     socket.on('removeUser', removeUser);
     socket.on('updateUserBirthdate', updateUserBirthdate);
+    socket.on('changePassword', changePassword);
 };
 
 module.exports = usersIo;

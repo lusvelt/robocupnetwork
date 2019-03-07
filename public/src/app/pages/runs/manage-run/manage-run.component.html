@@ -1,50 +1,51 @@
 <div class="row">
-    <nb-flip-card class="ml-3">
+    <nb-flip-card *ngFor="let run of runs" class="ml-3">
         <nb-card-front>
-            <nb-card status="success" size="xsmall">
+            <nb-card [status]="run.cardStatus"  size="xsmall">
               <nb-card-header>
                 <div class="row">
                   <div class="col-md-4 title">
-                    Fenix
+                    {{run.Team.name}}
                   </div>
                   <div class="col-md-4 active-id-text">
-                    id: 221
+                    
                   </div>
                   <div class="col-md-4 active-icon">
-                      <i class="fas fa-check"></i>
+                      id: {{run.id}}
+                      <i [ngClass]="{ 'fas': true, 'fa-check': run.status == 'toBeValidated' || run.status == 'validated' , 'fa-spinner': run.status == 'running' , 'fa-trash-alt': run.status == 'toBeCanceled' || run.status == 'deleted', 'fa-edit': run.status == 'toBeReviewed' || run.status == 'reviewed' }"></i>
                   </div>
                 </div>
               </nb-card-header>
               <nb-card-body>
                 <div class="row">
                   <div class="col-md-6">
-                    I.I.S A.Volta
+                    {{run.Team.School.name}}
                   </div>
                   <div class="col-md-6">
-                    U18
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    09:18
-                  </div>
-                  <div class="col-md-6">
-                    RescueLine
+                    {{run.Team.AgeRange.name}}
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-6">
-                    Gara 3
+                    {{run.status}}
                   </div>
                   <div class="col-md-6">
-                    Campo 3
+                    Campo {{run.field}}
+                  </div>
+                </div>
+                <div *ngIf="run.status !== 'running'" class="row">
+                  <div class="col-md-6">
+                    Inizio: {{run.start | date:'d/M/yyyy , H:mm'}}
+                  </div>
+                  <div class="col-md-6">
+                    Fine: {{run.start | date:'d/M/yyyy, H:mm'}}
                   </div>
                 </div>
               </nb-card-body>
-              <nb-card-footer>
+              <nb-card-footer *ngIf="run.status !== 'running'">
                   <div class="row">
                       <div class="col-md-4"></div>
-                      <div class="col-md-4 score font-w-bold">318 <span class="font-w-light">pt</span></div>
+                      <div class="col-md-4 score font-w-bold">{{run.score}} <span class="font-w-light">pt</span></div>
                       <div class="col-md-4"></div>
                   </div>
               </nb-card-footer>
@@ -54,13 +55,13 @@
               <nb-card size="xsmall">
                 <nb-card-body>
                     <nb-actions fullWidth size="large">
-                        <nb-action (click)="confirmRun()">
+                        <nb-action *ngIf="run.status !== 'running' && run.status !== 'toBeCanceled'" (click)="validateRun(run)">
                           <i class="fas fa-check"></i>
                         </nb-action>
-                        <nb-action (click)="openRunModal()">
+                        <nb-action *ngIf="run.status !== 'running' && run.status !== 'toBeCanceled'" (click)="openRunModal(run)">
                           <i class="fas fa-tasks"></i>
                         </nb-action>
-                        <nb-action (click)="deleteRun()">
+                        <nb-action (click)="deleteRun(run)">
                           <i large class="fas fa-trash"></i>
                         </nb-action>
                     </nb-actions>
@@ -69,6 +70,7 @@
             </nb-card-back>
       </nb-flip-card>
 
+      <!--
 
       <nb-flip-card class="ml-3">
           <nb-card-front>
@@ -336,3 +338,4 @@
                       </nb-card>
                     </nb-card-back>
               </nb-flip-card>
+-->
