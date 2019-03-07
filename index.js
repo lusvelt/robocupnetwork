@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
 const socketio = require('socket.io');
+const fs = require('fs');
+const https = require('https');
 
 const argv = require('./server/config/yargs');
 const config = require('./server/config/config');
@@ -23,7 +25,18 @@ const port = process.env.PORT;
 const distPath = path.join(__dirname, 'dist');
 
 const app = express();
-const server = http.createServer(app);
+
+let server;
+
+if (process.env.SSL) {
+    const options = {
+        key: fs.readFileSync('/etc/letsencrypt/live/robocupnetwork.it/privkey.pem'),
+        cert: fs.readFileSync('/etc/letsencrypt/live/robocupnetwork.it/fullchain.pem')
+    };
+    server = https.createServer(options, app);
+} else
+    server = http.createServer(app);
+
 const io = socketio(server);
 
 app.use(bodyParser.json());

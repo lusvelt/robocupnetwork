@@ -7,17 +7,19 @@ const cordovaDir = path.join(__dirname, 'mobileApp');
 const publicDir = path.join(__dirname, 'public');
 const wwwCordovaDir = path.join(__dirname, 'mobileApp', 'www');
 
+const stdio = 'inherit';
+
 const utils = {
     buildMobile: function () {        
         if (!fs.existsSync(cordovaDir)) {
             console.log('Directory \'mobileApp\' does not exist');
             console.log('Initializing cordova project...');
-            execSync('cordova create mobileApp', { cwd: rootDir }); //it.robocupnetwork.mobile Robocup\\ Network
-            execSync('cordova platform add browser', { cwd: cordovaDir });
-            execSync('cordova platform add android', { cwd: cordovaDir });
+            execSync('cordova create mobileApp', { cwd: rootDir, stdio }); //it.robocupnetwork.mobile Robocup\\ Network
+            execSync('cordova platform add browser', { cwd: cordovaDir, stdio });
+            execSync('cordova platform add android', { cwd: cordovaDir, stdio });
             console.log('Directory \'mobileApp\' initialized');
             console.log('Adding plugins for cordova...');
-            execSync('cordova plugin add https://github.com/phonegap/phonegap-plugin-barcodescanner', { cwd: cordovaDir });
+            execSync('cordova plugin add https://github.com/phonegap/phonegap-plugin-barcodescanner', { cwd: cordovaDir, stdio });
             console.log('Cordova plugins added successfully');
         }
         
@@ -25,18 +27,23 @@ const utils = {
         if (fs.existsSync(wwwCordovaDir))
             fs.removeSync(wwwCordovaDir);
         
-        execSync('ng build -c mobile --output-path="../mobileApp/www"', { cwd: publicDir });
+        execSync('ng build -c mobile --output-path="../mobileApp/www"', { cwd: publicDir, stdio });
         console.log('Angular application built successfully');
     },
     runBrowser: function () {
         this.buildMobile();
         console.log('Application running on browser');
-        execSync('cordova run browser', { cwd: cordovaDir });
+        execSync('cordova run browser', { cwd: cordovaDir, stdio });
     },
     publish: function () {
-        execSync('ng build --prod', { cwd: publicDir });
-        execSync('git push production', { cwd: rootDir });
-        execSync('scp -r dist git@robocupnetwork.it:/opt/apps/robocupnetwork', { cwd: publicDir });
+        console.log('Building Angular application, this may take several time...');
+        execSync('ng build --prod', { cwd: publicDir, stdio });
+        console.log('Angular application built successfully');
+        console.log('Uploading files on the server...');
+        execSync('git push production', { cwd: rootDir, stdio });
+        execSync('scp -r dist git@robocupnetwork.it:/opt/apps/robocupnetwork', { cwd: publicDir, stdio });
+        console.log('Files uploaded successfully');
+        console.log('You can now access the website at robocupnetwork.it');
     }
 };
 
