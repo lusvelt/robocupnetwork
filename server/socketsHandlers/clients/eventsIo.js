@@ -30,7 +30,7 @@ const eventsIo = (clientsIo, socket, room) => {
 
     const getEventsInCategory = async (category ,callback) => {
         try {
-            id = category.id;
+            const id = category.id;
             Category.findById(id)
                 .then(category => category.getEvents({include: [{ 
                     model: Event,
@@ -95,14 +95,14 @@ const eventsIo = (clientsIo, socket, room) => {
             _eventToUpdate.forEach(toUpdate => {
                 promises.push(new Promise((resolve, reject) => {
                     Event.findById(toUpdate.id)
-                    .then(ev => {
-                        if(toUpdate.selected)
-                            return event.addEvent(ev);
-                        else
-                            return event.removeEvent(ev);    
-                    })
-                    .then(result => resolve(result))
-                    .catch(err => reject(err));
+                        .then(ev => {
+                            if(toUpdate.selected)
+                                return event.addEvent(ev);
+                            else
+                                return event.removeEvent(ev);    
+                        })
+                        .then(result => resolve(result))
+                        .catch(err => reject(err));
                 }));
             });
 
@@ -112,7 +112,7 @@ const eventsIo = (clientsIo, socket, room) => {
         } catch (err) {
             callback(new Error());
         }
-    }
+    };
 
     socket.on('createEventInCategory', createEventInCategory);
     socket.on('removeEvent', removeEvent);

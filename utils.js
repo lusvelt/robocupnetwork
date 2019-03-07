@@ -49,7 +49,7 @@ const utils = {
         
         if (!remotes.includes('production'))
             execSync('git remote add production git@robocupnetwork.it:/opt/git/robocupnetwork.git', { cwd: rootDir, stdio });
-        
+
         if (!args.n) {
             execSync('ng build --prod', { cwd: publicDir, stdio });
             this.buildMobile();
@@ -75,7 +75,7 @@ const utils = {
         
         if (args.t)
             info.version = args.t;
-
+        
         fs.writeFileSync(packagePath, JSON.stringify(info, undefined, 2));
 
         execSync('git add .', { cwd: rootDir, stdio });
@@ -91,7 +91,8 @@ const utils = {
 
         execSync('git push production', { cwd: rootDir, stdio });
         execSync('scp -r dist git@robocupnetwork.it:/opt/apps/robocupnetwork', { cwd: publicDir, stdio });
-        // execSync('scp mobileApp git@robocupnetwork.it:/opt/apps/robocupnetwork', { cwd: publicDir, stdio });
+        execSync('cordova build android', { cwd: cordovaDir, stdio });
+        execSync('scp mobileApp/platforms/android/app/build/outputs/apk/app-debug.apk git@robocupnetwork.it:/opt/apps/robocupnetwork/robocapp.apk', { cwd: publicDir, stdio });
         console.log('Publishing process completed successfully');
         console.log('You can now access the website at robocupnetwork.it');
     },

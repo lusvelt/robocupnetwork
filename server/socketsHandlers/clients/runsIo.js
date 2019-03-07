@@ -46,7 +46,7 @@ const runsIo = (clientsIo, socket, room) => {
             console.log('arrivo');
 
             if (_toEliminate === true) {
-                status = "toBeCanceled";
+                status = 'toBeCanceled';
             } else {
                 if (_isContestation === true)
                     status = 'toBeReviewed';
