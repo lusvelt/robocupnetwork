@@ -106,7 +106,7 @@ const runsIo = (clientsIo, socket, room) => {
             _events = JSON.stringify({ events: _events });
 
             if (_toEliminate === true) {
-                status = "toBeCanceled";
+                status = 'toBeCanceled';
             } else {
                 if (_isContestation === true)
                     status = 'toBeReviewed';

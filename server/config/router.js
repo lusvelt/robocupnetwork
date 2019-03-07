@@ -1,6 +1,7 @@
 const login = require('../routes/login');
 const register = require('../routes/register');
-const { getActionTypes, createActionType, editActionType, removeActionType } = require('../routes/privileges');
+const appLatestVersion = require('../routes/appLatestVersion');
+const robocapp = require('../routes/robocapp');
 
 const router = {
     initialize: (app, passport) => {
@@ -9,12 +10,8 @@ const router = {
         app.post('/login', login);
         app.post('/register', register);
         
-        /*
-        app.get('/getActionTypes', getActionTypes);
-        app.post('/createActionType', createActionType);
-        app.post('/editActionType', editActionType);
-        app.post('/removeActionType', removeActionType);
-        */
+        app.get('/appLatestVersion', appLatestVersion);
+        app.get('/robocapp', robocapp);
     }
 };
 

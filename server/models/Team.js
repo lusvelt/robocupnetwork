@@ -7,7 +7,6 @@ const Team = sequelize.define('Team', {
     name: { type: Sequelize.STRING, allowNull: false }
 });
 
-Team.getTeamsList = () => Team.findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] },
-                                         include: [ AgeRange, School ] });
+Team.getTeamsList = () => Team.findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] }, include: [ AgeRange, School ] });
 
 module.exports = Team;

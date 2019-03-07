@@ -39,11 +39,11 @@ const teamIo = (clientsIo, socket, room) => {
 
             promises = [];
             School.findById(_school.id)
-            .then(school => promises.push(team.setSchool(school)));   
+                .then(school => promises.push(team.setSchool(school)));   
 
             promises = [];
             AgeRange.findById(_ageRange.id)
-            .then(agerange => promises.push(team.setAgeRange(agerange)));
+                .then(agerange => promises.push(team.setAgeRange(agerange)));
 
             const result = await Promise.all(promises);
             if(!result)
