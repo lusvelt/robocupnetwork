@@ -19,7 +19,7 @@ const utils = {
             execSync('cordova platform add android', { cwd: cordovaDir, stdio });
             console.log('Directory \'mobileApp\' initialized');
             console.log('Adding plugins for cordova...');
-            execSync('cordova plugin add https://github.com/phonegap/phonegap-plugin-barcodescanner', { cwd: cordovaDir });
+            execSync('cordova plugin add https://github.com/phonegap/phonegap-plugin-barcodescanner', { cwd: cordovaDir, stdio });
             console.log('Cordova plugins added successfully');
         }
 
@@ -36,6 +36,18 @@ const utils = {
         execSync('cordova run browser', { cwd: cordovaDir, stdio });
     },
     publish: function () {
+        let remotes = execSync('git remote -v', { cwd: rootDir })
+            .toString('utf8')
+            .split('\n')
+            .filter(remote => !!remote)
+            .map(remote => remote.split('\t')[0]);
+        
+        if (!remotes.includes('production')) {
+            console.log('Adding production remote to git remotes');
+            execSync('git remote add production git@robocupnetwork.it:/opt/git/robocupnetwork.git', { cwd: rootDir, stdio });
+            console.log('Remote added successfully');
+        }
+        
         console.log('Building Angular application, this may take several time...');
         execSync('ng build --prod', { cwd: publicDir, stdio });
         console.log('Angular application built successfully');

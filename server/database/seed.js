@@ -600,7 +600,7 @@ const seed = async () => {
         await Event.create({
             name:'Exit',
             description:'Il robot è uscito dalla stanza e ha percorso correttamente tre mattonelle, dopo aver toccato o salvato una vittima',
-            pointsJSCalculator:'this.score += 20;;',
+            pointsJSCalculator:'this.exit();',
             affectsZone: false,
             affectsAttempt: false,
             manuallyTriggerable:true,
@@ -1031,11 +1031,6 @@ const seed = async () => {
 
     await categories[0].addPhase(phase[0]);
 
-<<<<<<< HEAD
-=======
-    await TeamIsInPhase.create({teamId: teams[0].id, phaseId: phase[0].id});
-
->>>>>>> 1f36a5fc880458ca299ea22177e149f4c2da5f77
     /*const competitions = [
       await Competition.create
   ];*/

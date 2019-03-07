@@ -10,6 +10,7 @@
     "watch": "nodemon index",
     "build": "cd public && ng build --prod",
     "precommit": "eslint index.js server/**",
+    "installPublic": "cd public && npm install",
     "serve": "cd public && ng serve",
     "browser": "node utils runBrowser",
     "android": "node utils runAndroid",
