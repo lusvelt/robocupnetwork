@@ -1,7 +1,7 @@
 {
   "name": "robocupnetwork",
-  "version": "4.0.1",
-  "mobileAppVersion": "1.0.1",
+  "version": "4.0.2",
+  "mobileAppVersion": "1.0.2",
   "description": "Programma ufficiale italiano per la gestione delle gare di robotica",
   "main": "index.js",
   "scripts": {
@@ -54,7 +54,6 @@
   },
   "devDependencies": {
     "eslint": "^5.5.0",
-    "husky": "^0.14.3",
     "nodemon": "^1.18.9"
   }
 }

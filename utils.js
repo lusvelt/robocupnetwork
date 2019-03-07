@@ -66,21 +66,32 @@ const utils = {
         config[2].childNodes[5].childNodes[0].text = info.author;
         config[2].childNodes[5].innerXML = info.author;
 
-        if (args.v) {
+        if (args.v)
             info.mobileAppVersion = args.v;
-            config[2].attributes.version = args.v;
-            configXml = xml.stringify(config, 0);
-            fs.writeFileSync(configXmlPath, configXml);
+        else {
+            const oldMobileAppVersionArray = info.mobileAppVersion.split('.');
+            const lastIndex = oldMobileAppVersionArray.length - 1;
+            oldMobileAppVersionArray[lastIndex] = (parseInt(oldMobileAppVersionArray[lastIndex]) + 1).toString();
+            info.mobileAppVersion = oldMobileAppVersionArray.join('.');
         }
+        config[2].attributes.version = info.mobileAppVersion;
+        configXml = xml.stringify(config, 0);
+        fs.writeFileSync(configXmlPath, configXml);
         
         if (args.t)
             info.version = args.t;
+        else {
+            const oldVersionArray = info.version.split('.');
+            const lastIndex = oldVersionArray.length - 1;
+            oldVersionArray[lastIndex] = (parseInt(oldVersionArray[lastIndex]) + 1).toString();
+            info.version = oldVersionArray.join('.');
+        }
         
         fs.writeFileSync(packagePath, JSON.stringify(info, undefined, 2));
 
         execSync('git add .', { cwd: rootDir, stdio });
         execSync('git commit -m "' + args.m + '"', { cwd: rootDir, stdio });
-        
+
         if (args.t)
             execSync('git tag v' + args.t, { cwd: rootDir, stdio });
         
