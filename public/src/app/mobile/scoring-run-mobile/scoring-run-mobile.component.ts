@@ -159,6 +159,18 @@ export class ScoringRunMobileComponent implements OnInit {
 
   endOfPlay() { }
 
+  endRun(cd1) {
+    cd1.pause();
+    this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_END')
+        .then(confirmation => {
+          if (confirmation) {
+            this.onFinished();
+          } else {
+            cd1.resume();
+          }
+        });
+  }
+
   evaluate(command: string) {
     this.events.push();
     eval(command);

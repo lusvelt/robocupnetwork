@@ -39,7 +39,7 @@ export class AfterRunMobileComponent implements OnInit {
   }
 
   sendRace() {
-      this.runService.endRun(this.run, this.isContestation, this.contestation, this.score, this.events)
+      this.runService.endRun(this.run, this.runSettings, this.toEliminate, this.isContestation, this.contestation, this.score, this.events)
       .then(() => {
         this.notificationsService.success('RACE_UPLOADED_SUCCESSFUL');
         this.router.navigate(['/mobile', 'dashboard']);

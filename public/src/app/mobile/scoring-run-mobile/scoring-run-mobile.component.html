@@ -94,7 +94,7 @@
                   <div class="col-md-1"></div>
                   <button nbButton class="col-md-4" type="button" status="warning" (click)="changeStatus(cd1)">{{ (cd1.paused ? 'RESUME' : 'PAUSE') | translate }}</button>
                   <div class="col-md-2"></div>
-                  <button nbButton class="col-md-4" type="button" status="danger">{{'FINISH'|translate}}</button>
+                  <button nbButton class="col-md-4" type="button" status="danger" (click)="endRun(cd1)">{{'FINISH'|translate}}</button>
                   <div class="col-md-1"></div>
               </div>
           </nb-card-body>
