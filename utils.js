@@ -56,6 +56,12 @@ const utils = {
         execSync('scp -r dist git@robocupnetwork.it:/opt/apps/robocupnetwork', { cwd: publicDir, stdio });
         console.log('Files uploaded successfully');
         console.log('You can now access the website at robocupnetwork.it');
+    },
+    seed: async function () {
+        console.log('Adding seed data to database...');
+        const seed = require('./server/database/seed');
+        await seed();
+        console.log('Seed data added successfully');
     }
 };
 

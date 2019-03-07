@@ -15,7 +15,8 @@
     "browser": "node utils runBrowser",
     "android": "node utils runAndroid",
     "buildMobile": "node utils buildMobile",
-    "publish": "node utils publish"
+    "publish": "node utils publish",
+    "seed": "node utils seed"
   },
   "repository": {
     "type": "git",
