@@ -54,6 +54,10 @@ const utils = {
             console.log('Angular application built successfully');
         }
 
+        console.log('Uploading files to GitHub...');
+        execSync('git push', { cwd: rootDir, stdio });
+        console.log('Push to GitHub done successfully');
+
         console.log('Uploading files on the server...');
         execSync('git push production', { cwd: rootDir, stdio });
         execSync('scp -r dist git@robocupnetwork.it:/opt/apps/robocupnetwork', { cwd: publicDir, stdio });
