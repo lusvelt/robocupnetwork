@@ -294,5 +294,16 @@
     "SEND_RACE":"Manda gara",
 
     "RACE_UPLOADED_SUCCESSFUL":"Gara inviata con successo",
-    "RACE_UPLOAD_ERROR":"Errore nell'invio della gara. Salvare il punteggio sul proprio telefono e riferirlo ai giudici :("
+    "RACE_UPLOAD_ERROR":"Errore nell'invio della gara. Salvare il punteggio sul proprio telefono e riferirlo ai giudici :(",
+
+    "SETTINGS":"Impostazioni",
+    "CHANGE_PASSWORD":"Cambia la password",
+    "RANKING":"Classifica",
+    "APPLY_CHANGES":"Applica cambiamenti",
+    "NEW_PASSWORD":"Nuova password",
+    "SELECT_A_PHASE":"Seleziona una fase",
+    "WRITE_PHASE_NAME":"Inserisci nome fase",
+    "RANK":"Posizione",
+    "NUMBER_OF_RUNS":"Gare disputate"
+
 }

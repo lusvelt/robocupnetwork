@@ -294,6 +294,16 @@
     "SEND_RACE":"Send run",
 
     "RACE_UPLOADED_SUCCESSFUL":"Run sended successfully",
-    "RACE_UPLOAD_ERROR":"Error sending the run. Save the points on your phone and send it to the judges :("
+    "RACE_UPLOAD_ERROR":"Error sending the run. Save the points on your phone and send it to the judges :(",
+
+    "SETTINGS":"Settings",
+    "CHANGE_PASSWORD":"Change the password",
+    "RANKING":"Ranking",
+    "SELECT_A_PHASE":"Select a phase",
+    "WRITE_PHASE_NAME":"Insert phase name",
+    "APPLY_CHANGES":"Apply changes",
+    "NEW_PASSWORD":"New password",
+    "RANK":"Rank",
+    "NUMBER_OF_RUNS":"Number of runs"
 
 }

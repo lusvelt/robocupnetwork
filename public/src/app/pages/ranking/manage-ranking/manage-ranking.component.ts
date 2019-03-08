@@ -9,6 +9,7 @@ import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../../services/auth.service';
 import { merge, Observable } from 'rxjs';
 import { NotificationsService } from '../../../services/notifications.service';
+import { RunService } from '../../../services/run.service';
 
 @Component({
   selector: 'ngx-manage-ranking',
@@ -19,6 +20,7 @@ export class ManageRankingComponent implements OnInit {
 
   phasesList: [];
   phaseSelected: any;
+  source: DataSource = new DataSource();
 
   @ViewChild('searchPhaseInstance') searchPhaseInstance: NgbTypeahead;
   focus$ = new Subject<string>();
@@ -40,7 +42,8 @@ export class ManageRankingComponent implements OnInit {
   constructor(private tablesService: TablesService,
               public authService: AuthService,
               private phasesService: PhasesService,
-              private notificationsService: NotificationsService) { }
+              private notificationsService: NotificationsService,
+              private runService: RunService) { }
 
   ngOnInit() {
     if (this.authService.isManifestationSelected() && this.authService.canDo('getPhasesInManifestation')) {
@@ -50,13 +53,31 @@ export class ManageRankingComponent implements OnInit {
         })
         .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
     }
+
+    this.runService.notify('deleteRun')
+      .subscribe(run => this.getData());
+
+      this.runService.notify('validateRun')
+      .subscribe(run => this.getData());
   }
 
   onPhaseClicked(event: any) {
     this.phaseSelected = event.item;
+    this.getData();
   }
 
-  source: DataSource = new DataSource();
+  getData() {
+    this.runService.getDataForRanking(this.phaseSelected)
+    .then(data => {
+      for (let i = 0; i < data.length; i++ ) {
+        data[i].rank = i + 1;
+      }
+      this.source.load(data);
+      this.source.refresh();
+    });
+  }
+
+
 
   settings = this.tablesService.getSettings(notAddableConfig, {
     rank: {

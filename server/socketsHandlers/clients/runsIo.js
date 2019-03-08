@@ -1,5 +1,5 @@
 const _ = require('lodash');
-
+const sequelize = require('../../config/sequelize');
 const Team = require('../../models/Team');
 const Phase = require('../../models/Phase');
 const Run = require('../../models/Run');
@@ -13,6 +13,7 @@ const runsIo = (clientsIo, socket, room) => {
             const runSettings = data.runSettings;
             const _team = data.team;
             const _referee = data.referee;
+            const _phase = _team.Phases[0];
 
             const team = await Team.findById(_team.id);
             const referee = await User.findById(_referee.id);
@@ -22,6 +23,10 @@ const runsIo = (clientsIo, socket, room) => {
             const run = await Run.create(runSettings);
             await run.addUser(referee);
             await run.setTeam(team);
+
+            const phase = await Phase.findById(_phase.id);
+            
+            await run.setPhase(phase);
 
             const res = await Run.getRunInfo(run.id);
             log.verbose('Run started');
@@ -47,13 +52,13 @@ const runsIo = (clientsIo, socket, room) => {
             const id = run.id;
             run.status = 'validated';
             run.cardStatus = '';
-            const result = Run.update({status: 'validated'}, {where: {id}});
+            const result = await Run.update({status: 'validated'}, {where: {id}});
             if(!result)
                 throw new Error();
             callback(result);
             socket.broadcast.emit('validateRun', run);
             log.verbose('Run validated');
-        } catch {
+        } catch (err) {
             callback(new Error());
         }
     }
@@ -63,13 +68,13 @@ const runsIo = (clientsIo, socket, room) => {
             const id = run.id;
             run.status = 'deleted';
             run.cardStatus = '';
-            const result = Run.update({status: 'deleted'}, {where: {id}});
+            const result = await Run.update({status: 'deleted'}, {where: {id}});
             if(!result)
                 throw new Error();
             callback(result);
             socket.broadcast.emit('deleteRun', run);
             log.verbose('Run deleted');
-        } catch {
+        } catch (err) {
             callback(new Error());
         }
     }
@@ -79,18 +84,29 @@ const runsIo = (clientsIo, socket, room) => {
             const id = run.id;
             run.status = 'validated';
             run.cardStatus = '';
-            const result = Run.update({status: 'validated',score: run.score}, {where: {id}});
+            const result = await Run.update({status: 'validated',score: run.score}, {where: {id}});
             if(!result)
                 throw new Error();
             callback(result);
             socket.broadcast.emit('validateRun', run);
             log.verbose('Run validated');
-        } catch {
+        } catch (err) {
             callback(new Error());
         }
     }
 
-
+    const getDataForRanking = async (phase, callback) => {
+        try {
+            const phaseId = phase.id;
+            const ranking = await sequelize.query('SELECT Teams.name as team, Schools.name as school, AgeRanges.name as ageRange, sum(Runs.score) as score, count(Runs.id) as numberOfRuns from  Runs inner join Phases on Runs.phaseId = Phases.id inner join Teams on Runs.teamId = Teams.id inner join Schools on Teams.schoolId = Schools.id inner join AgeRanges on Teams.agerangeId = AgeRanges.id where Phases.id = 1 and Runs.status = \'validated\' group by Teams.id order by score desc;', 
+            { replacements: { phaseId }, type: sequelize.QueryTypes.SELECT });
+            callback(ranking);   
+            log.verbose('Get data for ranking');     
+        } catch (err) {
+            console.log(err);
+            callback(new Error());
+        }       
+    }
 
     const endRun = async (data, callback) => {
         try {
@@ -137,6 +153,7 @@ const runsIo = (clientsIo, socket, room) => {
     socket.on('fastValidateRun',fastValidateRun);
     socket.on('deleteRun',deleteRun);
     socket.on('validateRunWithPoint',validateRunWithPoint);
+    socket.on('getDataForRanking', getDataForRanking);
 };
 
 module.exports = runsIo;

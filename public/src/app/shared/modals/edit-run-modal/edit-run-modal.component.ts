@@ -9,7 +9,7 @@ import { NotificationsService } from '../../../services/notifications.service';
   templateUrl: './edit-run-modal.component.html',
   styleUrls: ['./edit-run-modal.component.scss']
 })
-export class EditRunModalComponent implements OnInit{
+export class EditRunModalComponent implements OnInit {
 
   modalHeader: string;
   modalContent: string;

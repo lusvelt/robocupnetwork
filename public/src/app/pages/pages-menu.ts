@@ -100,7 +100,7 @@ export const MENU_ITEMS: any[] = [
     title: 'RANKING',
     alias: 'ranking',
     icon: 'fas fa-list-ol',
-    link: '/pages/ranking/manage-ranking'
+    link: '/pages/ranking/manage'
   },
   {
     title: 'TEAMS',

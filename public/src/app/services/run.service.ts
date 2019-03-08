@@ -37,6 +37,10 @@ export class RunService {
     return this.socketIoService.send('validateRunWithPoint', run);
   }
 
+  getDataForRanking(phase) {
+    return this.socketIoService.send('getDataForRanking', phase);
+  }
+
   notify(eventName: string): Observable<any> {
     return new Observable(observer => this.socketIoService.on(eventName)
       .subscribe(data => observer.next(data)));
