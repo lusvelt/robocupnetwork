@@ -45,7 +45,7 @@ const runsIo = (clientsIo, socket, room) => {
         } catch (err) {
             callback(new Error());
         }
-    }
+    };
 
     const fastValidateRun = async (run, callback) => {
         try {
@@ -61,7 +61,7 @@ const runsIo = (clientsIo, socket, room) => {
         } catch (err) {
             callback(new Error());
         }
-    }
+    };
 
     const deleteRun = async (run, callback) => {
         try {
@@ -77,7 +77,7 @@ const runsIo = (clientsIo, socket, room) => {
         } catch (err) {
             callback(new Error());
         }
-    }
+    };
 
     const validateRunWithPoint = async (run, callback) => {
         try {
@@ -93,20 +93,20 @@ const runsIo = (clientsIo, socket, room) => {
         } catch (err) {
             callback(new Error());
         }
-    }
+    };
 
     const getDataForRanking = async (phase, callback) => {
         try {
             const phaseId = phase.id;
             const ranking = await sequelize.query('SELECT Teams.name as team, Schools.name as school, AgeRanges.name as ageRange, sum(Runs.score) as score, count(Runs.id) as numberOfRuns from  Runs inner join Phases on Runs.phaseId = Phases.id inner join Teams on Runs.teamId = Teams.id inner join Schools on Teams.schoolId = Schools.id inner join AgeRanges on Teams.agerangeId = AgeRanges.id where Phases.id = 1 and Runs.status = \'validated\' group by Teams.id order by score desc;', 
-            { replacements: { phaseId }, type: sequelize.QueryTypes.SELECT });
+                { replacements: { phaseId }, type: sequelize.QueryTypes.SELECT });
             callback(ranking);   
             log.verbose('Get data for ranking');     
         } catch (err) {
             console.log(err);
             callback(new Error());
         }       
-    }
+    };
 
     const endRun = async (data, callback) => {
         try {

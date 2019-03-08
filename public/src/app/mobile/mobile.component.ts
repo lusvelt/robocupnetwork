@@ -11,13 +11,12 @@ declare var device;
     </ngx-one-column-layout>`
 })
 export class MobileComponent implements OnInit {
-  constructor(private socketIoService: SocketIoService) { }
+  constructor() { }
   ngOnInit() {
-    this.socketIoService.connect('/clients');
     document.addEventListener('deviceready', onDeviceReady, false);
+
     function onDeviceReady() {
       function onBackKeyDown() { }
-
       if (device.platform === 'android' || device.platform === 'Android') {
         document.addEventListener('backbutton', onBackKeyDown, false);
       }

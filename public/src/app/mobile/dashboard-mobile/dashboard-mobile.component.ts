@@ -10,6 +10,7 @@ import 'rxjs/add/operator/catch';
 import { UserService } from '../../services/user.service';
 import { QrCodeService } from '../../services/qr-code.service';
 import { TokenService } from '../../services/token.service';
+import { SocketIoService } from '../../services/socket-io.service';
 
 @Component({
   selector: 'ngx-dashboard-mobile',
@@ -25,7 +26,8 @@ export class DashboardMobileComponent implements OnInit {
               private userService: UserService,
               private qrCodeService: QrCodeService,
               private tokenService: TokenService,
-              private paramsService: ParamsService) { }
+              private paramsService: ParamsService,
+              private socketIoService: SocketIoService) { }
 
 
   redirectDelay: number = 0;
@@ -49,6 +51,7 @@ export class DashboardMobileComponent implements OnInit {
 
     ngOnInit() {
       this.fullName = this.userService.getFullName();
+      this.socketIoService.connect('/clients');
     }
 
     qrCodeScan() {

@@ -82,7 +82,7 @@ const categoryIo = (clientsIo, socket, room) => {
     socket.on('removeCategory', removeCategory);
     socket.on('getCategories', getCategories);
     socket.on('editCategory', editCategory);
-    socket.on('findCategoryFromPhaseId',findCategoryFromPhaseId);
+    socket.on('findCategoryFromPhaseId', findCategoryFromPhaseId);
 };
 
 module.exports = categoryIo;

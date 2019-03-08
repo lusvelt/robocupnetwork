@@ -22,9 +22,9 @@ const Run = sequelize.define('Run', {
 });
 
 Run.getRunsList = () => Run.findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] },
-                        include: [{model: Team,  attributes: { exclude: ['createdAt', 'updatedAt']}, include: [AgeRange, School]}] });
+    include: [{model: Team,  attributes: { exclude: ['createdAt', 'updatedAt']}, include: [AgeRange, School]}] });
 
 Run.getRunInfo = (id) => Run.findById(id, { attributes: { exclude: ['createdAt', 'updatedAt'] },
-include: [{model: Team,  attributes: { exclude: ['createdAt', 'updatedAt']}, include: [AgeRange, School]}] });                        
+    include: [{model: Team,  attributes: { exclude: ['createdAt', 'updatedAt']}, include: [AgeRange, School]}] });                        
 
 module.exports = Run;
