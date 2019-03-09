@@ -7,8 +7,9 @@ const AgeRange = require('../../models/AgeRange');
 const log = require('../../config/consoleMessageConfig');
 const TeamHasUser = require('../../database/associationTables/TeamHasUser');
 const Team = require('../../models/Team');
+const Field = require('../../models/Field');
 const TeamIsInPhase = require('../../database/associationTables/TeamIsInPhase');
-const TeamParticipatesToManifestation = require('../../database/associationTables/TeamParticipatesToManifestation');
+const PhaseHasField = require('../../database/associationTables/PhaseHasField');
 
 const phasesIo = (clientsIo, socket, room) => {
 
@@ -18,6 +19,7 @@ const phasesIo = (clientsIo, socket, room) => {
         const _manifestation = data.manifestation;
         const _category = _phase.category;
         const _teams = _phase.teams;
+        const _numField = _phase.numField;
 
         try {
             const phase = await Phase.create(_phase);
@@ -37,6 +39,17 @@ const phasesIo = (clientsIo, socket, room) => {
                 .then(category => {
                     promises.push(category.addPhase(phase));
                 });
+
+            let fields = [];
+            for(let i = 0; i <_numField; i++) {
+                console.log(i);
+                fields[i] = await Field.create({number: i+1,status: 'free'});
+            }; 
+            
+            promises = [];
+            fields.forEach(field => {
+                promises.push(PhaseHasField.create({phaseId: phase.id, fieldId: field.id }));
+            });
 
             promises = [];
 

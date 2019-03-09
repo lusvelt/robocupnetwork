@@ -43,6 +43,9 @@ export class ManageRunComponent implements OnInit {
       this.runService.notify('validateRun')
       .subscribe(run => this.runs.splice(this.runs.findIndex(el => el.id === run.id), 1, run));
 
+      this.runService.notify('updateLiveScore')
+      .subscribe(run => this.runs.splice(this.runs.findIndex(el => el.id === run.id), 1, run));
+
       this.runService.notify('endRun')
       .subscribe(run => {
         if (run.status === 'toBeValidated')

@@ -41,6 +41,10 @@ export class RunService {
     return this.socketIoService.send('getDataForRanking', phase);
   }
 
+  updateLiveScore(run, score) {
+    return this.socketIoService.send('updateLiveScore', {run, score});
+  }
+
   notify(eventName: string): Observable<any> {
     return new Observable(observer => this.socketIoService.on(eventName)
       .subscribe(data => observer.next(data)));

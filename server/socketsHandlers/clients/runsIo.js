@@ -3,6 +3,7 @@ const sequelize = require('../../config/sequelize');
 const Team = require('../../models/Team');
 const Phase = require('../../models/Phase');
 const Run = require('../../models/Run');
+const Field = require('../../models/Field');
 const User = require('../../models/User');
 const log = require('../../config/consoleMessageConfig');
 
@@ -17,6 +18,7 @@ const runsIo = (clientsIo, socket, room) => {
 
             const team = await Team.findById(_team.id);
             const referee = await User.findById(_referee.id);
+            const field = await Field.findById(runSettings.field[0].id)
 
             runSettings.start = new Date();
             runSettings.zones = JSON.stringify({ zones: runSettings.checkpoints });
@@ -27,6 +29,7 @@ const runsIo = (clientsIo, socket, room) => {
             const phase = await Phase.findById(_phase.id);
             
             await run.setPhase(phase);
+            await run.setField(field);
 
             const res = await Run.getRunInfo(run.id);
             log.verbose('Run started');
@@ -146,6 +149,23 @@ const runsIo = (clientsIo, socket, room) => {
         }
     };
 
+    const updateLiveScore = async (data, callback) => {
+        try {
+            const run = data.run;
+            const score = data.score;
+            const id = run.id;
+
+            const result = await Run.update({score: score},{where: {id}});
+            if (!result)
+                throw new Error();
+            callback(result);
+            const res = await Run.getRunInfo(id);
+            socket.broadcast.emit('updateLiveScore',res);   
+        } catch (err) {
+            callback(new Error());
+        }     
+    }
+
 
     socket.on('endRun', endRun);
     socket.on('startRun', startRun);
@@ -154,6 +174,7 @@ const runsIo = (clientsIo, socket, room) => {
     socket.on('deleteRun',deleteRun);
     socket.on('validateRunWithPoint',validateRunWithPoint);
     socket.on('getDataForRanking', getDataForRanking);
+    socket.on('updateLiveScore',updateLiveScore);
 };
 
 module.exports = runsIo;

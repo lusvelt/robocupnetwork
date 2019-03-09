@@ -30,7 +30,7 @@
                     {{run.status}}
                   </div>
                   <div class="col-md-6">
-                    Campo {{run.field}}
+                    Campo {{run.Field.number}}
                   </div>
                 </div>
                 <div *ngIf="run.status !== 'running'" class="row">
@@ -42,7 +42,7 @@
                   </div>
                 </div>
               </nb-card-body>
-              <nb-card-footer *ngIf="run.status !== 'running'">
+              <nb-card-footer>
                   <div class="row">
                       <div class="col-md-4"></div>
                       <div class="col-md-4 score font-w-bold">{{run.score}} <span class="font-w-light">pt</span></div>

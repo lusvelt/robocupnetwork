@@ -13,6 +13,7 @@ const categoryIo = require('./clients/categoryIo');
 const phasesIo = require('./clients/phasesIo');
 const eventsIo = require('./clients/eventsIo');
 const runsIo = require('./clients/runsIo');
+const fieldIo = require('./clients/fieldIo');
 
 const clientsAuthMiddleware = require('../auth/middlewares/clientsAuthMiddleware');
 
@@ -39,6 +40,8 @@ const clientsIoHandler = (clientsIo) => (socket) => {
     phasesIo(clientsIo, socket, room);
     eventsIo(clientsIo, socket, room);
     runsIo(clientsIo, socket, room);
+    fieldIo(clientsIo, socket, room);
+
 };
 
 module.exports = clientsIoHandler;

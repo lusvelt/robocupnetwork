@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CountdownComponent } from 'ngx-countdown';
 import { ModalService } from '../../services/modal.service';
+import { FieldsService } from '../../services/fields.service';
+import { RunService } from '../../services/run.service';
 // import * as Timer from 'tiny-timer';
 
 
@@ -38,7 +40,7 @@ export class ScoringRunMobileComponent implements OnInit {
   timer: any;
   time: number;
 
-  constructor(private route: ActivatedRoute, private router: Router, private paramsService: ParamsService, private modalService: ModalService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private paramsService: ParamsService, private modalService: ModalService, private runService: RunService, private fieldsService: FieldsService) { }
 
   ngOnInit() {
     const params = this.paramsService.getParams();
@@ -51,6 +53,8 @@ export class ScoringRunMobileComponent implements OnInit {
   fireEvent(event) {
     this.evaluate(event.pointsJSCalculator);
     this.events.push(event);
+    this.fieldsService.updateScoreOnField(this.runSettings.field, this.score);
+    this.runService.updateLiveScore(this.run, this.score);
   }
 
   nextZone() {

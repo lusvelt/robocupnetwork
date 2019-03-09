@@ -16,6 +16,7 @@
       <nb-card-body>
         <div class="row">
           <div class="borderclass col-md-6">
+            <!--
             <div class="mt-3">
               <label for="input-field" class="sr-only">{{ 'FIELD' | translate}}</label>
               <input type="number" nbInput [(ngModel)]="runsetting.field" #field="ngModel" id="input-field" name="field"
@@ -25,6 +26,18 @@
                 {{ 'FIELD_REQUIRED' | translate }}
               </small>
             </div>
+          -->
+                <div class="mt-3" ngbDropdown>
+                  <button class="btn btn-primary" type="button" ngbDropdownToggle>
+                    {{ 'FIELD' | translate }}
+                  </button>
+                  <ul ngbDropdownMenu class="dropdown-menu">
+                    <li class="dropdown-item" *ngFor="let field of runsetting.field">
+                      <nb-checkbox name="field" [(ngModel)]="field.selected">{{ field.number }}</nb-checkbox>
+                    </li>
+                  </ul>
+                </div>
+
             <div class="mt-3">
               <label for="input-aliveVictims" class="sr-only">{{ 'ALIVE_VICTIM' | translate}}</label>
               <input type="number" nbInput [(ngModel)]="runsetting.aliveVictims" #aliveVictim="ngModel" id="input-aliveVictim" name="aliveVictim"

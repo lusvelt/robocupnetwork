@@ -33,6 +33,7 @@ export class ManagePhaseComponent implements OnInit, OnDestroy {
     description: '',
     numAdmittedTeams: '',
     numPassingTeams: '',
+    numField: '',
     show: false
   };
   subscriptions: Subscription[] = [];

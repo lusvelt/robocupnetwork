@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { RunService } from '../../services/run.service';
 import { NotificationsService } from '../../services/notifications.service';
 import { Router } from '@angular/router';
+import { FieldsService } from '../../services/fields.service';
 
 @Component({
   selector: 'ngx-afterrun',
@@ -26,7 +27,8 @@ export class AfterRunMobileComponent implements OnInit {
               private translateService: TranslateService,
               private runService: RunService,
               private notificationsService: NotificationsService,
-              private router: Router) { }
+              private router: Router,
+              private fieldsService: FieldsService) { }
 
   ngOnInit() {
     const data = this.paramsService.getParams();
@@ -45,6 +47,8 @@ export class AfterRunMobileComponent implements OnInit {
         this.router.navigate(['/mobile', 'dashboard']);
       })
       .catch(err => this.notificationsService.error('RACE_UPLOAD_ERROR'));
+
+      this.fieldsService.endRunOnField(this.runSettings.field);
   }
 
 }
