@@ -1,24 +1,10 @@
-const {
-    User,
-    ActionType,
-    Action,
-    Role,
-    Manifestation,
-    School,
-    Place,
-    AgeRange,
-    Team,
-    Category,
-    Module,
-    Event,
-    Phase
-} = require('./models');
+const { User, ActionType, Action, Role, Manifestation, School, Place, AgeRange, Team, Category, Module, Event, Phase } = require('./models');
 const TeamHasUser = require('../database/associationTables/TeamHasUser');
 const TeamIsInPhase = require('../database/associationTables/TeamIsInPhase');
 
 const seed = async () => {
-    const users = [
-        await User.create({
+    let users = [
+        User.create({
             name: 'Niccolò',
             surname: 'Bellucci',
             birthDate: new Date(1999, 9, 15),
@@ -26,7 +12,7 @@ const seed = async () => {
             password: 'admin1',
             isAdmin: true
         }),
-        await User.create({
+        User.create({
             name: 'Stefano',
             surname: 'Colamonaco',
             birthDate: new Date(2000, 0, 5),
@@ -34,7 +20,7 @@ const seed = async () => {
             password: 'admin2',
             isAdmin: true
         }),
-        await User.create({
+        User.create({
             name: 'Alessio',
             surname: 'Di Pasquale',
             birthDate: new Date(2000, 11, 2),
@@ -42,7 +28,7 @@ const seed = async () => {
             password: 'admin3',
             isAdmin: true
         }),
-        await User.create({
+        User.create({
             name: 'Damiano',
             surname: 'Scevola',
             birthDate: new Date(1999, 7, 12),
@@ -52,41 +38,41 @@ const seed = async () => {
         })
     ];
 
-    const actionTypes = [
-        await ActionType.create({
+    let actionTypes = [
+        ActionType.create({
             name: 'Create',
             alias: 'create'
         }),
-        await ActionType.create({
+        ActionType.create({
             name: 'Read',
             alias: 'read'
         }),
-        await ActionType.create({
+        ActionType.create({
             name: 'Update',
             alias: 'update'
         }),
-        await ActionType.create({
+        ActionType.create({
             name: 'Delete',
             alias: 'delete'
         })
     ];
 
-    const actions = [
+    let actions = [
 
         // Utente
-        await Action.create({
+        Action.create({
             name: 'Crea utente',
             alias: 'createUser',
             description: 'Puo\'creare un utente',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Modifica utente',
             alias: 'editUser',
             description: 'Puo\'modificare un utente',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Elimina utente',
             alias: 'deleteUser',
             description: 'Puo\'eliminare un utente',
@@ -94,43 +80,43 @@ const seed = async () => {
         }),
 
         // Gara
-        await Action.create({
+        Action.create({
             name: 'Visualizza gara',
             alias: 'getRun',
             description: 'Puo\'visualizzare una gara',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Arbitra gara',
             alias: 'arbitrateRun',
             description: 'Puo\'arbitrare una gara',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Valida gara',
             alias: 'validateRun',
             description: 'Puo\'validare una gara mandata dall\'arbitro',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Modifica gara contrassegnata',
             alias: 'editMarkedRun',
             description: 'Puo\'modificare una gara contrassegnata dall\'arbitro',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Cancella gara contrassegnata',
             alias: 'deleteMarkedRun',
             description: 'Puo\'eliminare una gara contrassegnata dall\'arbitro',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Modifica gara',
             alias: 'editRun',
             description: 'Puo\'modificare una gara',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Cancella gara',
             alias: 'deleteRun',
             description: 'Puo\'eliminare una gara',
@@ -138,25 +124,25 @@ const seed = async () => {
         }),
 
         // Luoghi
-        await Action.create({
+        Action.create({
             name: 'Visualizza luoghi',
             alias: 'getPlaces',
             description: 'Puo\'visualizzare i luoghi',
-            dependsOnManifestation: false
+            dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Crea luogo',
             alias: 'createPlace',
             description: 'Puo\'creare un luogo',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Modifica luogo',
             alias: 'editPlace',
             description: 'Puo\'modificare un luogo',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Elimina luogo',
             alias: 'removePlace',
             description: 'Puo\'eliminare un luogo',
@@ -164,25 +150,25 @@ const seed = async () => {
         }),
 
         // Categorie
-        await Action.create({
+        Action.create({
             name: 'Visualizza categorie',
             alias: 'getCategories',
             description: 'Puo\'visualizzare le categorie',
-            dependsOnManifestation: false
+            dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Crea categoria',
             alias: 'createCategory',
             description: 'Puo\'creare una categoria',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Modifica categoria',
             alias: 'editCategory',
             description: 'Puo\'modificare una categoria',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Elimina categoria',
             alias: 'removeCategory',
             description: 'Puo\'eliminare una categoria',
@@ -190,19 +176,19 @@ const seed = async () => {
         }),
 
         // Arbitri
-        await Action.create({
+        Action.create({
             name: 'Visualizza arbitri',
             alias: 'getReferees',
             description: 'Puo\'visualizzare gli arbitri',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Crea arbitro',
             alias: 'assignReferee',
             description: 'Assegna ad un utente i privilegi di arbitro',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Rimuovi arbitro',
             alias: 'removeReferee',
             description: 'Rimuove ad un utente i privlegi di arbitro',
@@ -210,19 +196,19 @@ const seed = async () => {
         }),
 
         // Gestore gara
-        await Action.create({
+        Action.create({
             name: 'Visualizza aiutanti gestore',
             alias: 'getManifestationManagerHelpers',
             description: 'Puo\'visualizzare gli aiutanti del gestore della manifestazione',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Crea aiutante gestore',
             alias: 'assignManifestationManagerHelpers',
             description: 'Assegna ad un utente i privilegi di aiutanti del gestore della manifestazione',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Rimuovi aiutante gestore',
             alias: 'removeManifestationManagerHelpers',
             description: 'Rimuove ad un utente i privlegi di aiutanti del gestore della manifestazione',
@@ -230,19 +216,19 @@ const seed = async () => {
         }),
 
         // Validatore gara
-        await Action.create({
+        Action.create({
             name: 'Visualizza validatori gare',
             alias: 'getRunsValidators',
             description: 'Puo\'visualizzare i validatori gare',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Crea validatore gare',
             alias: 'assignRunsValidator',
             description: 'Assegna ad un utente i privilegi di validatore gare',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Rimuovi validatore gare',
             alias: 'removeRunsValidator',
             description: 'Rimuove ad un utente i privlegi di validatore gare',
@@ -250,13 +236,13 @@ const seed = async () => {
         }),
 
         // Capitano
-        await Action.create({
+        Action.create({
             name: 'Crea Capitano',
             alias: 'assignCaptain',
             description: 'Assegna ad un utente il ruolo di capitano',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Rimuovi Capitano',
             alias: 'removeCaptain',
             description: 'Rimuove ad un utente il ruolo di capitano',
@@ -264,13 +250,13 @@ const seed = async () => {
         }),
 
         // Vice-capitano
-        await Action.create({
+        Action.create({
             name: 'Crea Vicecapitano',
             alias: 'assignViceCaptain',
             description: 'Assegna ad un utente il ruolo di Vicecapitano',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Rimuovi Capitano',
             alias: 'removeViceCaptain',
             description: 'Rimuove ad un utente il ruolo di Vicecapitano',
@@ -278,25 +264,25 @@ const seed = async () => {
         }),
 
         // Fascie d'età
-        await Action.create({
+        Action.create({
             name: 'Visualizza fasce di eta',
             alias: 'getAgeRanges',
             description: 'Puo\'visualizzare le fasce di eta',
-            dependsOnManifestation: false
+            dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Crea fascia di eta',
             alias: 'createAgeRange',
             description: 'Puo\'creare una fascia di eta',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Modifica fascia di eta',
             alias: 'editAgeRange',
             description: 'Puo\'modificare una fascia di eta',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Elimina fascia di eta',
             alias: 'removeAgeRange',
             description: 'Puo\'eliminare una fascia di eta',
@@ -304,25 +290,25 @@ const seed = async () => {
         }),
 
         // Scuole
-        await Action.create({
+        Action.create({
             name: 'Visualizza scuole',
             alias: 'getSchools',
             description: 'Puo\'visualizzare le scuole',
-            dependsOnManifestation: false
+            dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Crea Scuola',
             alias: 'createSchool',
             description: 'Puo\'creare una scuola',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Modifica Scuola',
             alias: 'editSchool',
             description: 'Puo\'modificare una scuola',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Elimina Scuola',
             alias: 'removeSchool',
             description: 'Puo\'eliminare una scuola',
@@ -330,25 +316,25 @@ const seed = async () => {
         }),
 
         // Fasi
-        await Action.create({
+        Action.create({
             name: 'Visualizza fasi',
             alias: 'getPhases',
             description: 'Puo\'visualizzare una fase',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Crea fase',
             alias: 'createPhase',
             description: 'Puo\'creare una fase',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Modifica fase',
             alias: 'editPhase',
             description: 'Puo\'modificare una fase',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Elimina fase',
             alias: 'removePhase',
             description: 'Puo\'eliminare una fase',
@@ -356,31 +342,31 @@ const seed = async () => {
         }),
 
         // Manifestazione
-        await Action.create({
+        Action.create({
             name: 'Visualizza utenti in manifestazione',
             alias: 'getUsersInManifestation',
             description: 'Puo\'visualizzare gli utenti in una manifestazione',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Crea utente in manifestazione',
             alias: 'createUserInManifestation',
             description: 'Puo\'creare un utente in una manifestazione',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Modifica utente in manifestazione',
             alias: 'editUserInManifestation',
             description: 'Puo\'modificare un utente in una manifestazione',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Elimina utente in manifestazione',
             alias: 'removeUserInManifestation',
             description: 'Puo\'eliminare un utente in una manifestazione',
             dependsOnManifestation: true
         }),
-        await Action.create({
+        Action.create({
             name: 'Visualizza teams in manifestazione',
             alias: 'getTeamsInManifestation',
             description: 'Puo\'visualizzare le squadre in una manifestazione',
@@ -389,59 +375,65 @@ const seed = async () => {
 
     ];
 
-    const roles = [
-        await Role.create({
+    let roles = [
+        Role.create({
             name: 'Arbitro',
             description: 'Puo\' arbitrare le gare',
             alias: 'referee',
             dependsOnManifestation: true
         }),
-        await Role.create({
+        Role.create({
             name: 'Utente',
             description: 'Utente base',
             alias: 'user',
             dependsOnManifestation: false
         }),
-        await Role.create({
+        Role.create({
             name: 'Validatore gare',
             description: 'Ha il compito di validare le gare',
             alias: 'runsValidator',
             dependsOnManifestation: true
         }),
-        await Role.create({
-            name: 'Gestore Manifestazione',
-            description: 'Ha tutti i privilegi nella sua manifestazione',
-            alias: 'manifestationManager',
-            dependsOnManifestation: true
-        }),
-        await Role.create({
+        Role.create({
             name: 'Aiutante gestore',
             description: 'E\' stato delegato dall\'amministratore. Ha tutti i privilegi nella sua manifestazione',
             alias: 'manifestationManagerHelper',
             dependsOnManifestation: true
         }),
-        await Role.create({
+        Role.create({
+            name: 'Sorvegliante manifestazione',
+            description: 'Visualizza tutti i dati della manifestazione senza però poterli modificare',
+            alias: 'supervisor',
+            dependsOnManifestation: true
+        }),
+        Role.create({
             name: 'Capitano',
             description: 'Capitano di una squadra',
             alias: 'captain',
             dependsOnManifestation: true
         }),
-        await Role.create({
+        Role.create({
             name: 'Vice capitano',
             description: 'Vicecapitano di una squadra',
             alias: 'viceCaptain',
             dependsOnManifestation: true
         }),
-        await Role.create({
+        Role.create({
             name: 'Membro squadra',
             description: 'Componente base di una squadra',
             alias: 'teamMember',
             dependsOnManifestation: true
         }),
+        Role.create({
+            name: 'Gestore Manifestazione',
+            description: 'Ha tutti i privilegi nella sua manifestazione',
+            alias: 'manifestationManager',
+            dependsOnManifestation: true
+        })
     ];
 
-    const events = [
-        await Event.create({
+    let events = [
+        Event.create({
             name: 'Intersezione',
             description: 'Intersezione in una mattonella',
             pointsJSCalculator: 'this.score += 15;',
@@ -453,106 +445,82 @@ const seed = async () => {
             waitLastIterationToTrigger: false,
             cancelPendingEvents: false
         }),
-        await Event.create({
-            name:'Dead end',
-            description:'Un intersezione in cui il robot deve invertire il proprio senso di marcia',
-            pointsJSCalculator:'this.score += 15;',
+        Event.create({
+            name: 'Dead end',
+            description: 'Un intersezione in cui il robot deve invertire il proprio senso di marcia',
+            pointsJSCalculator: 'this.score += 15;',
             affectsZone: false,
             affectsAttempt: false,
-            manuallyTriggerable:true,
+            manuallyTriggerable: true,
             needsStartCountForZones: false,
             triggerOnStart: false,
             waitLastIterationToTrigger: false,
             cancelPendingEvents: false
         }),
-        await Event.create({
-            name:'Ramp',
-            description:'Una salita o una discesa',
-            pointsJSCalculator:'this.score += 5;',
+        Event.create({
+            name: 'Ramp',
+            description: 'Una salita o una discesa',
+            pointsJSCalculator: 'this.score += 5;',
             affectsZone: false,
             affectsAttempt: false,
-            manuallyTriggerable:true,
+            manuallyTriggerable: true,
             needsStartCountForZones: false,
             triggerOnStart: false,
             waitLastIterationToTrigger: false,
             cancelPendingEvents: false
         }),
-        await Event.create({
-            name:'Speed bump',
-            description:'Un dosso da superare',
-            pointsJSCalculator:'this.score += 5;',
+        Event.create({
+            name: 'Speed bump',
+            description: 'Un dosso da superare',
+            pointsJSCalculator: 'this.score += 5;',
             affectsZone: false,
             affectsAttempt: false,
-            manuallyTriggerable:true,
+            manuallyTriggerable: true,
             needsStartCountForZones: false,
             triggerOnStart: false,
             waitLastIterationToTrigger: false,
             cancelPendingEvents: false
         }),
-        await Event.create({
-            name:'Obstacle',
-            description:'Un ostacolo da superare',
-            pointsJSCalculator:'this.score += 10;',
+        Event.create({
+            name: 'Obstacle',
+            description: 'Un ostacolo da superare',
+            pointsJSCalculator: 'this.score += 10;',
             affectsZone: false,
             affectsAttempt: false,
-            manuallyTriggerable:true,
+            manuallyTriggerable: true,
             needsStartCountForZones: false,
             triggerOnStart: false,
             waitLastIterationToTrigger: false,
             cancelPendingEvents: false
         }),
-        await Event.create({
-            name:'Gap',
-            description:'Un interruzione momentanea della linea',
-            pointsJSCalculator:'this.score += 10;',
+        Event.create({
+            name: 'Gap',
+            description: 'Un interruzione momentanea della linea',
+            pointsJSCalculator: 'this.score += 10;',
             affectsZone: false,
             affectsAttempt: false,
-            manuallyTriggerable:true,
+            manuallyTriggerable: true,
             needsStartCountForZones: false,
             triggerOnStart: false,
             waitLastIterationToTrigger: false,
             cancelPendingEvents: false
         }),
-        await Event.create({
-            name:'Lack of progress',
-            description:'Nuovo tentativo',
-            pointsJSCalculator:'this.lackOfProgress();',
+        Event.create({
+            name: 'Lack of progress',
+            description: 'Nuovo tentativo',
+            pointsJSCalculator: 'this.lackOfProgress();',
             affectsZone: false,
             affectsAttempt: true,
-            manuallyTriggerable:true,
+            manuallyTriggerable: true,
             needsStartCountForZones: false,
             triggerOnStart: false,
             waitLastIterationToTrigger: false,
             cancelPendingEvents: false
         }),
-        await Event.create({
-            name:'Jump zone',
-            description:'La zona non completata viene saltata',
-            pointsJSCalculator:'this.nextZone();',
-            affectsZone: true,
-            affectsAttempt: true,
-            manuallyTriggerable:true,
-            needsStartCountForZones: false,
-            triggerOnStart: false,
-            waitLastIterationToTrigger: false,
-            cancelPendingEvents: false
-        }),
-        /*await Event.create({
-            name:'Next zone',
-            description:'Completata una zona si passa a quella successiva',
-            pointsJSCalculator:'this.nextZone();',
-            affectsZone: true,
-            affectsAttempt: true,
-            manuallyTriggerable: false,
-            needsStartCountForZones: false,
-            triggerOnStart: false,
-            waitLastIterationToTrigger: true,
-            cancelPendingEvents: false
-        }),*/
-        await Event.create({
-            name:'Checkpoint',
-            description:'Viene raggiunto un checkpoint',
-            pointsJSCalculator:'this.checkpoint();',
+        Event.create({
+            name: 'Jump zone',
+            description: 'La zona non completata viene saltata',
+            pointsJSCalculator: 'this.nextZone();',
             affectsZone: true,
             affectsAttempt: true,
             manuallyTriggerable: true,
@@ -561,49 +529,73 @@ const seed = async () => {
             waitLastIterationToTrigger: false,
             cancelPendingEvents: false
         }),
-        await Event.create({
-            name:'End of play',
-            description:'Si verifica quando il robot completa il percorso, oppure quando la squadra dichiara di non voler continuare, oppure allo scadere del tempo ',
-            pointsJSCalculator:'this.endOfPlay();',
+        /* Event.create({
+        name:'Next zone',
+        description:'Completata una zona si passa a quella successiva',
+        pointsJSCalculator:'this.nextZone();',
+        affectsZone: true,
+        affectsAttempt: true,
+        manuallyTriggerable: false,
+        needsStartCountForZones: false,
+        triggerOnStart: false,
+        waitLastIterationToTrigger: true,
+        cancelPendingEvents: false
+    }),*/
+        Event.create({
+            name: 'Checkpoint',
+            description: 'Viene raggiunto un checkpoint',
+            pointsJSCalculator: 'this.checkpoint();',
+            affectsZone: true,
+            affectsAttempt: true,
+            manuallyTriggerable: true,
+            needsStartCountForZones: false,
+            triggerOnStart: false,
+            waitLastIterationToTrigger: false,
+            cancelPendingEvents: false
+        }),
+        Event.create({
+            name: 'End of play',
+            description: 'Si verifica quando il robot completa il percorso, oppure quando la squadra dichiara di non voler continuare, oppure allo scadere del tempo ',
+            pointsJSCalculator: 'this.endOfPlay();',
             affectsZone: false,
             affectsAttempt: false,
-            manuallyTriggerable:true,
+            manuallyTriggerable: true,
             needsStartCountForZones: false,
             triggerOnStart: false,
             waitLastIterationToTrigger: false,
             cancelPendingEvents: true
         }),
-        await Event.create({
-            name:'Living victim',
-            description:'Corretta evacuazione di una pallina argentata',
-            pointsJSCalculator:'this.livingVictim();',
+        Event.create({
+            name: 'Living victim',
+            description: 'Corretta evacuazione di una pallina argentata',
+            pointsJSCalculator: 'this.livingVictim();',
             affectsZone: false,
             affectsAttempt: false,
-            manuallyTriggerable:true,
+            manuallyTriggerable: true,
             needsStartCountForZones: false,
             triggerOnStart: false,
             waitLastIterationToTrigger: false,
             cancelPendingEvents: false
         }),
-        await Event.create({
-            name:'Dead victim',
-            description:'Corretta evacuazione di una pallina nera',
-            pointsJSCalculator:'this.deadVictim();',
+        Event.create({
+            name: 'Dead victim',
+            description: 'Corretta evacuazione di una pallina nera',
+            pointsJSCalculator: 'this.deadVictim();',
             affectsZone: false,
             affectsAttempt: false,
-            manuallyTriggerable:true,
+            manuallyTriggerable: true,
             needsStartCountForZones: false,
             triggerOnStart: false,
             waitLastIterationToTrigger: false,
             cancelPendingEvents: false
         }),
-        await Event.create({
-            name:'Exit',
-            description:'Il robot è uscito dalla stanza e ha percorso correttamente tre mattonelle, dopo aver toccato o salvato una vittima',
-            pointsJSCalculator:'this.exit();',
+        Event.create({
+            name: 'Exit',
+            description: 'Il robot è uscito dalla stanza e ha percorso correttamente tre mattonelle, dopo aver toccato o salvato una vittima',
+            pointsJSCalculator: 'this.exit();',
             affectsZone: false,
             affectsAttempt: false,
-            manuallyTriggerable:true,
+            manuallyTriggerable: true,
             needsStartCountForZones: false,
             triggerOnStart: false,
             waitLastIterationToTrigger: false,
@@ -612,8 +604,8 @@ const seed = async () => {
 
     ];
 
-    const manifestation = [
-        await Manifestation.create({
+    let manifestation = [
+        Manifestation.create({
             name: 'Regionali Abruzzo',
             description: 'Competizione regionale della regione Abruzzo',
             start: new Date('Marzo 08, 2019 08:00:00'),
@@ -621,14 +613,14 @@ const seed = async () => {
         }),
     ];
 
-    const schools = [
-        await School.create({
+    let schools = [
+        School.create({
             name: 'I.I.S "A. Volta" Pescara'
         })
     ];
 
-    const places = [
-        await Place.create({
+    let places = [
+        Place.create({
             street: 'Via Alessandro Volta',
             civicNumber: '15',
             city: 'Pescara',
@@ -639,27 +631,25 @@ const seed = async () => {
         })
     ];
 
-    const ageRanges = [
-        await AgeRange.create({
+    let ageRanges = [
+        AgeRange.create({
             name: 'under19',
             min: '14',
             max: '18'
         }),
-        await AgeRange.create({
+        AgeRange.create({
             name: 'under14',
             min: '10',
             max: '13'
         })
     ];
 
-    const teams = [
-    ];
+    let teams = [];
 
-    const teamsHasUser = [
-    ];
+    let teamsHasUser = [];
 
-    const categories = [
-        await Category.create({
+    let categories = [
+        Category.create({
             name: 'Rescue Line',
             description: 'Seguilinea',
             maxRobotsPerTeam: 1,
@@ -671,8 +661,8 @@ const seed = async () => {
         })
     ];
 
-    const phase = [
-        await Phase.create({
+    let phase = [
+        Phase.create({
             name: 'Qualificazioni',
             description: 'Qualificazioni per le nazionali.',
             start: new Date('Marzo 08, 2019 08:00:00'),
@@ -682,353 +672,417 @@ const seed = async () => {
         })
     ];
 
-    const modules = [
-        await Module.create({
+    let modules = [
+        Module.create({
             name: 'Users',
             alias: 'user'
         }),
-        await Module.create({
+        Module.create({
             name: 'Privileges',
             alias: 'privileges'
         }),
-        await Module.create({
+        Module.create({
             name: 'Manifestations',
             alias: 'manifestation'
         }),
-        await Module.create({
+        Module.create({
             name: 'Places',
             alias: 'places'
         }),
-        await Module.create({
+        Module.create({
             name: 'Categories',
             alias: 'categories'
         }),
-        await Module.create({
+        Module.create({
             name: 'Age Ranges',
             alias: 'ageRanges'
         }),
-        await Module.create({
+        Module.create({
             name: 'Referees',
             alias: 'referees'
         }),
-        await Module.create({
+        Module.create({
             name: 'Schools',
             alias: 'schools'
         }),
-        await Module.create({
+        Module.create({
             name: 'Teams',
             alias: 'teams'
         }),
-        await Module.create({
+        Module.create({
             name: 'Phases',
             alias: 'phases'
         }),
-        await Module.create({
+        Module.create({
             name: 'Runs',
             alias: 'runs'
         }),
-        await Module.create({
+        Module.create({
             name: 'Staff',
             alias: 'staff'
         })
     ];
 
-    await schools[0].setPlace(places[0]);
+    users = await Promise.all(users);
+    actionTypes = await Promise.all(actionTypes);
+    actions = await Promise.all(actions);
+    roles = await Promise.all(roles);
+    events = await Promise.all(events);
+    manifestation = await Promise.all(manifestation);
+    schools = await Promise.all(schools);
+    places = await Promise.all(places);
+    ageRanges = await Promise.all(ageRanges);
+    // teams = await Promise.all(teams);
+    // teamsHasUser = await Promise.all(teamsHasUser);
+    categories = await Promise.all(categories);
+    phase = await Promise.all(phase);
+    modules = await Promise.all(modules);
 
-    await actions[0].addActionType(actionTypes[0]);
-    await actions[1].addActionType(actionTypes[2]);
-    await actions[2].addActionType(actionTypes[3]);
-    await actions[3].addActionType(actionTypes[1]);
-    await actions[4].addActionType(actionTypes[0]);
-    await actions[5].addActionType(actionTypes[2]);
-    await actions[6].addActionType(actionTypes[2]);
-    await actions[7].addActionType(actionTypes[3]);
-    await actions[8].addActionType(actionTypes[2]);
-    await actions[9].addActionType(actionTypes[3]);
-    await actions[10].addActionType(actionTypes[1]);
-    await actions[11].addActionType(actionTypes[0]);
-    await actions[12].addActionType(actionTypes[2]);
-    await actions[13].addActionType(actionTypes[3]);
-    await actions[14].addActionType(actionTypes[1]);
-    await actions[15].addActionType(actionTypes[0]);
-    await actions[16].addActionType(actionTypes[2]);
-    await actions[17].addActionType(actionTypes[3]);
-    await actions[18].addActionType(actionTypes[1]);
-    await actions[19].addActionType(actionTypes[0]);
-    await actions[20].addActionType(actionTypes[3]);
-    await actions[21].addActionType(actionTypes[1]);
-    await actions[22].addActionType(actionTypes[0]);
-    await actions[23].addActionType(actionTypes[3]);
-    await actions[24].addActionType(actionTypes[1]);
-    await actions[25].addActionType(actionTypes[0]);
-    await actions[26].addActionType(actionTypes[3]);
-    await actions[27].addActionType(actionTypes[2]);
-    await actions[28].addActionType(actionTypes[3]);
-    await actions[29].addActionType(actionTypes[2]);
-    await actions[30].addActionType(actionTypes[3]);
-    await actions[31].addActionType(actionTypes[1]);
-    await actions[32].addActionType(actionTypes[0]);
-    await actions[33].addActionType(actionTypes[2]);
-    await actions[34].addActionType(actionTypes[3]);
-    await actions[35].addActionType(actionTypes[1]);
-    await actions[36].addActionType(actionTypes[0]);
-    await actions[37].addActionType(actionTypes[2]);
-    await actions[38].addActionType(actionTypes[3]);
-    await actions[39].addActionType(actionTypes[1]);
-    await actions[40].addActionType(actionTypes[0]);
-    await actions[41].addActionType(actionTypes[2]);
-    await actions[42].addActionType(actionTypes[3]);
-    await actions[43].addActionType(actionTypes[1]);
-    await actions[44].addActionType(actionTypes[0]);
-    await actions[45].addActionType(actionTypes[2]);
-    await actions[46].addActionType(actionTypes[3]);
+    schools[0].setPlace(places[0]);
+
+    actions[0].addActionType(actionTypes[0]);
+    actions[1].addActionType(actionTypes[2]);
+    actions[2].addActionType(actionTypes[3]);
+    actions[3].addActionType(actionTypes[1]);
+    actions[4].addActionType(actionTypes[0]);
+    actions[5].addActionType(actionTypes[2]);
+    actions[6].addActionType(actionTypes[2]);
+    actions[7].addActionType(actionTypes[3]);
+    actions[8].addActionType(actionTypes[2]);
+    actions[9].addActionType(actionTypes[3]);
+    actions[10].addActionType(actionTypes[1]);
+    actions[11].addActionType(actionTypes[0]);
+    actions[12].addActionType(actionTypes[2]);
+    actions[13].addActionType(actionTypes[3]);
+    actions[14].addActionType(actionTypes[1]);
+    actions[15].addActionType(actionTypes[0]);
+    actions[16].addActionType(actionTypes[2]);
+    actions[17].addActionType(actionTypes[3]);
+    actions[18].addActionType(actionTypes[1]);
+    actions[19].addActionType(actionTypes[0]);
+    actions[20].addActionType(actionTypes[3]);
+    actions[21].addActionType(actionTypes[1]);
+    actions[22].addActionType(actionTypes[0]);
+    actions[23].addActionType(actionTypes[3]);
+    actions[24].addActionType(actionTypes[1]);
+    actions[25].addActionType(actionTypes[0]);
+    actions[26].addActionType(actionTypes[3]);
+    actions[27].addActionType(actionTypes[2]);
+    actions[28].addActionType(actionTypes[3]);
+    actions[29].addActionType(actionTypes[2]);
+    actions[30].addActionType(actionTypes[3]);
+    actions[31].addActionType(actionTypes[1]);
+    actions[32].addActionType(actionTypes[0]);
+    actions[33].addActionType(actionTypes[2]);
+    actions[34].addActionType(actionTypes[3]);
+    actions[35].addActionType(actionTypes[1]);
+    actions[36].addActionType(actionTypes[0]);
+    actions[37].addActionType(actionTypes[2]);
+    actions[38].addActionType(actionTypes[3]);
+    actions[39].addActionType(actionTypes[1]);
+    actions[40].addActionType(actionTypes[0]);
+    actions[41].addActionType(actionTypes[2]);
+    actions[42].addActionType(actionTypes[3]);
+    actions[43].addActionType(actionTypes[1]);
+    actions[44].addActionType(actionTypes[0]);
+    actions[45].addActionType(actionTypes[2]);
+    actions[46].addActionType(actionTypes[3]);
 
 
-    await actions[0].addModule(modules[0]);
-    await actions[1].addModule(modules[0]);
-    await actions[2].addModule(modules[0]);
-    await actions[3].addModule(modules[10]);
-    await actions[4].addModule(modules[10]);
-    await actions[5].addModule(modules[10]);
-    await actions[6].addModule(modules[10]);
-    await actions[7].addModule(modules[10]);
-    await actions[8].addModule(modules[10]);
-    await actions[9].addModule(modules[10]);
-    await actions[10].addModule(modules[3]);
-    await actions[11].addModule(modules[3]);
-    await actions[12].addModule(modules[3]);
-    await actions[13].addModule(modules[3]);
-    await actions[14].addModule(modules[4]);
-    await actions[15].addModule(modules[4]);
-    await actions[16].addModule(modules[4]);
-    await actions[17].addModule(modules[4]);
-    await actions[18].addModule(modules[6]);
-    await actions[19].addModule(modules[6]);
-    await actions[20].addModule(modules[6]);
-    await actions[21].addModule(modules[11]);
-    await actions[22].addModule(modules[11]);
-    await actions[23].addModule(modules[11]);
-    await actions[24].addModule(modules[11]);
-    await actions[25].addModule(modules[11]);
-    await actions[26].addModule(modules[11]);
-    await actions[27].addModule(modules[8]);
-    await actions[28].addModule(modules[8]);
-    await actions[29].addModule(modules[8]);
-    await actions[30].addModule(modules[8]);
-    await actions[31].addModule(modules[5]);
-    await actions[32].addModule(modules[5]);
-    await actions[33].addModule(modules[5]);
-    await actions[34].addModule(modules[5]);
-    await actions[35].addModule(modules[7]);
-    await actions[36].addModule(modules[7]);
-    await actions[37].addModule(modules[7]);
-    await actions[38].addModule(modules[7]);
-    await actions[39].addModule(modules[9]);
-    await actions[40].addModule(modules[9]);
-    await actions[41].addModule(modules[9]);
-    await actions[42].addModule(modules[9]);
-    await actions[43].addModule(modules[0]);
-    await actions[44].addModule(modules[0]);
-    await actions[45].addModule(modules[0]);
-    await actions[46].addModule(modules[0]);
+    actions[0].addModule(modules[0]);
+    actions[1].addModule(modules[0]);
+    actions[2].addModule(modules[0]);
+    actions[3].addModule(modules[10]);
+    actions[4].addModule(modules[10]);
+    actions[5].addModule(modules[10]);
+    actions[6].addModule(modules[10]);
+    actions[7].addModule(modules[10]);
+    actions[8].addModule(modules[10]);
+    actions[9].addModule(modules[10]);
+    actions[10].addModule(modules[3]);
+    actions[11].addModule(modules[3]);
+    actions[12].addModule(modules[3]);
+    actions[13].addModule(modules[3]);
+    actions[14].addModule(modules[4]);
+    actions[15].addModule(modules[4]);
+    actions[16].addModule(modules[4]);
+    actions[17].addModule(modules[4]);
+    actions[18].addModule(modules[6]);
+    actions[19].addModule(modules[6]);
+    actions[20].addModule(modules[6]);
+    actions[21].addModule(modules[11]);
+    actions[22].addModule(modules[11]);
+    actions[23].addModule(modules[11]);
+    actions[24].addModule(modules[11]);
+    actions[25].addModule(modules[11]);
+    actions[26].addModule(modules[11]);
+    actions[27].addModule(modules[8]);
+    actions[28].addModule(modules[8]);
+    actions[29].addModule(modules[8]);
+    actions[30].addModule(modules[8]);
+    actions[31].addModule(modules[5]);
+    actions[32].addModule(modules[5]);
+    actions[33].addModule(modules[5]);
+    actions[34].addModule(modules[5]);
+    actions[35].addModule(modules[7]);
+    actions[36].addModule(modules[7]);
+    actions[37].addModule(modules[7]);
+    actions[38].addModule(modules[7]);
+    actions[39].addModule(modules[9]);
+    actions[40].addModule(modules[9]);
+    actions[41].addModule(modules[9]);
+    actions[42].addModule(modules[9]);
+    actions[43].addModule(modules[0]);
+    actions[44].addModule(modules[0]);
+    actions[45].addModule(modules[0]);
+    actions[46].addModule(modules[0]);
 
-    // Arbitro
-    await roles[0].addAction(actions[3]);
-    await roles[0].addAction(actions[4]);
-    await roles[0].addAction(actions[10]);
-    await roles[0].addAction(actions[14]);
-    await roles[0].addAction(actions[18]);
-    await roles[0].addAction(actions[24]);
-    await roles[0].addAction(actions[31]);
-    await roles[0].addAction(actions[35]);
-    await roles[0].addAction(actions[39]);
-    await roles[0].addAction(actions[43]);
-    await roles[0].addAction(actions[47]);
+    // for (let index = 0; index < actions.length; index++) {
+    //     const element = index + ': ' + actions[index].alias;
+    //     console.log(element);
 
-    // Utente
-    /*await roles[1].addAction(actions[3]);
-  await roles[1].addAction(actions[10]);
-  await roles[1].addAction(actions[14]);
-  await roles[1].addAction(actions[19]);
-  await roles[1].addAction(actions[31]);
-  await roles[1].addAction(actions[35]);
-  await roles[1].addAction(actions[39]);
-  await roles[1].addAction(actions[43]);
-  await roles[1].addAction(actions[47]);*/
+    // }
 
-    // Validatore gare
-    await roles[2].addAction(actions[3]);
-    await roles[2].addAction(actions[5]);
-    await roles[2].addAction(actions[6]);
-    await roles[2].addAction(actions[7]);
-    await roles[2].addAction(actions[10]);
-    await roles[2].addAction(actions[14]);
-    await roles[2].addAction(actions[18]);
-    await roles[2].addAction(actions[21]);
-    await roles[2].addAction(actions[24]);
-    await roles[2].addAction(actions[31]);
-    await roles[2].addAction(actions[35]);
-    await roles[2].addAction(actions[39]);
-    await roles[2].addAction(actions[43]);
-    await roles[2].addAction(actions[47]);
+    for (let index = 0; index < roles.length; index++) {
+        switch (roles[index].alias) {
+        case 'referee':
+            // Arbitro
+            // console.log(roles[index].alias);
+            roles[index].addAction(actions[3]);
+            roles[index].addAction(actions[4]);
+            roles[index].addAction(actions[10]);
+            roles[index].addAction(actions[14]);
+            roles[index].addAction(actions[18]);
+            roles[index].addAction(actions[24]);
+            roles[index].addAction(actions[31]);
+            roles[index].addAction(actions[35]);
+            roles[index].addAction(actions[39]);
+            roles[index].addAction(actions[43]);
+            roles[index].addAction(actions[47]);
+            break;
 
-    // Gestore manifestazione
-    await roles[3].addAction(actions[0]);
-    await roles[3].addAction(actions[1]);
-    await roles[3].addAction(actions[2]);
-    await roles[3].addAction(actions[3]);
-    await roles[3].addAction(actions[6]);
-    await roles[3].addAction(actions[7]);
-    await roles[3].addAction(actions[8]);
-    await roles[3].addAction(actions[9]);
-    await roles[3].addAction(actions[10]);
-    await roles[3].addAction(actions[11]);
-    await roles[3].addAction(actions[12]);
-    await roles[3].addAction(actions[13]);
-    await roles[3].addAction(actions[14]);
-    await roles[3].addAction(actions[15]);
-    await roles[3].addAction(actions[16]);
-    await roles[3].addAction(actions[17]);
-    await roles[3].addAction(actions[18]);
-    await roles[3].addAction(actions[19]);
-    await roles[3].addAction(actions[20]);
-    await roles[3].addAction(actions[21]);
-    await roles[3].addAction(actions[22]);
-    await roles[3].addAction(actions[23]);
-    await roles[3].addAction(actions[24]);
-    await roles[3].addAction(actions[25]);
-    await roles[3].addAction(actions[26]);
-    await roles[3].addAction(actions[27]);
-    await roles[3].addAction(actions[28]);
-    await roles[3].addAction(actions[29]);
-    await roles[3].addAction(actions[30]);
-    await roles[3].addAction(actions[32]);
-    await roles[3].addAction(actions[33]);
-    await roles[3].addAction(actions[34]);
-    await roles[3].addAction(actions[35]);
-    await roles[3].addAction(actions[36]);
-    await roles[3].addAction(actions[37]);
-    await roles[3].addAction(actions[38]);
-    await roles[3].addAction(actions[39]);
-    await roles[3].addAction(actions[40]);
-    await roles[3].addAction(actions[41]);
-    await roles[3].addAction(actions[42]);
-    await roles[3].addAction(actions[43]);
-    await roles[3].addAction(actions[44]);
-    await roles[3].addAction(actions[45]);
-    await roles[3].addAction(actions[46]);
-    await roles[3].addAction(actions[47]);
-    await roles[3].addAction(actions[48]);
-    await roles[3].addAction(actions[49]);
-    await roles[3].addAction(actions[50]);
+        case 'user':
+            // Utente
+            // console.log(roles[index].alias);
+            // roles[index].addAction(actions[3]);
+            // roles[index].addAction(actions[10]);
+            // roles[index].addAction(actions[14]);
+            // roles[index].addAction(actions[18]);
+            // roles[index].addAction(actions[21]);
+            // roles[index].addAction(actions[24]);
+            // roles[index].addAction(actions[31]);
+            // roles[index].addAction(actions[35]);
+            // roles[index].addAction(actions[39]);
+            // roles[index].addAction(actions[43]);
+            // roles[index].addAction(actions[47]);
+            break;
 
-    // Aiutatnte gestore
-    await roles[4].addAction(actions[0]);
-    await roles[4].addAction(actions[1]);
-    await roles[4].addAction(actions[2]);
-    await roles[4].addAction(actions[3]);
-    await roles[4].addAction(actions[6]);
-    await roles[4].addAction(actions[7]);
-    await roles[4].addAction(actions[8]);
-    await roles[4].addAction(actions[9]);
-    await roles[4].addAction(actions[10]);
-    await roles[4].addAction(actions[11]);
-    await roles[4].addAction(actions[12]);
-    await roles[4].addAction(actions[13]);
-    await roles[4].addAction(actions[14]);
-    await roles[4].addAction(actions[15]);
-    await roles[4].addAction(actions[16]);
-    await roles[4].addAction(actions[17]);
-    await roles[4].addAction(actions[18]);
-    await roles[4].addAction(actions[19]);
-    await roles[4].addAction(actions[20]);
-    await roles[4].addAction(actions[21]);
-    await roles[4].addAction(actions[24]);
-    await roles[4].addAction(actions[25]);
-    await roles[4].addAction(actions[26]);
-    await roles[4].addAction(actions[27]);
-    await roles[4].addAction(actions[28]);
-    await roles[4].addAction(actions[29]);
-    await roles[4].addAction(actions[30]);
-    await roles[4].addAction(actions[32]);
-    await roles[4].addAction(actions[33]);
-    await roles[4].addAction(actions[34]);
-    await roles[4].addAction(actions[35]);
-    await roles[4].addAction(actions[36]);
-    await roles[4].addAction(actions[37]);
-    await roles[4].addAction(actions[38]);
-    await roles[4].addAction(actions[39]);
-    await roles[4].addAction(actions[40]);
-    await roles[4].addAction(actions[41]);
-    await roles[4].addAction(actions[42]);
-    await roles[4].addAction(actions[43]);
-    await roles[4].addAction(actions[44]);
-    await roles[4].addAction(actions[45]);
-    await roles[4].addAction(actions[46]);
-    await roles[4].addAction(actions[47]);
-    await roles[4].addAction(actions[48]);
-    await roles[4].addAction(actions[49]);
-    await roles[4].addAction(actions[50]);
+        case 'runsValidator':
+            // Validatore gare
+            // console.log(roles[index].alias);
+            roles[index].addAction(actions[3]);
+            roles[index].addAction(actions[5]);
+            roles[index].addAction(actions[6]);
+            roles[index].addAction(actions[7]);
+            roles[index].addAction(actions[10]);
+            roles[index].addAction(actions[14]);
+            roles[index].addAction(actions[18]);
+            roles[index].addAction(actions[21]);
+            roles[index].addAction(actions[24]);
+            roles[index].addAction(actions[31]);
+            roles[index].addAction(actions[35]);
+            roles[index].addAction(actions[39]);
+            roles[index].addAction(actions[43]);
+            roles[index].addAction(actions[47]);
+            break;
+        case 'manifestationManagerHelper':
+            // Aiutatnte gestore
+            // console.log(roles[index].alias);
+            roles[index].addAction(actions[0]);
+            roles[index].addAction(actions[1]);
+            roles[index].addAction(actions[2]);
+            roles[index].addAction(actions[3]);
+            roles[index].addAction(actions[6]);
+            roles[index].addAction(actions[7]);
+            roles[index].addAction(actions[8]);
+            roles[index].addAction(actions[9]);
+            roles[index].addAction(actions[10]);
+            roles[index].addAction(actions[11]);
+            roles[index].addAction(actions[12]);
+            roles[index].addAction(actions[13]);
+            roles[index].addAction(actions[14]);
+            roles[index].addAction(actions[15]);
+            roles[index].addAction(actions[16]);
+            roles[index].addAction(actions[17]);
+            roles[index].addAction(actions[18]);
+            roles[index].addAction(actions[19]);
+            roles[index].addAction(actions[20]);
+            roles[index].addAction(actions[21]);
+            roles[index].addAction(actions[24]);
+            roles[index].addAction(actions[25]);
+            roles[index].addAction(actions[26]);
+            roles[index].addAction(actions[27]);
+            roles[index].addAction(actions[28]);
+            roles[index].addAction(actions[29]);
+            roles[index].addAction(actions[30]);
+            roles[index].addAction(actions[32]);
+            roles[index].addAction(actions[33]);
+            roles[index].addAction(actions[34]);
+            roles[index].addAction(actions[35]);
+            roles[index].addAction(actions[36]);
+            roles[index].addAction(actions[37]);
+            roles[index].addAction(actions[38]);
+            roles[index].addAction(actions[39]);
+            roles[index].addAction(actions[40]);
+            roles[index].addAction(actions[41]);
+            roles[index].addAction(actions[42]);
+            roles[index].addAction(actions[43]);
+            roles[index].addAction(actions[44]);
+            roles[index].addAction(actions[45]);
+            roles[index].addAction(actions[46]);
+            roles[index].addAction(actions[47]);
+            roles[index].addAction(actions[48]);
+            roles[index].addAction(actions[49]);
+            roles[index].addAction(actions[50]);
+            break;
+        case 'supervisor':
+            // Supervisore manifestazione
+            // console.log(roles[index].alias);
+            roles[index].addAction(actions[3]);
+            roles[index].addAction(actions[10]);
+            roles[index].addAction(actions[14]);
+            roles[index].addAction(actions[18]);
+            roles[index].addAction(actions[21]);
+            roles[index].addAction(actions[24]);
+            roles[index].addAction(actions[31]);
+            roles[index].addAction(actions[35]);
+            roles[index].addAction(actions[39]);
+            roles[index].addAction(actions[43]);
+            roles[index].addAction(actions[47]);
+            break;
+        case 'captain':
+            // Capitano
+            // console.log(roles[index].alias);
+            roles[index].addAction(actions[3]);
+            roles[index].addAction(actions[10]);
+            roles[index].addAction(actions[14]);
+            roles[index].addAction(actions[18]);
+            roles[index].addAction(actions[31]);
+            roles[index].addAction(actions[35]);
+            roles[index].addAction(actions[39]);
+            roles[index].addAction(actions[43]);
+            roles[index].addAction(actions[47]);
+            break;
+        case 'viceCaptain':
+            // Vice capitano
+            // console.log(roles[index].alias);
+            roles[index].addAction(actions[3]);
+            roles[index].addAction(actions[10]);
+            roles[index].addAction(actions[14]);
+            roles[index].addAction(actions[18]);
+            roles[index].addAction(actions[31]);
+            roles[index].addAction(actions[35]);
+            roles[index].addAction(actions[39]);
+            roles[index].addAction(actions[43]);
+            roles[index].addAction(actions[47]);
+            break;
+        case 'teamMember':
+            // Membro squadra
+            // console.log(roles[index].alias);
+            roles[index].addAction(actions[3]);
+            roles[index].addAction(actions[10]);
+            roles[index].addAction(actions[14]);
+            roles[index].addAction(actions[18]);
+            roles[index].addAction(actions[31]);
+            roles[index].addAction(actions[35]);
+            roles[index].addAction(actions[39]);
+            roles[index].addAction(actions[43]);
+            roles[index].addAction(actions[47]);
+            break;
+        case 'manifestationManager':
+            // Gestore manifestazione
+            // console.log(roles[index].alias);
+            roles[index].addAction(actions[0]);
+            roles[index].addAction(actions[1]);
+            roles[index].addAction(actions[2]);
+            roles[index].addAction(actions[3]);
+            roles[index].addAction(actions[6]);
+            roles[index].addAction(actions[7]);
+            roles[index].addAction(actions[8]);
+            roles[index].addAction(actions[9]);
+            roles[index].addAction(actions[10]);
+            roles[index].addAction(actions[11]);
+            roles[index].addAction(actions[12]);
+            roles[index].addAction(actions[13]);
+            roles[index].addAction(actions[14]);
+            roles[index].addAction(actions[15]);
+            roles[index].addAction(actions[16]);
+            roles[index].addAction(actions[17]);
+            roles[index].addAction(actions[18]);
+            roles[index].addAction(actions[19]);
+            roles[index].addAction(actions[20]);
+            roles[index].addAction(actions[21]);
+            roles[index].addAction(actions[22]);
+            roles[index].addAction(actions[23]);
+            roles[index].addAction(actions[24]);
+            roles[index].addAction(actions[25]);
+            roles[index].addAction(actions[26]);
+            roles[index].addAction(actions[27]);
+            roles[index].addAction(actions[28]);
+            roles[index].addAction(actions[29]);
+            roles[index].addAction(actions[30]);
+            roles[index].addAction(actions[32]);
+            roles[index].addAction(actions[33]);
+            roles[index].addAction(actions[34]);
+            roles[index].addAction(actions[35]);
+            roles[index].addAction(actions[36]);
+            roles[index].addAction(actions[37]);
+            roles[index].addAction(actions[38]);
+            roles[index].addAction(actions[39]);
+            roles[index].addAction(actions[40]);
+            roles[index].addAction(actions[41]);
+            roles[index].addAction(actions[42]);
+            roles[index].addAction(actions[43]);
+            roles[index].addAction(actions[44]);
+            roles[index].addAction(actions[45]);
+            roles[index].addAction(actions[46]);
+            roles[index].addAction(actions[47]);
+            roles[index].addAction(actions[48]);
+            roles[index].addAction(actions[49]);
+            roles[index].addAction(actions[50]);
+            break;
+        }
+    }
 
-    // Capitano
-    await roles[5].addAction(actions[4]);
-    await roles[5].addAction(actions[10]);
-    await roles[5].addAction(actions[14]);
-    await roles[5].addAction(actions[19]);
-    await roles[5].addAction(actions[31]);
-    await roles[5].addAction(actions[35]);
-    await roles[5].addAction(actions[39]);
-    await roles[5].addAction(actions[43]);
-    await roles[5].addAction(actions[47]);
 
-    // Vice capitano
-    await roles[6].addAction(actions[4]);
-    await roles[6].addAction(actions[10]);
-    await roles[6].addAction(actions[14]);
-    await roles[6].addAction(actions[19]);
-    await roles[6].addAction(actions[31]);
-    await roles[6].addAction(actions[35]);
-    await roles[6].addAction(actions[39]);
-    await roles[6].addAction(actions[43]);
-    await roles[6].addAction(actions[47]);
 
-    // Membro squadra
-    await roles[7].addAction(actions[4]);
-    await roles[7].addAction(actions[10]);
-    await roles[7].addAction(actions[14]);
-    await roles[7].addAction(actions[19]);
-    await roles[7].addAction(actions[31]);
-    await roles[7].addAction(actions[35]);
-    await roles[7].addAction(actions[39]);
-    await roles[7].addAction(actions[43]);
-    await roles[7].addAction(actions[47]);
 
-    await places[0].addManifestation(manifestation[0]);
-    await places[0].addManifestation(manifestation[1]);
+    places[0].addManifestation(manifestation[0]);
+    places[0].addManifestation(manifestation[1]);
 
-    await categories[0].addEvent(events[0]);
-    await categories[0].addEvent(events[1]);
-    await categories[0].addEvent(events[2]);
-    await categories[0].addEvent(events[3]);
-    await categories[0].addEvent(events[4]);
-    await categories[0].addEvent(events[5]);
-    await categories[0].addEvent(events[6]);
-    await categories[0].addEvent(events[7]);
-    await categories[0].addEvent(events[8]);
-    await categories[0].addEvent(events[9]);
-    await categories[0].addEvent(events[10]);
-    await categories[0].addEvent(events[11]);
-    await categories[0].addEvent(events[12]);
-    await categories[0].addEvent(events[13]);
+    categories[0].addEvent(events[0]);
+    categories[0].addEvent(events[1]);
+    categories[0].addEvent(events[2]);
+    categories[0].addEvent(events[3]);
+    categories[0].addEvent(events[4]);
+    categories[0].addEvent(events[5]);
+    categories[0].addEvent(events[6]);
+    categories[0].addEvent(events[7]);
+    categories[0].addEvent(events[8]);
+    categories[0].addEvent(events[9]);
+    categories[0].addEvent(events[10]);
+    categories[0].addEvent(events[11]);
+    categories[0].addEvent(events[12]);
+    categories[0].addEvent(events[13]);
 
-    // await events[0].addEvent(events[0]);
+    //  events[0].addEvent(events[0]);
 
-    await manifestation[0].addPhase(phase[0]);
+    manifestation[0].addPhase(phase[0]);
 
-    await categories[0].addPhase(phase[0]);
+    categories[0].addPhase(phase[0]);
 
     /*const competitions = [
-      await Competition.create
+       Competition.create
   ];*/
 
     // users[0].addCompetition(competitions[0]);
