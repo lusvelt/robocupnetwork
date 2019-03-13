@@ -1,5 +1,5 @@
 <div class="row header">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <nb-card>
       <nb-card-body>
         <div class="row header">
@@ -8,6 +8,17 @@
       </nb-card-body>
     </nb-card>
   </div>
+
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-body>
+        <div class="row timer">
+          <h3 class="font-w-light welcome-back">{{'TIMER'|translate}}: <countdown #cd1 (notify)="onNotify($event)" (finished)="onFinished()" [config]="{leftTime: runsetting.maxTime, demand: true}">$!m!:$!s!</countdown> <button nbButton class="col-md-4" type="button" status="warning" (click)="changeStatus(cd1)">{{ (cd1.paused ? 'RESUME' : 'PAUSE') | translate }}</button></h3>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
 </div>
 
 <form (ngSubmit)="visualizza()" #form="ngForm" autocomplete="nope">
@@ -100,18 +111,23 @@
   </div>
 </form>  
 
-<div class="row">
-  <div class="col-md-12">
-    <button nbButton status="danger" class="button" (click)="backToDashboard()"><i class="fas fa-sign-out-alt"></i></button>
-  </div>
-</div>
+
 
 <div class="row footer">
-  <div class="col-md-12">
-    <span class="created-by">
-      {{ 'CREATED_BY' | translate }}
-      <a class="font-w-bold linkschool" href="http://iisvoltapescara.gov.it/" target="_blank">I.I.S A.Volta Pescara</a>
-      2018-2019
-    </span>
-  </div>
+    <div class="col-sm-12"> 
+        <nb-card>
+            <div class="row">
+            <div class="logout col-sm-6">
+                <button nbButton status="danger" class="button" (click)="backToDashboard()"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+            <div class="credits col-sm-6">
+                    <span class=" created-by">
+                        {{ 'CREATED_BY' | translate }}
+                        <a class="font-w-bold linkschool" href="http://iisvoltapescara.gov.it/" target="_blank">I.I.S A.Volta Pescara</a>
+                        2018-2019
+                    </span>
+                </div>
+            </div>  
+        </nb-card>   
+    </div>
 </div>

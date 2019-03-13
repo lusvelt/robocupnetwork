@@ -42,18 +42,21 @@
     </div>
 </div>
 
-<div class="row">
-        <div class="col-md-12">
-            <button nbButton status="danger" class="button" (click)="logout()"><i class="fas fa-sign-out-alt"></i></button>
-    </div>
-</div>
-
 <div class="row footer">
-    <div class="col-md-12">
-        <span class="created-by">
-            {{ 'CREATED_BY' | translate }}
-            <a class="font-w-bold linkschool" href="http://iisvoltapescara.gov.it/" target="_blank">I.I.S A.Volta Pescara</a>
-            2018-2019
-        </span>
+    <div class="col-sm-12"> 
+        <nb-card>
+            <div class="row">
+            <div class="logout col-sm-6">
+                <button nbButton status="danger" class="button" (click)="logout()"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+            <div class="credits col-sm-6">
+                    <span class=" created-by">
+                        {{ 'CREATED_BY' | translate }}
+                        <a class="font-w-bold linkschool" href="http://iisvoltapescara.gov.it/" target="_blank">I.I.S A.Volta Pescara</a>
+                        2018-2019
+                    </span>
+                </div>
+            </div>  
+        </nb-card>   
     </div>
 </div>

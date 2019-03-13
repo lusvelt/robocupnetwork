@@ -49,7 +49,7 @@ export class RunSettingMobileComponent implements OnInit {
   messages: string[] = [];
 
   category: any;
-
+  leftTime: any= '';
   user: any = {};
   team: any = {};
 
@@ -61,7 +61,7 @@ export class RunSettingMobileComponent implements OnInit {
     field: [ ],
     numberOfCheckpoints: undefined,
     checkpoints: [ ],
-    maxTime: undefined
+    maxTime: 480
   };
 
   submitted: boolean = false;
@@ -85,7 +85,21 @@ export class RunSettingMobileComponent implements OnInit {
     });
   }
 
+  onFinished() {
+
+  }
+
+  changeStatus(cd1) {
+    this.leftTime = cd1.left;
+    if (cd1.paused) {
+      cd1.resume();
+    } else {
+      cd1.pause();
+    }
+  }
+
   visualizza() {
+    this.runsetting.maxTime = this.leftTime / 1000;
     const oldField = this.runsetting.field;
     this.runsetting.field = this.runsetting.field.filter((field: any) => field.selected);
     if ( this.runsetting.field.length === 1) {

@@ -15,12 +15,6 @@
       }
   }
 
-  .created-by {
-      float: right;
-      position: absolute;
-      margin-top: 6px;
-      font-size: 1.5rem;
-  }
 
 .button {
   border-radius: 1.5rem;
@@ -36,5 +30,15 @@
 
 .borderclass {
   border-right: 2px solid #37317a;
+}
+
+.logout {
+  padding: 2%;
+}
+
+.credits {
+  text-align: end;
+    padding: 3%;
+    font-size: 1.3rem;
 }
 
