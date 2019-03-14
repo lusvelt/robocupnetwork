@@ -304,6 +304,13 @@
     "APPLY_CHANGES":"Apply changes",
     "NEW_PASSWORD":"New password",
     "RANK":"Rank",
-    "NUMBER_OF_RUNS":"Number of runs"
+    "NUMBER_OF_RUNS":"Number of runs",
+
+    "FIELDS": "Fields",
+    "SELECT_A_FIELD": "Select a field",
+    "NUM_FIELDS": "Number of fields",
+
+    "STAFF": "Staff",
+    "STAFF_FOR_THIS_MANIFESTATION": "Staff for this manifestation"
 
 }

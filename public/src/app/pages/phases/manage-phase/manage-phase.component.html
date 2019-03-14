@@ -72,13 +72,13 @@
           </div>
 
           <div class="mt-3 mb-3">
-            <label for="input-numField" class="sr-only">{{ 'NUM_FIELD' | translate}}</label>
+            <label for="input-numField" class="sr-only">{{ 'NUM_FIELDS' | translate}}</label>
             <input nbInput [(ngModel)]="phase.numField" #numField="ngModel" id="input-numField"
-              name="numField" type="number" placeholder="{{ 'NUM_FIELD' | translate }}"
+              name="numField" type="number" placeholder="{{ 'NUM_FIELDS' | translate }}"
               autofocus fullWidth [status]="numField.dirty ? (numField.invalid  ? 'danger' : 'success') : ''"
               required>
             <small class="form-text error" *ngIf="numField.touched && numField.errors?.required">
-              {{ 'NUM_FIELD_REQUIRED' | translate }}
+              {{ 'NUM_FIELDS_REQUIRED' | translate }}
             </small>
           </div>
 

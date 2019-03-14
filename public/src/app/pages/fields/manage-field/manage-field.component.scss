@@ -1,0 +1,96 @@
+@import '../../../@theme/styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+
+@include nb-install-component() {
+  .solar-card nb-card-header {
+    border: none;
+    padding-bottom: 0;
+  }
+
+  @include media-breakpoint-down(sm) {
+    ngx-traffic {
+      display: none;
+    }
+  }
+
+  @include media-breakpoint-down(is) {
+    /deep/ nb-card.large-card {
+      height: nb-theme(card-height-medium);
+    }
+  }
+}
+
+.maintitle {
+  font-size: 1.7rem;
+  text-align: center;
+  display: inline;
+  padding: 0;
+}
+
+.subtitle {
+  padding: 0;
+  font-size: 1rem;
+  text-align: center;
+}
+
+::-webkit-input-placeholder { text-align:center; }
+
+.title {
+  font-size: 1.7rem;
+}
+
+.id-text {
+position: absolute;
+text-align: center;
+font-size: 1rem;
+margin-left: 13rem;
+margin-top: 5px;
+}
+
+.active-id-text {
+position: absolute;
+text-align: center;
+font-size: 1rem;
+margin-left: 16rem;
+margin-top: 5px;
+}
+
+.icon {
+  font-size: 1.7rem;
+  width: 100%;
+  position: absolute;
+  margin-left: 18rem;
+}
+
+.active-icon {
+font-size: 1.4rem;
+width: 100%;
+position: absolute;
+margin-left: 22rem;
+}
+
+.list-button {
+  border: 1px solid nb-theme(separator);
+}
+
+nb-actions {
+  margin-top: 20%;
+  font-size: 1.5rem;
+}
+
+nb-card-footer {
+  text-align: center;
+}
+
+nb-flip-card {
+width: 30%;
+}
+
+nb-card-body {
+text-align: center;
+}
+
+.score {
+font-size: 1.5rem;
+}

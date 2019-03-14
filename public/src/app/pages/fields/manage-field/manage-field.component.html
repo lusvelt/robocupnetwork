@@ -1,0 +1,85 @@
+<div *ngIf="!this.phaseSelected">
+  <div class="welcome" *ngIf="!authService.isManifestationSelected()">
+    <div class="maintitle">
+      <h1 class="font-w-bold">{{ 'SELECT_A_MANIFESTATION' | translate }}</h1>
+    </div>
+
+    <div class="subtitle">
+      <h1 class="font-w-light">{{'GO_TO_THE_DASHBOARD' | translate}}!</h1>
+    </div>
+  </div>
+
+
+
+  <div *ngIf="authService.isManifestationSelected()">
+
+    <div class="subtitle">
+      <h1 class="font-w-light">{{'SELECT_A_PHASE' | translate}}</h1>
+    </div>
+
+    <div class="mb-3" ngbDropdown>
+
+      <div class="col-md-6 offset-md-3">
+        <input type="text" class="form-control" placeholder="{{ 'WRITE_PHASE_NAME' | translate }}" (selectItem)="onPhaseClicked($event)"
+          [ngbTypeahead]="searchPhase" [resultFormatter]="phasesFormatter" [inputFormatter]="phasesFormatter" (focus)="focus$.next($event.target.value)"
+          (click)="click$.next($event.target.value)" #searchPhaseInstance="ngbTypeahead" />
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="body" *ngIf="this.phaseSelected">
+    <nb-card>
+      <nb-card-header>
+        {{'FIELDS'|translate}}
+      </nb-card-header>
+      <nb-card-body>
+
+        <div class="row">
+          <nb-flip-card *ngFor="let field of fields" class="ml-3">
+            <nb-card-front>
+                <nb-card [status]="field.cardStatus"  size="xsmall">
+                  <nb-card-header>
+                      <div class="row">
+                          <div class="col-md-4 title">
+                            {{field.number}}
+                          </div>
+                          <div class="col-md-4 active-id-text"></div>
+                          <div class="col-md-4 active-icon">
+                            id: {{field.id}}
+                            <i [ngClass]="{ 'fas': true,
+                                          'fa-check': field.status == 'free' ,
+                                          'fa-spinner': field.status == 'running' }">
+                            </i>
+                          </div>
+                      </div>
+                  </nb-card-header>
+                  <nb-card-body>
+                    <div class="row">
+                      <div class="col-md-6">
+                        {{field.team}}
+                      </div>
+                    </div>
+                  </nb-card-body>
+                  <nb-card-footer>
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4 score font-w-bold">{{field.score}} <span class="font-w-light">pt</span></div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </nb-card-footer>
+                </nb-card>
+            </nb-card-front>
+            <nb-card-back>
+              <nb-card size="xsmall">
+                <nb-card-body>
+
+                </nb-card-body>
+              </nb-card>
+            </nb-card-back>
+          </nb-flip-card>
+        </div>
+
+      </nb-card-body>
+    </nb-card>
+  </div>

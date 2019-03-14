@@ -5,6 +5,7 @@ const log = require('../../config/consoleMessageConfig');
 
 const fieldIo = (clientsIo, socket, room) => {
 
+
     const findFieldsFromPhaseId = async (phase, callback) => {
         try {
             const fields = await PhaseHasField.findAll({where: {phaseId: phase.id}});
@@ -12,18 +13,18 @@ const fieldIo = (clientsIo, socket, room) => {
             fields.forEach(field => {
                 promises.push(new Promise((resolve, reject) => {
                     Field.findById(field.fieldId)
-                    .then(result => resolve(result));
-                }))
-            })
+                        .then(result => resolve(result));
+                }));
+            });
             const result = await Promise.all(promises);
             if (!result)
-                throw new Error()
-            callback(result);    
+                throw new Error();
+            callback(result);
             log.verbose('Field from phaseId request');
         } catch (err) {
             callback(new Error());
         }
-    }
+    };
 
     const updateFieldStatus = async (data, callback) => {
         try {
@@ -50,7 +51,7 @@ const fieldIo = (clientsIo, socket, room) => {
                 throw new Error();
             callback(result);
             socket.broadcast.emit('endRunOnField',result);
-            log.verbose('End run on field');    
+            log.verbose('End run on field');
         } catch (err) {
             callback(new Error());
         }
@@ -64,13 +65,13 @@ const fieldIo = (clientsIo, socket, room) => {
             if (!result)
                 throw new Error();
             callback(result);
-            socket.broadcast.emit('updateScoreOnField',result);    
+            socket.broadcast.emit('updateScoreOnField',result);
         } catch (err) {
             throw(new Error());
         }
     }
 
-    
+
     socket.on('findFieldsFromPhaseId',findFieldsFromPhaseId);
     socket.on('updateFieldStatus',updateFieldStatus);
     socket.on('endRunOnField',endRunOnField);

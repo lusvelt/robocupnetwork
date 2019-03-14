@@ -304,6 +304,13 @@
     "SELECT_A_PHASE":"Seleziona una fase",
     "WRITE_PHASE_NAME":"Inserisci nome fase",
     "RANK":"Posizione",
-    "NUMBER_OF_RUNS":"Gare disputate"
+    "NUMBER_OF_RUNS":"Gare disputate",
+
+    "FIELDS": "Campi",
+    "SELECT_A_FIELD": "Seleziona un campo",
+    "NUM_FIELDS": "Numero di campi",
+
+    "STAFF": "Staff",
+    "STAFF_FOR_THIS_MANIFESTATION": "Staff in questa manifestazione"
 
 }

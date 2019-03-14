@@ -91,6 +91,16 @@ const routes: Routes = [{
     canActivate: [AuthGuardService]
   },
   {
+    path: 'staff',
+    loadChildren: './staff/staff.module#StaffModule',
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'fields',
+    loadChildren: './fields/fields.module#FieldsModule',
+    canActivate: [AuthGuardService]
+  },
+  {
     path: 'users',
     loadChildren: './users/users.module#UsersModule',
     canActivate: [AuthGuardService]

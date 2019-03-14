@@ -1,0 +1,21 @@
+<div *ngIf="!this.phaseSelected">
+  <div class="welcome" *ngIf="!authService.isManifestationSelected()">
+    <div class="maintitle">
+      <h1 class="font-w-bold">{{ 'SELECT_A_MANIFESTATION' | translate }}</h1>
+    </div>
+
+    <div class="subtitle">
+      <h1 class="font-w-light">{{'GO_TO_THE_DASHBOARD' | translate}}!</h1>
+    </div>
+  </div>
+
+
+
+  <div *ngIf="authService.isManifestationSelected()">
+
+    <nb-card>
+      <nb-card-header>
+        {{'STAFF_FOR_THIS_MANIFESTATION'|translate}}
+      </nb-card-header>
+    </nb-card>
+  </div>

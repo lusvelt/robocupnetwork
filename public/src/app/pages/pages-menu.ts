@@ -103,6 +103,18 @@ export const MENU_ITEMS: any[] = [
     link: '/pages/ranking/manage'
   },
   {
+    title: 'FIELDS',
+    alias: 'fields',
+    icon: 'far fa-square',
+    link: '/pages/fields/manage'
+  },
+  {
+    title: 'STAFF',
+    alias: 'staff',
+    icon: 'fas fa-people-carry',
+    link: '/pages/staff/manage'
+  },
+  {
     title: 'TEAMS',
     alias: 'teams',
     icon: 'fas fa-users',
