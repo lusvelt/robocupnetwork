@@ -48,7 +48,7 @@
              [status]="password.dirty ? (password.invalid  ? 'danger' : 'success') : ''"
              required>
       <small class="form-text error" *ngIf="password.invalid && password.touched && password.errors?.required">
-        {{ 'LOGIN_PASSWORD_REQUIRED' | translate }} 
+        {{ 'LOGIN_PASSWORD_REQUIRED' | translate }}
       </small>
       <small
         class="form-text error"
@@ -96,8 +96,8 @@
     </ng-container>-->
     <a href="{{ apiUrl }}/calendar">Scarica il calendario</a>
 
-    <!--<small class="form-text">
+    <small class="mt-3 form-text">
       {{ 'LOGIN_SIGNUP_DESCRIPTION' | translate }} <a routerLink="../register"><strong>{{ 'LOGIN_SIGNUP' | translate }}</strong></a>
-    </small>-->
+    </small>
   </div>
 </nb-auth-block>

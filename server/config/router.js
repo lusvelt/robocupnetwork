@@ -9,8 +9,8 @@ const router = {
         const authenticate = passport.authenticate('jwt', { session: false });
 
         app.post('/login', login);
-        // app.post('/register', register);
-        
+        app.post('/register', register);
+
         app.get('/appLatestVersion', appLatestVersion);
         app.get('/robocapp', robocapp);
         app.get('/calendar', calendar);

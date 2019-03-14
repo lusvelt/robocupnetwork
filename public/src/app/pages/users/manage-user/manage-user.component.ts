@@ -37,7 +37,10 @@ export class ManageUserComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.usersService.notify('createUser')
-        .subscribe(user => this.source.insert(user)));
+        .subscribe(user => {
+          console.log(user);
+          this.source.insert(user);
+        }));
 
     this.subscriptions.push(
       this.usersService.notify('editUser')

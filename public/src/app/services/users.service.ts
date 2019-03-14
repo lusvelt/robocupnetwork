@@ -14,6 +14,10 @@ export class UsersService {
     return this.socketIoService.get('getUsers');
   }
 
+  sendUser(user) {
+    return this.socketIoService.send('sendUser', user);
+  }
+
   createUser(data) {
     return this.socketIoService.send('createUser', data);
   }

@@ -135,6 +135,15 @@ const usersIo = (clientsIo, socket, room) => {
         }
     };
 
+    const sendUser = async (user, callback) => {
+        try {
+          console.log(user);
+            socket.broadcast.emit('createUser',user);
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
     const changePassword = async (args, callback) => {
         try {
             const id = args.user.id;
@@ -156,6 +165,7 @@ const usersIo = (clientsIo, socket, room) => {
     socket.on('removeUser', removeUser);
     socket.on('updateUserBirthdate', updateUserBirthdate);
     socket.on('changePassword', changePassword);
+    socket.on('sendUser', sendUser);
 };
 
 module.exports = usersIo;

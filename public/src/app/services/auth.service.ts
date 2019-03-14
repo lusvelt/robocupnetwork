@@ -1,3 +1,4 @@
+import { UsersService } from './users.service';
 import { UserCredentialsInterface } from './../interfaces/user-credentials.interface';
 import { UserInterface } from './../interfaces/user.interface';
 import { TokenService } from './token.service';
@@ -18,6 +19,7 @@ export class AuthService {
   constructor(private http: HttpService,
               private tokenService: TokenService,
               private userService: UserService,
+              private usersService: UsersService,
               private socketIoService: SocketIoService,
               private router: Router) { }
 
@@ -29,6 +31,8 @@ export class AuthService {
 
   register(user: UserInterface): Promise<any> {
     return this.http.post('/register', user, false);
+    // httpRequest.then(response => this.usersService.sendUser(response));
+    // return httpRequest;
   }
 
   isAuthenticated(): boolean {

@@ -46,6 +46,6 @@ export class RegisterComponent {
       .then(() => {
         this.notificationsService.success('REGISTRATION_COMPLETED');
         this.router.navigate(['/auth', 'login']);
-      }, err => this.notificationsService.error(err.error.code));
+      }, err => this.notificationsService.error('REGISTRATION_FAILED'));
   }
 }
