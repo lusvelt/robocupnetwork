@@ -100,8 +100,9 @@ const runsIo = (clientsIo, socket, room) => {
 
     const getDataForRanking = async (phase, callback) => {
         try {
+            console.log(phase);
             const phaseId = phase.id;
-            const ranking = await sequelize.query('SELECT Teams.name as team, Schools.name as school, AgeRanges.name as ageRange, sum(Runs.score) as score, count(Runs.id) as numberOfRuns from  Runs inner join Phases on Runs.phaseId = Phases.id inner join Teams on Runs.teamId = Teams.id inner join Schools on Teams.schoolId = Schools.id inner join AgeRanges on Teams.agerangeId = AgeRanges.id where Phases.id = 1 and Runs.status = \'validated\' group by Teams.id order by score desc;', 
+            const ranking = await sequelize.query('SELECT Teams.name as team, Schools.name as school, AgeRanges.name as ageRange, sum(Runs.score) as score, count(Runs.id) as numberOfRuns from  Runs inner join Phases on Runs.phaseId = Phases.id inner join Teams on Runs.teamId = Teams.id inner join Schools on Teams.schoolId = Schools.id inner join AgeRanges on Teams.agerangeId = AgeRanges.id where Phases.id = :phaseId  and Runs.status = \'validated\' group by Teams.id order by score desc;', 
                 { replacements: { phaseId }, type: sequelize.QueryTypes.SELECT });
             callback(ranking);   
             log.verbose('Get data for ranking');     

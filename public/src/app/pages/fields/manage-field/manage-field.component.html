@@ -28,58 +28,44 @@
   </div>
 </div>
 
-  <div class="body" *ngIf="this.phaseSelected">
-    <nb-card>
+<div class="body" *ngIf="this.phaseSelected">
+
+  <div class="row">
+    <nb-card *ngFor="let field of fields" class="ml-3" [status]="field.cardStatus" size="xsmall">
       <nb-card-header>
-        {{'FIELDS'|translate}}
+            <div class="number">{{field.number}}</div>
       </nb-card-header>
       <nb-card-body>
+          <div class="row" *ngIf="field.status == 'running'">
+            <div class="col-md-6">
+              {{field.team}}
+            </div>
+            <div class="col-md-6">
+              {{field.status}}
+            </div>
+         </div>
+         <div class="row" *ngIf="field.status != 'running'">
+            <div class="col-md-12">{{field.status}}</div>
+         </div>
+      </nb-card-body>
+      <nb-card-footer>
+          <div class="row" *ngIf="field.status == 'running'">
+            <div class="score font-w-bold">{{field.score}} <span class="font-w-light">pt</span></div>
+            <div class="button"><button nbButton><i class="fas fa-search"></i></button></div>
+          </div> 
+          <div class="row" *ngIf="field.status != 'running'">
+              <div class="button"><button nbButton><i class="fas fa-search"></i></button></div>
+          </div> 
+      </nb-card-footer>
+    </nb-card>
+  </div>
 
-        <div class="row">
-          <nb-flip-card *ngFor="let field of fields" class="ml-3">
-            <nb-card-front>
-                <nb-card [status]="field.cardStatus"  size="xsmall">
-                  <nb-card-header>
-                      <div class="row">
-                          <div class="col-md-4 title">
-                            {{field.number}}
-                          </div>
-                          <div class="col-md-4 active-id-text"></div>
-                          <div class="col-md-4 active-icon">
-                            id: {{field.id}}
-                            <i [ngClass]="{ 'fas': true,
-                                          'fa-check': field.status == 'free' ,
-                                          'fa-spinner': field.status == 'running' }">
-                            </i>
-                          </div>
-                      </div>
-                  </nb-card-header>
-                  <nb-card-body>
-                    <div class="row">
-                      <div class="col-md-6">
-                        {{field.team}}
-                      </div>
-                    </div>
-                  </nb-card-body>
-                  <nb-card-footer>
-                    <div class="row">
-                        <div class="col-md-4"></div>
-                        <div class="col-md-4 score font-w-bold">{{field.score}} <span class="font-w-light">pt</span></div>
-                        <div class="col-md-4"></div>
-                    </div>
-                </nb-card-footer>
-                </nb-card>
-            </nb-card-front>
-            <nb-card-back>
-              <nb-card size="xsmall">
-                <nb-card-body>
-
-                </nb-card-body>
-              </nb-card>
-            </nb-card-back>
-          </nb-flip-card>
-        </div>
-
+  <div class="footer">
+    <nb-card fullWidth>
+      <nb-card-body>
+        <button class="btn btn-secondary btn-demo" (click)="resetAllFields()">{{'RESET_ALL_FIELDS'| translate}}</button>
       </nb-card-body>
     </nb-card>
   </div>
+
+</div>

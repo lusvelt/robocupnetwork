@@ -13,6 +13,10 @@ export class FieldsService {
     return this.socketIoService.send('findFieldsFromPhaseId', phase);
   }
 
+  resetAllFields(phase) {
+    return this.socketIoService.send('resetAllFields', phase);
+  }
+
   updateFieldStatus(field, team) {
     return this.socketIoService.send('updateFieldStatus', {field, team});
   }
@@ -23,5 +27,10 @@ export class FieldsService {
 
   updateScoreOnField(field, score) {
     return this.socketIoService.send('updateScoreOnField', {field, score});
+  }
+
+  notify(eventName: string): Observable<any> {
+    return new Observable(observer => this.socketIoService.on(eventName)
+      .subscribe(data => observer.next(data)));
   }
 }

@@ -54,6 +54,46 @@ export class ManageFieldComponent implements OnInit {
         })
         .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
     }
+
+    this.fieldService.notify('updateFieldStatus')
+    .subscribe(field => {
+      if (field.status === 'free')
+        field.cardStatus = 'success';
+      if (field.status === 'running')
+        field.cardStatus = 'warning';
+      this.fields.splice(this.fields.findIndex(el => el.id === field.id), 1, field);
+    });
+
+    this.fieldService.notify('endRunOnField')
+    .subscribe(field => {
+      if (field.status === 'free')
+        field.cardStatus = 'success';
+      if (field.status === 'running')
+        field.cardStatus = 'warning';
+      this.fields.splice(this.fields.findIndex(el => el.id === field.id), 1, field);
+    });
+
+    this.fieldService.notify('updateScoreOnField')
+    .subscribe(field => {
+      if (field.status === 'free')
+        field.cardStatus = 'success';
+      if (field.status === 'running')
+        field.cardStatus = 'warning';
+      this.fields.splice(this.fields.findIndex(el => el.id === field.id), 1, field);
+    });
+
+    this.fieldService.notify('resetAllFields')
+    .subscribe(phase => {
+      if (this.phaseSelected.id === phase.id) {
+        if (this.authService.isManifestationSelected() && this.authService.canDo('getPhasesInManifestation')) {
+          this.phasesService.getPhasesInManifestation()
+            .then(phases => {
+              this.phasesList = phases;
+            })
+            .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+        }
+      }
+    });
   }
 
   onPhaseClicked(event: any) {
@@ -69,6 +109,24 @@ export class ManageFieldComponent implements OnInit {
             });
              this.fields = fields;
           });
+  }
+
+  resetAllFields() {
+    this.fieldService.resetAllFields(this.phaseSelected)
+    .then((res) => {
+      this.fieldService.findFieldsFromPhaseId(this.phaseSelected)
+      .then(fields => {
+        fields.forEach(field => {
+          if (field.status === 'free')
+            field.cardStatus = 'success';
+          if (field.status === 'running')
+            field.cardStatus = 'warning';
+        });
+         this.fields = fields;
+         this.notificationsService.success('ALL_FIELDS_RESET_SUCCESSFULL');
+      });
+    })
+    .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
   }
 
 

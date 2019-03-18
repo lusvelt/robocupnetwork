@@ -72,7 +72,7 @@ export class RunSettingMobileComponent implements OnInit {
   ngOnInit() {
     this.fullName = this.userService.getFullName();
     const data = this.paramsService.getParams();
-    this.team = JSON.parse('{"id":1,"name":"das","Phases":[{"id":2,"name":"asd"}]}'); // data.text
+    this.team = JSON.parse('{"id":1,"name":"micoo","Phases":[{"id":2,"name":"Qualificazioni"}]}'); // data.text
     this.categoriesService.findCategoryFromPhaseId(this.team.Phases[0])
     .then(category => {
       this.runsetting.maxTime = category.defaultMaxTime;
