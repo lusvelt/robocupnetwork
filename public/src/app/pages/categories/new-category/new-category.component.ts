@@ -50,9 +50,13 @@ export class NewCategoryComponent implements OnInit, OnDestroy {
 }
 
   ngOnInit() {
+    if (this.authService.canDo('getCategories')) {
     this.categoriesService.getCategories()
     .then(categories => this.source.load(categories))
     .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+    } else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
 
     this.subscriptions.push(
     this.categoriesService.notify('createCategory')
@@ -164,7 +168,7 @@ export class NewCategoryComponent implements OnInit, OnDestroy {
   }
 
   onDeleteConfirm(event): void {
-    if (this.authService.canDo('deleteCategory')) {
+    if (this.authService.canDo('removeCategory')) {
       this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
         .then(confirmation => {
           if (confirmation) {

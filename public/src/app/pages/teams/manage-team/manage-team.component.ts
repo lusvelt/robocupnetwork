@@ -79,7 +79,7 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    if (this.authService.isManifestationSelected() && this.authService.canDo('seeTeams')) {
+    if (this.authService.isManifestationSelected() && this.authService.canDo('getTeams')) {
       this.teamService.getTeamsInManifestation()
       .then(teams => {
         teams.forEach(team => {

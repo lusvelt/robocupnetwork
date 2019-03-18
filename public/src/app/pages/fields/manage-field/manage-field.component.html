@@ -30,7 +30,7 @@
 
 <div class="body" *ngIf="this.phaseSelected">
 
-  <div class="row">
+  <div *ngIf="authService.canDo('findFieldsFromPhaseId')" class="row">
     <nb-card *ngFor="let field of fields" class="ml-3" [status]="field.cardStatus" size="xsmall">
       <nb-card-header>
             <div class="number">{{field.number}}</div>
@@ -60,7 +60,7 @@
     </nb-card>
   </div>
 
-  <div class="footer">
+  <div *ngIf="authService.canDo('resetAllFields')" class="footer">
     <nb-card fullWidth>
       <nb-card-body>
         <button class="btn btn-secondary btn-demo" (click)="resetAllFields()">{{'RESET_ALL_FIELDS'| translate}}</button>

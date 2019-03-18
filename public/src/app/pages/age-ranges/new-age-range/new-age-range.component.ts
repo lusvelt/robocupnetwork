@@ -39,9 +39,13 @@ export class NewAgeRangeComponent implements OnInit, OnDestroy {
       config.autoClose = false;
   }
   ngOnInit() {
-    this.ageRangesService.getAgeRanges()
-    .then(ageRanges => this.source.load(ageRanges))
-    .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+    if (this.authService.canDo('getAgeRanges')) {
+      this.ageRangesService.getAgeRanges()
+      .then(ageRanges => this.source.load(ageRanges))
+      .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+    } else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
 
     this.subscriptions.push(
     this.ageRangesService.notify('createAgeRange')
@@ -102,7 +106,7 @@ export class NewAgeRangeComponent implements OnInit, OnDestroy {
   }
 
   onDeleteConfirm(event): void {
-    if (this.authService.canDo('deleteAgeRange')) {
+    if (this.authService.canDo('removeAgeRange')) {
       this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
         .then(confirmation => {
           if (confirmation) {

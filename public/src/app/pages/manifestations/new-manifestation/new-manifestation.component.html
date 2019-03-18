@@ -1,5 +1,5 @@
 <button class="mb-3" [ngClass]="{ 'btn': true, 'btn-success': !manifestation.show, 'btn-danger': manifestation.show }" type="button"
-  (click)="toggleForm()">
+  (click)="toggleForm()" *ngIf="authService.canDo('createManifestation')">
   <i [ngClass]="{ 'fas': true, 'fa-plus': !manifestation.show, 'fa-times': manifestation.show }"></i>
   {{ (manifestation.show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
 </button>
@@ -58,7 +58,7 @@
 </form>
 
 
-<nb-card size="xxlarge">
+<nb-card *ngIf="authService.canDo('getManifestations')" size="xxlarge">
   <nb-card-header>
     {{'MANIFESTATIONS'|translate}}
   </nb-card-header>

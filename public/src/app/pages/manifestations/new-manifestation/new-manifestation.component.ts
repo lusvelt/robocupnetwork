@@ -16,6 +16,7 @@ import { Subject, Observable, merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { PlacesService } from '../../../services/places.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'ngx-new-manifestation',
@@ -58,11 +59,13 @@ export class NewManifestationComponent implements OnInit, OnDestroy {
               private config: NgbDropdownConfig,
               private placeService: PlacesService,
               private router: Router,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private authService: AuthService) {
                 config.autoClose = false;
                }
 
   ngOnInit() {
+    if (this.authService.canDo('getManifestations')) {
     this.manifestationsService.getManifestations()
       .then(manifestations => {
         manifestations.forEach(manifestation => {
@@ -71,6 +74,9 @@ export class NewManifestationComponent implements OnInit, OnDestroy {
         this.source.load(manifestations);
       })
       .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+    } else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
 
     this.subscriptions.push(
       this.manifestationsService.notify('createManifestation')
@@ -103,22 +109,26 @@ export class NewManifestationComponent implements OnInit, OnDestroy {
   }
 
   onButtonClicked() {
-    const manifestation: ManifestationInterface = _.cloneDeep(this.manifestation);
-    const place = manifestation.place;
+    if (this.authService.canDo('createManifestation')) {
+      const manifestation: ManifestationInterface = _.cloneDeep(this.manifestation);
+      const place = manifestation.place;
 
-    manifestation.start = new Date(this.manifestation.start);
-    manifestation.end = new Date(this.manifestation.end);
-    if (manifestation.name !== '' && manifestation.description !== '') {
-    this.manifestationsService.createManifestation(manifestation)
-      .then(_manifestation => {
-         _manifestation.Place = place.street + ' ' + place.civicNumber + ', ' + place.city + ' ' + place.postalCode + ', ' + place.country;
-        // _manifestation.placeId = place.id;
-        this.notificationsService.success('MANIFESTATION_CREATED');
-        this.source.insert(_manifestation);
-        this.manifestation.show = false;
-      });
+      manifestation.start = new Date(this.manifestation.start);
+      manifestation.end = new Date(this.manifestation.end);
+      if (manifestation.name !== '' && manifestation.description !== '') {
+      this.manifestationsService.createManifestation(manifestation)
+        .then(_manifestation => {
+          _manifestation.Place = place.street + ' ' + place.civicNumber + ', ' + place.city + ' ' + place.postalCode + ', ' + place.country;
+          // _manifestation.placeId = place.id;
+          this.notificationsService.success('MANIFESTATION_CREATED');
+          this.source.insert(_manifestation);
+          this.manifestation.show = false;
+        });
     } else {
       this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
+    }
+    } else {
+      this.notificationsService.error('UNAUTHORIZED');
     }
   }
 
@@ -174,24 +184,32 @@ export class NewManifestationComponent implements OnInit, OnDestroy {
   });
 
   onEditConfirm(event) {
+    if (this.authService.canDo('editManifestation')) {
     event.confirm.resolve();
     this.manifestationsService.editManifestation(event.newData)
       .then(result => this.notificationsService.success('MANIFESTATION_UPDATED'))
       .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+    } else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
   }
 
   onDeleteConfirm(event): void {
-    this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
-      .then(confirmation => {
-        if (confirmation) {
-          event.confirm.resolve();
-          this.manifestationsService.removeManifestation(event.data)
-            .then(result => this.notificationsService.success('DELETE_SUCCEDED'))
-            .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
-        } else {
-          event.confirm.reject();
-        }
-      });
+    if (this.authService.canDo('removeManifestation')) {
+      this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
+        .then(confirmation => {
+          if (confirmation) {
+            event.confirm.resolve();
+            this.manifestationsService.removeManifestation(event.data)
+              .then(result => this.notificationsService.success('DELETE_SUCCEDED'))
+              .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+          } else {
+            event.confirm.reject();
+          }
+        });
+      } else {
+        this.notificationsService.error('UNAUTHORIZED');
+      }
   }
 
   toggleForm() {
