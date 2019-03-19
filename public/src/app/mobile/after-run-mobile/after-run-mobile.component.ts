@@ -18,6 +18,7 @@ export class AfterRunMobileComponent implements OnInit {
   events: any;
   score: any;
   run: any;
+  remainingTime: any;
 
   isContestation: false;
   toEliminate: false;
@@ -38,10 +39,11 @@ export class AfterRunMobileComponent implements OnInit {
     this.events = data.events;
     this.score = data.score;
     this.run = data.run;
+    this.remainingTime = data.remainingTime.left  / 1000;
   }
 
   sendRace() {
-      this.runService.endRun(this.run, this.runSettings, this.toEliminate, this.isContestation, this.contestation, this.score, this.events)
+      this.runService.endRun(this.run, this.runSettings, this.toEliminate, this.isContestation, this.contestation, this.score, this.events, this.remainingTime)
       .then(() => {
         this.notificationsService.success('RACE_UPLOADED_SUCCESSFUL');
         this.router.navigate(['/mobile', 'dashboard']);

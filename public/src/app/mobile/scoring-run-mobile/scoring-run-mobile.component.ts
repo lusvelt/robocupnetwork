@@ -39,6 +39,7 @@ export class ScoringRunMobileComponent implements OnInit {
 
   timer: any;
   time: number;
+  remainingTime = 0;
 
   constructor(private route: ActivatedRoute, private router: Router, private paramsService: ParamsService, private modalService: ModalService, private runService: RunService, private fieldsService: FieldsService) { }
 
@@ -154,7 +155,8 @@ export class ScoringRunMobileComponent implements OnInit {
         team: this.team,
         category: this.category,
         events: this.events,
-        score: this.score
+        score: this.score,
+        remainingTime: this.remainingTime
       });
       this.router.navigate(['/mobile', 'after-run']);
     });
@@ -168,6 +170,7 @@ export class ScoringRunMobileComponent implements OnInit {
     this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_END')
         .then(confirmation => {
           if (confirmation) {
+            this.remainingTime = cd1;
             this.onFinished();
           } else {
             cd1.resume();

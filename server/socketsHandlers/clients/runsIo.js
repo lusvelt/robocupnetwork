@@ -121,6 +121,7 @@ const runsIo = (clientsIo, socket, room) => {
             const _toEliminate = data.toEliminate;
             const _isContestation = data.isContestation;
             const contestation = data.contestation;
+            const _remainingTime = data.remainingTime;
             let status = 'toBeValidated';
 
             _events = JSON.stringify({ events: _events });
@@ -132,7 +133,7 @@ const runsIo = (clientsIo, socket, room) => {
                     status = 'toBeReviewed';
             }    
             
-            const result = await Run.update({end: new Date(), status: status, contestationMessage: contestation, score: _score, events: _events}, {where: {id}});      
+            const result = await Run.update({end: new Date(), status: status, contestationMessage: contestation, score: _score, events: _events, remainingTime: _remainingTime}, {where: {id}});      
             if(!result)
                 throw new Error();
             

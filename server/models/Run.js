@@ -18,7 +18,8 @@ const Run = sequelize.define('Run', {
     maxTime: { type: Sequelize.INTEGER },
     numberOfCheckpoints: { type: Sequelize.INTEGER },
     events: { type: Sequelize.JSON},
-    score: {type: Sequelize.INTEGER }
+    score: {type: Sequelize.INTEGER },
+    remainingTime: {type: Sequelize.INTEGER, defaultValue: 0}
 });
 
 Run.getRunsList = () => Run.findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] },
