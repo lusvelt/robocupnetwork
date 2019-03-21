@@ -311,6 +311,13 @@
     "NUM_FIELDS": "Number of fields",
 
     "STAFF": "Staff",
-    "STAFF_FOR_THIS_MANIFESTATION": "Staff for this manifestation"
+    "STAFF_FOR_THIS_MANIFESTATION": "Staff for this manifestation",
+
+    "WELCOME_IN":"Welcome in",
+    "WHAT_IS_ROBOCUP":"What is Robocup?",
+    "WHAT_IS_ROBOCUP_DESCRIPTION":"PROJECT-ORIENTED EDUCATIONAL ROBOTICS FOR STUDENTS UP THROUGH AGE 19, WITH A FOCUS ON PROVIDING A HANDS-ON, SCAFFOLDED ENVIRONMENT WHERE LEARNERS CAN GROW BY EXPANDING THEIR KNOWLEDGE OF, SPARKING THEIR CURIOSITY ABOUT AND INCREASING THEIR COMFORT WITH TECHNOLOGY. THREE CHALLENGES: SOCCER, RESCUE, ONSTAGE (FORMER DANCE) EACH EMPHASIZING COOPERATIVE PROBLEM-SOLVING; EACH DESIGNED TO REACH CREATIVE YOUNG MINDS WITH A RANGE OF INTERESTS, AND SKILLS",
+    "RESCUE_DESCRIPTION":"Robots identify victims within re-created disaster scenarios, varying in complexity from line-following on a flat surface to negotiating paths through obstacles on uneven terrain Please make sure to check the RoboCupJunior General Rules! Rescue League...",
+    "SOCCER_DESCRIPTION":"2-on-2 teams of autonomous mobile robots play in a highly dynamic environment, tracking a special light-emitting ball in an enclosed, land-marked field.   Please make sure to check the RoboCupJunior General Rules! Soccer has two sub-leagues: Soccer-Lightweight (2019...",
+    "ONSTAGE_DESCRIPTION":"One or more robots come together with humans, dressed in costume and moving in creative, interactive and collaborative ways Please make sure to check the RoboCupJunior General Rules! OnStage has two sub-leagues: OnStage-Preliminary (2019 rules)..."
 
 }
