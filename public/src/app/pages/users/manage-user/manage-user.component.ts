@@ -10,6 +10,7 @@ import { DataSource } from '../../../classes/data-source.class';
 import { notAddableConfig } from '../../../config/tables.config';
 import { SingleDateComponent } from '../../../shared/view-cells/single-date/single-date.component';
 import { SingleButtonComponent } from '../../../shared/view-cells/single-button/single-button.component';
+import { AuthService } from './../../../services/auth.service';
 
 @Component({
   selector: 'ngx-manage-user',
@@ -27,13 +28,18 @@ export class ManageUserComponent implements OnInit, OnDestroy {
       private notificationsService: NotificationsService,
       private modalService: ModalService,
       private translateService: TranslateService,
-      private usersService: UsersService
+      private usersService: UsersService,
+      public authService: AuthService
   ) { }
 
   ngOnInit() {
+    if (this.authService.canDo('getUsers')) {
     this.usersService.getUsers()
       .then(users => this.source.load(users))
       .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+    }else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
 
     this.subscriptions.push(
       this.usersService.notify('createUser')
@@ -99,13 +105,17 @@ export class ManageUserComponent implements OnInit, OnDestroy {
   });
 
   onEditConfirm(event) {
+    if (this.authService.canDo('editUser')) {
     event.confirm.resolve();
     this.usersService.editUser(event.newData)
       .then(result => this.notificationsService.success('USER_UPDATED'))
       .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+  }else {
+    this.notificationsService.error('UNAUTHORIZED');
   }
-
+  }
   onDeleteConfirm(event): void {
+    if (this.authService.canDo('removeUser')) {
     this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
       .then(confirmation => {
         if (confirmation) {
@@ -117,6 +127,9 @@ export class ManageUserComponent implements OnInit, OnDestroy {
           event.confirm.reject();
         }
       });
+    }else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
   }
 
   ngOnDestroy() {

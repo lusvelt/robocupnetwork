@@ -15,6 +15,7 @@ import { Subject } from 'rxjs/Subject';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { merge } from 'rxjs';
 import { forEach } from '@angular/router/src/utils/collection';
+import { AuthService } from './../../../services/auth.service';
 
 @Component({
   selector: 'ngx-new-user',
@@ -67,11 +68,13 @@ export class NewUserComponent implements OnInit {
               private notificationsService: NotificationsService,
               private dialogService: NbDialogService,
               private transalteService: TranslateService,
+              public authService: AuthService,
               private ngbDropdownConfig: NgbDropdownConfig) {
                 ngbDropdownConfig.autoClose = false;
   }
 
   ngOnInit() {
+    if (this.authService.canDo('createUsers')) {
     this.manifestationsService.getManifestations()
     .then(manifestations => this.manifestationsList = manifestations);
 
@@ -79,6 +82,9 @@ export class NewUserComponent implements OnInit {
     .then(roles => {
       this.user.standardRoles = roles.filter((role: any) => role.dependsOnManifestation === false);
     });
+  }else {
+    this.notificationsService.error('UNAUTHORIZED');
+  }
 
   }
 

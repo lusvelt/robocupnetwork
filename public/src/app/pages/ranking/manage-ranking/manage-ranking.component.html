@@ -26,9 +26,9 @@
       </div>
     </div>
   </div>
-</div>  
+</div>
 
-  <div class="body" *ngIf="this.phaseSelected">
+  <div class="body" *ngIf="this.phaseSelected && authService.canDo('getDataForRanking')" >
     <nb-card>
       <nb-card-header>
         {{'RANKING'|translate}}

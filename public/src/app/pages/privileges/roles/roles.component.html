@@ -1,5 +1,5 @@
 <button class = "mb-3" [ngClass]="{ 'btn': true, 'btn-success': !role.show, 'btn-danger': role.show }" type="button" (click)="toggleForm()">
-  <i [ngClass]="{ 'fas': true, 'fa-plus': !role.show, 'fa-times': role.show }"></i>
+  <i [ngClass]="{ 'fas': true, 'fa-plus': !role.show, 'fa-times': role.show }" *ngIf="authService.canDo('createRole')"></i>
   {{ (role.show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
 </button>
 
@@ -67,7 +67,7 @@
 </form>
 
 
-<nb-card size="xxlarge">
+<nb-card *ngIf="authService.canDo('getRoles')" size="xxlarge">
 <nb-card-header>
   {{'ROLES'|translate}}
 </nb-card-header>

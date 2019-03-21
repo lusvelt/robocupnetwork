@@ -65,6 +65,7 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit() {
+    if (this.authService.canDo('getSchools')) {
     this.schoolService.getSchools()
       .then(school => {
         // tslint:disable-next-line:no-shadowed-variable
@@ -76,6 +77,11 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
         this.source.load(school);
       })
       .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+    } else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
+
+
     this.subscriptions.push(
       this.schoolService.notify('createSchool')
       .subscribe(school => this.source.insert(school)));
@@ -107,6 +113,7 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
   }
 
   onButtonClicked() {
+    if (this.authService.canDo('createSchool')) {
     const school: SchoolInterface = _.cloneDeep(this.school);
     const place = school.place;
     if (school.place && school.name !== '') {
@@ -120,6 +127,9 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
     }else {
       this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE');
     }
+  } else {
+    this.notificationsService.error('UNAUTHORIZED');
+  }
   }
 
 
@@ -155,7 +165,7 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
   }
 
   onDeleteConfirm(event): void {
-    if (this.authService.canDo('deleteSchool')) {
+    if (this.authService.canDo('removeSchool')) {
       this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
         .then(confirmation => {
           if (confirmation) {

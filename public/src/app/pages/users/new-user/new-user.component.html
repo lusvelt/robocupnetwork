@@ -1,4 +1,4 @@
-<form (ngSubmit)="onButtonClicked()" #form="ngForm">
+<form (ngSubmit)="onButtonClicked()" #form="ngForm" *ngIf="authService.canDo('createUser')">
   <div class="form-group">
     <nb-card>
       <nb-card-header>{{'NEW_USER' | translate}}</nb-card-header>

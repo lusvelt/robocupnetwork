@@ -1,5 +1,5 @@
-<button class="mb-3" [ngClass]="{ 'btn': true, 'btn-success': !place.show, 'btn-danger': place.show }" type="button" (click)="toggleForm()">
-  <i [ngClass]="{ 'fas': true, 'fa-plus': !place.show, 'fa-times': place.show }"></i>
+<button class="mb-3" [ngClass]="{ 'btn': true, 'btn-success': !place.show, 'btn-danger': place.show }" type="button" *ngIf="authService.canDo('createPlace')" (click)="toggleForm()">
+  <i [ngClass]="{ 'fas': true, 'fa-plus': !place.show, 'fa-times': place.show }" ></i>
   {{ (place.show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
 </button>
 
@@ -133,7 +133,7 @@
 </form>
 
 
-<nb-card size="xxlarge">
+<nb-card *ngIf="authService.canDo('getPlaces')" size="xxlarge">
   <nb-card-header>
     {{'PLACE'|translate}}
   </nb-card-header>

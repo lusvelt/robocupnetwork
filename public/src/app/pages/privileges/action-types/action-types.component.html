@@ -1,4 +1,4 @@
-<nb-card size="xxlarge">
+<nb-card *ngIf="authService.canDo('getActionTypes')" size="xxlarge">
   <nb-card-header>
     {{'ACTION_TYPES'|translate}}
   </nb-card-header>

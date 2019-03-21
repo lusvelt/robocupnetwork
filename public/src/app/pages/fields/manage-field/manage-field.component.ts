@@ -98,7 +98,7 @@ export class ManageFieldComponent implements OnInit {
 
   onPhaseClicked(event: any) {
     this.phaseSelected = event.item;
-
+    if (this.authService.canDo('findFieldsFromPhaseId')) {
     this.fieldService.findFieldsFromPhaseId(this.phaseSelected)
           .then(fields => {
             fields.forEach(field => {
@@ -109,6 +109,9 @@ export class ManageFieldComponent implements OnInit {
             });
              this.fields = fields;
           });
+        } else {
+          this.notificationsService.error('UNAUTHORIZED');
+        }
   }
 
   resetAllFields() {

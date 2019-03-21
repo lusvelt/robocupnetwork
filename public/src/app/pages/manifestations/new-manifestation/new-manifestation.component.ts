@@ -60,7 +60,7 @@ export class NewManifestationComponent implements OnInit, OnDestroy {
               private placeService: PlacesService,
               private router: Router,
               private datePipe: DatePipe,
-              private authService: AuthService) {
+              public authService: AuthService) {
                 config.autoClose = false;
                }
 

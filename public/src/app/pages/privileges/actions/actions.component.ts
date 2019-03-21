@@ -14,6 +14,7 @@ import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { CheckboxComponent } from '../../../shared/view-cells/checkbox/checkbox.component';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'ngx-action',
@@ -39,14 +40,19 @@ export class ActionsComponent implements OnInit, OnDestroy {
               private privilegesService: PrivilegesService,
               private notificationsService: NotificationsService,
               private modalService: ModalService,
+              public authService: AuthService,
               private config: NgbDropdownConfig) {
                 config.autoClose = false;
   }
 
   ngOnInit() {
+    if (this.authService.canDo('getActions')) {
     this.privilegesService.getActions()
     .then(actions => this.source.load(actions))
     .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+  }else {
+    this.notificationsService.error('UNAUTHORIZED');
+  }
 
     this.subscriptions.push(
     this.privilegesService.notify('createAction')
@@ -100,6 +106,7 @@ export class ActionsComponent implements OnInit, OnDestroy {
   }
 
   onButtonClicked() {
+    if (this.authService.canDo('createAction')) {
     const action: ActionInterface = _.cloneDeep(this.action);
     action.actionTypes = action.actionTypes.filter((actionType: any) => actionType.selected);
     action.modules = action.modules.filter((mod: any) => mod.selected);
@@ -113,6 +120,9 @@ export class ActionsComponent implements OnInit, OnDestroy {
     } else {
       this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
     }
+  }else {
+    this.notificationsService.error('UNAUTHORIZED');
+  }
   }
 
   settings = this.tablesService.getSettings(notAddableConfig, {
@@ -190,13 +200,18 @@ export class ActionsComponent implements OnInit, OnDestroy {
   });
 
   onEditConfirm(event) {
+    if (this.authService.canDo('editAction')) {
     event.confirm.resolve();
     this.privilegesService.editAction(event.newData)
       .then(result => this.notificationsService.success('ACTION_UPDATED'))
       .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+    } else {
+      this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
+    }
   }
 
   onDeleteConfirm(event): void {
+    if (this.authService.canDo('removeAction')) {
     this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
       .then(confirmation => {
         if (confirmation) {
@@ -208,6 +223,9 @@ export class ActionsComponent implements OnInit, OnDestroy {
           event.confirm.reject();
         }
       });
+    } else {
+      this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
+    }
   }
 
   toggleForm() {

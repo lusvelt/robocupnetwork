@@ -5,6 +5,7 @@ import { confirmSettings } from '../../../config/modal.config';
 import { RunService } from '../../../services/run.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from '../../../services/notifications.service';
+import { AuthService } from './../../../services/auth.service';
 
 @Component({
   selector: 'ngx-manage-run',
@@ -16,9 +17,11 @@ export class ManageRunComponent implements OnInit {
   cardStatus: any;
   constructor(private modalService: NgbModal,
               private runService: RunService,
+              public authService: AuthService,
               private notificationsService: NotificationsService) { }
 
   ngOnInit() {
+    if (this.authService.canDo('getRuns')) {
     this.runService.getRuns()
     .then(runs => {
       runs.forEach(run => {
@@ -33,6 +36,9 @@ export class ManageRunComponent implements OnInit {
       });
       this.runs = runs;
     });
+  } else {
+    this.notificationsService.error('UNAUTHORIZED');
+  }
 
     this.runService.notify('startRun')
     .subscribe(run => this.runs.push(run));
@@ -61,6 +67,7 @@ export class ManageRunComponent implements OnInit {
   }
 
   deleteRun(run) {
+    if (this.authService.canDo('deleteRun')) {
     this.runService.deleteRun(run)
     .then(res => {
       run.status = 'deleted';
@@ -68,9 +75,13 @@ export class ManageRunComponent implements OnInit {
       this.notificationsService.success('RACE_DELETED');
     })
     .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+  } else {
+    this.notificationsService.error('UNAUTHORIZED');
+  }
   }
 
   validateRun(run) {
+    if (this.authService.canDo('validateRunWithPoints')) {
     this.runService.fastValidateRun(run)
       .then(res => {
         run.status = 'validated';
@@ -78,6 +89,9 @@ export class ManageRunComponent implements OnInit {
         this.notificationsService.success('RACE_VALIDATED');
       })
       .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+    } else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
   }
 
   openRunModal(run) {

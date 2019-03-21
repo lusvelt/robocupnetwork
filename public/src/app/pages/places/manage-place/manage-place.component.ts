@@ -12,6 +12,7 @@ import { PlaceInterface } from '../../../interfaces/place.interface';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { AuthService } from './../../../services/auth.service';
 
 @Component({
   selector: 'ngx-manage-place',
@@ -40,14 +41,19 @@ export class ManagePlaceComponent implements OnInit, OnDestroy {
     private notificationsService: NotificationsService,
     private modalService: ModalService,
     private router: Router,
+    public authService: AuthService,
     private config: NgbDropdownConfig) {
       config.autoClose = false;
 }
 
   ngOnInit() {
+    if (this.authService.canDo('getPlaces')) {
     this.placesService.getPlaces()
     .then(places => this.source.load(places))
     .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+  } else {
+    this.notificationsService.error('UNAUTHORIZED');
+  }
 
     this.subscriptions.push(
     this.placesService.notify('createPlace')
@@ -63,6 +69,7 @@ export class ManagePlaceComponent implements OnInit, OnDestroy {
   }
 
   onButtonClicked() {
+    if (this.authService.canDo('createPlace')) {
     const place: PlaceInterface = _.cloneDeep(this.place);
     if (place.city !== '' && place.civicNumber !== '' && place.country !== '' && place.postalCode !== '' && place.province !== '' && place.region !== '' && place.street !== '') {
       this.placesService.createPlace(place)
@@ -74,6 +81,9 @@ export class ManagePlaceComponent implements OnInit, OnDestroy {
     } else {
       this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
     }
+  } else {
+    this.notificationsService.error('UNAUTHORIZED');
+  }
   }
     settings = this.tablesService.getSettings(notAddableConfig, {
     id: {
@@ -113,13 +123,18 @@ export class ManagePlaceComponent implements OnInit, OnDestroy {
   });
 
   onEditConfirm(event) {
+    if (this.authService.canDo('editPlace')) {
     event.confirm.resolve();
     this.placesService.editPlace(event.newData)
       .then(result => this.notificationsService.success('PLACE_UPDATED'))
       .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+    } else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
   }
 
   onDeleteConfirm(event): void {
+    if (this.authService.canDo('removePlace')) {
     this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
       .then(confirmation => {
         if (confirmation) {
@@ -131,6 +146,9 @@ export class ManagePlaceComponent implements OnInit, OnDestroy {
           event.confirm.reject();
         }
       });
+    } else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
   }
 
   toggleForm() {

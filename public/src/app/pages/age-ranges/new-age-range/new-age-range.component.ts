@@ -61,6 +61,7 @@ export class NewAgeRangeComponent implements OnInit, OnDestroy {
   }
 
   onButtonClicked() {
+    if (this.authService.canDo('getAgeRanges')) {
     const ageRange: AgeRangeInterface = _.cloneDeep(this.ageRange);
     if (ageRange.name !== '' && ageRange.min !== '' && ageRange.max !== '' ) {
       this.ageRangesService.createAgeRange(ageRange)
@@ -72,6 +73,9 @@ export class NewAgeRangeComponent implements OnInit, OnDestroy {
     } else {
       this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
     }
+  } else {
+    this.notificationsService.error('UNAUTHORIZED');
+  }
   }
     settings = this.tablesService.getSettings(notAddableConfig, {
     id: {

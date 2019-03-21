@@ -67,6 +67,7 @@ export class ManageRankingComponent implements OnInit {
   }
 
   getData() {
+    if (this.authService.canDo('getDataForRanking')) {
     this.runService.getDataForRanking(this.phaseSelected)
     .then(data => {
       for (let i = 0; i < data.length; i++ ) {
@@ -75,6 +76,9 @@ export class ManageRankingComponent implements OnInit {
       this.source.load(data);
       this.source.refresh();
     });
+  } else {
+    this.notificationsService.error('UNAUTHORIZED');
+  }
   }
 
 

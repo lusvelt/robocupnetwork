@@ -179,6 +179,7 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
   }
 
   onButtonClicked() {
+    if (this.authService.canDo('createTeam')) {
     const team: TeamInterface = _.cloneDeep(this.team);
     const captain = team.captain;
     team.ageRanges = team.ageRanges.filter((ageRange: any) => ageRange.selected);
@@ -198,6 +199,9 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
     }else {
       this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE');
     }
+  } else {
+    this.notificationsService.error('UNAUTHORIZED');
+  }
   }
 
   settings = this.tablesService.getSettings(notAddableConfig, {
@@ -240,6 +244,7 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
     } else {
       this.notificationsService.error('UNAUTHORIZED');
     }
+
   }
 
   onDeleteConfirm(event): void {

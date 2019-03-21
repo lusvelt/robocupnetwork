@@ -1,4 +1,4 @@
-<nb-card size="xxlarge">
+<nb-card *ngIf="authService.canDo('getUsers')" size="xxlarge">
   <nb-card-header>
     <h3>{{'USERS'|translate}}</h3>
   </nb-card-header>

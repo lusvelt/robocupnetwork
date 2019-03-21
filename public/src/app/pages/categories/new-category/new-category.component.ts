@@ -73,6 +73,7 @@ export class NewCategoryComponent implements OnInit, OnDestroy {
 
 
   onButtonClicked() {
+    if (this.authService.canDo('createCategory')) {
     this.category.maxRobotsPerTeam = parseInt(this.category.maxRobotsPerTeam, 10);
     this.category.maxTeamsPerLineUp = parseInt(this.category.maxTeamsPerLineUp, 10);
     this.category.defaultMaxTime = parseInt(this.category.defaultMaxTime, 10);
@@ -87,6 +88,9 @@ export class NewCategoryComponent implements OnInit, OnDestroy {
     } else {
       this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
     }
+  } else {
+    this.notificationsService.error('UNAUTHORIZED');
+  }
   }
     settings = this.tablesService.getSettings(notAddableConfig, {
     id: {

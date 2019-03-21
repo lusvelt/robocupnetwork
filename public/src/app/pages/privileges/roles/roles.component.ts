@@ -16,6 +16,7 @@ import * as _ from 'lodash';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { ViewOnlyCheckboxComponent } from '../../../shared/view-cells/view-only-checkbox/view-only-checkbox.component';
+import { AuthService } from './../../../services/auth.service';
 
 @Component({
   selector: 'ngx-role',
@@ -39,14 +40,19 @@ export class RolesComponent implements OnInit, OnDestroy {
               private privilegesService: PrivilegesService,
               private notificationsService: NotificationsService,
               private modalService: ModalService,
+              public authService: AuthService,
               private config: NgbDropdownConfig) {
                 config.autoClose = false;
   }
 
   ngOnInit() {
+    if (this.authService.canDo('getRoles')) {
     this.privilegesService.getRoles()
     .then(role => this.source.load(role))
     .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+  } else {
+    this.notificationsService.error('UNAUTHORIZED');
+  }
 
     this.subscriptions.push(
     this.privilegesService.notify('createRole')
@@ -91,6 +97,7 @@ export class RolesComponent implements OnInit, OnDestroy {
 
 
   onButtonClicked() {
+    if (this.authService.canDo('createRole')) {
     const role: RoleInterface = _.cloneDeep(this.role);
     role.actions = role.actions.filter((action: any) => action.selected);
     if (role.name !== '' && role.description !== '') {
@@ -103,6 +110,9 @@ export class RolesComponent implements OnInit, OnDestroy {
     } else {
       this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
     }
+  } else {
+    this.notificationsService.error('UNAUTHORIZED');
+  }
   }
 
   settings = this.tablesService.getSettings(notAddableConfig, {
@@ -166,13 +176,18 @@ export class RolesComponent implements OnInit, OnDestroy {
 
 
   onEditConfirm(event) {
+    if (this.authService.canDo('editRole')) {
     event.confirm.resolve();
     this.privilegesService.editRole(event.newData)
       .then(result => this.notificationsService.success('ROLE_UPDATED'))
       .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+    } else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
   }
 
   onDeleteConfirm(event): void {
+    if (this.authService.canDo('removeRole')) {
     this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
       .then(confirmation => {
         if (confirmation) {
@@ -184,6 +199,9 @@ export class RolesComponent implements OnInit, OnDestroy {
           event.confirm.reject();
         }
       });
+    } else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
   }
 
   toggleForm() {

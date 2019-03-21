@@ -1,5 +1,5 @@
 <button class="mb-3" [ngClass]="{ 'btn': true, 'btn-success': !action.show, 'btn-danger': action.show }" type="button" (click)="toggleForm()">
-  <i [ngClass]="{ 'fas': true, 'fa-plus': !action.show, 'fa-times': action.show }"></i>
+  <i [ngClass]="{ 'fas': true, 'fa-plus': !action.show, 'fa-times': action.show }" *ngIf="authService.canDo('createAction')"></i>
   {{ (action.show ? 'HIDE_FORM' : 'SHOW_FORM') | translate }}
 </button>
 
@@ -82,7 +82,7 @@
 </form>
 
 
-<nb-card size="xxlarge">
+<nb-card *ngIf="authService.canDo('getActions')"size="xxlarge">
   <nb-card-header>
     {{'ACTIONS'|translate}}
   </nb-card-header>

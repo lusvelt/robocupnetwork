@@ -1,5 +1,6 @@
+<div *ngIf="authService.canDo('getRuns')">
 <div class="row">
-    <nb-flip-card *ngFor="let run of runs" class="ml-3">
+    <nb-flip-card *ngFor="let run of runs" class="ml-3" >
         <nb-card-front>
             <nb-card [status]="run.cardStatus"  size="xsmall">
               <nb-card-header>
@@ -8,7 +9,7 @@
                     {{run.Team.name}}
                   </div>
                   <div class="col-md-4 active-id-text">
-                    
+
                   </div>
                   <div class="col-md-4 active-icon">
                       id: {{run.id}}
@@ -339,3 +340,4 @@
                     </nb-card-back>
               </nb-flip-card>
 -->
+</div>

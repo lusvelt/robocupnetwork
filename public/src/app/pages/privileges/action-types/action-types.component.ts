@@ -9,6 +9,7 @@ import { NotificationsService } from '../../../services/notifications.service';
 import { ModalService } from '../../../services/modal.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import { AuthService } from './../../../services/auth.service';
 
 @Component({
   selector: 'ngx-action-types',
@@ -22,12 +23,17 @@ export class ActionTypesComponent implements OnInit, OnDestroy {
               private privilegesService: PrivilegesService,
               private notificationsService: NotificationsService,
               private modalService: ModalService,
+              public authService: AuthService,
               private translateService: TranslateService) { }
 
   ngOnInit() {
+    if (this.authService.canDo('getActionTypes')) {
     this.privilegesService.getActionTypes()
       .then(actionTypes => this.source.load(actionTypes))
       .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
+    }else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
 
     this.subscriptions.push(
       this.privilegesService.notify('createActionType')
@@ -60,6 +66,7 @@ export class ActionTypesComponent implements OnInit, OnDestroy {
   });
 
   onCreateConfirm(event) {
+    if (this.authService.canDo('createActionType')) {
     event.confirm.resolve();
     this.privilegesService.createActionType(event.newData)
       .then(result => {
@@ -71,16 +78,24 @@ export class ActionTypesComponent implements OnInit, OnDestroy {
           });
       })
       .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+    }else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
   }
 
   onEditConfirm(event) {
+    if (this.authService.canDo('editActionType')) {
     event.confirm.resolve();
     this.privilegesService.editActionType(event.newData)
       .then(result => this.notificationsService.success('ACTION_TYPE_UPDATED'))
       .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+    }else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
   }
 
   onDeleteConfirm(event): void {
+    if (this.authService.canDo('removeActionType')) {
     this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
       .then(confirmation => {
         if (confirmation) {
@@ -92,6 +107,9 @@ export class ActionTypesComponent implements OnInit, OnDestroy {
           event.confirm.reject();
         }
       });
+    }else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
   }
   ngOnDestroy() {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());

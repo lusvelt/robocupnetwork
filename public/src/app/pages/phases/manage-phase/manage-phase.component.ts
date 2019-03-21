@@ -140,6 +140,7 @@ export class ManagePhaseComponent implements OnInit, OnDestroy {
 }
 
   onButtonClicked() {
+    if (this.authService.canDo('createPhase')) {
     const phase: PhaseInterface = _.cloneDeep(this.phase);
 
     phase.start = new Date(this.phase.start);
@@ -160,6 +161,9 @@ export class ManagePhaseComponent implements OnInit, OnDestroy {
     } else {
       this.notificationsService.error('YOU_SHOULD_INSERT_DATA');
     }
+  } else {
+    this.notificationsService.error('UNAUTHORIZED');
+  }
   }
 
   settings = this.tablesService.getSettings(notAddableConfig, {
@@ -256,7 +260,7 @@ export class ManagePhaseComponent implements OnInit, OnDestroy {
   }
 
   onDeleteConfirm(event): void {
-    if (this.authService.canDo('deletePhase')) {
+    if (this.authService.canDo('removePhase')) {
       this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_DELETE')
         .then(confirmation => {
           if (confirmation) {
