@@ -1,4 +1,39 @@
+<ngx-one-column-layout>
+  <router-outlet>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="left-content">
+        <div class="maintitle" id="wrap">
+          <span>RobocupNetwork@home:~$ </span>
+        </div>
+        <div class="subtitles">ls robocupnetwork/videos</div>
+          <iframe width="420" height="315" src="https://www.youtube.com/embed/44IZUZ5mNx8" frameborder="0" allowfullscreen></iframe>
+        <div class="subtitles">1 item found.</div>
+      </div>
+    </div>
+      <div class="col-sm-6">
+        <div class="row">
+          <div class="col-md-10"></div>
+          <div class="col-md-2 icon">
+            <img src="./../../assets/images/Logo.jpeg" width="100px" height="100px">
+          </div>
+        </div>
+        <div class="right-content">
+            <h1 class="right-title">{{'WHAT_IS_ROBOCUP'|translate  }}</h1>
+            <p class="right-description">{{'WHAT_IS_ROBOCUP_DESCRIPTION'|translate}}</p>
+            <div class="row button">
+              <div class="col-md-5"></div>
+              <div class="col-md-2"><a href="#/auth/login" class="btn btn-2">{{'LOGIN_SIGNIN'|translate}}</a></div>
+              <div class="col-md-5"></div>
+            </div>         
+        </div>
+      </div>
+    </div>
+  </router-outlet>
+</ngx-one-column-layout>
 
+
+<!--
 <div class="header">
    <a href="#/auth/login" class="logo">{{'LOGIN' | translate}}</a>
   <div class="info">
@@ -53,3 +88,4 @@
   </div>
     <a href="http://iisvoltapescara.gov.it/" class="logo">{{'CONTACT_US'|translate}}</a>
 </div>
+-->
