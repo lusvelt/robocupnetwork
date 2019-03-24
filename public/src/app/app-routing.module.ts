@@ -42,7 +42,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'login', pathMatch: 'full' }
     ],
   },
-  { path: '', redirectTo: environment.mobile ? 'mobile' : 'auth', pathMatch: 'full' }
+  { path: '', redirectTo: environment.mobile ? 'mobile' : 'main-page', pathMatch: 'full' }
 ];
 
 const config: ExtraOptions = {
