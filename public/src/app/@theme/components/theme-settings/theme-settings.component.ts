@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 
 import { StateService } from '../../../@core/data/state.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'ngx-theme-settings',
   styleUrls: ['./theme-settings.component.scss'],
   template: `
-    <h6>LAYOUTS</h6>
+    <h6>{{'LANGUAGE'|translate}}</h6>
     <div class="settings-row">
-      <a *ngFor="let layout of layouts"
-         href="#"
-         [class.selected]="layout.selected"
-         [attr.title]="layout.name"
-         (click)="layoutSelect(layout)">
-        <i [attr.class]="layout.icon"></i>
+      <a (click)="languageSelect('italian')">
+        <img src="./../../../../assets/images/italy.png" width="20px" height="20px">
+      </a>
+      <a (click)="languageSelect('english')">
+        <img src="./../../../../assets/images/united-kingdom.png" width="20px" height="20px">
       </a>
     </div>
   `,
@@ -23,7 +23,7 @@ export class ThemeSettingsComponent {
   layouts = [];
   sidebars = [];
 
-  constructor(protected stateService: StateService) {
+  constructor(protected stateService: StateService, private translateService: TranslateService) {
     this.stateService.getLayoutStates()
       .subscribe((layouts: any[]) => this.layouts = layouts);
 
@@ -51,5 +51,12 @@ export class ThemeSettingsComponent {
     sidebars.selected = true;
     this.stateService.setSidebarState(sidebars);
     return false;
+  }
+
+  languageSelect(language) {
+    if (language === 'italian')
+      this.translateService.setDefaultLang('it');
+    if (language === 'english')
+      this.translateService.setDefaultLang('en');
   }
 }

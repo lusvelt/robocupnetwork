@@ -6,6 +6,7 @@ const Run = require('../../models/Run');
 const Field = require('../../models/Field');
 const User = require('../../models/User');
 const log = require('../../config/consoleMessageConfig');
+const RunIsArbitratedByReferee = require('../../database/associationTables/RunIsArbitratedByReferee');
 
 const runsIo = (clientsIo, socket, room) => {
 
@@ -112,6 +113,24 @@ const runsIo = (clientsIo, socket, room) => {
         }       
     };
 
+    const getArbitratedRunsById = async (user, callback) => {
+        try {
+            const id = user.id;
+            const runs = await RunIsArbitratedByReferee.findAll({where:{userId: id}});
+            const promises = [];
+            runs.forEach(run => {
+               promises.push(Run.getRunInfo(run.runId));
+            });
+            const result = await Promise.all(promises);
+            if (!result)
+                throw new Error();
+            callback (result);    
+        } catch (err) {
+            callback(new Error());
+        }
+        
+    }
+
     const endRun = async (data, callback) => {
         try {
             const id = data.run.id;
@@ -177,6 +196,7 @@ const runsIo = (clientsIo, socket, room) => {
     socket.on('validateRunWithPoint',validateRunWithPoint);
     socket.on('getDataForRanking', getDataForRanking);
     socket.on('updateLiveScore',updateLiveScore);
+    socket.on('getArbitratedRunsById', getArbitratedRunsById);
 };
 
 module.exports = runsIo;

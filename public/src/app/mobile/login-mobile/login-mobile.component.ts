@@ -67,4 +67,11 @@ export class LoginMobileComponent implements OnInit {
   qrCode() {
   }
 
+  languageSelect(language) {
+    if (language === 'italian')
+      this.translate.setDefaultLang('it');
+    if (language === 'english')
+      this.translate.setDefaultLang('en');
+  }
+
 }

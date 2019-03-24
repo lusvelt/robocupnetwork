@@ -15,7 +15,7 @@ export class ModalService {
   async alert(header: string, message: string) {
     const modal = this.modalService.open(AlertModalComponent, alertSettings);
     modal.componentInstance.modalHeader = await this.translateService.get(header).toPromise();
-    modal.componentInstance.modalContent = message;
+    modal.componentInstance.modalContent = await this.translateService.get(message).toPromise();
     return modal.result;
   }
 

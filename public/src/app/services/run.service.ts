@@ -41,6 +41,10 @@ export class RunService {
     return this.socketIoService.send('getDataForRanking', phase);
   }
 
+  getArbitratedRunsById(user) {
+    return this.socketIoService.send('getArbitratedRunsById', user);
+  }
+
   updateLiveScore(run, score) {
     return this.socketIoService.send('updateLiveScore', {run, score});
   }

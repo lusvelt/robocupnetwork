@@ -13,7 +13,7 @@
     <nb-card>
       <nb-card-body>
         <div class="row timer">
-          <h3 class="font-w-light welcome-back">{{'TIMER'|translate}}: <countdown #cd1 (notify)="onNotify($event)" (finished)="onFinished()" [config]="{leftTime: runsetting.maxTime, demand: true}">$!m!:$!s!</countdown> <button nbButton class="col-md-4" type="button" status="warning" (click)="changeStatus(cd1)">{{ (cd1.paused ? 'RESUME' : 'PAUSE') | translate }}</button></h3>
+          <h3 class="font-w-light welcome-back">{{'TIMER'|translate}}: <countdown #cd1 (notify)="onNotify($event)" (finished)="onFinished()" [config]="{leftTime: runsetting.maxTime, demand: true}">$!m!:$!s!</countdown> </h3> <button nbButton size="xsmall" class="time-button col-md-4" type="button" status="warning" (click)="changeStatus(cd1)">{{ (cd1.paused ? 'RESUME' : 'PAUSE') | translate }}</button>
         </div>
       </nb-card-body>
     </nb-card>
@@ -117,10 +117,20 @@
     <div class="col-sm-12"> 
         <nb-card>
             <div class="row">
-            <div class="logout col-sm-6">
+            <div class="logout col-sm-4">
                 <button nbButton status="danger" class="button" (click)="backToDashboard()"><i class="fas fa-sign-out-alt"></i></button>
             </div>
-            <div class="credits col-sm-6">
+            <div class="credits col-sm-4">
+                <div class="row">
+                        <a class="mr-3" (click)="languageSelect('italian')">
+                            <img src="./../../../assets/images/italy.png" width="40px" height="40px">
+                        </a>
+                        <a class="ml-3" (click)="languageSelect('english')">
+                            <img src="./../../../assets/images/united-kingdom.png" width="40px" height="40px">
+                        </a>
+                </div>
+            </div>
+            <div class="credits col-sm-4">
                     <span class=" created-by">
                         {{ 'CREATED_BY' | translate }}
                         <a class="font-w-bold linkschool" href="http://iisvoltapescara.gov.it/" target="_blank">I.I.S A.Volta Pescara</a>

@@ -11,34 +11,34 @@
 </div>
 
 <div class="row content">
-    <!--<div class="col-md-6">
+    <div class="col-md-6">
         <nb-card class="list-card" size="small">
-            <nb-card-header>Gare Arbitrate</nb-card-header>
+            <nb-card-header>{{'ARBITRATED_RUNS'|translate}}</nb-card-header>
             <nb-list>
               <nb-list-item *ngFor="let arbitratedRun of arbitratedRuns">
-                <nb-user [name]="arbitratedRun.name" [title]="arbitratedRun.points">
+                <nb-user [name]="arbitratedRun.Team.name" [title]="arbitratedRun.status">
                 </nb-user>
               </nb-list-item>
             </nb-list>
           </nb-card>
-    </div>-->
+    </div>
     <div class="col-md-6">
         <nb-card>
             <nb-card-header>
-                Arbitra una nuova gara
+                {{'ARBITRATE_NEW_RUN'|translate}}
             </nb-card-header>
             <nb-card-body>
-                <button nbButton fullWidth status="danger" class="button" (click)="qrCodeScan()">Scansiona il codice della squadra</button>
+                <button nbButton fullWidth status="danger" class="button" (click)="qrCodeScan()">{{'SCAN_THE_TEAM_CODE'|translate}}</button>
             </nb-card-body>
         </nb-card>
-        <!--<nb-card>
+        <nb-card>
                 <nb-card-header>
-                    Scarica il calendario gare
+                    {{'DOWNLOAD_CALENDAR'|translate}}
                 </nb-card-header>
                 <nb-card-body>
                     <button nbButton fullWidth status="success" class="button">Download</button>
                 </nb-card-body>
-            </nb-card>-->
+            </nb-card>
     </div>
 </div>
 
@@ -46,10 +46,20 @@
     <div class="col-sm-12"> 
         <nb-card>
             <div class="row">
-            <div class="logout col-sm-6">
+            <div class="logout col-sm-4">
                 <button nbButton status="danger" class="button" (click)="logout()"><i class="fas fa-sign-out-alt"></i></button>
             </div>
-            <div class="credits col-sm-6">
+            <div class="credits col-sm-4">
+                <div class="row">
+                        <a class="mr-3" (click)="languageSelect('italian')">
+                            <img src="./../../../assets/images/italy.png" width="40px" height="40px">
+                        </a>
+                        <a class="ml-3" (click)="languageSelect('english')">
+                            <img src="./../../../assets/images/united-kingdom.png" width="40px" height="40px">
+                        </a>
+                </div>
+            </div>
+            <div class="credits col-sm-4">
                     <span class=" created-by">
                         {{ 'CREATED_BY' | translate }}
                         <a class="font-w-bold linkschool" href="http://iisvoltapescara.gov.it/" target="_blank">I.I.S A.Volta Pescara</a>

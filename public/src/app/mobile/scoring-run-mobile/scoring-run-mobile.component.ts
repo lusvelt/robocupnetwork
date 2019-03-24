@@ -5,6 +5,7 @@ import { CountdownComponent } from 'ngx-countdown';
 import { ModalService } from '../../services/modal.service';
 import { FieldsService } from '../../services/fields.service';
 import { RunService } from '../../services/run.service';
+import { TranslateService } from '@ngx-translate/core';
 // import * as Timer from 'tiny-timer';
 
 
@@ -41,7 +42,7 @@ export class ScoringRunMobileComponent implements OnInit {
   time: number;
   remainingTime = 0;
 
-  constructor(private route: ActivatedRoute, private router: Router, private paramsService: ParamsService, private modalService: ModalService, private runService: RunService, private fieldsService: FieldsService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private paramsService: ParamsService, private modalService: ModalService, private runService: RunService, private fieldsService: FieldsService, private translateService: TranslateService) { }
 
   ngOnInit() {
     const params = this.paramsService.getParams();
@@ -51,8 +52,9 @@ export class ScoringRunMobileComponent implements OnInit {
     this.run = params.run;
   }
 
-  fireEvent(event) {
+  async fireEvent(event) {
     this.evaluate(event.pointsJSCalculator);
+    event.name = await this.translateService.get(event.name).toPromise();
     this.events.push(event);
     this.fieldsService.updateScoreOnField(this.runSettings.field, this.score);
     this.runService.updateLiveScore(this.run, this.score);

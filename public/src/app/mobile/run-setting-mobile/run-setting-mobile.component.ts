@@ -147,4 +147,11 @@ export class RunSettingMobileComponent implements OnInit {
     return index;
   }
 
+  languageSelect(language) {
+    if (language === 'italian')
+      this.translate.setDefaultLang('it');
+    if (language === 'english')
+      this.translate.setDefaultLang('en');
+  }
+
 }

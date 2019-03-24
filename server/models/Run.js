@@ -18,7 +18,7 @@ const Run = sequelize.define('Run', {
     maxTime: { type: Sequelize.INTEGER },
     numberOfCheckpoints: { type: Sequelize.INTEGER },
     events: { type: Sequelize.JSON},
-    score: {type: Sequelize.INTEGER },
+    score: {type: Sequelize.INTEGER, defaultValue: 0 },
     remainingTime: {type: Sequelize.INTEGER, defaultValue: 0}
 });
 
@@ -26,6 +26,6 @@ Run.getRunsList = () => Run.findAll({ attributes: { exclude: ['createdAt', 'upda
     include: [Field, {model: Team,  attributes: { exclude: ['createdAt', 'updatedAt']}, include: [AgeRange, School]}] });
 
 Run.getRunInfo = (id) => Run.findById(id, { attributes: { exclude: ['createdAt', 'updatedAt'] },
-    include: [Field, {model: Team,  attributes: { exclude: ['createdAt', 'updatedAt']}, include: [AgeRange, School]}] });                        
+    include: [Field, {model: Team,  attributes: { exclude: ['createdAt', 'updatedAt']}, include: [AgeRange, School]}] });        
 
 module.exports = Run;

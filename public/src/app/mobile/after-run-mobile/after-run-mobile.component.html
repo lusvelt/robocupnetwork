@@ -19,6 +19,6 @@
   translate }}</nb-checkbox>
 <nb-checkbox class="mt-3 ml-3" name="toEliminate" status="danger" [(ngModel)]="toEliminate">{{ 'TO_ELIMINATE' |
   translate }}</nb-checkbox>
-<input nbInput class="mt-3" *ngIf="isContestation" [(ngModel)]="contestation" #contestationmessage="ngModel" name="contestationmessage"
-  type="text" placeholder="{{'CONTESTATION'|translate}}" fullWidth required>
-<button class="mt-3" nbButton fullWidth status="success" (click)="sendRace()">{{'SEND_RACE'}}</button>
+<input nbInput class="mt-3" *ngIf="isContestation" [(ngModel)]="contestation" #contestationmessage="ngModel"
+  name="contestationmessage" type="text" placeholder="{{'CONTESTATION'|translate}}" fullWidth required>
+<button class="mt-3" nbButton fullWidth status="success" (click)="sendRace()">{{'SEND_RACE'|translate}}</button>

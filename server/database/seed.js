@@ -434,7 +434,7 @@ const seed = async () => {
 
     let events = [
         Event.create({
-            name: 'Intersezione',
+            name: 'INTERSECTION',
             description: 'Intersezione in una mattonella',
             pointsJSCalculator: 'this.score += 15;',
             affectsZone: false,
@@ -446,7 +446,7 @@ const seed = async () => {
             cancelPendingEvents: false
         }),
         Event.create({
-            name: 'Dead end',
+            name: 'DEAD_END',
             description: 'Un intersezione in cui il robot deve invertire il proprio senso di marcia',
             pointsJSCalculator: 'this.score += 15;',
             affectsZone: false,
@@ -458,7 +458,7 @@ const seed = async () => {
             cancelPendingEvents: false
         }),
         Event.create({
-            name: 'Ramp',
+            name: 'RAMP',
             description: 'Una salita o una discesa',
             pointsJSCalculator: 'this.score += 5;',
             affectsZone: false,
@@ -470,7 +470,7 @@ const seed = async () => {
             cancelPendingEvents: false
         }),
         Event.create({
-            name: 'Speed bump',
+            name: 'SPEED_BUMP',
             description: 'Un dosso da superare',
             pointsJSCalculator: 'this.score += 5;',
             affectsZone: false,
@@ -482,7 +482,7 @@ const seed = async () => {
             cancelPendingEvents: false
         }),
         Event.create({
-            name: 'Obstacle',
+            name: 'OBSTACLE',
             description: 'Un ostacolo da superare',
             pointsJSCalculator: 'this.score += 10;',
             affectsZone: false,
@@ -494,7 +494,7 @@ const seed = async () => {
             cancelPendingEvents: false
         }),
         Event.create({
-            name: 'Gap',
+            name: 'GAP',
             description: 'Un interruzione momentanea della linea',
             pointsJSCalculator: 'this.score += 10;',
             affectsZone: false,
@@ -506,7 +506,7 @@ const seed = async () => {
             cancelPendingEvents: false
         }),
         Event.create({
-            name: 'Lack of progress',
+            name: 'LACK_OF_PROGRESS',
             description: 'Nuovo tentativo',
             pointsJSCalculator: 'this.lackOfProgress();',
             affectsZone: false,
@@ -518,7 +518,7 @@ const seed = async () => {
             cancelPendingEvents: false
         }),
         Event.create({
-            name: 'Jump zone',
+            name: 'JUMP_ZONE',
             description: 'La zona non completata viene saltata',
             pointsJSCalculator: 'this.nextZone();',
             affectsZone: true,
@@ -554,7 +554,7 @@ const seed = async () => {
             cancelPendingEvents: false
         }),
         Event.create({
-            name: 'End of play',
+            name: 'END_OF_PLAY',
             description: 'Si verifica quando il robot completa il percorso, oppure quando la squadra dichiara di non voler continuare, oppure allo scadere del tempo ',
             pointsJSCalculator: 'this.endOfPlay();',
             affectsZone: false,
@@ -566,7 +566,7 @@ const seed = async () => {
             cancelPendingEvents: true
         }),
         Event.create({
-            name: 'Living victim',
+            name: 'LIVING_VICTIM',
             description: 'Corretta evacuazione di una pallina argentata',
             pointsJSCalculator: 'this.livingVictim();',
             affectsZone: false,
@@ -578,7 +578,7 @@ const seed = async () => {
             cancelPendingEvents: false
         }),
         Event.create({
-            name: 'Dead victim',
+            name: 'DEAD_VICTIM',
             description: 'Corretta evacuazione di una pallina nera',
             pointsJSCalculator: 'this.deadVictim();',
             affectsZone: false,
@@ -590,7 +590,7 @@ const seed = async () => {
             cancelPendingEvents: false
         }),
         Event.create({
-            name: 'Exit',
+            name: 'EXIT',
             description: 'Il robot è uscito dalla stanza e ha percorso correttamente tre mattonelle, dopo aver toccato o salvato una vittima',
             pointsJSCalculator: 'this.exit();',
             affectsZone: false,

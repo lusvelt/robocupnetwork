@@ -11,6 +11,7 @@ import { UserService } from '../../services/user.service';
 import { QrCodeService } from '../../services/qr-code.service';
 import { TokenService } from '../../services/token.service';
 import { SocketIoService } from '../../services/socket-io.service';
+import { RunService } from '../../services/run.service';
 
 @Component({
   selector: 'ngx-dashboard-mobile',
@@ -27,20 +28,15 @@ export class DashboardMobileComponent implements OnInit {
               private qrCodeService: QrCodeService,
               private tokenService: TokenService,
               private paramsService: ParamsService,
-              private socketIoService: SocketIoService) { }
+              private socketIoService: SocketIoService,
+              private runService: RunService) { }
 
 
   redirectDelay: number = 0;
   strategy: string = '';
   fullName: string;
 
-  arbitratedRuns: { name: string, points: string }[] = [
-    { name: 'Fenix', points: '121 pt' },
-    { name: 'Jamil', points: '20 pt' },
-    { name: 'Elettroncica 1', points: '40 pt' },
-    { name: 'Erminio', points: '22 pt' },
-    { name: 'Dellemonudo', points: '32 pt' },
-  ];
+  arbitratedRuns: any = [];
   errors: string[] = [];
   messages: string[] = [];
 
@@ -51,7 +47,10 @@ export class DashboardMobileComponent implements OnInit {
 
     ngOnInit() {
       this.fullName = this.userService.getFullName();
+      this.user = this.userService.getUserInfo();
       this.socketIoService.connect('/clients');
+      this.runService.getArbitratedRunsById(this.user)
+      .then(runs => this.arbitratedRuns = runs);
     }
 
     qrCodeScan() {
@@ -65,6 +64,13 @@ export class DashboardMobileComponent implements OnInit {
     logout() {
       this.tokenService.setToken('');
       this.router.navigate(['/mobile', 'login']);
+    }
+
+    languageSelect(language) {
+      if (language === 'italian')
+        this.translate.setDefaultLang('it');
+      if (language === 'english')
+        this.translate.setDefaultLang('en');
     }
 
 
