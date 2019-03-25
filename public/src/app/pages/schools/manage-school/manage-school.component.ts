@@ -67,14 +67,11 @@ export class ManageSchoolComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if (this.authService.canDo('getSchools')) {
     this.schoolService.getSchools()
-      .then(school => {
-        // tslint:disable-next-line:no-shadowed-variable
-        school.forEach(school => {
-        this.schoolService.getPlaceFromId(school.id).then(res => {
-          school.place = res[0].country + ' ' + res[0].region + ' ' + res[0].province + ' ' + res[0].postalCode + ' ' + res[0].city + ' ' + res[0].civicNumber + ' ' + res[0].street;
-        });
+      .then(schools => {
+        schools.forEach(school => {
+        school.place = school.Place.country + ' ' + school.Place.region + ' ' + school.Place.province + ' ' + school.Place.postalCode + ' ' + school.Place.city + ' ' + school.Place.civicNumber + ' ' + school.Place.street;
       });
-        this.source.load(school);
+        this.source.load(schools);
       })
       .catch(err => this.notificationsService.error('COULD_NOT_LOAD_DATA'));
     } else {
