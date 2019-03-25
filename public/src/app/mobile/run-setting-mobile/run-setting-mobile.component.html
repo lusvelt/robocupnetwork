@@ -13,7 +13,7 @@
     <nb-card>
       <nb-card-body>
         <div class="row timer">
-          <h3 class="font-w-light welcome-back">{{'TIMER'|translate}}: <countdown #cd1 (notify)="onNotify($event)" (finished)="onFinished()" [config]="{leftTime: runsetting.maxTime, demand: true}">$!m!:$!s!</countdown> </h3> <button nbButton size="xsmall" class="time-button col-md-4" type="button" status="warning" (click)="changeStatus(cd1)">{{ (cd1.paused ? 'RESUME' : 'PAUSE') | translate }}</button>
+          <h3 class="font-w-light welcome-back">{{'TIMER'|translate}}: <countdown #cd1 (finished)="onFinished()" [config]="{leftTime: runsetting.maxTime, demand: true}">$!m!:$!s!</countdown> </h3> <button nbButton size="xsmall" class="time-button col-md-4" type="button" status="warning" (click)="changeStatus(cd1)">{{ (cd1.paused ? 'RESUME' : 'PAUSE') | translate }}</button>
         </div>
       </nb-card-body>
     </nb-card>
@@ -109,12 +109,12 @@
       </nb-card-footer>
     </nb-card>
   </div>
-</form>  
+</form>
 
 
 
 <div class="row footer">
-    <div class="col-sm-12"> 
+    <div class="col-sm-12">
         <nb-card>
             <div class="row">
             <div class="logout col-sm-4">
@@ -137,7 +137,7 @@
                         2018-2019
                     </span>
                 </div>
-            </div>  
-        </nb-card>   
+            </div>
+        </nb-card>
     </div>
 </div>

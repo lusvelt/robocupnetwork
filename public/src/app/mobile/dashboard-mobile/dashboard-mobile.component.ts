@@ -45,7 +45,7 @@ export class DashboardMobileComponent implements OnInit {
   }
 
   constructor(private translate: TranslateService,
-              protected authService: AuthService,
+              public authService: AuthService,
               private router: Router,
               private notificationsService: NotificationsService,
               private userService: UserService,
