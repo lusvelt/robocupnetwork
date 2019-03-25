@@ -8,9 +8,16 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class MainPageComponent implements OnInit {
 
-  constructor(private translateService: TranslateService) { }
+  constructor(private translate: TranslateService) { }
 
   ngOnInit() {
+  }
+
+  languageSelect(language) {
+    if (language === 'italian')
+      this.translate.setDefaultLang('it');
+    if (language === 'english')
+      this.translate.setDefaultLang('en');
   }
 
 }

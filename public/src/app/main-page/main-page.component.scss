@@ -1,3 +1,34 @@
+@import '../@theme/styles/styles';
+@import '~@nebular/theme/styles/global/breakpoints';
+@import '~bootstrap/scss/mixins/breakpoints';
+
+@include nb-install-component() {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .socials {
+    padding: 3%;
+    font-size: 2rem;
+
+    a {
+      padding: 0.4rem;
+      color: nb-theme(color-fg);
+      transition: color ease-out 0.1s;
+
+      &:hover {
+        color: nb-theme(color-fg-heading);
+      }
+    }
+  }
+
+  @include media-breakpoint-down(is) {
+    .socials {
+      font-size: 1.5rem;
+    }
+  }
+}
 /*
 // INIZIO STILE PAGINA
 html,body {
@@ -111,7 +142,7 @@ html,body {
   0% { transform:scale(1)}
   50% { transform:scale(1.2)}
 }
-.content {  
+.content {
   padding:5% 10%;
   text-align:justify;
   background:linear-gradient(#161b28, #242052);
@@ -134,7 +165,7 @@ html,body {
 .footer {
   background-color: #242052;
   width: 100%;
-  height: 20rem; 
+  height: 20rem;
   text-align: center;
 }
 // FINE STILE PAGINA
@@ -145,16 +176,16 @@ html,body {
         margin-block-start: 4em;
         margin-inline-start: 0;
         margin-inline-end: 0;
-    
+
 }
 
-span {
+.maintitle span {
 	font-family: monospace;
   font-size: 4rem;
   color: white;
 }
 
-span::after {
+.maintitle span::after {
 	content:'_';
 	opacity: 0;
 	animation: cursor 1s infinite;
@@ -237,6 +268,24 @@ iframe {
   text-align: center;
   margin-right: 10%;
   margin-left: 10%;
+}
+
+.linkschool {
+  color: #a1a1e5;
+}
+
+.logout {
+  padding: 3%;
+}
+
+.credits {
+  text-align: end;
+  padding: 3%;
+  font-size: 1.3rem;
+}
+
+.footer {
+  margin-top: 10%;
 }
 
 //FINE MIO

@@ -21,8 +21,9 @@ const manifestationIo = (clientsIo, socket, room) => {
         }
     };
 
-    const getManifestations = async (args,callback) => {
+    const getManifestations = async (args, callback) => {
         try {
+            console.log('arrivo');
             const manifestations = await Manifestation.getManifestationsList();
             callback(manifestations);
             log.verbose('Manifestation data request');

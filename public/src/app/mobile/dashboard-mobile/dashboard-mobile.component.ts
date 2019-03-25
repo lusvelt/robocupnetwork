@@ -1,5 +1,11 @@
+import { merge } from 'rxjs/observable/merge';
+import { Observable } from 'rxjs/Observable';
+import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import { Subject } from 'rxjs/Subject';
+import { ManifestationsService } from './../../services/manifestations.service';
 import { ParamsService } from './../../services/params.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Router } from '@angular/router';
@@ -20,6 +26,24 @@ import { RunService } from '../../services/run.service';
 })
 export class DashboardMobileComponent implements OnInit {
 
+  manifestationsList: [];
+  @ViewChild('searchManifestationInstance') searchManifestationInstance: NgbTypeahead;
+  focus$ = new Subject<string>();
+  click$ = new Subject<string>();
+
+  manifestationsFormatter = (value: any) => value.name;
+
+  searchManifestation = (text$: Observable<string>) => {
+    const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+    const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.searchManifestationInstance.isPopupOpen()));
+    const inputFocus$ = this.focus$;
+
+    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+      map(term => (term === '' ? this.manifestationsList
+        : this.manifestationsList.filter((v: any) => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
+    );
+  }
+
   constructor(private translate: TranslateService,
               protected authService: AuthService,
               private router: Router,
@@ -29,7 +53,8 @@ export class DashboardMobileComponent implements OnInit {
               private tokenService: TokenService,
               private paramsService: ParamsService,
               private socketIoService: SocketIoService,
-              private runService: RunService) { }
+              private runService: RunService,
+              private manifestationsService: ManifestationsService) { }
 
 
   redirectDelay: number = 0;
@@ -46,9 +71,11 @@ export class DashboardMobileComponent implements OnInit {
   rememberMe = false;
 
     ngOnInit() {
+      this.socketIoService.connect('/clients');
+      this.manifestationsService.getManifestations()
+      .then(manifestations => this.manifestationsList = manifestations);
       this.fullName = this.userService.getFullName();
       this.user = this.userService.getUserInfo();
-      this.socketIoService.connect('/clients');
       this.runService.getArbitratedRunsById(this.user)
       .then(runs => this.arbitratedRuns = runs);
     }
@@ -72,6 +99,14 @@ export class DashboardMobileComponent implements OnInit {
       if (language === 'english')
         this.translate.setDefaultLang('en');
     }
+
+    onManifestationClicked(event: any) {
+    const manifestation = event.item;
+    this.authService.selectManifestation(manifestation)
+      .then(result => this.notificationsService.success('SELECT_MANIFESTATION_SUCCEDED'))
+      .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+  }
+
 
 
 }

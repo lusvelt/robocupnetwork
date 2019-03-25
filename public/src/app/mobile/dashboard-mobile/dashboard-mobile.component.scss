@@ -1,4 +1,7 @@
 
+
+
+
   .list-card {
     nb-card-header {
       border-bottom: none;
@@ -20,6 +23,19 @@
     border-radius: 1.5rem;
 }
 
+.maintitle {
+  font-size: 1.7rem;
+  text-align: center;
+  display: inline;
+  padding: 0;
+}
+
+.subtitle {
+  padding: 0;
+  font-size: 1rem;
+  text-align: center;
+}
+
 .linkschool {
     color: #a1a1e5;
 }
@@ -33,3 +49,31 @@
     padding: 3%;
     font-size: 1.3rem;
 }
+
+.welcome {
+  margin-top: 15%;
+}
+
+.img {
+  width: 350px;
+  height: 350px;
+  border-radius:8px !important;
+  border:1px solid #ffffff;
+}
+
+.linkschool {
+  color: #a1a1e5;
+}
+
+.button {
+  border-radius: 1.5rem;
+}
+
+.logout {
+  padding: 3%;
+}
+
+.footer {
+  margin-top: 3%;
+}
+

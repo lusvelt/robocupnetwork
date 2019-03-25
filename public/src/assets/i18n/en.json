@@ -326,6 +326,7 @@
     "DOWNLOAD_CALENDAR":"Download the run calendar",
     "SCAN_THE_TEAM_CODE":"Scan the team QrCode",
     "SET_URL":"Set url",
-    "CHECKING_FOR_UPDATES":"I'm looking for updates, just wait..."
+    "CHECKING_FOR_UPDATES":"I'm looking for updates, just wait...",
+    "UNAUTHORIZED_MESSAGE":"Oh no! It's look like you are not strong enough!"
 
 }
