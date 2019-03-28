@@ -327,7 +327,9 @@
     "SCAN_THE_TEAM_CODE":"Scannerizza il codice della squadra",
     "SET_URL":"Imposta url",
     "CHECKING_FOR_UPDATES":"Sto controllando se ci sono aggiornamenti, attendi ...",
-    "UNAUTHORIZED_MESSAGE": "Oh no! Sembra che tu non sia forte abbastanza!"
+    "UNAUTHORIZED_MESSAGE": "Oh no! Sembra che tu non sia forte abbastanza!",
+    "APP_NOT_UPDATED":"App non aggiornata",
+    "DOWNLOAD_NEW_VERSION":"Scarica l'ultima versione"
 
 
 

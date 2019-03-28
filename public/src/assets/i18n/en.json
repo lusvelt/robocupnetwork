@@ -327,6 +327,8 @@
     "SCAN_THE_TEAM_CODE":"Scan the team QrCode",
     "SET_URL":"Set url",
     "CHECKING_FOR_UPDATES":"I'm looking for updates, just wait...",
-    "UNAUTHORIZED_MESSAGE":"Oh no! It's look like you are not strong enough!"
+    "UNAUTHORIZED_MESSAGE":"Oh no! It's look like you are not strong enough!",
+    "APP_NOT_UPDATED":"App not updated",
+    "DOWNLOAD_NEW_VERSION":"Download the latest version"
 
 }

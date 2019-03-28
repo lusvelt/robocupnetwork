@@ -2,7 +2,7 @@
   <h1 class="font-w-light welcome">{{ 'CHECKING_FOR_UPDATES' | translate }}</h1>
 </div>
 <div [hidden]="!updatesChecked">
-    <div class="language">
+    <!--<div class="language">
         <div class="row justify-content-end">
             <div class="col-1">
                 <a (click)="languageSelect('italian')">
@@ -13,7 +13,7 @@
                   </a>
             </div>
           </div>
-    </div>
+    </div>-->
   <div class="maintitle">
     <h1 class="font-w-light welcome">{{ 'WELCOME_MESSAGE' | translate }}</h1>
     <h3 class="font-w-bold robocup">{{ 'ROBOCUP_NETWORK' | translate }}</h3>
@@ -92,6 +92,20 @@
   <button nbButton status="warning" fullWidth (click)="changeApiUrl()">
     {{ 'SET_URL' | translate }}
   </button>
+
+
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col-12">
+          <a (click)="languageSelect('italian')">
+            <img src="./../../../assets/images/italy.png" width="40px" height="40px">
+          <a class="ml-3" (click)="languageSelect('english')">
+            <img src="./../../../assets/images/united-kingdom.png" width="40px" height="40px">
+          </a>
+          </a>
+        </div>
+      </div>
+    </div>
 
 
 </div>
