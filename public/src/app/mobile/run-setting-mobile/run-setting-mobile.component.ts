@@ -61,7 +61,8 @@ export class RunSettingMobileComponent implements OnInit {
     field: [ ],
     numberOfCheckpoints: undefined,
     checkpoints: [ ],
-    maxTime: 480
+    maxTime: 480,
+    entryLevel: true
   };
 
   submitted: boolean = false;

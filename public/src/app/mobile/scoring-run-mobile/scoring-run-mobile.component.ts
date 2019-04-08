@@ -25,7 +25,7 @@ export class ScoringRunMobileComponent implements OnInit {
 
   events = [];
 
-  score: number = 0;
+  score: number = 5;
   attempt: number = 1;
   zone: number = 1;
 
@@ -126,16 +126,18 @@ export class ScoringRunMobileComponent implements OnInit {
   }
 
   lackOfProgress() {
-    if (this.zone > this.runSettings.numberOfCheckpoints) {
-        this.lacksOfProgressAfterTheFinalCheck ++;
-        this.subtractedPointsForLackOfProgressAfterTheFinalCheck = ( 5 * this.livingVictimsRescued ) + ( 5 * this.deadVictimsRescued );
-        if (this.subtractablePoints < this.subtractedPointsForLackOfProgressAfterTheFinalCheck) {
-          this.subtractedPointsForLackOfProgressAfterTheFinalCheck = this.subtractablePoints;
-          this.subtractablePoints = 0;
-        } else {
-          this.subtractablePoints -= this.subtractedPointsForLackOfProgressAfterTheFinalCheck;
-        }
-        this.score -= this.subtractedPointsForLackOfProgressAfterTheFinalCheck;
+    if (!this.runSettings.entryLevel) {
+      if (this.zone > this.runSettings.numberOfCheckpoints) {
+          this.lacksOfProgressAfterTheFinalCheck ++;
+          this.subtractedPointsForLackOfProgressAfterTheFinalCheck = ( 5 * this.livingVictimsRescued ) + ( 5 * this.deadVictimsRescued );
+          if (this.subtractablePoints < this.subtractedPointsForLackOfProgressAfterTheFinalCheck) {
+            this.subtractedPointsForLackOfProgressAfterTheFinalCheck = this.subtractablePoints;
+            this.subtractablePoints = 0;
+          } else {
+            this.subtractablePoints -= this.subtractedPointsForLackOfProgressAfterTheFinalCheck;
+          }
+          this.score -= this.subtractedPointsForLackOfProgressAfterTheFinalCheck;
+      }
     }
     this.attempt ++;
   }
@@ -178,6 +180,10 @@ export class ScoringRunMobileComponent implements OnInit {
             cd1.resume();
           }
         });
+  }
+
+  exit() {
+    this.score += 20;
   }
 
   evaluate(command: string) {

@@ -42,7 +42,7 @@ import { FieldsService } from '../services/fields.service';
 export class RankComponent implements OnInit {
   fields: any = [];
   cardStatus: any;
-  choose = 'ranking';
+  choose;
   phasesList: [];
   phaseSelected: any;
   source: DataSource = new DataSource();
