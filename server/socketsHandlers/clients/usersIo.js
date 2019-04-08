@@ -137,7 +137,6 @@ const usersIo = (clientsIo, socket, room) => {
 
     const sendUser = async (user, callback) => {
         try {
-          console.log(user);
             socket.broadcast.emit('createUser',user);
         } catch (err) {
             callback(new Error());

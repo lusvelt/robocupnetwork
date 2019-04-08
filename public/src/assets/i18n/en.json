@@ -333,6 +333,8 @@
     "SELECT_MANIFESTATION_SUCCEDED":"Manifestation selected successfully",
     "RANKING_AND_FIELDS":"Ranking and fields",
     "FREE":"Free",
-    "RUNNING":"Running"
+    "RUNNING":"Running",
+    "APP_NOT_UPDATED":"App not updated",
+    "DOWNLOAD_NEW_VERSION":"Download the latest version"
 
 }

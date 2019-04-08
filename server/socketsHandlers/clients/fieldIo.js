@@ -41,7 +41,7 @@ const fieldIo = (clientsIo, socket, room) => {
         } catch (err) {
             callback(new Error());
         }
-    }
+    };
 
     const endRunOnField = async (data,callback) => {
         try {
@@ -56,7 +56,7 @@ const fieldIo = (clientsIo, socket, room) => {
         } catch (err) {
             callback(new Error());
         }
-    }
+    };
 
     const updateScoreOnField = async (data,callback) => {
         try {
@@ -71,7 +71,7 @@ const fieldIo = (clientsIo, socket, room) => {
         } catch (err) {
             throw(new Error());
         }
-    }
+    };
 
     const resetAllFields = async (phase, callback) => {
         try {
@@ -93,7 +93,7 @@ const fieldIo = (clientsIo, socket, room) => {
         } catch (err) {
             callback(new Error());
         }
-    }
+    };
 
 
     socket.on('findFieldsFromPhaseId',findFieldsFromPhaseId);

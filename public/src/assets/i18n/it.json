@@ -333,8 +333,9 @@
     "SELECT_MANIFESTATION_SUCCEDED":"Manifestatione selezionata con successo",
     "RANKING_AND_FIELDS":"Classifica e campi",
     "FREE":"Libero",
-    "RUNNING":"Occupato"
-
+    "RUNNING":"Occupato",
+    "APP_NOT_UPDATED":"App non aggiornata",
+    "DOWNLOAD_NEW_VERSION":"Scarica l'ultima versione"
 
 
 

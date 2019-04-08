@@ -228,7 +228,7 @@ const privilegesIo = (clientsIo, socket, room) => {
                 manifestation.roles.forEach(_role =>
                     promises.push(UserHasRoleInManifestation.create({ userId: userId, manifestationId: manifestationId, roleId: _role.id})));
                 promises.push(ManifestationHasUser.create({manifestationId: manifestationId, userId: userId}));
-            }    
+            }
             const result = await Promise.all(promises);
             callback(result);
             socket.broadcast.emit('updateUserHasRolesInManifestation', user);
