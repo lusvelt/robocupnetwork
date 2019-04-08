@@ -11,6 +11,7 @@ import { NotificationsService } from '../../services/notifications.service';
 import { AuthService } from '../../services/auth.service';
 import { notAddableConfig } from '../../config/tables.config';
 import { TablesService } from '../../services/tables.service';
+import { Router } from '@angular/router';
 
 
 interface CardSettings {
@@ -49,7 +50,8 @@ export class DashboardComponent implements OnInit {
   constructor(private manifestationsService: ManifestationsService,
               public authService: AuthService,
               private notificationsService: NotificationsService,
-              private tablesService: TablesService) { }
+              private tablesService: TablesService,
+              private router: Router) { }
 
   ngOnInit() {
     this.manifestationsService.getManifestations()
@@ -61,6 +63,10 @@ export class DashboardComponent implements OnInit {
     this.authService.selectManifestation(manifestation)
       .then(result => this.notificationsService.success('SELECT_MANIFESTATION_SUCCEDED'))
       .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+  }
+
+  openRank() {
+    this.router.navigate(['/rank']);
   }
 
 

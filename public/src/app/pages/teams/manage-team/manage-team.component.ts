@@ -82,12 +82,12 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
     if (this.authService.isManifestationSelected() && this.authService.canDo('getTeams')) {
       this.teamService.getTeamsInManifestation()
       .then(teams => {
-        teams.forEach(team => {
+         teams.forEach(team => {
           team.ageRange = team.AgeRange.name;
           team.school = team.School.name;
-          this.teamService.getCaptainFromId(team.id).then(res => {
+          /*this.teamService.getCaptainFromId(team.id).then(res => {
             team.captain = res[0].name + ' ' + res[0].surname;
-          });
+          });*/
         });
         this.source.load(teams);
       })
@@ -214,13 +214,13 @@ export class ManageTeamComponent implements OnInit, OnDestroy {
     name: {
       title: 'NAME',
       type: 'text',
-    },
+    }, /*
     captain: {
       title: 'CAPTAIN',
       type: 'text',
       addable: false,
       editable: false
-    },
+    },*/
     school: {
       title: 'SCHOOL',
       type: 'text',

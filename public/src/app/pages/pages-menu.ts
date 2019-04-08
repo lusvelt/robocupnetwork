@@ -107,13 +107,13 @@ export const MENU_ITEMS: any[] = [
     alias: 'fields',
     icon: 'far fa-square',
     link: '/pages/fields/manage'
-  },
+  }, /*
   {
     title: 'STAFF',
     alias: 'staff',
     icon: 'fas fa-people-carry',
     link: '/pages/staff/manage'
-  },
+  },*/
   {
     title: 'TEAMS',
     alias: 'teams',

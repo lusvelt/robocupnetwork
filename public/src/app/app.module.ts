@@ -21,6 +21,7 @@ import { ToasterModule } from 'angular2-toaster';
 import { JwtModule } from '@auth0/angular-jwt';
 import { values } from './config/values.config';
 import { MainPageComponent } from './main-page/main-page.component';
+import { RankComponent } from './rank/rank.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -31,7 +32,7 @@ export function tokenGetterFunction() {
 }
 
 @NgModule({
-  declarations: [AppComponent, MainPageComponent],
+  declarations: [AppComponent, MainPageComponent, RankComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

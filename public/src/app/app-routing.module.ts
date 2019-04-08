@@ -10,11 +10,13 @@ import { NgModule } from '@angular/core';
 import { NbAuthComponent } from '@nebular/auth';
 import { environment } from '../environments/environment';
 import { MainPageComponent } from './main-page/main-page.component';
+import { RankComponent } from './rank/rank.component';
 
 const routes: Routes = [
-  {path : 'main-page', component: MainPageComponent},
+  { path : 'main-page', component: MainPageComponent},
   { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule', canActivate: [AuthGuardService] },
   { path: 'mobile', loadChildren: 'app/mobile/mobile.module#MobileModule'/*, canActivate: [AuthGuardService] */},
+  { path: 'rank', component: RankComponent},
   {
     path: 'auth',
     component: NbAuthComponent,

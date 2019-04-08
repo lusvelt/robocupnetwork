@@ -1,0 +1,79 @@
+<ngx-one-column-layout>
+  <router-outlet>
+    <div *ngIf="!this.phaseSelected">
+      <div *ngIf="authService.isManifestationSelected()">
+
+        <div class="subtitle">
+          <h1 class="font-w-light">{{'SELECT_A_PHASE' | translate}}</h1>
+        </div>
+
+        <div class="mb-3" ngbDropdown>
+
+          <div class="col-md-6 offset-md-3">
+            <input type="text" class="form-control" placeholder="{{ 'WRITE_PHASE_NAME' | translate }}"
+              (selectItem)="onPhaseClicked($event)" [ngbTypeahead]="searchPhase" [resultFormatter]="phasesFormatter"
+              [inputFormatter]="phasesFormatter" (focus)="focus$.next($event.target.value)"
+              (click)="click$.next($event.target.value)" #searchPhaseInstance="ngbTypeahead" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="body" *ngIf="this.phaseSelected && authService.canDo('getDataForRanking')">
+      <h1 class="manifestation"><span>{{authService.getManifestation().name}}, {{phaseSelected.name}}</span></h1>
+      <div [(ngModel)]="choose" ngbRadioGroup
+        class="btn-group btn-group-toggle btn-outline-toggle-group btn-group-full-width btn-toggle-radio-group">
+        <label ngbButtonLabel class="btn btn-outline-primary">
+          <input ngbButton type="radio" value="ranking"> {{'RANKING'|translate}}
+        </label>
+        <label ngbButtonLabel class="btn btn-outline-primary">
+          <input ngbButton type="radio" value="field"> {{'FIELDS'|translate}}
+        </label>
+      </div>  
+
+      <div class="mt-3" *ngIf="this.choose == 'ranking'">       
+         <nb-card>
+          <nb-card-body>
+            <ng2-smart-table [settings]="settings" [source]="source" (createConfirm)="onCreateConfirm($event)"
+              (editConfirm)="onEditConfirm($event)" (deleteConfirm)="onDeleteConfirm($event)">
+            </ng2-smart-table>
+          </nb-card-body>
+        </nb-card>
+      </div>
+
+      <div class="mt-3" *ngIf="this.choose == 'field'">
+          <div *ngIf="authService.canDo('findFieldsFromPhaseId')" class="row">
+              <nb-card *ngFor="let field of fields" class="ml-3" [status]="field.cardStatus" size="xsmall">
+                <nb-card-header>
+                      <div class="number">{{field.number}}</div>
+                </nb-card-header>
+                <nb-card-body>
+                    <div class="row" *ngIf="field.status == 'running'">
+                      <div class="col-md-6">
+                        {{field.team}}
+                      </div>
+                      <div class="col-md-6">
+                        {{'RUNNING'|translate}}
+                      </div>
+                   </div>
+                   <div class="row" *ngIf="field.status != 'running'">
+                      <div class="col-md-12"> {{'FREE'|translate}}</div>
+                   </div>
+                </nb-card-body>
+                <nb-card-footer>
+                    <div class="row" *ngIf="field.status == 'running'">
+                      <div class="score font-w-bold">{{field.score}} <span class="font-w-light">pt</span></div>
+                      <div class="button"><button nbButton><i class="fas fa-search"></i></button></div>
+                    </div> 
+                    <div class="row" *ngIf="field.status != 'running'">
+                        <div class="button"><button nbButton><i class="fas fa-search"></i></button></div>
+                    </div> 
+                </nb-card-footer>
+              </nb-card>
+            </div>
+      </div>
+
+      </div>
+
+  </router-outlet>
+</ngx-one-column-layout>

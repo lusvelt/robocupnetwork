@@ -1,0 +1,94 @@
+.manifestation {
+    text-align: center;
+    font-size: 3rem;
+}
+
+.maintitle {
+  font-size: 1.7rem;
+  text-align: center;
+  display: inline;
+  padding: 0;
+}
+
+.subtitle {
+  padding: 0;
+  font-size: 1rem;
+  text-align: center;
+}
+
+::-webkit-input-placeholder { text-align:center; }
+
+.title {
+  font-size: 1.7rem;
+}
+
+.id-text {
+position: absolute;
+text-align: center;
+font-size: 1rem;
+margin-left: 13rem;
+margin-top: 5px;
+}
+
+.active-id-text {
+position: absolute;
+text-align: center;
+font-size: 1rem;
+margin-left: 16rem;
+margin-top: 5px;
+}
+
+.icon {
+  font-size: 1.7rem;
+  width: 100%;
+  position: absolute;
+  margin-left: 18rem;
+}
+
+.active-icon {
+font-size: 1.4rem;
+width: 100%;
+position: absolute;
+margin-left: 22rem;
+}
+
+.list-button {
+  border: 1px solid nb-theme(separator);
+}
+
+nb-actions {
+  margin-top: 20%;
+  font-size: 1.5rem;
+}
+
+nb-card-footer {
+  text-align: center;
+}
+
+nb-flip-card {
+width: 30%;
+}
+
+nb-card-body {
+text-align: center;
+}
+
+.score {
+  text-align: center;
+  margin-left: 3rem;
+  font-size: 1.5rem;
+}
+
+.button {
+  margin-left: 5rem;
+  margin-right: 1rem;
+}
+
+.number {
+  text-align: center;
+}
+
+.onlyStatus {
+  
+}
+

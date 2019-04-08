@@ -327,6 +327,12 @@
     "SCAN_THE_TEAM_CODE":"Scan the team QrCode",
     "SET_URL":"Set url",
     "CHECKING_FOR_UPDATES":"I'm looking for updates, just wait...",
-    "UNAUTHORIZED_MESSAGE":"Oh no! It's look like you are not strong enough!"
+    "UNAUTHORIZED_MESSAGE":"Oh no! It's look like you are not strong enough!",
+    "AGE_RANGE":"Age range",
+    "RESET_ALL_FIELDS":"Reset all fields",
+    "SELECT_MANIFESTATION_SUCCEDED":"Manifestation selected successfully",
+    "RANKING_AND_FIELDS":"Ranking and fields",
+    "FREE":"Free",
+    "RUNNING":"Running"
 
 }
