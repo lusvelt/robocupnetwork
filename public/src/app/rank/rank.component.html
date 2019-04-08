@@ -63,10 +63,11 @@
                 <nb-card-footer>
                     <div class="row" *ngIf="field.status == 'running'">
                       <div class="score font-w-bold">{{field.score}} <span class="font-w-light">pt</span></div>
-                      <div class="button"><button nbButton><i class="fas fa-search"></i></button></div>
+                      <div style="width: 60px"></div>
+                      <!--<div class="button"><button nbButton><i class="fas fa-search"></i></button></div>-->
                     </div> 
                     <div class="row" *ngIf="field.status != 'running'">
-                        <div class="button"><button nbButton><i class="fas fa-search"></i></button></div>
+                       <div style="width: 130px"></div>
                     </div> 
                 </nb-card-footer>
               </nb-card>
