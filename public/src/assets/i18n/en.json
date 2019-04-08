@@ -335,6 +335,8 @@
     "FREE":"Free",
     "RUNNING":"Running",
     "APP_NOT_UPDATED":"App not updated",
-    "DOWNLOAD_NEW_VERSION":"Download the latest version"
+    "DOWNLOAD_NEW_VERSION":"Download the latest version",
+    "CATEGORY":"Category",
+    "GENERATE_QR_CODE":"Generate QrCodes"
 
 }
