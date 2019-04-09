@@ -1117,6 +1117,7 @@ const seed = async () => {
             // console.log(roles[index].alias);
             roles[index].addAction(actions[3]);
             roles[index].addAction(actions[5]);
+            roles[index].addAction(actions[7]);
             roles[index].addAction(actions[8]);
             roles[index].addAction(actions[9]);
             roles[index].addAction(actions[12]);
@@ -1151,9 +1152,11 @@ const seed = async () => {
             // console.log(roles[index].alias);
             roles[index].addAction(actions[3]);
             roles[index].addAction(actions[5]);
+            roles[index].addAction(actions[7]);
             roles[index].addAction(actions[10]);
             roles[index].addAction(actions[11]);
             roles[index].addAction(actions[12]);
+            roles[index].addAction(actions[16]);
             roles[index].addAction(actions[17]);
             roles[index].addAction(actions[21]);
             roles[index].addAction(actions[32]);
@@ -1248,8 +1251,24 @@ const seed = async () => {
         case 'supervisor':
             // Supervisore manifestazione
             // console.log(roles[index].alias);
+            // roles[index].addAction(actions[3]);
+            // roles[index].addAction(actions[5]);
+            // roles[index].addAction(actions[12]);
+            // roles[index].addAction(actions[17]);
+            // roles[index].addAction(actions[21]);
+            // roles[index].addAction(actions[32]);
+            // roles[index].addAction(actions[39]);
+            // roles[index].addAction(actions[43]);
+            // roles[index].addAction(actions[64]);
+            // roles[index].addAction(actions[70]);
+            // roles[index].addAction(actions[72]);
+            break;
+        case 'captain':
+            // Capitano
+            // console.log(roles[index].alias);
             roles[index].addAction(actions[3]);
             roles[index].addAction(actions[5]);
+            roles[index].addAction(actions[7]);
             roles[index].addAction(actions[12]);
             roles[index].addAction(actions[17]);
             roles[index].addAction(actions[21]);
@@ -1260,28 +1279,12 @@ const seed = async () => {
             roles[index].addAction(actions[70]);
             roles[index].addAction(actions[72]);
             break;
-        case 'captain':
-            // Capitano
-            // console.log(roles[index].alias);
-            roles[index].addAction(actions[3]);
-            roles[index].addAction(actions[10]);
-            roles[index].addAction(actions[14]);
-            roles[index].addAction(actions[18]);
-            roles[index].addAction(actions[21]);
-            roles[index].addAction(actions[24]);
-            roles[index].addAction(actions[31]);
-            roles[index].addAction(actions[35]);
-            roles[index].addAction(actions[37]);
-            roles[index].addAction(actions[38]);
-            roles[index].addAction(actions[39]);
-            roles[index].addAction(actions[43]);
-            roles[index].addAction(actions[47]);
-            break;
         case 'viceCaptain':
             // Vice capitano
             // console.log(roles[index].alias);
             roles[index].addAction(actions[3]);
             roles[index].addAction(actions[5]);
+            roles[index].addAction(actions[7]);
             roles[index].addAction(actions[12]);
             roles[index].addAction(actions[17]);
             roles[index].addAction(actions[21]);
@@ -1297,6 +1300,7 @@ const seed = async () => {
             // console.log(roles[index].alias);
             roles[index].addAction(actions[3]);
             roles[index].addAction(actions[5]);
+            roles[index].addAction(actions[7]);
             roles[index].addAction(actions[12]);
             roles[index].addAction(actions[17]);
             roles[index].addAction(actions[21]);
