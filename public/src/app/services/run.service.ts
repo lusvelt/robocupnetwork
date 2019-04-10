@@ -21,8 +21,8 @@ export class RunService {
     return this.socketIoService.get('getRuns');
   }
 
-  endRun(run, runSettings, toEliminate, isContestation, contestation, score, events, remainingTime) {
-    return this.socketIoService.send('endRun', { run, runSettings, toEliminate, isContestation, contestation, score, events, remainingTime });
+  endRun(run, runSettings, toEliminate, isContestation, contestation, score, events, remainingTime, sign) {
+    return this.socketIoService.send('endRun', { run, runSettings, toEliminate, isContestation, contestation, score, events, remainingTime, sign });
   }
 
   fastValidateRun(run) {

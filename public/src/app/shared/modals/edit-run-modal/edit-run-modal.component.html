@@ -30,10 +30,14 @@
       <strong class="value-header font-w-bold">Fine:</strong><p class="value font-w-light">{{run.end | date:'d/M/yyyy, H:mm'}}</p>
    </div>
   <div class="row">
-    <strong class="value-header font-w-bold">Campo:</strong><p class="value font-w-light">{{run.field}}</p>
+    <strong class="value-header font-w-bold">Campo:</strong><p class="value font-w-light">{{run.Field.number}}</p>
   </div>
   <div class="row">
     <strong class="value-header font-w-bold">Fascia:</strong><p class="value font-w-light">{{run.Team.AgeRange.name}}</p>
+  </div>
+
+  <div class="row">
+    <img class="sign" [src]="run.sign">
   </div>
 
   <div class="mt-3">
