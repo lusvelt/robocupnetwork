@@ -28,7 +28,7 @@ export class AfterRunMobileComponent implements OnInit, AfterViewInit {
 
   @ViewChild(SignaturePad) signaturePad: SignaturePad;
 
-  private signaturePadOptions: Object = {
+  public signaturePadOptions: Object = {
     // passed through to szimek/signature_pad constructor
     minWidth: 0.5,
     maxWidth: 2,
