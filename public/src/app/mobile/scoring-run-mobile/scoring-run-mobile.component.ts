@@ -83,22 +83,16 @@ export class ScoringRunMobileComponent implements OnInit {
     if (this.deadVictimsRescued !== this.runSettings.deadVictims) {
       if ( this.livingVictimsRescued === this.runSettings.aliveVictims ) {
         if (this.runSettings.evacuationType === 'high') {
-          this.pointsForADeadVictim = ( 30 - ( 5 * this.lacksOfProgressAfterTheFinalCheck ) );
-          if ( this.pointsForADeadVictim < 0)
-            this.pointsForADeadVictim = 0;
+          this.pointsForADeadVictim = 30;
           this.score +=  this.pointsForADeadVictim;
           this.subtractablePoints += this.pointsForADeadVictim;
         } else {
-          this.pointsForADeadVictim = ( 20 - ( 5 * this.lacksOfProgressAfterTheFinalCheck ) );
-          if ( this.pointsForADeadVictim < 0)
-            this.pointsForADeadVictim = 0;
+          this.pointsForADeadVictim = 20;
           this.score +=  this.pointsForADeadVictim;
           this.subtractablePoints += this.pointsForADeadVictim;
         }
       } else {
-        this.pointsForADeadVictim = ( 5 - ( 5 * this.lacksOfProgressAfterTheFinalCheck ) );
-          if ( this.pointsForADeadVictim < 0)
-            this.pointsForADeadVictim = 0;
+        this.pointsForADeadVictim = 5;
           this.score +=  this.pointsForADeadVictim;
           this.subtractablePoints += this.pointsForADeadVictim;
       }
@@ -109,15 +103,11 @@ export class ScoringRunMobileComponent implements OnInit {
   livingVictim() {
     if (this.livingVictimsRescued !== this.runSettings.aliveVictims) {
       if (this.runSettings.evacuationType === 'high') {
-        this.pointsForALivingVictim = ( 40 - ( 5 * this.lacksOfProgressAfterTheFinalCheck ) );
-          if ( this.pointsForALivingVictim < 0)
-            this.pointsForALivingVictim = 0;
+        this.pointsForALivingVictim = 40;
           this.score +=  this.pointsForALivingVictim;
           this.subtractablePoints += this.pointsForALivingVictim;
       } else {
-        this.pointsForALivingVictim = ( 30 - ( 5 * this.lacksOfProgressAfterTheFinalCheck ) );
-          if ( this.pointsForALivingVictim < 0)
-            this.pointsForALivingVictim = 0;
+        this.pointsForALivingVictim = 30;
           this.score +=  this.pointsForALivingVictim;
           this.subtractablePoints += this.pointsForALivingVictim;
       }
