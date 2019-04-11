@@ -82,6 +82,13 @@ export class SingleButtonComponent implements OnInit {
         })
         .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
     }
+
+    if (this.internalKey === 'deleteLowestRun') {
+      this.phasesService.deleteLowestRun(this.rowData)
+        .then(data => {
+        })
+        .catch(err => this.notificationsService.error('OPERATION_FAILED_ERROR_MESSAGE'));
+    }
   }
 
 }

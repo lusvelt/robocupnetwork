@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const AgeRange = require('../../models/AgeRange');
-const log = require('../../config/consoleMessageConfig');
+const log = require('../../config/logger');
 
 const ageRangeIo = (clientsIo, socket, room) => {
 

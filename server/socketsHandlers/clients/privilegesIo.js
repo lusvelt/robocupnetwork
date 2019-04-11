@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const log = require('../../config/consoleMessageConfig');
+const log = require('../../config/logger');
 
 const ActionType = require('../../models/ActionType');
 const Action = require('../../models/Action');

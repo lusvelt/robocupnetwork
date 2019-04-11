@@ -14,6 +14,21 @@ const appPath = path.join(__dirname, 'mobileApp', 'platforms', 'android', 'app',
 const stdio = 'inherit';
 
 const utils = {
+    help: function () {
+        console.log('In order to execute a dev procedure, you should execute the following command:');
+        console.log();
+        console.log('\tnode utils <procedure> [...args]');
+        console.log();
+        console.log('Procedures are the following:');
+        console.log('\tbuildMobile\tBuilds the mobile application with cordova');
+        console.log('\trunBrowser\tRuns the mobile application in the default browser in dev mode');
+        console.log('\trunAndroid\tRuns the mobile application after deploying it to the connected adb device');
+        console.log('\tpublish\t\tPushes the latest saved changes to GitHub and deploys them on the server');
+        console.log('\t\t-m <commit_message>\t\tREQUIRED - The commit message for git');
+        console.log('\t\t-n\t\t\t\tDon\'t build front-end');
+        console.log('\t\t-t <application_version>\tThe new version of the application');
+        console.log('\t\t-v <mobile_version>\t\tThe new version of the mobile app (i.e. "v1.4.2")');
+    },
     buildMobile: function () {
         fs.removeSync(cordovaDir);
         execSync('cordova create mobileApp com.robocupnetwork.mobile Robocup\\ Network', { cwd: rootDir, stdio }); 
@@ -104,14 +119,9 @@ const utils = {
         execSync('scp -r dist git@robocupnetwork.it:/opt/apps/robocupnetwork', { cwd: publicDir, stdio });
         execSync('cordova build android', { cwd: cordovaDir, stdio });
         execSync('scp ' + appPath + ' git@robocupnetwork.it:/opt/apps/robocupnetwork/robocapp.apk', { cwd: publicDir, stdio });
+        
         console.log('Publishing process completed successfully');
         console.log('You can now access the website at robocupnetwork.it');
-    },
-    seed: async function () {
-        console.log('Adding seed data to database...');
-        const database = require('./server/config/database');
-        await database.initialize(true);
-        console.log('Seed data added successfully');
     }
 };
 

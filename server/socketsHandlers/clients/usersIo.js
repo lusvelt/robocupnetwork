@@ -4,7 +4,7 @@ const Role = require('../../models/Role');
 const Manifestation = require('../../models/Manifestation');
 const UserHasRoleInManifestation = require('../../database/associationTables/UserHasRoleInManifestation');
 const UserHasRole = require('../../database/associationTables/UserHasRole');
-const log = require('../../config/consoleMessageConfig');
+const log = require('../../config/logger');
 
 const usersIo = (clientsIo, socket, room) => {
 /*const createAction = async (_action, callback) => {

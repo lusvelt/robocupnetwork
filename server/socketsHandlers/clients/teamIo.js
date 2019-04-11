@@ -4,7 +4,7 @@ const User = require('../../models/User');
 const School = require('../../models/School');
 const Manifestation = require('../../models/Manifestation');
 const AgeRange = require('../../models/AgeRange');
-const log = require('../../config/consoleMessageConfig');
+const log = require('../../config/logger');
 const TeamHasUser = require('../../database/associationTables/TeamHasUser');
 const TeamParticipatesToManifestation = require('../../database/associationTables/TeamParticipatesToManifestation');
 

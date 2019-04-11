@@ -37,7 +37,6 @@ export class ManageRefereesComponent implements OnInit, OnDestroy {
     //   .then(users =>
     //     users.forEach(user => {
     //       if (user.roleId === 1) {
-    //         //  console.log(user.userId, user.manifestationId);
     //       }
     //     })
     //   );
@@ -47,9 +46,7 @@ export class ManageRefereesComponent implements OnInit, OnDestroy {
     // this.usersService.getUsersHasRoleInManifestation()
     //   .then(users =>
     //     users.forEach(user => {
-    //       // console.log(user.roleId , this.refereesId);
     //       if (user.roleId === this.refereesId) {
-    //         //  console.log(user.userId, user.manifestationId);
     //       }
     //     })
     //   );

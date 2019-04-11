@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const Place = require('../../models/Place');
-const log = require('../../config/consoleMessageConfig');
+const log = require('../../config/logger');
 
 const placeIo = (clientsIo, socket, room) => {
 

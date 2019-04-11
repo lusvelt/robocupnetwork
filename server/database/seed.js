@@ -1088,33 +1088,10 @@ const seed = async () => {
 
     // Staff
 
-
-
-
-
-
-
-
-    // for (let index = 0; index < actions.length; index++) {
-    //     const element = index + ': ' + actions[index].alias;
-    //     console.log(element);
-    // }
-
-    // for (let index = 0; index < modules.length; index++) {
-    //     const element = index + ': ' + modules[index].alias;
-    //     console.log(element);
-    // }
-
-    //  for (let index = 0; index < actionTypes.length; index++) {
-    //     const element = index + ': ' + actionTypes[index].alias;
-    //     console.log(element);
-    // }
-
     for (let index = 0; index < roles.length; index++) {
         switch (roles[index].alias) {
         case 'referee':
             // Arbitro
-            // console.log(roles[index].alias);
             roles[index].addAction(actions[3]);
             roles[index].addAction(actions[5]);
             roles[index].addAction(actions[7]);
@@ -1133,7 +1110,6 @@ const seed = async () => {
 
         case 'user':
             // Utente
-            // console.log(roles[index].alias);
             // roles[index].addAction(actions[3]);
             // roles[index].addAction(actions[10]);
             // roles[index].addAction(actions[14]);
@@ -1149,7 +1125,6 @@ const seed = async () => {
 
         case 'runsValidator':
             // Validatore gare
-            // console.log(roles[index].alias);
             roles[index].addAction(actions[3]);
             roles[index].addAction(actions[5]);
             roles[index].addAction(actions[7]);
@@ -1168,7 +1143,6 @@ const seed = async () => {
             break;
         case 'manifestationManagerHelper':
             // Aiutatnte gestore
-            // console.log(roles[index].alias);
             roles[index].addAction(actions[0]);
             roles[index].addAction(actions[1]);
             roles[index].addAction(actions[2]);
@@ -1250,7 +1224,6 @@ const seed = async () => {
             break;
         case 'supervisor':
             // Supervisore manifestazione
-            // console.log(roles[index].alias);
             // roles[index].addAction(actions[3]);
             // roles[index].addAction(actions[5]);
             // roles[index].addAction(actions[12]);
@@ -1265,7 +1238,6 @@ const seed = async () => {
             break;
         case 'captain':
             // Capitano
-            // console.log(roles[index].alias);
             roles[index].addAction(actions[3]);
             roles[index].addAction(actions[5]);
             roles[index].addAction(actions[7]);
@@ -1281,7 +1253,6 @@ const seed = async () => {
             break;
         case 'viceCaptain':
             // Vice capitano
-            // console.log(roles[index].alias);
             roles[index].addAction(actions[3]);
             roles[index].addAction(actions[5]);
             roles[index].addAction(actions[7]);
@@ -1297,7 +1268,6 @@ const seed = async () => {
             break;
         case 'teamMember':
             // Membro squadra
-            // console.log(roles[index].alias);
             roles[index].addAction(actions[3]);
             roles[index].addAction(actions[5]);
             roles[index].addAction(actions[7]);
@@ -1313,7 +1283,6 @@ const seed = async () => {
             break;
         case 'manifestationManager':
             // Gestore manifestazione
-            // console.log(roles[index].alias);
             roles[index].addAction(actions[0]);
             roles[index].addAction(actions[1]);
             roles[index].addAction(actions[2]);

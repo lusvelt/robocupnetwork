@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const School = require('../../models/School');
 const Place = require('../../models/Place');
-const log = require('../../config/consoleMessageConfig');
+const log = require('../../config/logger');
 
 const schoolIo = (clientsIo, socket, room) => {
 

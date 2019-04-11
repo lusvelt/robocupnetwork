@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const Manifestation = require('../../models/Manifestation');
 const User = require('../../models/User');
-const log = require('../../config/consoleMessageConfig');
+const log = require('../../config/logger');
 
 const authIo = (clientsIo, socket, room) => {
 

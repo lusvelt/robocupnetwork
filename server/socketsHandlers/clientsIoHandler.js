@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 
-const eventEmitter = require('../config/eventEmitter');
 const authIo = require('./clients/authIo');
 const privilegesIo = require('./clients/privilegesIo');
 const usersIo = require('./clients/usersIo');

@@ -5,7 +5,7 @@ const Phase = require('../../models/Phase');
 const Run = require('../../models/Run');
 const Field = require('../../models/Field');
 const User = require('../../models/User');
-const log = require('../../config/consoleMessageConfig');
+const log = require('../../config/logger');
 const RunIsArbitratedByReferee = require('../../database/associationTables/RunIsArbitratedByReferee');
 
 const runsIo = (clientsIo, socket, room) => {
@@ -101,14 +101,24 @@ const runsIo = (clientsIo, socket, room) => {
 
     const getDataForRanking = async (phase, callback) => {
         try {
-            console.log(phase);
             const phaseId = phase.id;
-            const ranking = await sequelize.query('SELECT Teams.name as team, Schools.name as school, AgeRanges.name as ageRange, sum(Runs.score) as score, count(Runs.id) as numberOfRuns from  Runs inner join Phases on Runs.phaseId = Phases.id inner join Teams on Runs.teamId = Teams.id inner join Schools on Teams.schoolId = Schools.id inner join AgeRanges on Teams.agerangeId = AgeRanges.id where Phases.id = :phaseId  and Runs.status = \'validated\' group by Teams.id order by score desc;',
-                { replacements: { phaseId }, type: sequelize.QueryTypes.SELECT });
+            const ranking = await sequelize.query(` SELECT Teams.name AS team,
+                                                          Schools.name AS school,
+                                                          AgeRanges.name AS ageRange,
+                                                          SUM(Runs.score) AS score,
+                                                          COUNT(Runs.id) AS numberOfRuns
+                                                    FROM Runs
+                                                    INNER JOIN Phases ON Runs.phaseId = Phases.id
+                                                    INNER JOIN Teams ON Runs.teamId = Teams.id
+                                                    INNER JOIN Schools ON Teams.schoolId = Schools.id
+                                                    INNER JOIN AgeRanges ON Teams.agerangeId = AgeRanges.id
+                                                    WHERE Phases.id = :phaseId AND Runs.status = 'validated'
+                                                    GROUP BY Teams.id
+                                                    ORDER BY score DESC;`,
+            { replacements: { phaseId }, type: sequelize.QueryTypes.SELECT });
             callback(ranking);
             log.verbose('Get data for ranking');
         } catch (err) {
-            console.log(err);
             callback(new Error());
         }
     };
@@ -166,7 +176,6 @@ const runsIo = (clientsIo, socket, room) => {
             socket.broadcast.emit('endRun', res);
             log.verbose('Run modified');
         } catch (err) {
-            console.log(err);
             callback(new Error());
         }
     };

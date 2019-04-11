@@ -2,12 +2,11 @@ const _ = require('lodash');
 const Category = require('../../models/Category');
 const Phase = require('../../models/Phase');
 const Event = require('../../models/Event');
-const log = require('../../config/consoleMessageConfig');
+const log = require('../../config/logger');
 
 const categoryIo = (clientsIo, socket, room) => {
 
     const createCategory = async (_category, callback) => {
-        console.log(_category);
         try {
             const category = await Category.create(_category);
             if (!category)

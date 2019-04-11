@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const Manifestation = require('../../models/Manifestation');
-const log = require('../../config/consoleMessageConfig');
+const log = require('../../config/logger');
 const Place = require('../../models/Place');
 
 const manifestationIo = (clientsIo, socket, room) => {
@@ -23,7 +23,6 @@ const manifestationIo = (clientsIo, socket, room) => {
 
     const getManifestations = async (args, callback) => {
         try {
-            console.log('arrivo');
             const manifestations = await Manifestation.getManifestationsList();
             callback(manifestations);
             log.verbose('Manifestation data request');
@@ -80,7 +79,6 @@ const manifestationIo = (clientsIo, socket, room) => {
     const updateStart = async (args, callback) => {
         const _manifestation = args.manifestation;
         const start = args.startDate;
-        console.log(start);
         try {
             const manifestation = await Manifestation.findById(_manifestation.id);
             const result = await manifestation.update({ start });
@@ -97,7 +95,6 @@ const manifestationIo = (clientsIo, socket, room) => {
     const updateEnd = async (args, callback) => {
         const _manifestation = args.manifestation;
         const end = args.endDate;
-        console.log(end);
         try {
             const manifestation = await Manifestation.findById(_manifestation.id);
             const result = await manifestation.update({ end });

@@ -8,18 +8,17 @@ const socketio = require('socket.io');
 const fs = require('fs');
 const https = require('https');
 
-const argv = require('./server/config/yargs');
+const args = require('./server/config/yargs');
 const config = require('./server/config/config');
-const log = require('./server/config/consoleMessageConfig');
+const log = require('./server/config/logger');
 
-config(argv);
+config(args);
 
 const router = require('./server/config/router');
 const database = require('./server/config/database');
 const passportJwtStrategy = require('./server/auth/strategies/passportJwt');
 const socketioJwtStrategy = require('./server/auth/strategies/socketioJwt');
 const sockets = require('./server/config/sockets');
-const internalEventsSystem = require('./server/config/internalEventsSystem');
 
 const port = process.env.PORT;
 const distPath = path.join(__dirname, 'dist');
@@ -48,11 +47,9 @@ app.use(cors());
 app.use('/', express.static(distPath));
 
 passport.use(passportJwtStrategy);
-io.use(socketioJwtStrategy);
 
-app.use(internalEventsSystem);
 router.initialize(app, passport);
-sockets.initialize(io);
+sockets.initialize(io, socketioJwtStrategy);
 
 console.log();
 
@@ -63,6 +60,6 @@ if (process.env.SSL) {
     redirectServer.listen(redirectFromPort, () => log.info('Redirection to https enabled'));
 }
 
-database.initialize(argv.reset)
+database.initialize(args)
     .then(() => server.listen(port, () => log.info('Server is listening on port ' + port)));
 

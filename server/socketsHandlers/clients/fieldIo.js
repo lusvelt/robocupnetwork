@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const Field = require('../../models/Field');
 const PhaseHasField = require('../../database/associationTables/PhaseHasField');
-const log = require('../../config/consoleMessageConfig');
+const log = require('../../config/logger');
 
 const fieldIo = (clientsIo, socket, room) => {
 

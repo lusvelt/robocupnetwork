@@ -46,6 +46,10 @@ export class PhasesService {
     return this.socketIoService.send('getQRCodesData', phase);
   }
 
+  deleteLowestRun(phase) {
+    return this.socketIoService.send('deleteLowestRun', phase);
+  }
+
   notify(eventName: string): Observable<any> {
     return new Observable(observer =>
       this.socketIoService.on(eventName).subscribe(data => observer.next(data))

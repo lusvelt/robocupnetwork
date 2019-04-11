@@ -1,12 +1,14 @@
 const _ = require('lodash');
+const sequelize = require('../../config/sequelize');
 const Phase = require('../../models/Phase');
 const Category = require('../../models/Category');
 const User = require('../../models/User');
 const Manifestation = require('../../models/Manifestation');
 const AgeRange = require('../../models/AgeRange');
-const log = require('../../config/consoleMessageConfig');
+const log = require('../../config/logger');
 const TeamHasUser = require('../../database/associationTables/TeamHasUser');
 const Team = require('../../models/Team');
+const Run = require('../../models/Run');
 const Field = require('../../models/Field');
 const TeamIsInPhase = require('../../database/associationTables/TeamIsInPhase');
 const PhaseHasField = require('../../database/associationTables/PhaseHasField');
@@ -42,9 +44,8 @@ const phasesIo = (clientsIo, socket, room) => {
 
             let fields = [];
             for(let i = 0; i <_numField; i++) {
-                console.log(i);
                 fields[i] = await Field.create({number: i+1,status: 'free'});
-            }; 
+            }
             
             promises = [];
             fields.forEach(field => {
@@ -72,7 +73,6 @@ const phasesIo = (clientsIo, socket, room) => {
         const _phase = data.phase;
         const _manifestation = data.manifestation;
         const start = data.startDate;
-        console.log(start);
         try {
             const phase = await Phase.findById(_phase.id);
             const result = await phase.update({ start });
@@ -119,7 +119,6 @@ const phasesIo = (clientsIo, socket, room) => {
 
     const getTeamsInPhase = async (_phase, callback) => {
         try {
-            console.log(_phase.id);
             const promises = [];
             const items = await TeamIsInPhase.findAll({where: {phaseId: _phase.id}});
             items.forEach(item => promises.push(Team.findById(item.teamId)));
@@ -208,8 +207,16 @@ const phasesIo = (clientsIo, socket, room) => {
         try {
             const phase = await Phase.findById(_phase.id);
             const data = await phase.getQRCodesData();
-            console.log(data);
             callback(data);
+        } catch (err) {
+            callback(err);
+        }
+    };
+
+    const deleteLowestRun = async (_phase, callback) => {
+        try {
+            const phaseId = _phase.id;
+            const result = sequelize.query('UPDATE Runs SET Runs.status = NOW() WHERE ');
         } catch (err) {
             callback(err);
         }

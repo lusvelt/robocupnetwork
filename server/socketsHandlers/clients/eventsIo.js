@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const Event = require('../../models/Event');
 const Category = require('../../models/Category');
-const log = require('../../config/consoleMessageConfig');
+const log = require('../../config/logger');
 
 const eventsIo = (clientsIo, socket, room) => {
 
@@ -45,7 +45,6 @@ const eventsIo = (clientsIo, socket, room) => {
 
     const editEvent = async (data, callback) => {
         try {
-            console.log(data);
             const _event = data.event;
             const _category = data.category;
             const id = _event.id;

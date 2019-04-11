@@ -25,7 +25,6 @@ export class SingleDateTimeComponent implements ViewCell, OnInit {
   }
 
   onDateChange(date: any) {
-    // console.log(this._dateTimeLocal);
     // this.parentNotifier.emit('change', date);
   }
 

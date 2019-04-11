@@ -245,6 +245,14 @@ export class ManagePhaseComponent implements OnInit, OnDestroy {
       onComponentInitFunction: (instance) => {
         instance.internalKey = 'generateQrCodeModal';
       }
+    },
+    delete_lowest_run: {
+      title: 'DELETE_LOWEST_RUN',
+      type: 'custom',
+      renderComponent: SingleButtonComponent,
+      onComponentInitFunction: (instance) => {
+        instance.internalKey = 'deleteLowestRun';
+      }
     }
   });
 
