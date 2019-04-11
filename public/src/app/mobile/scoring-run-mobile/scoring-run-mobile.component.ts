@@ -28,6 +28,8 @@ export class ScoringRunMobileComponent implements OnInit {
   score: number = 5;
   attempt: number = 1;
   zone: number = 1;
+  triangle: number = Math.floor(Math.random() * 4) + 1;
+
 
   livingVictimsRescued = 0;
   deadVictimsRescued = 0;
@@ -65,6 +67,10 @@ export class ScoringRunMobileComponent implements OnInit {
       this.attempt = 1;
       this.zone++;
     }
+  }
+
+  randomTriangle() {
+    this.triangle = Math.floor(Math.random() * 4) + 1;
   }
 
   checkpoint() {

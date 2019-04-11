@@ -49,7 +49,7 @@ export class RunSettingMobileComponent implements OnInit {
   messages: string[] = [];
 
   category: any;
-  leftTime: any= '';
+  leftTime: any= 480000;
   user: any = {};
   team: any = {};
 
@@ -73,7 +73,7 @@ export class RunSettingMobileComponent implements OnInit {
   ngOnInit() {
     this.fullName = this.userService.getFullName();
     const data = this.paramsService.getParams();
-    this.team = JSON.parse(data.text); // data.text    '{"id":1,"name":"aa","Phases":[{"id":2,"name":"aa"}]}'
+    this.team = JSON.parse('{"id":1,"name":"a","Phases":[{"id":2,"name":"a"}]}'); // data.text    '{"id":1,"name":"aa","Phases":[{"id":2,"name":"aa"}]}'
     this.categoriesService.findCategoryFromPhaseId(this.team.Phases[0])
     .then(category => {
       this.runsetting.maxTime = category.defaultMaxTime;
