@@ -95,9 +95,9 @@ export class RunSettingMobileComponent implements OnInit {
       if (fields.length > 0)
         this.runsetting.field = localStorage.getItem('field') ? this.fields.filter(field => field.id === parseInt(localStorage.getItem('field')))[0] : this.fields[0];
     });
-    this.runsetting.aliveVictims = localStorage.getItem('aliveVictims');
-    this.runsetting.deadVictims = localStorage.getItem('deadVictims');
-    this.runsetting.numberOfCheckpoints = localStorage.getItem('numberOfCheckpoints');
+    this.runsetting.aliveVictims = parseInt(localStorage.getItem('aliveVictims'));
+    this.runsetting.deadVictims = parseInt(localStorage.getItem('deadVictims'));
+    this.runsetting.numberOfCheckpoints = parseInt(localStorage.getItem('numberOfCheckpoints'));
     this.onNumberOfCheckpointChange();
   }
 

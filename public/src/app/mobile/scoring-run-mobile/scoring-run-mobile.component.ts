@@ -107,14 +107,14 @@ export class ScoringRunMobileComponent implements OnInit {
   deadVictim() {
     let points = 0;
     if (this.deadVictimsRescued !== this.runSettings.deadVictims) {
-      if ( this.livingVictimsRescued === this.runSettings.aliveVictims ) {
+      if (this.livingVictimsRescued === this.runSettings.aliveVictims) {
         if (this.runSettings.evacuationType === 'high') {
           this.pointsForADeadVictim = 30;
-          points =  this.pointsForADeadVictim;
+          points = this.pointsForADeadVictim;
           this.subtractablePoints += this.pointsForADeadVictim;
         } else {
           this.pointsForADeadVictim = 20;
-          points =  this.pointsForADeadVictim;
+          points = this.pointsForADeadVictim;
           this.subtractablePoints += this.pointsForADeadVictim;
         }
       } else {

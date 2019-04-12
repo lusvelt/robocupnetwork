@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const parser = require('xml2json');
+const readline = require('readline-promise').default;
 const { execSync } = require('child_process');
 
 const rootDir = path.join(__dirname);
@@ -11,7 +12,18 @@ const configXmlPath = path.join(__dirname, 'mobileApp', 'config.xml');
 const packagePath = path.join(__dirname, 'package.json');
 const appPath = path.join(__dirname, 'mobileApp', 'platforms', 'android', 'app', 'build', 'outputs', 'apk', 'debug', 'app-debug.apk');
 
+const stagingDir = '/opt/staging/robocupnetwork';
+const gitRemote = 'staging';
+
 const stdio = 'inherit';
+const rlp = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    terminal: true
+});
+const isYes = (s) => s === 'yes' || s === 'YES' || s === 'Yes';
+const isNo = (s) => s === 'no' || s === 'NO' || s === 'No';
+const isYesNo = (s) => isYes(s) || isNo(s);
 
 const utils = {
     help: function () {
@@ -52,7 +64,7 @@ const utils = {
         this.buildMobile();
         execSync('cordova run android', { cwd: cordovaDir, stdio });
     },
-    publish: function (args) {
+    stage: async function (args) {
         if (!args || !args.m)
             return console.log('You must specify a commit message');
 
@@ -64,8 +76,8 @@ const utils = {
             .filter(remote => !!remote)
             .map(remote => remote.split('\t')[0]);
         
-        if (!remotes.includes('production'))
-            execSync('git remote add production git@robocupnetwork.it:/opt/git/robocupnetwork.git', { cwd: rootDir, stdio });
+        if (!remotes.includes(gitRemote))
+            execSync('git remote add ' + gitRemote + ' git@robocupnetwork.it:/opt/git/robocupnetwork.git', { cwd: rootDir, stdio });
 
         if (!args.n) {
             execSync('ng build --prod', { cwd: publicDir, stdio });
@@ -115,13 +127,35 @@ const utils = {
         if (args.t)
             execSync('git push --tags', { cwd: rootDir, stdio });
 
-        execSync('git push production', { cwd: rootDir, stdio });
-        execSync('scp -r dist git@robocupnetwork.it:/opt/apps/robocupnetwork', { cwd: publicDir, stdio });
         execSync('cordova build android', { cwd: cordovaDir, stdio });
-        execSync('scp ' + appPath + ' git@robocupnetwork.it:/opt/apps/robocupnetwork/robocapp.apk', { cwd: publicDir, stdio });
         
-        console.log('Publishing process completed successfully');
-        console.log('You can now access the website at robocupnetwork.it');
+        execSync('ssh git@robocupnetwork.it "rm -rf ' + stagingDir + '/*"', { cwd: rootDir, stdio });
+        execSync('scp -r dist git@robocupnetwork.it:' + stagingDir, { cwd: publicDir, stdio });
+        execSync('scp ' + appPath + ' git@robocupnetwork.it:' + stagingDir + '/robocapp.apk', { cwd: rootDir, stdio });
+        
+        let answer;
+        while (!isYesNo(answer))
+            answer = await rlp.questionAsync('Are you sure you want to stage the commit to the server? [Yes/No] > ');
+        
+        if (isYes(answer)) {
+            execSync('git push ' + gitRemote, { cwd: rootDir, stdio });
+            console.log('Staging process completed successfully');
+        }
+        rlp.close();
+    },
+    restart: async function () {
+        let answer;
+        while (!isYesNo(answer))
+            answer = await rlp.questionAsync('Are you sure you want to restart the server? [Yes/No] > ');
+        if (isYes(answer)) {
+            execSync('ssh git@robocupnetwork.it "pm2 stop robocupnetwork && rm -rf /opt/apps/robocupnetwork && cp -r /opt/staging/robocupnetwork && pm2 start /opt/ecosystems/robocupnetwork.config.js --env production"');
+            console.log('Server restart process completed successfully');
+        }
+        rlp.close();
+    },
+    publish: async function (args) {
+        await this.stage(args);
+        await this.restart();
     }
 };
 
