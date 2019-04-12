@@ -76,7 +76,7 @@ export class RunSettingMobileComponent implements OnInit {
   ngOnInit() {
     this.fullName = this.userService.getFullName();
     const data = this.paramsService.getParams();
-    this.team = JSON.parse(environment.production ? data.text : '{"id":1,"name":"TestTeam","Phases":[{"id":1,"name":"Qualificazioni"}]}'); // data.text    '{"id":1,"name":"aa","Phases":[{"id":2,"name":"aa"}]}'
+    this.team = JSON.parse(environment.mobile ? data.text : '{"id":1,"name":"TestTeam","Phases":[{"id":1,"name":"Qualificazioni"}]}'); // data.text    '{"id":1,"name":"aa","Phases":[{"id":2,"name":"aa"}]}'
     this.teamService.getTeamInfo(this.team.id)
       .then(team => {
         this.runsetting.evacuationType = team.AgeRange.name === 'under14' ? 'low' : 'high';
