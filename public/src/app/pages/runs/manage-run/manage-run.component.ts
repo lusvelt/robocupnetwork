@@ -15,6 +15,7 @@ import { AuthService } from './../../../services/auth.service';
 export class ManageRunComponent implements OnInit {
   runs: any = [];
   cardStatus: any;
+  limitRuns: boolean = true;
   constructor(private modalService: NgbModal,
               private runService: RunService,
               public authService: AuthService,
@@ -22,7 +23,7 @@ export class ManageRunComponent implements OnInit {
 
   ngOnInit() {
     if (this.authService.canDo('getRuns')) {
-    this.runService.getRuns()
+    this.runService.getRuns(this.limitRuns)
     .then(runs => {
       runs.forEach(run => {
         if (run.status === 'toBeValidated')
@@ -41,7 +42,7 @@ export class ManageRunComponent implements OnInit {
   }
 
     this.runService.notify('startRun')
-    .subscribe(run => this.runs.push(run));
+    .subscribe(run => this.runs.splice(0, 0, run));
 
     this.runService.notify('deleteRun')
       .subscribe(run => this.runs.splice(this.runs.findIndex(el => el.id === run.id), 1, run));
@@ -64,6 +65,27 @@ export class ManageRunComponent implements OnInit {
             run.cardStatus = 'warning';
         this.runs.splice(this.runs.findIndex(el => el.id === run.id), 1, run);
       });
+  }
+
+  getRuns() {
+    if (this.authService.canDo('getRuns')) {
+      this.runService.getRuns(this.limitRuns)
+      .then(runs => {
+        runs.forEach(run => {
+          if (run.status === 'toBeValidated')
+            run.cardStatus = 'success';
+  
+          if (run.status === 'toBeCanceled')
+            run.cardStatus = 'danger';
+  
+          if (run.status === 'toBeReviewed')
+            run.cardStatus = 'warning';
+        });
+        this.runs = runs;
+      });
+    } else {
+      this.notificationsService.error('UNAUTHORIZED');
+    }
   }
 
   deleteRun(run) {
@@ -96,7 +118,7 @@ export class ManageRunComponent implements OnInit {
 
   openRunModal(run) {
     const modal = this.modalService.open(EditRunModalComponent);
-      modal.componentInstance.run = run;
+      modal.componentInstance.runId = run.id;
   }
 
 }

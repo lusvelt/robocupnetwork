@@ -3,5 +3,6 @@ export const values = {
     passwordMinLength: 8,
     passwordMaxLength: 24,
     whitelistedDomains: [],
-    whitelistedRoutes: []
+    whitelistedRoutes: [],
+    numberOfDisplayedTeams: 115
 };

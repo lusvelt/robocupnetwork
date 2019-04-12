@@ -1,3 +1,5 @@
+import { values } from './values.config';
+
 export const standardConfig = {
     actions: {
         columnTitle: 'ACTIONS',
@@ -41,7 +43,7 @@ export const notAddableConfig = {
 
 export const rankingConfig = {
     pager: {
-        perPage : 110
+        perPage : values.numberOfDisplayedTeams
     },
     actions: {
         columnTitle: 'ACTIONS',

@@ -14,9 +14,15 @@ export class EditRunModalComponent implements OnInit {
   modalHeader: string;
   modalContent: string;
 
-  run: any;
+  run;
+  runId: any;
   ngOnInit() {
-    this.run.events = JSON.parse(this.run.events);
+    this.runService.getRunInfo(this.runId)
+    .then(run => {
+      this.run = run;
+      this.run.events = JSON.parse(this.run.events);
+    });
+    
   }
 
   constructor(private activeModal: NgbActiveModal,

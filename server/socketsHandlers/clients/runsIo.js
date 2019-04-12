@@ -41,9 +41,13 @@ const runsIo = (clientsIo, socket, room) => {
         }
     };
 
-    const getRuns = async (args, callback) => {
+    const getRuns = async (limitRuns, callback) => {
         try {
-            const runs = await Run.getRunsList();
+            let runs;
+            if (!limitRuns)
+                runs = await Run.getRunsList();
+            else 
+                runs = await Run.getLimitatedList();    
             callback(runs);
             log.verbose('Runs data request');
         } catch (err) {
@@ -141,6 +145,17 @@ const runsIo = (clientsIo, socket, room) => {
 
     };
 
+    const getRunInfo = async (id, callback) => {
+        try {
+            const result = await Run.getRunInfo(id);
+            if(!result)
+                throw new Error();
+            callback (result);
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
     const endRun = async (data, callback) => {
         try {
             const id = data.run.id;
@@ -197,6 +212,7 @@ const runsIo = (clientsIo, socket, room) => {
         }
     };
 
+    socket.on('getRunInfo',getRunInfo);
     socket.on('endRun', endRun);
     socket.on('startRun', startRun);
     socket.on('getRuns', getRuns);

@@ -17,8 +17,8 @@ export class RunService {
     return this.socketIoService.send('startRun', { runSettings, team, referee: _.pick(this.authService.getUserInfo(), ['id']) });
   }
 
-  getRuns() {
-    return this.socketIoService.get('getRuns');
+  getRuns(limitRuns) {
+    return this.socketIoService.send('getRuns', limitRuns);
   }
 
   endRun(run, runSettings, toEliminate, isContestation, contestation, score, events, remainingTime, sign) {
@@ -31,6 +31,10 @@ export class RunService {
 
   deleteRun(run) {
     return this.socketIoService.send('deleteRun', run);
+  }
+
+  getRunInfo(id) {
+    return this.socketIoService.send('getRunInfo', id);
   }
 
   validateRunWithPoint(run) {

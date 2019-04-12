@@ -1,4 +1,7 @@
 <div *ngIf="authService.canDo('getRuns')">
+  <div class="row">
+    <nb-checkbox (change)="getRuns()"[(ngModel)]="limitRuns">{{'LIMIT_RUNS'|translate}}</nb-checkbox>
+  </div>
 <div class="row">
     <nb-flip-card *ngFor="let run of runs" class="ml-3" >
         <nb-card-front>

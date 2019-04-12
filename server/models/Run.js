@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const {limitRun} = require('../config/values');
 const sequelize = require('../config/sequelize');
 const Team = require('./Team');
 const School = require('./School');
@@ -23,10 +24,13 @@ const Run = sequelize.define('Run', {
     sign: { type: Sequelize.TEXT }
 });
 
-Run.getRunsList = () => Run.findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] },
+Run.getRunsList = () => Run.findAll({order: [['start','DESC']],attributes: { exclude: ['createdAt', 'updatedAt','sign'] },
     include: [Field, {model: Team,  attributes: { exclude: ['createdAt', 'updatedAt']}, include: [AgeRange, School]}] });
 
 Run.getRunInfo = (id) => Run.findById(id, { attributes: { exclude: ['createdAt', 'updatedAt'] },
     include: [Field, {model: Team,  attributes: { exclude: ['createdAt', 'updatedAt']}, include: [AgeRange, School]}] });
+
+Run.getLimitatedList = () => Run.findAll({order: [['start','DESC']], limit: limitRun, attributes: { exclude: ['createdAt', 'updatedAt','sign'] },
+    include: [Field, {model: Team,  attributes: { exclude: ['createdAt', 'updatedAt']}, include: [AgeRange, School]}]});  
 
 module.exports = Run;
