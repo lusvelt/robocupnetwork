@@ -339,6 +339,9 @@
     "CATEGORY":"Category",
     "GENERATE_QR_CODE":"Generate QrCodes",
     "EVACUATION_ZONE_POSITION": "Triangle",
-    "RANDOMIZE": "Randomize"
+    "RANDOMIZE": "Randomize",
+    "LIMIT_RUNS":"Limit runs (last 50)",
+    "RACE_VALIDATED":"Race validated",
+    "RACE_DELETED":"Race deleted"
 
 }

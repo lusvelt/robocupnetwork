@@ -339,7 +339,10 @@
     "CATEGORY":"Categoria",
     "GENERATE_QR_CODE":"Genera QrCode",
     "EVACUATION_ZONE_POSITION": "Triangolo",
-    "RANDOMIZE": "Randomizza"
+    "RANDOMIZE": "Randomizza",
+    "LIMIT_RUNS":"Limita gare (ultime 50)",
+    "RACE_VALIDATED":"Gara validata",
+    "RACE_DELETED":"Gara cancellata"
 
 
 
