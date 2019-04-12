@@ -25,7 +25,10 @@ const database = {
             }
             log.info('Database initialized successfully');
         } catch (err) {
+            console.log(err);
             log.error(err);
+            if (options.reset)
+                process.exit(1);
         }
     }
 };
