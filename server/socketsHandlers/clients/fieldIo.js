@@ -45,7 +45,7 @@ const fieldIo = (clientsIo, socket, room) => {
 
     const endRunOnField = async (data,callback) => {
         try {
-            const id = data[0].id;
+            const id = data.id;
             const result = await Field.update({status:'free',team: null,score:null},{where: {id}});
             if (!result)
                 throw new Error();
