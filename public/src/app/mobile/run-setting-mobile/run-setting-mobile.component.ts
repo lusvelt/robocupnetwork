@@ -49,7 +49,7 @@ export class RunSettingMobileComponent implements OnInit {
   messages: string[] = [];
 
   category: any;
-  leftTime: any= '';
+  leftTime: any= 480000;
   user: any = {};
   team: any = {};
 

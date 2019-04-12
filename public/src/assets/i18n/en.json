@@ -337,6 +337,8 @@
     "APP_NOT_UPDATED":"App not updated",
     "DOWNLOAD_NEW_VERSION":"Download the latest version",
     "CATEGORY":"Category",
-    "GENERATE_QR_CODE":"Generate QrCodes"
+    "GENERATE_QR_CODE":"Generate QrCodes",
+    "EVACUATION_ZONE_POSITION": "Triangle",
+    "RANDOMIZE": "Randomize"
 
 }

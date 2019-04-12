@@ -30,7 +30,7 @@ import {
   NotificationsService
 } from '../services/notifications.service';
 import { PhasesService } from '../services/phases.service';
-import { notAddableConfig } from '../config/tables.config';
+import { notAddableConfig, rankingConfig } from '../config/tables.config';
 import { TablesService } from '../services/tables.service';
 import { FieldsService } from '../services/fields.service';
 
@@ -81,7 +81,9 @@ export class RankComponent implements OnInit {
     }
 
     this.getNotified();
+
   }
+
 
   onPhaseClicked(event: any) {
     this.phaseSelected = event.item;
@@ -159,7 +161,7 @@ export class RankComponent implements OnInit {
     });
   }
 
-  settings = this.tablesService.getSettings(notAddableConfig, {
+  settings = this.tablesService.getSettings(rankingConfig, {
     rank: {
       title: 'RANK',
       type: 'number',

@@ -1,6 +1,7 @@
+
 .manifestation {
     text-align: center;
-    font-size: 3rem;
+    font-size: 1.2rem;
 }
 
 .maintitle {
@@ -73,6 +74,11 @@ nb-card-body {
 text-align: center;
 }
 
+.switcher {
+  font-size: 0.8rem;
+  line-height: 0;
+}
+
 .score {
   text-align: center;
   margin-left: 3rem;
@@ -88,7 +94,12 @@ text-align: center;
   text-align: center;
 }
 
-.onlyStatus {
-  
+
+.rankTable {
+  height: 600px; overflow-y: auto;
+}
+
+.fieldRank {
+  height: 300px; overflow-y: auto; overflow-x: auto;
 }
 
