@@ -20,12 +20,13 @@ export class ScoringRunMobileComponent implements OnInit {
   runSettings: any;
   team: any;
   run: any;
+  private lastDescription;
 
   subtractablePoints: number = 0;
 
   events = [];
 
-  score: number = 5;
+  score: number = 0;
   attempt: number = 1;
   zone: number = 1;
   triangle: number = Math.floor(Math.random() * 4) + 1;
@@ -52,14 +53,31 @@ export class ScoringRunMobileComponent implements OnInit {
     this.runSettings = params.runSettings;
     this.team = params.team;
     this.run = params.run;
+    this.category.Events.filter(event => event.triggerOnStart).forEach(event => this.fireEvent(event));
   }
 
-  async fireEvent(event) {
+  async fireEvent(_event) {
+    const event = Object.assign({}, _event);
     this.evaluate(event.pointsJSCalculator);
     event.name = await this.translateService.get(event.name).toPromise();
+    event.description = this.lastDescription;
     this.events.push(event);
     this.fieldsService.updateScoreOnField(this.runSettings.field, this.score);
     this.runService.updateLiveScore(this.run, this.score);
+  }
+
+  private setPointsDescription(points) {
+    this.lastDescription = points + ' pt';
+  }
+
+  add(points) {
+    this.score += points;
+    this.setPointsDescription(points);
+  }
+
+  jumpZone() {
+    this.nextZone();
+    this.setPointsDescription(0);
   }
 
   nextZone() {
@@ -74,57 +92,61 @@ export class ScoringRunMobileComponent implements OnInit {
   }
 
   checkpoint() {
+    let points = 0;
     if (!(this.zone > this.runSettings.numberOfCheckpoints)) {
-      if ( this.attempt === 1 )
-        this.score += this.runSettings.checkpoints[this.zone - 1] * 5;
-      if ( this.attempt === 2 )
-        this.score += this.runSettings.checkpoints[this.zone - 1] * 3;
-      if ( this.attempt === 3 )
-        this.score += this.runSettings.checkpoints[this.zone - 1] * 1;
-      this.nextZone();
+      points = this.runSettings.checkpoints[this.zone - 1] * (5 - (this.attempt - 1) * 2);
+      if (points < 0)
+        points = 0;
     }
+    this.add(points);
+    this.nextZone();
   }
 
   deadVictim() {
+    let points = 0;
     if (this.deadVictimsRescued !== this.runSettings.deadVictims) {
       if ( this.livingVictimsRescued === this.runSettings.aliveVictims ) {
         if (this.runSettings.evacuationType === 'high') {
           this.pointsForADeadVictim = 30;
-          this.score +=  this.pointsForADeadVictim;
+          points =  this.pointsForADeadVictim;
           this.subtractablePoints += this.pointsForADeadVictim;
         } else {
           this.pointsForADeadVictim = 20;
-          this.score +=  this.pointsForADeadVictim;
+          points =  this.pointsForADeadVictim;
           this.subtractablePoints += this.pointsForADeadVictim;
         }
       } else {
         this.pointsForADeadVictim = 5;
-          this.score +=  this.pointsForADeadVictim;
+          points = this.pointsForADeadVictim;
           this.subtractablePoints += this.pointsForADeadVictim;
       }
-      this.deadVictimsRescued ++;
+      this.deadVictimsRescued++;
     }
+    this.add(points);
   }
 
   livingVictim() {
+    let points = 0;
     if (this.livingVictimsRescued !== this.runSettings.aliveVictims) {
       if (this.runSettings.evacuationType === 'high') {
         this.pointsForALivingVictim = 40;
-          this.score +=  this.pointsForALivingVictim;
+          points = this.pointsForALivingVictim;
           this.subtractablePoints += this.pointsForALivingVictim;
       } else {
         this.pointsForALivingVictim = 30;
-          this.score +=  this.pointsForALivingVictim;
+          points = this.pointsForALivingVictim;
           this.subtractablePoints += this.pointsForALivingVictim;
       }
-      this.livingVictimsRescued ++;
+      this.livingVictimsRescued++;
     }
+    this.add(points);
   }
 
   lackOfProgress() {
+    let points = 0;
     if (!this.runSettings.entryLevel) {
       if (this.zone > this.runSettings.numberOfCheckpoints) {
-          this.lacksOfProgressAfterTheFinalCheck ++;
+          this.lacksOfProgressAfterTheFinalCheck++;
           this.subtractedPointsForLackOfProgressAfterTheFinalCheck = ( 5 * this.livingVictimsRescued ) + ( 5 * this.deadVictimsRescued );
           if (this.subtractablePoints < this.subtractedPointsForLackOfProgressAfterTheFinalCheck) {
             this.subtractedPointsForLackOfProgressAfterTheFinalCheck = this.subtractablePoints;
@@ -132,10 +154,11 @@ export class ScoringRunMobileComponent implements OnInit {
           } else {
             this.subtractablePoints -= this.subtractedPointsForLackOfProgressAfterTheFinalCheck;
           }
-          this.score -= this.subtractedPointsForLackOfProgressAfterTheFinalCheck;
+          points = -this.subtractedPointsForLackOfProgressAfterTheFinalCheck;
       }
     }
-    this.attempt ++;
+    this.add(points);
+    this.attempt++;
   }
 
   changeStatus(cd1) {
@@ -179,12 +202,11 @@ export class ScoringRunMobileComponent implements OnInit {
   }
 
   exit() {
-    this.score += 20;
+    this.add(20);
   }
 
   evaluate(command: string) {
-    this.events.push();
-    eval(command);
+    eval('this.' + command + ';');
   }
 
 }

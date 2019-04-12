@@ -3,6 +3,7 @@ import { ViewOnlyRolesModalComponent } from './modals/view-only-roles-modal/view
 import { ConfirmModalComponent } from './modals/confirm-modal/confirm-modal.component';
 import { AlertModalComponent } from './modals/alert-modal/alert-modal.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { NgxAutoScrollModule } from 'ngx-auto-scroll';
 import { ThemeModule } from './../@theme/theme.module';
 import { NotificationsService } from './../services/notifications.service';
 import { TokenService } from './../services/token.service';
@@ -28,12 +29,14 @@ import { EventsListComponent } from './dialogs/events-list/events-list.component
     imports: [
         TranslateModule,
         ThemeModule,
-        Ng2SmartTableModule
+        Ng2SmartTableModule,
+        NgxAutoScrollModule
     ],
     exports: [
         TranslateModule,
         ThemeModule,
-        Ng2SmartTableModule
+        Ng2SmartTableModule,
+        NgxAutoScrollModule
     ],
     declarations: [
         AlertModalComponent,

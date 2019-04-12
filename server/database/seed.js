@@ -1,4 +1,4 @@
-const { User, ActionType, Action, Role, Manifestation, School, Place, AgeRange, Team, Category, Module, Event, Phase } = require('./models');
+const { User, ActionType, Action, Role, Manifestation, School, Field, Place, AgeRange, Team, Category, Module, Event, Phase } = require('./models');
 const TeamHasUser = require('../database/associationTables/TeamHasUser');
 const TeamIsInPhase = require('../database/associationTables/TeamIsInPhase');
 
@@ -653,7 +653,7 @@ const seed = async () => {
         Event.create({
             name: 'INTERSECTION',
             description: 'Intersezione in una mattonella',
-            pointsJSCalculator: 'this.score += 15;',
+            pointsJSCalculator: 'add(15)',
             affectsZone: false,
             affectsAttempt: false,
             manuallyTriggerable: true,
@@ -665,7 +665,7 @@ const seed = async () => {
         Event.create({
             name: 'DEAD_END',
             description: 'Un intersezione in cui il robot deve invertire il proprio senso di marcia',
-            pointsJSCalculator: 'this.score += 15;',
+            pointsJSCalculator: 'add(15)',
             affectsZone: false,
             affectsAttempt: false,
             manuallyTriggerable: true,
@@ -677,7 +677,7 @@ const seed = async () => {
         Event.create({
             name: 'RAMP',
             description: 'Una salita o una discesa',
-            pointsJSCalculator: 'this.score += 5;',
+            pointsJSCalculator: 'add(5)',
             affectsZone: false,
             affectsAttempt: false,
             manuallyTriggerable: true,
@@ -689,7 +689,7 @@ const seed = async () => {
         Event.create({
             name: 'SPEED_BUMP',
             description: 'Un dosso da superare',
-            pointsJSCalculator: 'this.score += 5;',
+            pointsJSCalculator: 'add(5)',
             affectsZone: false,
             affectsAttempt: false,
             manuallyTriggerable: true,
@@ -701,7 +701,7 @@ const seed = async () => {
         Event.create({
             name: 'OBSTACLE',
             description: 'Un ostacolo da superare',
-            pointsJSCalculator: 'this.score += 10;',
+            pointsJSCalculator: 'add(10)',
             affectsZone: false,
             affectsAttempt: false,
             manuallyTriggerable: true,
@@ -713,7 +713,7 @@ const seed = async () => {
         Event.create({
             name: 'GAP',
             description: 'Un interruzione momentanea della linea',
-            pointsJSCalculator: 'this.score += 10;',
+            pointsJSCalculator: 'add(10)',
             affectsZone: false,
             affectsAttempt: false,
             manuallyTriggerable: true,
@@ -725,7 +725,7 @@ const seed = async () => {
         Event.create({
             name: 'LACK_OF_PROGRESS',
             description: 'Nuovo tentativo',
-            pointsJSCalculator: 'this.lackOfProgress();',
+            pointsJSCalculator: 'lackOfProgress()',
             affectsZone: false,
             affectsAttempt: true,
             manuallyTriggerable: true,
@@ -737,7 +737,7 @@ const seed = async () => {
         Event.create({
             name: 'JUMP_ZONE',
             description: 'La zona non completata viene saltata',
-            pointsJSCalculator: 'this.nextZone();',
+            pointsJSCalculator: 'jumpZone()',
             affectsZone: true,
             affectsAttempt: true,
             manuallyTriggerable: true,
@@ -761,7 +761,7 @@ const seed = async () => {
         Event.create({
             name: 'Checkpoint',
             description: 'Viene raggiunto un checkpoint',
-            pointsJSCalculator: 'this.checkpoint();',
+            pointsJSCalculator: 'checkpoint()',
             affectsZone: true,
             affectsAttempt: true,
             manuallyTriggerable: true,
@@ -773,7 +773,7 @@ const seed = async () => {
         Event.create({
             name: 'END_OF_PLAY',
             description: 'Si verifica quando il robot completa il percorso, oppure quando la squadra dichiara di non voler continuare, oppure allo scadere del tempo ',
-            pointsJSCalculator: 'this.endOfPlay();',
+            pointsJSCalculator: 'endOfPlay()',
             affectsZone: false,
             affectsAttempt: false,
             manuallyTriggerable: true,
@@ -785,7 +785,7 @@ const seed = async () => {
         Event.create({
             name: 'LIVING_VICTIM',
             description: 'Corretta evacuazione di una pallina argentata',
-            pointsJSCalculator: 'this.livingVictim();',
+            pointsJSCalculator: 'livingVictim()',
             affectsZone: false,
             affectsAttempt: false,
             manuallyTriggerable: true,
@@ -797,7 +797,7 @@ const seed = async () => {
         Event.create({
             name: 'DEAD_VICTIM',
             description: 'Corretta evacuazione di una pallina nera',
-            pointsJSCalculator: 'this.deadVictim();',
+            pointsJSCalculator: 'deadVictim()',
             affectsZone: false,
             affectsAttempt: false,
             manuallyTriggerable: true,
@@ -809,7 +809,7 @@ const seed = async () => {
         Event.create({
             name: 'EXIT',
             description: 'Il robot è uscito dalla stanza e ha percorso correttamente tre mattonelle, dopo aver toccato o salvato una vittima',
-            pointsJSCalculator: 'this.exit();',
+            pointsJSCalculator: 'exit()',
             affectsZone: false,
             affectsAttempt: false,
             manuallyTriggerable: true,
@@ -861,7 +861,9 @@ const seed = async () => {
         })
     ];
 
-    let teams = [];
+    let teams = [
+        Team.create({ name: 'TestTeam' })
+    ];
 
     let teamsHasUser = [];
 
@@ -940,6 +942,11 @@ const seed = async () => {
         })
     ];
 
+    let fields = [
+        Field.create({ number: 1 }),
+        Field.create({ number: 2 })
+    ];
+
     users = await Promise.all(users);
     actionTypes = await Promise.all(actionTypes);
     actions = await Promise.all(actions);
@@ -949,142 +956,145 @@ const seed = async () => {
     schools = await Promise.all(schools);
     places = await Promise.all(places);
     ageRanges = await Promise.all(ageRanges);
-    // teams = await Promise.all(teams);
+    teams = await Promise.all(teams);
     // teamsHasUser = await Promise.all(teamsHasUser);
     categories = await Promise.all(categories);
     phase = await Promise.all(phase);
     modules = await Promise.all(modules);
+    fields = await Promise.all(fields);
 
-    schools[0].setPlace(places[0]);
+    const promises = [
+        schools[0].setPlace(places[0]),
 
-    actions[0].addActionType(actionTypes[0]);
-    actions[1].addActionType(actionTypes[2]);
-    actions[2].addActionType(actionTypes[3]);
-    actions[3].addActionType(actionTypes[1]);
-    actions[4].addActionType(actionTypes[0]);
-    actions[5].addActionType(actionTypes[2]);
-    actions[6].addActionType(actionTypes[2]);
-    actions[7].addActionType(actionTypes[3]);
-    actions[8].addActionType(actionTypes[2]);
-    actions[9].addActionType(actionTypes[3]);
-    actions[10].addActionType(actionTypes[1]);
-    actions[11].addActionType(actionTypes[0]);
-    actions[12].addActionType(actionTypes[2]);
-    actions[13].addActionType(actionTypes[3]);
-    actions[14].addActionType(actionTypes[1]);
-    actions[15].addActionType(actionTypes[0]);
-    actions[16].addActionType(actionTypes[2]);
-    actions[17].addActionType(actionTypes[3]);
-    actions[18].addActionType(actionTypes[1]);
-    actions[19].addActionType(actionTypes[0]);
-    actions[20].addActionType(actionTypes[3]);
-    actions[21].addActionType(actionTypes[1]);
-    actions[22].addActionType(actionTypes[0]);
-    actions[23].addActionType(actionTypes[3]);
-    actions[24].addActionType(actionTypes[1]);
-    actions[25].addActionType(actionTypes[0]);
-    actions[26].addActionType(actionTypes[3]);
-    actions[27].addActionType(actionTypes[2]);
-    actions[28].addActionType(actionTypes[3]);
-    actions[29].addActionType(actionTypes[2]);
-    actions[30].addActionType(actionTypes[3]);
-    actions[31].addActionType(actionTypes[1]);
-    actions[32].addActionType(actionTypes[0]);
-    actions[33].addActionType(actionTypes[2]);
-    actions[34].addActionType(actionTypes[3]);
-    actions[35].addActionType(actionTypes[1]);
-    actions[36].addActionType(actionTypes[0]);
-    actions[37].addActionType(actionTypes[2]);
-    actions[38].addActionType(actionTypes[3]);
-    actions[39].addActionType(actionTypes[1]);
-    actions[40].addActionType(actionTypes[0]);
-    actions[41].addActionType(actionTypes[2]);
-    actions[42].addActionType(actionTypes[3]);
-    actions[43].addActionType(actionTypes[1]);
-    actions[44].addActionType(actionTypes[0]);
-    actions[45].addActionType(actionTypes[2]);
-    actions[46].addActionType(actionTypes[3]);
+        actions[0].addActionType(actionTypes[0]),
+        actions[1].addActionType(actionTypes[2]),
+        actions[2].addActionType(actionTypes[3]),
+        actions[3].addActionType(actionTypes[1]),
+        actions[4].addActionType(actionTypes[0]),
+        actions[5].addActionType(actionTypes[2]),
+        actions[6].addActionType(actionTypes[2]),
+        actions[7].addActionType(actionTypes[3]),
+        actions[8].addActionType(actionTypes[2]),
+        actions[9].addActionType(actionTypes[3]),
+        actions[10].addActionType(actionTypes[1]),
+        actions[11].addActionType(actionTypes[0]),
+        actions[12].addActionType(actionTypes[2]),
+        actions[13].addActionType(actionTypes[3]),
+        actions[14].addActionType(actionTypes[1]),
+        actions[15].addActionType(actionTypes[0]),
+        actions[16].addActionType(actionTypes[2]),
+        actions[17].addActionType(actionTypes[3]),
+        actions[18].addActionType(actionTypes[1]),
+        actions[19].addActionType(actionTypes[0]),
+        actions[20].addActionType(actionTypes[3]),
+        actions[21].addActionType(actionTypes[1]),
+        actions[22].addActionType(actionTypes[0]),
+        actions[23].addActionType(actionTypes[3]),
+        actions[24].addActionType(actionTypes[1]),
+        actions[25].addActionType(actionTypes[0]),
+        actions[26].addActionType(actionTypes[3]),
+        actions[27].addActionType(actionTypes[2]),
+        actions[28].addActionType(actionTypes[3]),
+        actions[29].addActionType(actionTypes[2]),
+        actions[30].addActionType(actionTypes[3]),
+        actions[31].addActionType(actionTypes[1]),
+        actions[32].addActionType(actionTypes[0]),
+        actions[33].addActionType(actionTypes[2]),
+        actions[34].addActionType(actionTypes[3]),
+        actions[35].addActionType(actionTypes[1]),
+        actions[36].addActionType(actionTypes[0]),
+        actions[37].addActionType(actionTypes[2]),
+        actions[38].addActionType(actionTypes[3]),
+        actions[39].addActionType(actionTypes[1]),
+        actions[40].addActionType(actionTypes[0]),
+        actions[41].addActionType(actionTypes[2]),
+        actions[42].addActionType(actionTypes[3]),
+        actions[43].addActionType(actionTypes[1]),
+        actions[44].addActionType(actionTypes[0]),
+        actions[45].addActionType(actionTypes[2]),
+        actions[46].addActionType(actionTypes[3]),
 
-    // Utenti
-    actions[0].addModule(modules[0]);
-    actions[1].addModule(modules[0]);
-    actions[2].addModule(modules[0]);
-    actions[3].addModule(modules[0]);
-    actions[4].addModule(modules[0]);
-    actions[5].addModule(modules[0]);
-    actions[6].addModule(modules[0]);
-    actions[57].addModule(modules[0]);
-    actions[58].addModule(modules[0]);
-    actions[59].addModule(modules[0]);
-    actions[60].addModule(modules[0]);
+        // Utenti
+        actions[0].addModule(modules[0]),
+        actions[1].addModule(modules[0]),
+        actions[2].addModule(modules[0]),
+        actions[3].addModule(modules[0]),
+        actions[4].addModule(modules[0]),
+        actions[5].addModule(modules[0]),
+        actions[6].addModule(modules[0]),
+        actions[57].addModule(modules[0]),
+        actions[58].addModule(modules[0]),
+        actions[59].addModule(modules[0]),
+        actions[60].addModule(modules[0]),
 
-    // Gare
-    actions[7].addModule(modules[10]);
-    actions[8].addModule(modules[10]);
-    actions[9].addModule(modules[10]);
-    actions[10].addModule(modules[10]);
-    actions[11].addModule(modules[10]);
-    actions[15].addModule(modules[10]);
-    actions[16].addModule(modules[10]);
+        // Gare
+        actions[7].addModule(modules[10]),
+        actions[8].addModule(modules[10]),
+        actions[9].addModule(modules[10]),
+        actions[10].addModule(modules[10]),
+        actions[11].addModule(modules[10]),
+        actions[15].addModule(modules[10]),
+        actions[16].addModule(modules[10]),
 
-    // Luoghi
-    actions[17].addModule(modules[3]);
-    actions[18].addModule(modules[3]);
-    actions[19].addModule(modules[3]);
-    actions[20].addModule(modules[3]);
-    actions[47].addModule(modules[3]);
+        // Luoghi
+        actions[17].addModule(modules[3]),
+        actions[18].addModule(modules[3]),
+        actions[19].addModule(modules[3]),
+        actions[20].addModule(modules[3]),
+        actions[47].addModule(modules[3]),
 
-    // Arbitri
-    actions[14].addModule(modules[6]);
-    actions[26].addModule(modules[6]);
-    actions[27].addModule(modules[6]);
-    actions[28].addModule(modules[6]);
+        // Arbitri
+        actions[14].addModule(modules[6]),
+        actions[26].addModule(modules[6]),
+        actions[27].addModule(modules[6]),
+        actions[28].addModule(modules[6]),
 
-    // Privilegi
-    actions[29].addModule(modules[1]);
-    actions[30].addModule(modules[1]);
-    actions[31].addModule(modules[1]);
-    actions[32].addModule(modules[1]);
-    actions[33].addModule(modules[1]);
-    actions[34].addModule(modules[1]);
-    actions[35].addModule(modules[1]);
-    actions[36].addModule(modules[1]);
-    actions[37].addModule(modules[1]);
-    actions[38].addModule(modules[1]);
+        // Privilegi
+        actions[29].addModule(modules[1]),
+        actions[30].addModule(modules[1]),
+        actions[31].addModule(modules[1]),
+        actions[32].addModule(modules[1]),
+        actions[33].addModule(modules[1]),
+        actions[34].addModule(modules[1]),
+        actions[35].addModule(modules[1]),
+        actions[36].addModule(modules[1]),
+        actions[37].addModule(modules[1]),
+        actions[38].addModule(modules[1]),
 
-    // Manifestazioni
+        // Manifestazioni
 
-    // Categorie
-    actions[21].addModule(modules[4]);
-    actions[22].addModule(modules[4]);
-    actions[23].addModule(modules[4]);
-    actions[24].addModule(modules[4]);
-    actions[25].addModule(modules[4]);
+        // Categorie
+        actions[21].addModule(modules[4]),
+        actions[22].addModule(modules[4]),
+        actions[23].addModule(modules[4]),
+        actions[24].addModule(modules[4]),
+        actions[25].addModule(modules[4]),
 
-    // Fascie di età
-    actions[39].addModule(modules[5]);
-    actions[40].addModule(modules[5]);
-    actions[41].addModule(modules[5]);
-    actions[42].addModule(modules[5]);
+        // Fascie di età
+        actions[39].addModule(modules[5]),
+        actions[40].addModule(modules[5]),
+        actions[41].addModule(modules[5]),
+        actions[42].addModule(modules[5]),
 
-    // Scuole
-    actions[43].addModule(modules[7]);
-    actions[44].addModule(modules[7]);
-    actions[45].addModule(modules[7]);
-    actions[46].addModule(modules[7]);
+        // Scuole
+        actions[43].addModule(modules[7]),
+        actions[44].addModule(modules[7]),
+        actions[45].addModule(modules[7]),
+        actions[46].addModule(modules[7]),
 
-    // Squadre
-    actions[54].addModule(modules[8]);
-    actions[55].addModule(modules[8]);
-    actions[61].addModule(modules[8]);
+        // Squadre
+        actions[54].addModule(modules[8]),
+        actions[55].addModule(modules[8]),
+        actions[61].addModule(modules[8]),
 
-    // Fasi
-    actions[48].addModule(modules[9]);
-    actions[49].addModule(modules[9]);
-    actions[50].addModule(modules[9]);
-    actions[51].addModule(modules[9]);
-    actions[52].addModule(modules[9]);
-    actions[53].addModule(modules[9]);
+        // Fasi
+        actions[48].addModule(modules[9]),
+        actions[49].addModule(modules[9]),
+        actions[50].addModule(modules[9]),
+        actions[51].addModule(modules[9]),
+        actions[52].addModule(modules[9]),
+        actions[53].addModule(modules[9])
+    ];
 
     // Staff
 
@@ -1092,20 +1102,22 @@ const seed = async () => {
         switch (roles[index].alias) {
         case 'referee':
             // Arbitro
-            roles[index].addAction(actions[3]);
-            roles[index].addAction(actions[5]);
-            roles[index].addAction(actions[7]);
-            roles[index].addAction(actions[8]);
-            roles[index].addAction(actions[9]);
-            roles[index].addAction(actions[12]);
-            roles[index].addAction(actions[17]);
-            roles[index].addAction(actions[21]);
-            roles[index].addAction(actions[32]);
-            roles[index].addAction(actions[39]);
-            roles[index].addAction(actions[43]);
-            roles[index].addAction(actions[64]);
-            roles[index].addAction(actions[70]);
-            roles[index].addAction(actions[72]);
+            promises.push([
+                roles[index].addAction(actions[3]),
+                roles[index].addAction(actions[5]),
+                roles[index].addAction(actions[7]),
+                roles[index].addAction(actions[8]),
+                roles[index].addAction(actions[9]),
+                roles[index].addAction(actions[12]),
+                roles[index].addAction(actions[17]),
+                roles[index].addAction(actions[21]),
+                roles[index].addAction(actions[32]),
+                roles[index].addAction(actions[39]),
+                roles[index].addAction(actions[43]),
+                roles[index].addAction(actions[64]),
+                roles[index].addAction(actions[70]),
+                roles[index].addAction(actions[72])
+            ]);
             break;
 
         case 'user':
@@ -1125,102 +1137,105 @@ const seed = async () => {
 
         case 'runsValidator':
             // Validatore gare
-            roles[index].addAction(actions[3]);
-            roles[index].addAction(actions[5]);
-            roles[index].addAction(actions[7]);
-            roles[index].addAction(actions[10]);
-            roles[index].addAction(actions[11]);
-            roles[index].addAction(actions[12]);
-            roles[index].addAction(actions[16]);
-            roles[index].addAction(actions[17]);
-            roles[index].addAction(actions[21]);
-            roles[index].addAction(actions[32]);
-            roles[index].addAction(actions[39]);
-            roles[index].addAction(actions[43]);
-            roles[index].addAction(actions[64]);
-            roles[index].addAction(actions[70]);
-            roles[index].addAction(actions[72]);
+            promises.push([
+                roles[index].addAction(actions[3]),
+                roles[index].addAction(actions[5]),
+                roles[index].addAction(actions[7]),
+                roles[index].addAction(actions[10]),
+                roles[index].addAction(actions[11]),
+                roles[index].addAction(actions[12]),
+                roles[index].addAction(actions[16]),
+                roles[index].addAction(actions[17]),
+                roles[index].addAction(actions[21]),
+                roles[index].addAction(actions[32]),
+                roles[index].addAction(actions[39]),
+                roles[index].addAction(actions[43]),
+                roles[index].addAction(actions[64]),
+                roles[index].addAction(actions[70]),
+                roles[index].addAction(actions[72])
+            ]);
             break;
         case 'manifestationManagerHelper':
             // Aiutatnte gestore
-            roles[index].addAction(actions[0]);
-            roles[index].addAction(actions[1]);
-            roles[index].addAction(actions[2]);
-            roles[index].addAction(actions[3]);
-            roles[index].addAction(actions[4]);
-            roles[index].addAction(actions[5]);
-            roles[index].addAction(actions[6]);
-            roles[index].addAction(actions[7]);
-            roles[index].addAction(actions[12]);
-            roles[index].addAction(actions[13]);
-            roles[index].addAction(actions[14]);
-            roles[index].addAction(actions[15]);
-            roles[index].addAction(actions[16]);
-            roles[index].addAction(actions[17]);
-            roles[index].addAction(actions[18]);
-            roles[index].addAction(actions[19]);
-            roles[index].addAction(actions[20]);
-            roles[index].addAction(actions[21]);
-            roles[index].addAction(actions[22]);
-            roles[index].addAction(actions[23]);
-            roles[index].addAction(actions[24]);
-            roles[index].addAction(actions[25]);
-            roles[index].addAction(actions[26]);
-            roles[index].addAction(actions[27]);
-            roles[index].addAction(actions[28]);
-            roles[index].addAction(actions[29]);
-            roles[index].addAction(actions[32]);
-            roles[index].addAction(actions[33]);
-            roles[index].addAction(actions[34]);
-            roles[index].addAction(actions[35]);
-            roles[index].addAction(actions[36]);
-            roles[index].addAction(actions[37]);
-            roles[index].addAction(actions[38]);
-            roles[index].addAction(actions[39]);
-            roles[index].addAction(actions[40]);
-            roles[index].addAction(actions[41]);
-            roles[index].addAction(actions[42]);
-            roles[index].addAction(actions[43]);
-            roles[index].addAction(actions[44]);
-            roles[index].addAction(actions[45]);
-            roles[index].addAction(actions[46]);
-            roles[index].addAction(actions[47]);
-            roles[index].addAction(actions[48]);
-            roles[index].addAction(actions[49]);
-            roles[index].addAction(actions[50]);
-            roles[index].addAction(actions[51]);
-            roles[index].addAction(actions[52]);
-            roles[index].addAction(actions[53]);
-            roles[index].addAction(actions[54]);
-            roles[index].addAction(actions[55]);
-            roles[index].addAction(actions[56]);
-            roles[index].addAction(actions[57]);
-            roles[index].addAction(actions[58]);
-            roles[index].addAction(actions[59]);
-            roles[index].addAction(actions[60]);
-            roles[index].addAction(actions[61]);
-            roles[index].addAction(actions[62]);
-            roles[index].addAction(actions[63]);
-            roles[index].addAction(actions[64]);
-            roles[index].addAction(actions[65]);
-            roles[index].addAction(actions[66]);
-            roles[index].addAction(actions[67]);
-            roles[index].addAction(actions[68]);
-            roles[index].addAction(actions[69]);
-            roles[index].addAction(actions[70]);
-            roles[index].addAction(actions[71]);
-            roles[index].addAction(actions[72]);
-            roles[index].addAction(actions[73]);
-            roles[index].addAction(actions[74]);
-            roles[index].addAction(actions[75]);
-            roles[index].addAction(actions[76]);
-            roles[index].addAction(actions[77]);
-            roles[index].addAction(actions[78]);
-            roles[index].addAction(actions[79]);
-            roles[index].addAction(actions[80]);
-            roles[index].addAction(actions[81]);
-            roles[index].addAction(actions[82]);
-
+            promises.push([
+                roles[index].addAction(actions[0]),
+                roles[index].addAction(actions[1]),
+                roles[index].addAction(actions[2]),
+                roles[index].addAction(actions[3]),
+                roles[index].addAction(actions[4]),
+                roles[index].addAction(actions[5]),
+                roles[index].addAction(actions[6]),
+                roles[index].addAction(actions[7]),
+                roles[index].addAction(actions[12]),
+                roles[index].addAction(actions[13]),
+                roles[index].addAction(actions[14]),
+                roles[index].addAction(actions[15]),
+                roles[index].addAction(actions[16]),
+                roles[index].addAction(actions[17]),
+                roles[index].addAction(actions[18]),
+                roles[index].addAction(actions[19]),
+                roles[index].addAction(actions[20]),
+                roles[index].addAction(actions[21]),
+                roles[index].addAction(actions[22]),
+                roles[index].addAction(actions[23]),
+                roles[index].addAction(actions[24]),
+                roles[index].addAction(actions[25]),
+                roles[index].addAction(actions[26]),
+                roles[index].addAction(actions[27]),
+                roles[index].addAction(actions[28]),
+                roles[index].addAction(actions[29]),
+                roles[index].addAction(actions[32]),
+                roles[index].addAction(actions[33]),
+                roles[index].addAction(actions[34]),
+                roles[index].addAction(actions[35]),
+                roles[index].addAction(actions[36]),
+                roles[index].addAction(actions[37]),
+                roles[index].addAction(actions[38]),
+                roles[index].addAction(actions[39]),
+                roles[index].addAction(actions[40]),
+                roles[index].addAction(actions[41]),
+                roles[index].addAction(actions[42]),
+                roles[index].addAction(actions[43]),
+                roles[index].addAction(actions[44]),
+                roles[index].addAction(actions[45]),
+                roles[index].addAction(actions[46]),
+                roles[index].addAction(actions[47]),
+                roles[index].addAction(actions[48]),
+                roles[index].addAction(actions[49]),
+                roles[index].addAction(actions[50]),
+                roles[index].addAction(actions[51]),
+                roles[index].addAction(actions[52]),
+                roles[index].addAction(actions[53]),
+                roles[index].addAction(actions[54]),
+                roles[index].addAction(actions[55]),
+                roles[index].addAction(actions[56]),
+                roles[index].addAction(actions[57]),
+                roles[index].addAction(actions[58]),
+                roles[index].addAction(actions[59]),
+                roles[index].addAction(actions[60]),
+                roles[index].addAction(actions[61]),
+                roles[index].addAction(actions[62]),
+                roles[index].addAction(actions[63]),
+                roles[index].addAction(actions[64]),
+                roles[index].addAction(actions[65]),
+                roles[index].addAction(actions[66]),
+                roles[index].addAction(actions[67]),
+                roles[index].addAction(actions[68]),
+                roles[index].addAction(actions[69]),
+                roles[index].addAction(actions[70]),
+                roles[index].addAction(actions[71]),
+                roles[index].addAction(actions[72]),
+                roles[index].addAction(actions[73]),
+                roles[index].addAction(actions[74]),
+                roles[index].addAction(actions[75]),
+                roles[index].addAction(actions[76]),
+                roles[index].addAction(actions[77]),
+                roles[index].addAction(actions[78]),
+                roles[index].addAction(actions[79]),
+                roles[index].addAction(actions[80]),
+                roles[index].addAction(actions[81]),
+                roles[index].addAction(actions[82])
+            ]);
             break;
         case 'supervisor':
             // Supervisore manifestazione
@@ -1238,161 +1253,180 @@ const seed = async () => {
             break;
         case 'captain':
             // Capitano
-            roles[index].addAction(actions[3]);
-            roles[index].addAction(actions[5]);
-            roles[index].addAction(actions[7]);
-            roles[index].addAction(actions[12]);
-            roles[index].addAction(actions[17]);
-            roles[index].addAction(actions[21]);
-            roles[index].addAction(actions[32]);
-            roles[index].addAction(actions[39]);
-            roles[index].addAction(actions[43]);
-            roles[index].addAction(actions[64]);
-            roles[index].addAction(actions[70]);
-            roles[index].addAction(actions[72]);
+            promises.push([
+                roles[index].addAction(actions[3]),
+                roles[index].addAction(actions[5]),
+                roles[index].addAction(actions[7]),
+                roles[index].addAction(actions[12]),
+                roles[index].addAction(actions[17]),
+                roles[index].addAction(actions[21]),
+                roles[index].addAction(actions[32]),
+                roles[index].addAction(actions[39]),
+                roles[index].addAction(actions[43]),
+                roles[index].addAction(actions[64]),
+                roles[index].addAction(actions[70]),
+                roles[index].addAction(actions[72])
+            ]);
             break;
         case 'viceCaptain':
             // Vice capitano
-            roles[index].addAction(actions[3]);
-            roles[index].addAction(actions[5]);
-            roles[index].addAction(actions[7]);
-            roles[index].addAction(actions[12]);
-            roles[index].addAction(actions[17]);
-            roles[index].addAction(actions[21]);
-            roles[index].addAction(actions[32]);
-            roles[index].addAction(actions[39]);
-            roles[index].addAction(actions[43]);
-            roles[index].addAction(actions[64]);
-            roles[index].addAction(actions[70]);
-            roles[index].addAction(actions[72]);
+            promises.push([
+                roles[index].addAction(actions[3]),
+                roles[index].addAction(actions[5]),
+                roles[index].addAction(actions[7]),
+                roles[index].addAction(actions[12]),
+                roles[index].addAction(actions[17]),
+                roles[index].addAction(actions[21]),
+                roles[index].addAction(actions[32]),
+                roles[index].addAction(actions[39]),
+                roles[index].addAction(actions[43]),
+                roles[index].addAction(actions[64]),
+                roles[index].addAction(actions[70]),
+                roles[index].addAction(actions[72]), 
+            ]);
             break;
         case 'teamMember':
             // Membro squadra
-            roles[index].addAction(actions[3]);
-            roles[index].addAction(actions[5]);
-            roles[index].addAction(actions[7]);
-            roles[index].addAction(actions[12]);
-            roles[index].addAction(actions[17]);
-            roles[index].addAction(actions[21]);
-            roles[index].addAction(actions[32]);
-            roles[index].addAction(actions[39]);
-            roles[index].addAction(actions[43]);
-            roles[index].addAction(actions[64]);
-            roles[index].addAction(actions[70]);
-            roles[index].addAction(actions[72]);
+            promises.push([
+                roles[index].addAction(actions[3]),
+                roles[index].addAction(actions[5]),
+                roles[index].addAction(actions[7]),
+                roles[index].addAction(actions[12]),
+                roles[index].addAction(actions[17]),
+                roles[index].addAction(actions[21]),
+                roles[index].addAction(actions[32]),
+                roles[index].addAction(actions[39]),
+                roles[index].addAction(actions[43]),
+                roles[index].addAction(actions[64]),
+                roles[index].addAction(actions[70]),
+                roles[index].addAction(actions[72]),
+            ]);
             break;
         case 'manifestationManager':
             // Gestore manifestazione
-            roles[index].addAction(actions[0]);
-            roles[index].addAction(actions[1]);
-            roles[index].addAction(actions[2]);
-            roles[index].addAction(actions[3]);
-            roles[index].addAction(actions[4]);
-            roles[index].addAction(actions[5]);
-            roles[index].addAction(actions[6]);
-            roles[index].addAction(actions[7]);
-            roles[index].addAction(actions[12]);
-            roles[index].addAction(actions[13]);
-            roles[index].addAction(actions[14]);
-            roles[index].addAction(actions[15]);
-            roles[index].addAction(actions[16]);
-            roles[index].addAction(actions[17]);
-            roles[index].addAction(actions[18]);
-            roles[index].addAction(actions[19]);
-            roles[index].addAction(actions[20]);
-            roles[index].addAction(actions[21]);
-            roles[index].addAction(actions[22]);
-            roles[index].addAction(actions[23]);
-            roles[index].addAction(actions[24]);
-            roles[index].addAction(actions[25]);
-            roles[index].addAction(actions[26]);
-            roles[index].addAction(actions[27]);
-            roles[index].addAction(actions[28]);
-            roles[index].addAction(actions[29]);
-            roles[index].addAction(actions[30]);
-            roles[index].addAction(actions[31]);
-            roles[index].addAction(actions[32]);
-            roles[index].addAction(actions[33]);
-            roles[index].addAction(actions[34]);
-            roles[index].addAction(actions[35]);
-            roles[index].addAction(actions[36]);
-            roles[index].addAction(actions[37]);
-            roles[index].addAction(actions[38]);
-            roles[index].addAction(actions[39]);
-            roles[index].addAction(actions[40]);
-            roles[index].addAction(actions[41]);
-            roles[index].addAction(actions[42]);
-            roles[index].addAction(actions[43]);
-            roles[index].addAction(actions[44]);
-            roles[index].addAction(actions[45]);
-            roles[index].addAction(actions[46]);
-            roles[index].addAction(actions[47]);
-            roles[index].addAction(actions[48]);
-            roles[index].addAction(actions[49]);
-            roles[index].addAction(actions[50]);
-            roles[index].addAction(actions[51]);
-            roles[index].addAction(actions[52]);
-            roles[index].addAction(actions[53]);
-            roles[index].addAction(actions[54]);
-            roles[index].addAction(actions[55]);
-            roles[index].addAction(actions[56]);
-            roles[index].addAction(actions[57]);
-            roles[index].addAction(actions[58]);
-            roles[index].addAction(actions[59]);
-            roles[index].addAction(actions[60]);
-            roles[index].addAction(actions[61]);
-            roles[index].addAction(actions[62]);
-            roles[index].addAction(actions[63]);
-            roles[index].addAction(actions[64]);
-            roles[index].addAction(actions[65]);
-            roles[index].addAction(actions[66]);
-            roles[index].addAction(actions[67]);
-            roles[index].addAction(actions[68]);
-            roles[index].addAction(actions[69]);
-            roles[index].addAction(actions[70]);
-            roles[index].addAction(actions[71]);
-            roles[index].addAction(actions[72]);
-            roles[index].addAction(actions[73]);
-            roles[index].addAction(actions[74]);
-            roles[index].addAction(actions[75]);
-            roles[index].addAction(actions[76]);
-            roles[index].addAction(actions[77]);
-            roles[index].addAction(actions[78]);
-            roles[index].addAction(actions[79]);
-            roles[index].addAction(actions[80]);
-            roles[index].addAction(actions[81]);
-            roles[index].addAction(actions[82]);
+            promises.push([
+                roles[index].addAction(actions[0]),
+                roles[index].addAction(actions[1]),
+                roles[index].addAction(actions[2]),
+                roles[index].addAction(actions[3]),
+                roles[index].addAction(actions[4]),
+                roles[index].addAction(actions[5]),
+                roles[index].addAction(actions[6]),
+                roles[index].addAction(actions[7]),
+                roles[index].addAction(actions[12]),
+                roles[index].addAction(actions[13]),
+                roles[index].addAction(actions[14]),
+                roles[index].addAction(actions[15]),
+                roles[index].addAction(actions[16]),
+                roles[index].addAction(actions[17]),
+                roles[index].addAction(actions[18]),
+                roles[index].addAction(actions[19]),
+                roles[index].addAction(actions[20]),
+                roles[index].addAction(actions[21]),
+                roles[index].addAction(actions[22]),
+                roles[index].addAction(actions[23]),
+                roles[index].addAction(actions[24]),
+                roles[index].addAction(actions[25]),
+                roles[index].addAction(actions[26]),
+                roles[index].addAction(actions[27]),
+                roles[index].addAction(actions[28]),
+                roles[index].addAction(actions[29]),
+                roles[index].addAction(actions[30]),
+                roles[index].addAction(actions[31]),
+                roles[index].addAction(actions[32]),
+                roles[index].addAction(actions[33]),
+                roles[index].addAction(actions[34]),
+                roles[index].addAction(actions[35]),
+                roles[index].addAction(actions[36]),
+                roles[index].addAction(actions[37]),
+                roles[index].addAction(actions[38]),
+                roles[index].addAction(actions[39]),
+                roles[index].addAction(actions[40]),
+                roles[index].addAction(actions[41]),
+                roles[index].addAction(actions[42]),
+                roles[index].addAction(actions[43]),
+                roles[index].addAction(actions[44]),
+                roles[index].addAction(actions[45]),
+                roles[index].addAction(actions[46]),
+                roles[index].addAction(actions[47]),
+                roles[index].addAction(actions[48]),
+                roles[index].addAction(actions[49]),
+                roles[index].addAction(actions[50]),
+                roles[index].addAction(actions[51]),
+                roles[index].addAction(actions[52]),
+                roles[index].addAction(actions[53]),
+                roles[index].addAction(actions[54]),
+                roles[index].addAction(actions[55]),
+                roles[index].addAction(actions[56]),
+                roles[index].addAction(actions[57]),
+                roles[index].addAction(actions[58]),
+                roles[index].addAction(actions[59]),
+                roles[index].addAction(actions[60]),
+                roles[index].addAction(actions[61]),
+                roles[index].addAction(actions[62]),
+                roles[index].addAction(actions[63]),
+                roles[index].addAction(actions[64]),
+                roles[index].addAction(actions[65]),
+                roles[index].addAction(actions[66]),
+                roles[index].addAction(actions[67]),
+                roles[index].addAction(actions[68]),
+                roles[index].addAction(actions[69]),
+                roles[index].addAction(actions[70]),
+                roles[index].addAction(actions[71]),
+                roles[index].addAction(actions[72]),
+                roles[index].addAction(actions[73]),
+                roles[index].addAction(actions[74]),
+                roles[index].addAction(actions[75]),
+                roles[index].addAction(actions[76]),
+                roles[index].addAction(actions[77]),
+                roles[index].addAction(actions[78]),
+                roles[index].addAction(actions[79]),
+                roles[index].addAction(actions[80]),
+                roles[index].addAction(actions[81]),
+                roles[index].addAction(actions[82])
+            ]);
             break;
         }
     }
 
 
 
+    promises.push([
+        places[0].addManifestation(manifestation[0]),
+        places[0].addManifestation(manifestation[1]),
 
-    places[0].addManifestation(manifestation[0]);
-    places[0].addManifestation(manifestation[1]);
+        categories[0].addEvent(events[0]),
+        categories[0].addEvent(events[1]),
+        categories[0].addEvent(events[2]),
+        categories[0].addEvent(events[3]),
+        categories[0].addEvent(events[4]),
+        categories[0].addEvent(events[5]),
+        categories[0].addEvent(events[6]),
+        categories[0].addEvent(events[7]),
+        categories[0].addEvent(events[8]),
+        categories[0].addEvent(events[9]),
+        categories[0].addEvent(events[10]),
+        categories[0].addEvent(events[11]),
+        categories[0].addEvent(events[12]),
+        categories[0].addEvent(events[13]),
+        phase[0].addTeam(teams[0]),
+        schools[0].addTeam(teams[0]),
+        // teams[0].addManifestation(manifestation[0]),
+        teams[0].setAgeRange(ageRanges[0]),
 
-    categories[0].addEvent(events[0]);
-    categories[0].addEvent(events[1]);
-    categories[0].addEvent(events[2]);
-    categories[0].addEvent(events[3]);
-    categories[0].addEvent(events[4]);
-    categories[0].addEvent(events[5]);
-    categories[0].addEvent(events[6]);
-    categories[0].addEvent(events[7]);
-    categories[0].addEvent(events[8]);
-    categories[0].addEvent(events[9]);
-    categories[0].addEvent(events[10]);
-    categories[0].addEvent(events[11]);
-    categories[0].addEvent(events[12]);
-    categories[0].addEvent(events[13]);
+        //  events[0].addEvent(events[0]);
 
-    //  events[0].addEvent(events[0]);
+        phase[0].setManifestation(manifestation[0]),
+        phase[0].addField(fields[0]),
+        phase[0].addField(fields[1]),
 
-    manifestation[0].addPhase(phase[0]);
 
-    categories[0].addPhase(phase[0]);
+        categories[0].addPhase(phase[0])
+    ]);
 
+    await Promise.all(promises);
+
+    await teams[0].addManifestation(manifestation[0]);
     /*const competitions = [
        Competition.create
   ];*/
