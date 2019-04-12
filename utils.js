@@ -126,18 +126,17 @@ const utils = {
 
         if (args.t)
             execSync('git push --tags', { cwd: rootDir, stdio });
-
-        execSync('cordova build android', { cwd: cordovaDir, stdio });
         
-        execSync('ssh git@robocupnetwork.it "rm -rf ' + stagingDir + '/*"', { cwd: rootDir, stdio });
-        execSync('scp -r dist git@robocupnetwork.it:' + stagingDir, { cwd: publicDir, stdio });
-        execSync('scp ' + appPath + ' git@robocupnetwork.it:' + stagingDir + '/robocapp.apk', { cwd: rootDir, stdio });
+        execSync('cordova build android', { cwd: cordovaDir, stdio });
         
         let answer;
         while (!isYesNo(answer))
             answer = await rlp.questionAsync('Are you sure you want to stage the commit to the server? [Yes/No] > ');
         
         if (isYes(answer)) {
+            execSync('ssh git@robocupnetwork.it "rm -rf ' + stagingDir + '/*"', { cwd: rootDir, stdio });
+            execSync('scp -r dist git@robocupnetwork.it:' + stagingDir, { cwd: publicDir, stdio });
+            execSync('scp ' + appPath + ' git@robocupnetwork.it:' + stagingDir + '/robocapp.apk', { cwd: rootDir, stdio });
             execSync('git push ' + gitRemote, { cwd: rootDir, stdio });
             console.log('Staging process completed successfully');
         }
@@ -148,7 +147,11 @@ const utils = {
         while (!isYesNo(answer))
             answer = await rlp.questionAsync('Are you sure you want to restart the server? [Yes/No] > ');
         if (isYes(answer)) {
-            execSync('ssh git@robocupnetwork.it "pm2 stop robocupnetwork && rm -rf /opt/apps/robocupnetwork && cp -r /opt/staging/robocupnetwork && pm2 start /opt/ecosystems/robocupnetwork.config.js --env production"');
+            execSync(`ssh git@robocupnetwork.it "
+                        pm2 stop robocupnetwork &&
+                        rm -rf /opt/apps/robocupnetwork/* &&
+                        cp -r /opt/staging/robocupnetwork/* opt/apps/robocupnetwork &&
+                        pm2 start /opt/ecosystems/robocupnetwork.config.js --env production"`);
             console.log('Server restart process completed successfully');
         }
         rlp.close();

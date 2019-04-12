@@ -9,7 +9,7 @@ const Field = require('./Field');
 const Run = sequelize.define('Run', {
     start: { type: Sequelize.DATE, allowNull: false },
     end: { type: Sequelize.DATE },
-    status: { type: Sequelize.ENUM('validated', 'deleted' ,'toBeValidated', 'toBeCanceled', 'toBeReviewed', 'running'), allowNull: false, defaultValue: 'running' },
+    status: { type: Sequelize.ENUM('validated', 'deleted' ,'toBeValidated', 'toBeCanceled', 'toBeReviewed', 'running', 'excluded'), allowNull: false, defaultValue: 'running' },
     contestationMessage: { type: Sequelize.TEXT },
     aliveVictims: { type: Sequelize.INTEGER },
     deadVictims: { type: Sequelize.INTEGER },
