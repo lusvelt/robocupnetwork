@@ -14,6 +14,7 @@ import { ParamsService } from '../../services/params.service';
 import { ModalService } from '../../services/modal.service';
 import { environment } from '../../../environments/environment';
 import { FieldsService } from '../../services/fields.service';
+import { TeamService } from '../../services/team.service';
 @Component({
   selector: 'ngx-runsetting',
   templateUrl: './run-setting-mobile.component.html',
@@ -30,6 +31,7 @@ export class RunSettingMobileComponent implements OnInit {
               private categoriesService: CategoriesService,
               private runService: RunService,
               private paramsService: ParamsService,
+              private teamService: TeamService,
               private modalService: ModalService,
               private fieldsService: FieldsService) { }
 
@@ -37,6 +39,7 @@ export class RunSettingMobileComponent implements OnInit {
   redirectDelay: number = 0;
   strategy: string = '';
   fullName: string;
+  fields = [];
 
   arbitratedRuns: { name: string, points: string }[] = [
     { name: 'Fenix', points: '121 pt' },
@@ -58,7 +61,7 @@ export class RunSettingMobileComponent implements OnInit {
     aliveVictims: undefined,
     deadVictims: undefined,
     lastCheckpointIsRoom: true,
-    field: [ ],
+    field: undefined,
     numberOfCheckpoints: undefined,
     checkpoints: [ ],
     maxTime: 480,
@@ -74,20 +77,36 @@ export class RunSettingMobileComponent implements OnInit {
     this.fullName = this.userService.getFullName();
     const data = this.paramsService.getParams();
     this.team = JSON.parse(environment.production ? data.text : '{"id":1,"name":"TestTeam","Phases":[{"id":1,"name":"Qualificazioni"}]}'); // data.text    '{"id":1,"name":"aa","Phases":[{"id":2,"name":"aa"}]}'
+    this.teamService.getTeamInfo(this.team.id)
+      .then(team => {
+        this.runsetting.evacuationType = team.AgeRange.name === 'under14' ? 'low' : 'high';
+        this.runsetting.entryLevel = team.AgeRange.name === 'under14';
+      });
     this.categoriesService.findCategoryFromPhaseId(this.team.Phases[0])
     .then(category => {
       this.runsetting.maxTime = category.defaultMaxTime;
+      if (localStorage.getItem('maxTime'))
+        this.runsetting.maxTime = localStorage.getItem('maxTime');
       this.category = category;
     });
-
     this.fieldsService.findFieldsFromPhaseId(this.team.Phases[0])
     .then(fields => {
-      this.runsetting.field = fields;
+      this.fields = fields;
+      if (fields.length > 0)
+        this.runsetting.field = localStorage.getItem('field') ? this.fields.filter(field => field.id === parseInt(localStorage.getItem('field')))[0] : this.fields[0];
     });
+    this.runsetting.aliveVictims = localStorage.getItem('aliveVictims');
+    this.runsetting.deadVictims = localStorage.getItem('deadVictims');
+    this.runsetting.numberOfCheckpoints = localStorage.getItem('numberOfCheckpoints');
+    this.onNumberOfCheckpointChange();
   }
 
   onFinished() {
 
+  }
+
+  saveSetting(key, value) {
+    localStorage.setItem(key, value);
   }
 
   changeStatus(cd1) {
@@ -101,30 +120,23 @@ export class RunSettingMobileComponent implements OnInit {
 
   visualizza() {
     this.runsetting.maxTime = this.leftTime / 1000;
-    const oldField = this.runsetting.field;
-    this.runsetting.field = this.runsetting.field.filter((field: any) => field.selected);
-    if ( this.runsetting.field.length === 1) {
-      this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_START')
-          .then(confirmation => {
-            if (confirmation) {
-              this.runService.startRun(this.runsetting, this.team)
-              .then(run => {
-                this.paramsService.setParams({
-                  run : run,
-                  runSettings: this.runsetting,
-                  team: this.team,
-                  category: this.category
-                });
-                this.router.navigate(['/mobile', 'scoring-run']);
+    this.modalService.confirm('ARE_YOU_SURE_YOU_WANT_TO_START')
+        .then(confirmation => {
+          if (confirmation) {
+            this.runService.startRun(this.runsetting, this.team)
+            .then(run => {
+              this.paramsService.setParams({
+                run : run,
+                runSettings: this.runsetting,
+                team: this.team,
+                category: this.category
               });
+              this.router.navigate(['/mobile', 'scoring-run']);
+            });
 
-              this.fieldsService.updateFieldStatus(this.runsetting.field, this.team.name);
-            }
-          });
-    } else {
-      this.runsetting.field = oldField;
-      this.notificationsService.error('YOU_CAN_CHOOSE_ONLY_ONE_FIELD');
-    }
+            this.fieldsService.updateFieldStatus(this.runsetting.field, this.team.name);
+          }
+        });
   }
 
   onNumberOfCheckpointChange() {

@@ -32,7 +32,7 @@ export class AfterRunMobileComponent implements OnInit, AfterViewInit {
     // passed through to szimek/signature_pad constructor
     minWidth: 0.5,
     maxWidth: 2,
-    dotSize: 0.1,
+    dotSize: 1,
     canvasWidth: 600,
     canvasHeight: 200,
     backgroundColor: 'rgb(255, 255, 255)',

@@ -41,31 +41,26 @@
               </small>
             </div>
           -->
-            <div class="mt-3" ngbDropdown>
-              <button class="btn btn-primary" type="button" ngbDropdownToggle>
-                {{ 'FIELD' | translate }}
-              </button>
-              <ul ngbDropdownMenu class="dropdown-menu">
-                <li class="dropdown-item" *ngFor="let field of runsetting.field">
-                  <nb-checkbox name="field" [(ngModel)]="field.selected">{{ field.number }}</nb-checkbox>
-                </li>
-              </ul>
+            <div class="form-group mt-3">
+              <select class="form-control" name="category" (change)="saveSetting('field', runsetting.field.id)" [(ngModel)]="runsetting.field" class="form-control">
+                <option *ngFor="let field of fields" [ngValue]="field">{{field.number}}</option>
+              </select>
             </div>
 
             <div class="mt-3">
               <label for="input-aliveVictims" class="sr-only">{{ 'ALIVE_VICTIM' | translate}}</label>
-              <input type="number" nbInput [(ngModel)]="runsetting.aliveVictims" #aliveVictim="ngModel"
+              <input type="number" nbInput [(ngModel)]="runsetting.aliveVictims" #aliveVictim="ngModel" (change)="saveSetting('aliveVictims', runsetting.aliveVictims)"
                 id="input-aliveVictim" name="aliveVictim" placeholder="{{ 'ALIVE_VICTIM' | translate }}" autofocus
-                fullWidth [status]="aliveVictim.dirty ? (aliveVictim.invalid  ? 'danger' : 'success') : ''" required>
+                fullWidth [status]="aliveVictim.dirty ? (aliveVictim.invalid  ? 'danger' : 'success') : ''" selectOnFocus required>
               <small class="form-text error" *ngIf="aliveVictim.touched && aliveVictim.errors?.required">
                 {{ 'ALIVE_VICTIM_REQUIRED' | translate }}
               </small>
             </div>
             <div class="mt-3">
               <label for="input-aliveVictims" class="sr-only">{{ 'DEAD_VICTIM' | translate}}</label>
-              <input type="number" nbInput [(ngModel)]="runsetting.deadVictims" #deadVictim="ngModel"
+              <input type="number" nbInput [(ngModel)]="runsetting.deadVictims" #deadVictim="ngModel" (change)="saveSetting('deadVictims', runsetting.deadVictims)"
                 id="input-deadVictim" name="deadVictim" placeholder="{{ 'DEAD_VICTIM' | translate }}" autofocus
-                fullWidth [status]="deadVictim.dirty ? (deadVictim.invalid  ? 'danger' : 'success') : ''" required>
+                fullWidth [status]="deadVictim.dirty ? (deadVictim.invalid  ? 'danger' : 'success') : ''" selectOnFocus required>
               <small class="form-text error" *ngIf="deadVictim.touched && deadVictim.errors?.required">
                 {{ 'DEAD_VICTIM_REQUIRED' | translate }}
               </small>
@@ -80,14 +75,14 @@
             <div class="mt-3">
               <label for="input-maxTime" class="sr-only">{{ 'MAX_TIME' | translate }}</label>
               <input type="number" nbInput [(ngModel)]="runsetting.maxTime" #maxTime="ngModel" id="input-maxTime"
-                name="maxTime" placeholder="{{ 'MAX_TIME' | translate }}" fullWidth
-                [status]="maxTime.dirty ? (maxTime.invalid ? 'danger' : 'success') : ''" required>
+                name="maxTime" placeholder="{{ 'MAX_TIME' | translate }}" fullWidth (change)="saveSetting('maxTime', runsetting.maxTime)"
+                [status]="maxTime.dirty ? (maxTime.invalid ? 'danger' : 'success') : ''" selectOnFocus required>
               <small class="form-text error" *ngIf="maxTime.touched && maxTime.errors?.required">
                 {{ 'MAX_TIME_REQUIRED' | translate }}
               </small>
             </div>
             <div class="mt-3">
-              <nb-checkbox status="success" [(ngModel)]="runsetting.entryLevel" #entryLevel="ngModel" name="entryLevel">Entry level</nb-checkbox>
+              <nb-checkbox status="success" [(ngModel)]="runsetting.entryLevel" #entryLevel="ngModel" name="entryLevel" (change)="saveSetting('entryLevel', runsetting.entryLevel)">Entry level</nb-checkbox>
             </div>
           </div>
           <div class="col-md-6">
@@ -95,7 +90,7 @@
               <label for="input-checkpointNumber" class="sr-only">{{ 'CHECKPOINT_NUMBER' | translate}}</label>
               <input type="number" nbInput [(ngModel)]="runsetting.numberOfCheckpoints" #checkpointNumber="ngModel"
                 id="input-checkpointNumber" name="checkpointNumber" placeholder="{{ 'CHECKPOINT_NUMBER' | translate }}"
-                autofocus fullWidth
+                autofocus fullWidth selectOnFocus (change)="saveSetting('numberOfCheckpoints', runsetting.numberOfCheckpoints)"
                 [status]="checkpointNumber.dirty ? (checkpointNumber.invalid  ? 'danger' : 'success') : ''" required
                 (change)="onNumberOfCheckpointChange()">
               <small class="form-text error" *ngIf="checkpointNumber.touched && checkpointNumber.errors?.required">
@@ -109,7 +104,7 @@
             </div>
             <div class="mt-3" *ngFor="let cp of runsetting.checkpoints; let i = index; trackBy: trackByIndex">
               <input type="number" nbInput [(ngModel)]="runsetting.checkpoints[i]" name="checkpointNumber-{{i}}"
-                placeholder="{{ ('ZONE' | translate) + ' ' + (i + 1) }}" fullWidth required>
+                placeholder="{{ ('ZONE' | translate) + ' ' + (i + 1) }}" fullWidth selectOnFocus required>
             </div>
           </div>
         </div>

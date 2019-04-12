@@ -43,6 +43,7 @@ export class ScoringRunMobileComponent implements OnInit {
 
   timer: any;
   time: number;
+  triggerableEvents = [];
   remainingTime = 0;
 
   constructor(private route: ActivatedRoute, private router: Router, private paramsService: ParamsService, private modalService: ModalService, private runService: RunService, private fieldsService: FieldsService, private translateService: TranslateService) { }
@@ -54,6 +55,7 @@ export class ScoringRunMobileComponent implements OnInit {
     this.team = params.team;
     this.run = params.run;
     this.category.Events.filter(event => event.triggerOnStart).forEach(event => this.fireEvent(event));
+    this.triggerableEvents = this.category.Events.filter(event => event.manuallyTriggerable);
   }
 
   async fireEvent(_event) {
@@ -170,23 +172,8 @@ export class ScoringRunMobileComponent implements OnInit {
   }
 
   onFinished() {
-    this.modalService.alert('TIME_ENDED', 'GO_TO_RESUME')
-    .then(result => {
-      this.paramsService.setParams({
-        run: this.run,
-        runSettings: this.runSettings,
-        team: this.team,
-        category: this.category,
-        events: this.events,
-        score: this.score,
-        remainingTime: this.remainingTime
-      });
-      this.router.navigate(['/mobile', 'after-run']);
-    });
+    this.modalService.alert('TIME_ENDED', 'GO_TO_RESUME');
   }
-
-
-  endOfPlay() { }
 
   endRun(cd1) {
     cd1.pause();
@@ -194,7 +181,16 @@ export class ScoringRunMobileComponent implements OnInit {
         .then(confirmation => {
           if (confirmation) {
             this.remainingTime = cd1;
-            this.onFinished();
+            this.paramsService.setParams({
+              run: this.run,
+              runSettings: this.runSettings,
+              team: this.team,
+              category: this.category,
+              events: this.events,
+              score: this.score,
+              remainingTime: this.remainingTime
+            });
+            this.router.navigate(['/mobile', 'after-run']);
           } else {
             cd1.resume();
           }

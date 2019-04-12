@@ -39,6 +39,10 @@ export class TeamService {
     return this.socketIoService.send('getQRCodesData', this.authService.getManifestation());
   }
 
+  getTeamInfo(id) {
+    return this.socketIoService.send('getTeamInfo', id);
+  }
+
   notify(eventName: string): Observable<any> {
     return new Observable(observer => this.socketIoService.on(eventName)
       .subscribe(data => observer.next(data)));

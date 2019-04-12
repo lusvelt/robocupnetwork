@@ -339,8 +339,8 @@
     "CATEGORY":"Categoria",
     "GENERATE_QR_CODE":"Genera QrCode",
     "EVACUATION_ZONE_POSITION": "Triangolo",
-    "RANDOMIZE": "Randomizza"
-
+    "RANDOMIZE": "Randomizza",
+    "PARTICIPATION": "Partecipazione"
 
 
 }

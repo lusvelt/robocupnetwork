@@ -28,7 +28,7 @@ const fieldIo = (clientsIo, socket, room) => {
 
     const updateFieldStatus = async (data, callback) => {
         try {
-            const id = data.field[0].id;
+            const id = data.field.id;
             const team = data.team;
             const result = await Field.update({status: 'running', team: team, score: 0},{where: {id}});
             if(!result)
@@ -60,7 +60,7 @@ const fieldIo = (clientsIo, socket, room) => {
 
     const updateScoreOnField = async (data,callback) => {
         try {
-            const id = data.field[0].id;
+            const id = data.field.id;
             const score = data.score;
             const result = await Field.update({score: score},{where: {id}});
             if (!result)

@@ -1,3 +1,5 @@
+import { NgxAutoScrollModule } from 'ngx-auto-scroll';
+import { SharedModule } from './../shared/shared.module';
 import { MobileRoutingModule } from './mobile-routing.module';
 import { DashboardMobileComponent } from './dashboard-mobile/dashboard-mobile.component';
 import { NgModule } from '@angular/core';
@@ -16,7 +18,8 @@ import { SignaturePadModule } from 'angular2-signaturepad';
         ThemeModule,
         MobileRoutingModule,
         CountdownModule,
-        SignaturePadModule
+        SignaturePadModule,
+        SharedModule
     ],
     declarations: [
         MobileComponent,

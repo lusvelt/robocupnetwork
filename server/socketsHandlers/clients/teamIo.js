@@ -130,6 +130,15 @@ const teamIo = (clientsIo, socket, room) => {
         }
     };
 
+    const getTeamInfo = async (id, callback) => {
+        try {
+            const team = await Team.findById(id, { include: [AgeRange] });
+            callback(team);
+        } catch (err) {
+            callback(new Error());
+        }
+    };
+
     const removeTeam = async (data, callback) => {
         try {
             const _team = data.team;
@@ -155,7 +164,8 @@ const teamIo = (clientsIo, socket, room) => {
     socket.on('getTeams', getTeams);
     socket.on('getTeamsInManifestation', getTeamsInManifestation);
     socket.on('editTeam', editTeam);
-    socket.on('getCaptainFromId',getCaptainFromId);
+    socket.on('getTeamInfo', getTeamInfo);
+    socket.on('getCaptainFromId', getCaptainFromId);
 };
 
 module.exports = teamIo;

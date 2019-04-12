@@ -23,6 +23,7 @@ import { EditRolesModalComponent } from './modals/edit-roles-modal/edit-roles-mo
 import { TeamsListComponent } from './dialogs/teams-list/teams-list.component';
 import { SingleDateTimeComponent } from './view-cells/single-date-time/single-date-time.component';
 import { EventsListComponent } from './dialogs/events-list/events-list.component';
+import { SelectOnFocusDirective } from '../directives/select-on-focus.directive';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { EventsListComponent } from './dialogs/events-list/events-list.component
         TranslateModule,
         ThemeModule,
         Ng2SmartTableModule,
-        NgxAutoScrollModule
+        NgxAutoScrollModule,
+        SelectOnFocusDirective
     ],
     declarations: [
         AlertModalComponent,
@@ -53,7 +55,8 @@ import { EventsListComponent } from './dialogs/events-list/events-list.component
         ViewOnlyRolesModalComponent,
         EditRolesModalComponent,
         TeamsListComponent,
-        EventsListComponent
+        EventsListComponent,
+        SelectOnFocusDirective
     ],
     providers: [
         HttpService,

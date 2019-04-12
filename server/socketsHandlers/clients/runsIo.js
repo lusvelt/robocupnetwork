@@ -19,7 +19,7 @@ const runsIo = (clientsIo, socket, room) => {
 
             const team = await Team.findById(_team.id);
             const referee = await User.findById(_referee.id);
-            const field = await Field.findById(runSettings.field[0].id);
+            const field = await Field.findById(runSettings.field.id);
 
             runSettings.start = new Date();
             runSettings.zones = JSON.stringify({ zones: runSettings.checkpoints });
