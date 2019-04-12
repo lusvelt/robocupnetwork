@@ -9,13 +9,13 @@
     <strong>Non ci sono problemi!</strong> Puoi confermare la gara!
   </div>
   <div *ngIf="run.status === 'toBeReviewed'" class="alert alert-warning" role="alert">
-    <strong>Attenzione!</strong> Qualcuno ha vrastemato!
+    <strong>Attenzione!</strong> Gara da revisionare!
   </div>
   <div *ngIf="run.status === 'toBeCanceled'" class="alert alert-danger" role="alert">
-    <strong>Da eliminare!</strong> Questa gara e' da eliminare.
+    <strong>Da eliminare!</strong> Questa gara è da eliminare.
   </div>
   <div class="row">
-    <strong class="value-header font-w-bold">id Gara:</strong><p class="value font-w-light">{{run.id}}</p>
+    <strong class="value-header font-w-bold">ID Gara:</strong><p class="value font-w-light">{{run.id}}</p>
   </div>
   <div class="row">
     <strong class="value-header font-w-bold">Squadra:</strong><p class="value font-w-light">{{run.Team.name}}</p>
@@ -41,7 +41,7 @@
   </div>
 
   <div class="mt-3">
-    <strong class="mb-3 font-w-bold">Resoconto gara: </strong>
+    <strong class="mb-3 font-w-bold">Resoconto gara:</strong>
     <ul *ngFor="let event of run.events.events">
       <li>{{event.name}} - {{event.description}}</li>
     </ul>

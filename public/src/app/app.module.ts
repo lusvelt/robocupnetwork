@@ -22,6 +22,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { values } from './config/values.config';
 import { MainPageComponent } from './main-page/main-page.component';
 import { RankComponent } from './rank/rank.component';
+import { PublicRankingComponent } from './public-ranking/public-ranking.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -32,7 +33,7 @@ export function tokenGetterFunction() {
 }
 
 @NgModule({
-  declarations: [AppComponent, MainPageComponent, RankComponent],
+  declarations: [AppComponent, MainPageComponent, RankComponent, PublicRankingComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

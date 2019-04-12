@@ -1,36 +1,13 @@
-import {
-  Component,
-  OnInit,
-  ViewChild
-} from '@angular/core';
-import {
-  AuthService
-} from '../services/auth.service';
-import {
-  DataSource
-} from '../classes/data-source.class';
-import {
-  Subject,
-  Observable,
-  merge
-} from 'rxjs';
-import {
-  NgbTypeahead
-} from '@ng-bootstrap/ng-bootstrap';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  filter,
-  map
-} from 'rxjs/operators';
-import {
-  RunService
-} from '../services/run.service';
-import {
-  NotificationsService
-} from '../services/notifications.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { DataSource } from '../classes/data-source.class';
+import { Subject, Observable, merge } from 'rxjs';
+import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { RunService } from '../services/run.service';
+import { NotificationsService } from '../services/notifications.service';
 import { PhasesService } from '../services/phases.service';
-import { notAddableConfig, rankingConfig } from '../config/tables.config';
+import { rankingConfig } from '../config/tables.config';
 import { TablesService } from '../services/tables.service';
 import { FieldsService } from '../services/fields.service';
 
