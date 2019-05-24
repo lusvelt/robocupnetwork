@@ -1,131 +1,89 @@
-<ngx-one-column-layout>
-  <router-outlet>
-    <div class="row">
-      <div class="col-6">
-        <div class="left-content">
-        <div class="maintitle" id="wrap">
-          <span>RobocupNetwork@home:~$ </span>
+<nb-layout>
+  <nb-layout-column>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <input type="checkbox" id="nav" class="hidden">
+                <label for="nav" class="nav-btn">
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                </label>
+                <img class="logorounded" src="./../../assets/images/Logo.1.jpeg">
+                <div class="nav-wrapper">
+                    <ul>
+                        <nav class="cl-effect-3">
+                            <li><a href="#/main-page">Home</a></li>
+                            <li><a href="#/public-ranking">{{'RANKING'|translate}}</a></li>
+                            <li><a href="#/contact-us">{{'CONTACT_US'|translate}}</a></li>
+                            <li><a href="#/auth/login" class="circlelink bubbly-button" style="text-align: center;padding: 11px">{{'LOGIN_TITLE'|translate}}</a></li>
+                        </nav>
+                    </ul>
+                </div>
+            </nav>
         </div>
-        <div class="subtitles">ls robocupnetwork/videos</div>
-          <iframe width="420" height="315" src="https://www.youtube.com/embed/44IZUZ5mNx8" frameborder="0" allowfullscreen></iframe>
-        <div class="subtitles">1 item found.</div>
-      </div>
-    </div>
-      <div class="col-6">
-        <div class="row">
-          <div class="col-md-10"></div>
-          <div class="col-md-2 icon">
-            <img src="./../../assets/images/Logo.jpeg" width="100px" height="100px">
-          </div>
+    </header>
+    <section id="content">
+        <div class="container text">
+            <h3>{{'WELCOME_IN'|translate}}</h3>
+            <h1>Robocup Network</h1>
         </div>
-        <div class="right-content">
-            <h1 class="right-title">{{'WHAT_IS_ROBOCUP'|translate  }}</h1>
-            <p class="right-description">{{'WHAT_IS_ROBOCUP_DESCRIPTION'|translate}}</p>
-            <div class="row button">
-              <div class="col-md-5"></div>
-              <div class="col-md-2"><a href="#/auth/login" class="btn btn-2">{{'LOGIN_SIGNIN'|translate}}</a></div>
-              <div class="col-md-5"></div>
-            </div>
-            <div class="row mt-2">
-              <div class="col-md-5"></div>
-              <div class="col-md-2"><a href="#/public-ranking" class="btn btn-2">Classifica</a></div>
-              <div class="col-md-5"></div>
-            </div>
+    </section>
+
+    <section id="content">
+        <div class="container info">
+            <p>{{'WHAT_IS_ROBOCUP_DESCRIPTION'|translate}}</p>
         </div>
-      </div>
-    </div>
+    </section>
 
-    <div class="row footer">
-      <div class="col-sm-12">
-        <nb-card>
-          <div class="row">
-              <div class="socials col-sm-4">
-                <a href="https://github.com/" target="_blank" class="ion ion-social-github"></a>
-                <a href="https://it-it.facebook.com/Voltapescara.official/" target="_blank" class="ion ion-social-facebook"></a>
-              </div>
-            <div class="credits col-sm-4">
-              <div class="row">
-                <a class="mr-3" (click)="languageSelect('italian')">
-                  <img src="./../../../assets/images/italy.png" width="40px" height="40px">
-                </a>
-                <a class="ml-3" (click)="languageSelect('english')">
-                  <img src="./../../../assets/images/united-kingdom.png" width="40px" height="40px">
-                </a>
-              </div>
-            </div>
-            <div class="credits col-sm-4">
-              <span class=" created-by">
-                {{ 'CREATED_BY' | translate }}
-                <a class="font-w-bold linkschool" href="http://iisvoltapescara.gov.it/" target="_blank">I.I.S A.Volta
-                  Pescara</a>
-                2018-2019
-              </span>
-            </div>
-          </div>
-        </nb-card>
-      </div>
-    </div>
+    <section>
+        <div class="container">
+            <ul class="cards">
+                <li class="cards__item">
+                    <div class="card">
+                        <div class="card__image card__image--rescueline"></div>
+                        <div class="card__content">
+                            <div class="card__title">RESCUE</div>
+                            <p class="card__text">{{'RESCUE_DESCRIPTION'|translate}} </p>
+
+                        </div>
+                    </div>
+                </li>
+                <li class="cards__item">
+                    <div class="card">
+                        <div class="card__image card__image--soccer"></div>
+                        <div class="card__content">
+                            <div class="card__title">SOCCER</div>
+                            <p class="card__text">{{'SOCCER_DESCRIPTION'|translate}}</p>
+
+                        </div>
+                    </div>
+                </li>
+                <li class="cards__item">
+                    <div class="card">
+                        <div class="card__image card__image--onstage"></div>
+                        <div class="card__content">
+                            <div class="card__title">ONSTAGE</div>
+                            <p class="card__text">{{'ONSTAGE_DESCRIPTION'|translate}} </p>
+
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
 
 
 
-
-  </router-outlet>
-</ngx-one-column-layout>
-
-
-<!--
-<div class="header">
-   <a href="#/auth/login" class="logo">{{'LOGIN' | translate}}</a>
-  <div class="info">
-  <h4>{{'WELCOME_IN'|translate}}</h4>
-  <div class="maintitle" id="wrap">
-    <span>RobocupNetwork@home:~$ </span>
-  </div>
-    <div class="meta">
-      <br>
-      <br>
-    </div>
-  </div>
-</div>
-<section class="content">
-<h1 align="center">{{'WHAT_IS_ROBOCUP'|translate  }}</h1>
-<p>{{'WHAT_IS_ROBOCUP_DESCRIPTION'|translate}}</p>
-</section>
-<div class="footer">
-  <div class="row cards">
-    <div class="col-md-1"></div>
-    <div class="col-md-3">
-      <nb-card>
-        <nb-card-header>
-          Soccer
-        </nb-card-header>
-        <nb-card-body>
-          {{'SOCCER_DESCRIPTION'|translate}}
-        </nb-card-body>
-      </nb-card>
-    </div>
-    <div class="col-md-4">
-      <nb-card>
-        <nb-card-header>
-          Rescue
-        </nb-card-header>
-        <nb-card-body>
-          {{'RESCUE_DESCRIPTION'|translate}}
-        </nb-card-body>
-      </nb-card>
-    </div>
-    <div class="col-md-3">
-      <nb-card>
-        <nb-card-header>
-          On Stage
-        </nb-card-header>
-        <nb-card-body>
-          {{'ONSTAGE_DESCRIPTION'|translate}}
-        </nb-card-body>
-      </nb-card>
-    </div>
-    <div class="col-md-1"></div>
-  </div>
-    <a href="http://iisvoltapescara.gov.it/" class="logo">{{'CONTACT_US'|translate}}</a>
-</div>
--->
+    <footer class="text">
+        <div class="container">
+            <p>Created by <a class="school" href="#">IIS A.Volta</a> Pescara 2019</p>
+                    <a class="flag" (click)="languageSelect('italian')"><img src="./../../assets/images/italy (1).png" style="width: 30px; height:30px;"></a>
+                    <a class="flag"(click)="languageSelect('english')"><img src="./../../assets/images/united-kingdom (1).png" style="width: 30px; height:30px;"></a>
+            
+        </div>
+    </footer>
+</body>
+</nb-layout-column>
+</nb-layout>
