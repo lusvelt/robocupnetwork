@@ -144,17 +144,17 @@ const utils = {
     },
     restart: async function () {
         let answer;
-        //while (!isYesNo(answer))
-        //answer = await rlp.questionAsync('Are you sure you want to restart the server? [Yes/No] > ');
-        //if (isYes(answer)) {
-        execSync(`ssh git@robocupnetwork.it "
+        while (!isYesNo(answer))
+            answer = await rlp.questionAsync('Are you sure you want to restart the server? [Yes/No] > ');
+        if (isYes(answer)) {
+            execSync(`ssh git@robocupnetwork.it "
                         pm2 stop robocupnetwork &&
                         rm -rf /opt/apps/robocupnetwork/* &&
-                        cp -r /opt/staging/robocupnetwork/* opt/apps/robocupnetwork &&
+                        cp -r /opt/staging/robocupnetwork/* opt/apps/robocupnetwork/ &&
                         pm2 start /opt/ecosystems/robocupnetwork.config.js --env production"`);
-        console.log('Server restart process completed successfully');
-        //}
-        //rlp.close();
+            console.log('Server restart process completed successfully');
+        }
+        rlp.close();
     },
     publish: async function (args) {
         await this.stage(args);
