@@ -137,7 +137,7 @@ const utils = {
             execSync('ssh git@robocupnetwork.it "rm -rf ' + stagingDir + '/*"', { cwd: rootDir, stdio });
             execSync('scp -r dist git@robocupnetwork.it:' + stagingDir, { cwd: publicDir, stdio });
             execSync('scp ' + appPath + ' git@robocupnetwork.it:' + stagingDir + '/robocapp.apk', { cwd: rootDir, stdio });
-            execSync('git push ' + gitRemote, { cwd: rootDir, stdio });
+            execSync('git push --allow-empty ' + gitRemote, { cwd: rootDir, stdio });
             console.log('Staging process completed successfully');
         }
         rlp.close();
