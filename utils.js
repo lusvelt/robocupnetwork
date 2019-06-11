@@ -43,13 +43,13 @@ const utils = {
     },
     buildMobile: function () {
         fs.removeSync(cordovaDir);
-        execSync('cordova create mobileApp com.robocupnetwork.mobile Robocup\\ Network', { cwd: rootDir, stdio }); 
+        execSync('cordova create mobileApp com.robocupnetwork.mobile Robocup\\ Network', { cwd: rootDir, stdio });
         execSync('cordova platform add browser', { cwd: cordovaDir, stdio });
         execSync('cordova platform add android', { cwd: cordovaDir, stdio });
         execSync('cordova plugin add https://github.com/phonegap/phonegap-plugin-barcodescanner', { cwd: cordovaDir, stdio });
         execSync('cordova plugin add cordova-plugin-app-version', { cwd: cordovaDir, stdio });
         execSync('cordova plugin add cordova-plugin-device', { cwd: cordovaDir, stdio });
-        
+
         if (fs.existsSync(wwwCordovaDir))
             fs.removeSync(wwwCordovaDir);
 
@@ -75,7 +75,7 @@ const utils = {
             .split('\n')
             .filter(remote => !!remote)
             .map(remote => remote.split('\t')[0]);
-        
+
         if (!remotes.includes(gitRemote))
             execSync('git remote add ' + gitRemote + ' git@robocupnetwork.it:/opt/git/robocupnetwork.git', { cwd: rootDir, stdio });
 
@@ -83,10 +83,10 @@ const utils = {
             execSync('ng build --prod', { cwd: publicDir, stdio });
             this.buildMobile();
         }
-        
+
         let configXml = fs.readFileSync(configXmlPath).toString('utf8');
         const config = JSON.parse(parser.toJson(configXml, {reversible: true}));
-        
+
         config.widget.description.$t = info.description;
         config.widget.author.email = 'robocup.network@gmail.com';
         config.widget.author.href = 'https://robocupnetwork.it';
@@ -104,7 +104,7 @@ const utils = {
         config.widget.version = info.mobileAppVersion;
         configXml = parser.toXml(JSON.stringify(config));
         fs.writeFileSync(configXmlPath, configXml);
-        
+
         if (args.t)
             info.version = args.t;
         else {
@@ -113,7 +113,7 @@ const utils = {
             oldVersionArray[lastIndex] = (parseInt(oldVersionArray[lastIndex]) + 1).toString();
             info.version = oldVersionArray.join('.');
         }
-        
+
         fs.writeFileSync(packagePath, JSON.stringify(info, undefined, 2));
 
         execSync('git add .', { cwd: rootDir, stdio });
@@ -121,18 +121,18 @@ const utils = {
 
         if (args.t)
             execSync('git tag v' + args.t, { cwd: rootDir, stdio });
-        
+
         execSync('git push', { cwd: rootDir, stdio });
 
         if (args.t)
             execSync('git push --tags', { cwd: rootDir, stdio });
-        
+
         execSync('cordova build android', { cwd: cordovaDir, stdio });
-        
+
         let answer;
         while (!isYesNo(answer))
             answer = await rlp.questionAsync('Are you sure you want to stage the commit to the server? [Yes/No] > ');
-        
+
         if (isYes(answer)) {
             execSync('ssh git@robocupnetwork.it "rm -rf ' + stagingDir + '/*"', { cwd: rootDir, stdio });
             execSync('scp -r dist git@robocupnetwork.it:' + stagingDir, { cwd: publicDir, stdio });
