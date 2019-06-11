@@ -30,7 +30,8 @@ Phase.prototype.getQRCodesData = async function () {
     });
     teams = JSON.parse(JSON.stringify(teams));
     teams = teams.map(team => {
-        team.Phases = team.Phases.map(phase => _.omit(phase, ['TeamIsInPhase']));
+        team.Phases = team.Phases.map(phase => _.omit(phase, ['TeamIsInPhase']))
+            .filter(phase => phase.id === this.id);
         return team;
     });
     teams = teams.map(team => _.omit(team, ['TeamIsInPhase']));

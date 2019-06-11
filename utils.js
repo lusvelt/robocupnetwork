@@ -150,8 +150,8 @@ const utils = {
             execSync(`ssh git@robocupnetwork.it "
                         pm2 stop robocupnetwork &&
                         rm -rf /opt/apps/robocupnetwork/* &&
-                        cp -r /opt/staging/robocupnetwork/* opt/apps/robocupnetwork &&
-                        pm2 start /opt/ecosystems/robocupnetwork.config.js --env production"`);
+                        cp -r /opt/staging/robocupnetwork/* /opt/apps/robocupnetwork &&
+                        pm2 start /opt/ecosystems/robocupnetwork.config.js --env production"`, { cwd: rootDir, stdio });
             console.log('Server restart process completed successfully');
         }
         rlp.close();
